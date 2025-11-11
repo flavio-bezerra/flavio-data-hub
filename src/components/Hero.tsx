@@ -68,7 +68,7 @@ const Hero = () => {
               Flávio Menegueço Bezerra
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground">
-              Cientista de Dados Senior | Transformando Dados em Estratégias de Negócio
+              Especialista de Dados | Transformando Dados em Estratégias de Negócio
             </p>
           </div>
 
