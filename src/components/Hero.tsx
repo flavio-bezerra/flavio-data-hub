@@ -74,7 +74,7 @@ const Hero = () => {
 
           {/* Typing Tagline */}
           <div className="min-h-[4rem] flex items-center">
-            <p className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground">
+            <p className="text-3xl md:text-4xl lg:text-5xl font-script text-foreground">
               {highlightWords(typedText)}
               <span className="animate-pulse">|</span>
             </p>

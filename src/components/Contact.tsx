@@ -65,9 +65,9 @@ const Contact = () => {
           </div>
 
           {/* Tagline */}
-          <p className="text-lg text-muted-foreground">
-            Mais que insights, <span className="text-gold font-semibold">estratégia</span>.{" "}
-            Mais que dados, <span className="text-gold font-semibold">resultados</span>.
+          <p className="text-2xl md:text-3xl font-script text-foreground">
+            Mais que dados, <span className="text-gold">estratégia</span>.{" "}
+            Mais que insights, <span className="text-primary">resultados</span>.
           </p>
 
           {/* Copyright */}
