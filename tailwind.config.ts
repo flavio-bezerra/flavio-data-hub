@@ -16,7 +16,7 @@ export default {
       fontFamily: {
         heading: ['Poppins', 'sans-serif'],
         body: ['Lato', 'sans-serif'],
-        script: ['Ephesis', 'cursive'],
+        script: ['Evafiya', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",

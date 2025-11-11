@@ -59,9 +59,9 @@ const About = () => {
               <span className="text-gold font-semibold"> resultados mensuráveis</span> 
               e valor real para as organizações.
             </p>
-            <p className="text-center pt-4 text-xl font-semibold text-foreground">
+            <p className="text-center pt-4 text-2xl md:text-3xl font-script text-foreground">
               Mais que dados, <span className="text-gold">estratégia</span>. 
-              Mais que insights, <span className="text-gold">resultados</span>.
+              Mais que insights, <span className="text-primary">resultados</span>.
             </p>
           </div>
         </div>
