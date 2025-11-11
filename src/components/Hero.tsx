@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Linkedin, Github } from "lucide-react";
 import profileImage from "@/assets/profile.jpg";
-import heroBanner from "@/assets/hero-banner.jpeg";
+import heroBackground from "@/assets/hero-background.png";
 
 const Hero = () => {
   const [typedText, setTypedText] = useState("");
@@ -44,7 +44,7 @@ const Hero = () => {
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.85)), url(${heroBanner})`,
+        backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.75), rgba(17, 24, 39, 0.75)), url(${heroBackground})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
@@ -58,7 +58,7 @@ const Hero = () => {
             <img
               src={profileImage}
               alt="Flávio Bezerra"
-              className="relative w-52 h-52 md:w-64 md:h-64 rounded-full object-cover border-4 border-background shadow-2xl"
+              className="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-background shadow-2xl"
             />
           </div>
 
