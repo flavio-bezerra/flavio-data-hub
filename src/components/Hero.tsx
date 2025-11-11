@@ -22,9 +22,16 @@ const Hero = () => {
   const highlightWords = (text: string) => {
     return text.split(' ').map((word, index) => {
       const cleanWord = word.replace(/[.,]/g, '');
-      if (cleanWord === 'estratégia' || cleanWord === 'resultados') {
+      if (cleanWord === 'estratégia') {
         return (
           <span key={index} className="text-gold">
+            {word}{' '}
+          </span>
+        );
+      }
+      if (cleanWord === 'resultados') {
+        return (
+          <span key={index} className="text-primary">
             {word}{' '}
           </span>
         );
@@ -51,7 +58,7 @@ const Hero = () => {
             <img
               src={profileImage}
               alt="Flávio Bezerra"
-              className="relative w-40 h-40 rounded-full object-cover border-4 border-background shadow-2xl"
+              className="relative w-52 h-52 md:w-64 md:h-64 rounded-full object-cover border-4 border-background shadow-2xl"
             />
           </div>
 
