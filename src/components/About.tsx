@@ -39,7 +39,7 @@ const About = () => {
           <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
             <p>
               Meu trabalho é encontrar as respostas escondidas nos dados. Com formação em 
-              <span className="text-foreground font-semibold"> Engenharia Civil (UNESP)</span>, 
+              <span className="text-foreground font-semibold"> Engenharia Civil</span>, 
               trago uma mentalidade analítica e uma paixão por desafios para o mundo de 
               <span className="text-primary font-semibold"> Data Science</span>.
             </p>

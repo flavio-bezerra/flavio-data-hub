@@ -97,7 +97,7 @@ const WhatIsDataScience = () => {
             </h3>
             <p className="text-xl text-muted-foreground">
               Meu trabalho é guiar as decisões de negócio através de{" "}
-              <span className="text-gold font-semibold">4 níveis de maturidade analítica</span>:
+              <span className="text-gold font-semibold">5 níveis de maturidade analítica</span>:
             </p>
           </div>
 
