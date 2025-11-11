@@ -56,7 +56,7 @@ const About = () => {
               Meu diferencial está em traduzir complexidade técnica em 
               <span className="text-primary font-semibold"> estratégias de negócio claras</span>, 
               sempre com foco em gerar 
-              <span className="text-gold font-semibold"> resultados mensuráveis</span> 
+              <span className="text-gold font-semibold"> resultados mensuráveis </span> 
               e valor real para as organizações.
             </p>
             <p className="text-center pt-4 text-2xl md:text-3xl font-script text-foreground">

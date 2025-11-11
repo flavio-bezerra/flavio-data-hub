@@ -45,6 +45,7 @@ export default {
           foreground: "hsl(var(--accent-foreground))",
         },
         gold: "hsl(var(--gold))",
+        wine: "hsl(var(--wine))",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

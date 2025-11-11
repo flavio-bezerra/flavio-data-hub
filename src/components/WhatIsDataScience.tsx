@@ -152,19 +152,19 @@ const WhatIsDataScience = () => {
             className={`relative overflow-hidden group hover:scale-[1.02] transition-all duration-500 border-2 ${
               visibleCards.length >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
-            style={{ borderColor: "hsl(var(--gold))" }}
+            style={{ borderColor: "hsl(var(--wine))" }}
           >
             {/* Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gold to-yellow-500 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-wine to-red-900 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
 
             {/* Content */}
             <div className="relative p-8 space-y-6">
               <div className="flex items-start gap-6">
-                <div className="p-4 rounded-lg bg-gradient-to-br from-gold to-yellow-500 flex-shrink-0">
+                <div className="p-4 rounded-lg bg-gradient-to-br from-wine to-red-900 flex-shrink-0">
                   <Brain className="w-8 h-8 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="text-2xl md:text-3xl font-bold mb-3 text-gold">
+                  <h4 className="text-2xl md:text-3xl font-bold mb-3 text-wine">
                     IA Generativa & LLMs
                   </h4>
                   <p className="text-xl text-primary font-semibold mb-4">
@@ -177,19 +177,19 @@ const WhatIsDataScience = () => {
                   {/* Lista de Tópicos */}
                   <ul className="grid md:grid-cols-2 gap-4">
                     <li className="flex items-start gap-3">
-                      <span className="text-gold text-xl mt-1">•</span>
+                      <span className="text-wine text-xl mt-1">•</span>
                       <span className="text-foreground text-lg">Engenharia de Prompt</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-gold text-xl mt-1">•</span>
+                      <span className="text-wine text-xl mt-1">•</span>
                       <span className="text-foreground text-lg">RAG (Retrieval-Augmented Generation)</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-gold text-xl mt-1">•</span>
+                      <span className="text-wine text-xl mt-1">•</span>
                       <span className="text-foreground text-lg">Fine-tuning de Modelos</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <span className="text-gold text-xl mt-1">•</span>
+                      <span className="text-wine text-xl mt-1">•</span>
                       <span className="text-foreground text-lg">Criação de Agentes e Multiagentes</span>
                     </li>
                   </ul>
@@ -199,7 +199,7 @@ const WhatIsDataScience = () => {
 
             {/* Animated Border Bottom */}
             <div
-              className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-gold to-yellow-500 transform origin-left transition-transform duration-500 delay-700 ${
+              className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-wine to-red-900 transform origin-left transition-transform duration-500 delay-700 ${
                 visibleCards.length >= 4 ? "scale-x-100" : "scale-x-0"
               }`}
               style={{ width: "100%" }}
