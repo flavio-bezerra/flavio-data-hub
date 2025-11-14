@@ -6,7 +6,7 @@ import heroBackground from "@/assets/hero-background.png";
 
 const Hero = () => {
   const [typedText, setTypedText] = useState("");
-  const fullText = "Mais que dados, estratégia. Mais que insights, resultados.";
+  const fullText = "Mais que dados, estratégia.|Mais que insights, resultados.";
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -20,24 +20,29 @@ const Hero = () => {
   }, [currentIndex]);
 
   const highlightWords = (text: string) => {
-    return text.split(' ').map((word, index) => {
-      const cleanWord = word.replace(/[.,]/g, '');
-      if (cleanWord === 'estratégia') {
-        return (
-          <span key={index} className="text-gold">
-            {word}{' '}
-          </span>
-        );
-      }
-      if (cleanWord === 'resultados') {
-        return (
-          <span key={index} className="text-primary">
-            {word}{' '}
-          </span>
-        );
-      }
-      return <span key={index}>{word} </span>;
-    });
+    const sentences = text.split('|');
+    return sentences.map((sentence, sentenceIndex) => (
+      <div key={sentenceIndex}>
+        {sentence.split(' ').map((word, index) => {
+          const cleanWord = word.replace(/[.,]/g, '');
+          if (cleanWord === 'estratégia') {
+            return (
+              <span key={index} className="text-gold">
+                {word}{' '}
+              </span>
+            );
+          }
+          if (cleanWord === 'resultados') {
+            return (
+              <span key={index} className="text-primary">
+                {word}{' '}
+              </span>
+            );
+          }
+          return <span key={index}>{word} </span>;
+        })}
+      </div>
+    ));
   };
 
   return (
@@ -62,14 +67,11 @@ const Hero = () => {
             />
           </div>
 
-          {/* Name and Title */}
+          {/* Name */}
           <div className="space-y-4">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground">
               Flávio Menegueço Bezerra
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground">
-              Especialista de Dados | Transformando Dados em Estratégias de Negócio
-            </p>
           </div>
 
           {/* Typing Tagline */}
