@@ -4,18 +4,7 @@ import { Linkedin, Github } from "lucide-react";
 import profileImage from "@/assets/profile.jpg";
 import heroBackground from "@/assets/hero-background.png";
 const Hero = () => {
-  const [typedText, setTypedText] = useState("");
   const fullText = "Mais que dados, estratégia.|Mais que insights, resultados.";
-  const [currentIndex, setCurrentIndex] = useState(0);
-  useEffect(() => {
-    if (currentIndex < fullText.length) {
-      const timeout = setTimeout(() => {
-        setTypedText(fullText.slice(0, currentIndex + 1));
-        setCurrentIndex(currentIndex + 1);
-      }, 50);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex]);
   const highlightWords = (text: string) => {
     const sentences = text.split('|');
     return sentences.map((sentence, sentenceIndex) => <div key={sentenceIndex}>
@@ -56,10 +45,10 @@ const Hero = () => {
             </h1>
           </div>
 
-          {/* Typing Tagline */}
-          <div className="min-h-[4rem] flex items-center">
+          {/* Tagline */}
+          <div className="min-h-[4rem] flex items-center animate-fade-in animation-delay-500">
             <p className="text-3xl md:text-4xl lg:text-5xl font-script text-foreground">
-              {highlightWords(typedText.replace('|', ''))}
+              {highlightWords(fullText)}
               
             </p>
           </div>
