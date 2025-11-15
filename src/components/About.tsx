@@ -36,7 +36,7 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">
             Sobre Mim
           </h2>
-          <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+          <div className="space-y-6 text-xl text-muted-foreground leading-relaxed">
             <p>
               <span className="text-foreground font-semibold">Data Science</span> foi a forma pela qual meu foco em{" "}
               <span className="text-primary font-semibold">resolver problemas complexos</span> se concretizou. 
