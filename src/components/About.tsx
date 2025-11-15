@@ -38,26 +38,17 @@ const About = () => {
           </h2>
           <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
             <p>
-              Meu trabalho é encontrar as respostas escondidas nos dados. Com formação em 
-              <span className="text-foreground font-semibold"> Engenharia Civil</span>, 
-              trago uma mentalidade analítica e uma paixão por desafios para o mundo de 
-              <span className="text-primary font-semibold"> Data Science</span>.
+              <span className="text-foreground font-semibold">Data Science</span> foi a forma pela qual meu foco em{" "}
+              <span className="text-primary font-semibold">resolver problemas complexos</span> se concretizou. 
+              A partir de uma estrutura sólida baseada na{" "}
+              <span className="text-gold font-semibold">análise de dados internos</span>, 
+              tornou-se possível reduzir custos, otimizar processos e, principalmente, gerar resultados de alta performance 
+              de maneira <span className="text-gold font-semibold">mensurável</span> e alinhada ao core do negócio.
             </p>
             <p>
-              Ao longo da minha carreira, desenvolvi expertise em 
-              <span className="text-gold font-semibold"> Machine Learning</span>, 
-              <span className="text-gold font-semibold"> IA Generativa (LLMs)</span>, 
-              <span className="text-gold font-semibold"> Análise Exploratória (EDA)</span> e 
-              <span className="text-gold font-semibold"> MLOps</span>, 
-              aplicando essas tecnologias para resolver desafios reais em 
-              <span className="text-foreground font-semibold"> Varejo, Indústria e Supply Chain</span>.
-            </p>
-            <p>
-              Meu diferencial está em traduzir complexidade técnica em 
-              <span className="text-primary font-semibold"> estratégias de negócio claras</span>, 
-              sempre com foco em gerar 
-              <span className="text-gold font-semibold"> resultados mensuráveis </span> 
-              e valor real para as organizações.
+              Ao longo da confecção de diversos projetos nas áreas de Varejo, Indústria e Supply Chain, 
+              aprofundei minha especialização em{" "}
+              <span className="text-foreground font-semibold">Machine Learning, IA Generativa (LLMs), Análise Exploratória (EDA) e MLOps</span>.
             </p>
             <p className="text-center pt-4 text-2xl md:text-3xl font-script text-foreground">
               Mais que dados, <span className="text-gold">estratégia</span>. 
