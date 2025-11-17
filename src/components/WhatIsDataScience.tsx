@@ -1,37 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Search, AlertCircle, TrendingUp, Lightbulb, Brain, ArrowLeft } from "lucide-react";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { ResponsiveContainer, ScatterChart, CartesianGrid, XAxis, YAxis, Tooltip as RechartsTooltip, Scatter, Cell } from "recharts";
 
-const analyticsLevels = [
-  {
-    icon: Search,
-    title: "Análise Descritiva",
-    question: "O que aconteceu?",
-    description: "Para obter insights de dados históricos",
-    color: "from-blue-500 to-blue-600",
-  },
-  {
-    icon: AlertCircle,
-    title: "Análise Diagnóstica",
-    question: "Por que aconteceu?",
-    description: "Para encontrar a causa raiz dos problemas",
-    color: "from-purple-500 to-purple-600",
-  },
-  {
-    icon: TrendingUp,
-    title: "Análise Preditiva",
-    question: "O que vai acontecer?",
-    description: "Para realizar predições sobre eventos futuros",
-    color: "from-primary to-blue-500",
-  },
-  {
-    icon: Lightbulb,
-    title: "Análise Prescritiva",
-    question: "Como podemos fazer acontecer?",
-    description: "Para dar suporte a decisões e otimizações",
-    color: "from-gold to-yellow-500",
-  },
-];
 
 const WhatIsDataScience = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -40,6 +12,8 @@ const WhatIsDataScience = () => {
   const [circlesVisible, setCirclesVisible] = useState<number[]>([]);
   const [columnsVisible, setColumnsVisible] = useState<number[]>([]);
   const [hoveredPillar, setHoveredPillar] = useState<number | null>(null);
+  const [activeClassic, setActiveClassic] = useState<string | undefined>("descritiva");
+  const [activeGenAI, setActiveGenAI] = useState<string | undefined>("prompt");
   const sectionRef = useRef<HTMLDivElement>(null);
   const diagramRef = useRef<HTMLDivElement>(null);
 
@@ -48,12 +22,6 @@ const WhatIsDataScience = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          // Stagger the card animations
-          analyticsLevels.forEach((_, index) => {
-            setTimeout(() => {
-              setVisibleCards((prev) => [...prev, index]);
-            }, index * 200);
-          });
         }
       },
       { threshold: 0.1 }
@@ -266,7 +234,7 @@ const WhatIsDataScience = () => {
           </div>
         </div>
 
-        {/* Approach */}
+        {/* Approach - New Maturity Sections */}
         <div className="max-w-6xl mx-auto">
           <div
             className={`text-center mb-12 transition-all duration-1000 delay-300 ${
@@ -276,116 +244,258 @@ const WhatIsDataScience = () => {
             <h3 className="text-3xl md:text-4xl font-bold mb-4">
               Da Pergunta ao Resultado
             </h3>
-            <p className="text-xl text-muted-foreground">
-              Meu trabalho é guiar as decisões de negócio através de{" "}
-              <span className="text-gold font-semibold">5 níveis de maturidade analítica</span>:
+            <p className="text-xl text-muted-foreground mb-16">
+              Meu trabalho é guiar as decisões de negócio através de jornadas de maturidade analítica:
             </p>
-          </div>
 
-          {/* Analytics Cards */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            {analyticsLevels.map((level, index) => {
-              const Icon = level.icon;
-              const isCardVisible = visibleCards.includes(index);
+            {/* Section 1: ML Clássico */}
+            <div className="mb-20">
+              <h3 className="text-2xl md:text-3xl font-bold mb-8 text-left">
+                Jornada de Maturidade Analítica (ML Clássico)
+              </h3>
               
-              return (
-                <Card
-                  key={index}
-                  className={`relative overflow-hidden group hover:scale-105 transition-all duration-500 ${
-                    isCardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                  }`}
-                >
-                  {/* Gradient Background */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${level.color} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}
-                  ></div>
+              {(() => {
+                const classicMLLevels = [
+                  { 
+                    id: "descritiva", 
+                    icon: Search, 
+                    title: "1. Descrevendo (O que aconteceu?)", 
+                    description: "Visão consolidada do histórico.", 
+                    details: "A Análise Descritiva é a base. Ela usa dados históricos para criar dashboards e relatórios que mostram métricas-chave (KPIs) e tendências passadas.", 
+                    value: 1, 
+                    complexity: 1, 
+                    color: "hsl(var(--primary))" 
+                  },
+                  { 
+                    id: "diagnostica", 
+                    icon: AlertCircle, 
+                    title: "2. Diagnosticando (Por que aconteceu?)", 
+                    description: "Investigação para encontrar a causa raiz.", 
+                    details: "A Análise Diagnóstica vai além do 'o quê' e pergunta 'por quê'. Ela usa técnicas de drill-down e correlação para identificar os fatores que causaram um determinado resultado.", 
+                    value: 2, 
+                    complexity: 2, 
+                    color: "#a855f7" 
+                  },
+                  { 
+                    id: "preditiva", 
+                    icon: TrendingUp, 
+                    title: "3. Prevendo (O que vai acontecer?)", 
+                    description: "Uso de Machine Learning para prever o futuro.", 
+                    details: "A Análise Preditiva usa os dados do passado para criar modelos que estimam o futuro. Essencial para prever demanda, estimar o risco de churn de clientes ou identificar tendências de vendas.", 
+                    value: 3, 
+                    complexity: 3, 
+                    color: "hsl(var(--primary))" 
+                  },
+                  { 
+                    id: "prescritiva", 
+                    icon: Lightbulb, 
+                    title: "4. Prescrevendo (O que devemos fazer?)", 
+                    description: "Modelos de otimização para recomendar ações.", 
+                    details: "A Análise Prescritiva é o nível mais alto. Ela não apenas prevê o futuro, mas recomenda as melhores ações e simula o impacto de cada decisão, ajudando a otimizar estratégias.", 
+                    value: 4, 
+                    complexity: 4, 
+                    color: "hsl(var(--gold))" 
+                  }
+                ];
 
-                  {/* Content */}
-                  <div className="relative p-6 space-y-4">
-                    <div className="flex items-start gap-4">
-                      <div className={`p-3 rounded-lg bg-gradient-to-br ${level.color}`}>
-                        <Icon className="w-6 h-6 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="text-xl font-bold mb-2">{level.title}</h4>
-                        <p className="text-lg text-primary font-semibold mb-2">
-                          {level.question}
-                        </p>
-                        <p className="text-muted-foreground">{level.description}</p>
-                      </div>
+                return (
+                  <>
+                    {/* Chart 1: Classic ML */}
+                    <div className="mb-8 bg-card rounded-lg p-6 border">
+                      <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis 
+                            type="number" 
+                            dataKey="complexity" 
+                            name="Complexidade" 
+                            domain={[0, 5]}
+                            label={{ value: 'Complexidade', position: 'insideBottom', offset: -10 }}
+                          />
+                          <YAxis 
+                            type="number" 
+                            dataKey="value" 
+                            name="Valor" 
+                            domain={[0, 5]}
+                            label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
+                          />
+                          <RechartsTooltip cursor={{ strokeDasharray: '3 3' }} />
+                          <Scatter data={classicMLLevels} fill="hsl(var(--primary))">
+                            {classicMLLevels.map((entry, index) => (
+                              <Cell 
+                                key={`cell-${index}`} 
+                                fill={entry.color} 
+                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={() => setActiveClassic(entry.id)}
+                              />
+                            ))}
+                          </Scatter>
+                        </ScatterChart>
+                      </ResponsiveContainer>
                     </div>
-                  </div>
 
-                  {/* Animated Border */}
-                  <div
-                    className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${level.color} transform origin-left transition-transform duration-500 ${
-                      isCardVisible ? "scale-x-100" : "scale-x-0"
-                    }`}
-                    style={{ width: "100%" }}
-                  ></div>
-                </Card>
-              );
-            })}
-          </div>
-
-          {/* IA Generativa Box - Full Width */}
-          <Card
-            className={`relative overflow-hidden group hover:scale-[1.02] transition-all duration-500 border-2 ${
-              visibleCards.length >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}
-            style={{ borderColor: "hsl(var(--wine))" }}
-          >
-            {/* Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-wine to-red-900 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
-
-            {/* Content */}
-            <div className="relative p-8 space-y-6">
-              <div className="flex items-start gap-6">
-                <div className="p-4 rounded-lg bg-gradient-to-br from-wine to-red-900 flex-shrink-0">
-                  <Brain className="w-8 h-8 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="text-2xl md:text-3xl font-bold mb-3 text-wine">
-                    IA Generativa & LLMs
-                  </h4>
-                  <p className="text-xl text-primary font-semibold mb-4">
-                    Como podemos criar, automatizar e escalar o conhecimento?
-                  </p>
-                  <p className="text-muted-foreground text-lg mb-6">
-                    Utilizando o poder de Modelos de Linguagem (LLMs) para construir soluções avançadas, incluindo:
-                  </p>
-                  
-                  {/* Lista de Tópicos */}
-                  <ul className="grid md:grid-cols-2 gap-4">
-                    <li className="flex items-start gap-3">
-                      <span className="text-wine text-xl mt-1">•</span>
-                      <span className="text-foreground text-lg">Engenharia de Prompt</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-wine text-xl mt-1">•</span>
-                      <span className="text-foreground text-lg">RAG (Retrieval-Augmented Generation)</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-wine text-xl mt-1">•</span>
-                      <span className="text-foreground text-lg">Fine-tuning de Modelos</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-wine text-xl mt-1">•</span>
-                      <span className="text-foreground text-lg">Criação de Agentes e Multiagentes</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+                    {/* Accordion 1: Classic ML */}
+                    <Accordion 
+                      type="single" 
+                      collapsible 
+                      value={activeClassic} 
+                      onValueChange={setActiveClassic} 
+                      className="w-full"
+                    >
+                      {classicMLLevels.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <AccordionItem key={item.id} value={item.id}>
+                            <AccordionTrigger className="text-left hover:no-underline">
+                              <div className="flex items-center gap-4">
+                                <div className="p-2 rounded-lg" style={{ backgroundColor: item.color, opacity: 0.2 }}>
+                                  <Icon className="w-5 h-5" style={{ color: item.color }} />
+                                </div>
+                                <div className="flex-1">
+                                  <h4 className="font-bold text-lg">{item.title}</h4>
+                                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                                </div>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="pl-16 pr-4 pt-2">
+                                <p className="text-muted-foreground leading-relaxed">{item.details}</p>
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        );
+                      })}
+                    </Accordion>
+                  </>
+                );
+              })()}
             </div>
 
-            {/* Animated Border Bottom */}
-            <div
-              className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-wine to-red-900 transform origin-left transition-transform duration-500 delay-700 ${
-                visibleCards.length >= 4 ? "scale-x-100" : "scale-x-0"
-              }`}
-              style={{ width: "100%" }}
-            ></div>
-          </Card>
+            {/* Section 2: IA Generativa */}
+            <div>
+              <h3 className="text-2xl md:text-3xl font-bold mb-8 text-left">
+                Jornada de Maturidade em IA Generativa
+              </h3>
+              
+              {(() => {
+                const genAILevels = [
+                  { 
+                    id: "prompt", 
+                    icon: Brain, 
+                    title: "1. Engenharia de Prompt", 
+                    description: "Otimização de comandos para LLMs.", 
+                    details: "Esta é a habilidade fundamental de construir instruções claras e contextuais para que os Modelos de Linguagem (LLMs) executem tarefas específicas com precisão.", 
+                    value: 1, 
+                    complexity: 1, 
+                    color: "hsl(var(--wine))" 
+                  },
+                  { 
+                    id: "rag", 
+                    icon: Brain, 
+                    title: "2. RAG (Busca Aumentada)", 
+                    description: "Conectando LLMs a dados privados.", 
+                    details: "O RAG (Retrieval-Augmented Generation) permite que a IA responda perguntas usando como base seus documentos internos, garantindo respostas seguras e precisas baseadas em fontes de dados privadas.", 
+                    value: 2, 
+                    complexity: 2, 
+                    color: "hsl(var(--wine))" 
+                  },
+                  { 
+                    id: "finetuning", 
+                    icon: Brain, 
+                    title: "3. Fine-tuning (Especialização)", 
+                    description: "Treinando o modelo em tarefas específicas.", 
+                    details: "O Fine-tuning ajusta um modelo de IA pré-treinado para uma tarefa ou estilo de linguagem muito específico, aumentando drasticamente sua performance e especialização.", 
+                    value: 3, 
+                    complexity: 3, 
+                    color: "hsl(var(--wine))" 
+                  },
+                  { 
+                    id: "agents", 
+                    icon: Brain, 
+                    title: "4. Multi-Agentes (Autonomia)", 
+                    description: "IAs que planejam e executam tarefas.", 
+                    details: "Este é o nível mais avançado, onde múltiplos 'Agentes' de IA colaboram, planejam e executam sequências de tarefas complexas de forma autônoma para atingir um objetivo.", 
+                    value: 4, 
+                    complexity: 4, 
+                    color: "hsl(var(--wine))" 
+                  }
+                ];
+
+                return (
+                  <>
+                    {/* Chart 2: GenAI */}
+                    <div className="mb-8 bg-card rounded-lg p-6 border">
+                      <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis 
+                            type="number" 
+                            dataKey="complexity" 
+                            name="Complexidade" 
+                            domain={[0, 5]}
+                            label={{ value: 'Complexidade', position: 'insideBottom', offset: -10 }}
+                          />
+                          <YAxis 
+                            type="number" 
+                            dataKey="value" 
+                            name="Valor" 
+                            domain={[0, 5]}
+                            label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
+                          />
+                          <RechartsTooltip cursor={{ strokeDasharray: '3 3' }} />
+                          <Scatter data={genAILevels} fill="hsl(var(--wine))">
+                            {genAILevels.map((entry, index) => (
+                              <Cell 
+                                key={`cell-${index}`} 
+                                fill={entry.color} 
+                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={() => setActiveGenAI(entry.id)}
+                              />
+                            ))}
+                          </Scatter>
+                        </ScatterChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    {/* Accordion 2: GenAI */}
+                    <Accordion 
+                      type="single" 
+                      collapsible 
+                      value={activeGenAI} 
+                      onValueChange={setActiveGenAI} 
+                      className="w-full"
+                    >
+                      {genAILevels.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <AccordionItem key={item.id} value={item.id}>
+                            <AccordionTrigger className="text-left hover:no-underline">
+                              <div className="flex items-center gap-4">
+                                <div className="p-2 rounded-lg" style={{ backgroundColor: item.color, opacity: 0.2 }}>
+                                  <Icon className="w-5 h-5" style={{ color: item.color }} />
+                                </div>
+                                <div className="flex-1">
+                                  <h4 className="font-bold text-lg">{item.title}</h4>
+                                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                                </div>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="pl-16 pr-4 pt-2">
+                                <p className="text-muted-foreground leading-relaxed">{item.details}</p>
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        );
+                      })}
+                    </Accordion>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
         </div>
       </div>
     </section>
