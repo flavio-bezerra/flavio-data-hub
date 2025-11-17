@@ -113,9 +113,9 @@ const WhatIsDataScience = () => {
             </h3>
 
             {/* Venn Diagram Container with Label */}
-            <div className="relative w-full max-w-4xl mx-auto mb-16 flex items-center justify-center px-4">
+            <div className="relative w-full max-w-4xl mx-auto mb-16 flex items-center justify-center px-2 sm:px-4">
               {/* Diagram */}
-              <div className="relative w-full max-w-2xl flex items-center justify-center" style={{ minHeight: '300px', height: 'clamp(300px, 50vw, 450px)' }}>
+              <div className="relative w-full max-w-2xl flex items-center justify-center" style={{ minHeight: '250px', height: 'clamp(250px, 45vw, 450px)' }}>
                 {/* SVG Pattern for Hatching */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 20 }}>
                   <defs>
@@ -127,7 +127,7 @@ const WhatIsDataScience = () => {
                   <circle 
                     cx="50%" 
                     cy="56%" 
-                    r="clamp(20, 6vw, 30)" 
+                    r="clamp(15, 5vw, 30)" 
                     fill="url(#hatch)"
                     className={`transition-all duration-300 cursor-pointer pointer-events-auto ${
                       circlesVisible.length >= 3 ? "opacity-100" : "opacity-0"
@@ -139,49 +139,54 @@ const WhatIsDataScience = () => {
 
                 {/* Programming Circle - Top */}
                 <div 
-                  className={`absolute top-0 left-1/2 -translate-x-1/2 rounded-full bg-primary/30 border-2 sm:border-4 border-primary flex items-start justify-center pt-4 sm:pt-6 md:pt-8 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute top-0 left-1/2 -translate-x-1/2 rounded-full bg-primary/30 border-2 sm:border-3 md:border-4 border-primary flex items-start justify-center transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30" : "hover:scale-105"}`}
                   style={{ 
-                    width: 'clamp(180px, 40vw, 288px)',
-                    height: 'clamp(180px, 40vw, 288px)'
+                    width: 'clamp(140px, 37vw, 288px)',
+                    height: 'clamp(140px, 37vw, 288px)',
+                    paddingTop: 'clamp(12px, 3vw, 32px)'
                   }}
                   onMouseEnter={() => setHoveredPillar(0)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-primary font-bold text-sm sm:text-base md:text-lg lg:text-xl pointer-events-none">Programação</span>
+                  <span className="text-primary font-bold text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl pointer-events-none">Programação</span>
                 </div>
                 
                 {/* Statistics Circle - Bottom Left */}
                 <div 
-                  className={`absolute bottom-0 rounded-full bg-gold/30 border-2 sm:border-4 border-gold flex items-end justify-start pb-4 sm:pb-6 md:pb-8 pl-6 sm:pl-8 md:pl-12 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute bottom-0 rounded-full bg-gold/30 border-2 sm:border-3 md:border-4 border-gold flex items-end justify-start transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30" : "hover:scale-105"}`}
                   style={{ 
-                    width: 'clamp(180px, 40vw, 288px)',
-                    height: 'clamp(180px, 40vw, 288px)',
-                    left: 'clamp(5%, 15%, 15%)'
+                    width: 'clamp(140px, 37vw, 288px)',
+                    height: 'clamp(140px, 37vw, 288px)',
+                    left: 'clamp(2%, 10%, 15%)',
+                    paddingBottom: 'clamp(12px, 3vw, 32px)',
+                    paddingLeft: 'clamp(16px, 4vw, 48px)'
                   }}
                   onMouseEnter={() => setHoveredPillar(1)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-gold font-bold text-sm sm:text-base md:text-lg lg:text-xl pointer-events-none">Estatística</span>
+                  <span className="text-gold font-bold text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl pointer-events-none">Estatística</span>
                 </div>
                 
                 {/* Business Circle - Bottom Right */}
                 <div 
-                  className={`absolute bottom-0 rounded-full bg-wine/30 border-2 sm:border-4 border-wine flex items-end justify-end pb-4 sm:pb-6 md:pb-8 pr-6 sm:pr-8 md:pr-12 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute bottom-0 rounded-full bg-wine/30 border-2 sm:border-3 md:border-4 border-wine flex items-end justify-end transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30" : "hover:scale-105"}`}
                   style={{ 
-                    width: 'clamp(180px, 40vw, 288px)',
-                    height: 'clamp(180px, 40vw, 288px)',
-                    right: 'clamp(5%, 15%, 15%)'
+                    width: 'clamp(140px, 37vw, 288px)',
+                    height: 'clamp(140px, 37vw, 288px)',
+                    right: 'clamp(2%, 10%, 15%)',
+                    paddingBottom: 'clamp(12px, 3vw, 32px)',
+                    paddingRight: 'clamp(16px, 4vw, 48px)'
                   }}
                   onMouseEnter={() => setHoveredPillar(2)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-wine font-bold text-sm sm:text-base md:text-lg lg:text-xl pointer-events-none">Negócio</span>
+                  <span className="text-wine font-bold text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl pointer-events-none">Negócio</span>
                 </div>
               </div>
             </div>
