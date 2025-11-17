@@ -145,7 +145,7 @@ const WhatIsDataScience = () => {
                   style={{ 
                     width: 'clamp(140px, 37vw, 288px)',
                     height: 'clamp(140px, 37vw, 288px)',
-                    paddingTop: 'clamp(12px, 3vw, 32px)'
+                    paddingTop: 'clamp(18px, 4.5vw, 42px)'
                   }}
                   onMouseEnter={() => setHoveredPillar(0)}
                   onMouseLeave={() => setHoveredPillar(null)}
@@ -162,8 +162,8 @@ const WhatIsDataScience = () => {
                     width: 'clamp(140px, 37vw, 288px)',
                     height: 'clamp(140px, 37vw, 288px)',
                     left: 'clamp(2%, 10%, 15%)',
-                    paddingBottom: 'clamp(12px, 3vw, 32px)',
-                    paddingLeft: 'clamp(16px, 4vw, 48px)'
+                    paddingBottom: 'clamp(18px, 4.5vw, 42px)',
+                    paddingLeft: 'clamp(20px, 5vw, 52px)'
                   }}
                   onMouseEnter={() => setHoveredPillar(1)}
                   onMouseLeave={() => setHoveredPillar(null)}
@@ -180,8 +180,8 @@ const WhatIsDataScience = () => {
                     width: 'clamp(140px, 37vw, 288px)',
                     height: 'clamp(140px, 37vw, 288px)',
                     right: 'clamp(2%, 10%, 15%)',
-                    paddingBottom: 'clamp(12px, 3vw, 32px)',
-                    paddingRight: 'clamp(16px, 4vw, 48px)'
+                    paddingBottom: 'clamp(18px, 4.5vw, 42px)',
+                    paddingRight: 'clamp(20px, 5vw, 52px)'
                   }}
                   onMouseEnter={() => setHoveredPillar(2)}
                   onMouseLeave={() => setHoveredPillar(null)}
