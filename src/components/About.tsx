@@ -59,6 +59,7 @@ const About = () => {
             <div className={`text-center pt-4 sm:pt-8 ${isVisible ? 'animate-scale-in stagger-3' : ''}`}>
               <p className="text-xl sm:text-2xl md:text-3xl font-script text-foreground p-4 sm:p-6 rounded-lg bg-gradient-to-r from-primary/10 to-gold/10 border border-primary/30 tech-glow">
                 Mais que dados, <span className="text-gold">estratégia</span>. 
+                <br />
                 Mais que insights, <span className="text-primary">resultados</span>.
               </p>
             </div>
