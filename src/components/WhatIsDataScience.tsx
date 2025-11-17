@@ -302,51 +302,25 @@ const WhatIsDataScience = () => {
                   <>
                     {/* Chart 1: Classic ML */}
                     <div className="mb-8 bg-card rounded-lg p-6 border">
-                      <h4 className="text-lg font-semibold mb-4 text-left">Jornada de Maturidade</h4>
+                      <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={300}>
-                        <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 80 }}>
+                        <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
                             name="Complexidade" 
                             domain={[0, 5]}
-                            ticks={[1, 2, 3, 4]}
-                            tickFormatter={(value) => {
-                              const level = classicMLLevels.find(l => l.complexity === value);
-                              return level ? level.title.split('(')[0].trim() : '';
-                            }}
-                            angle={-45}
-                            textAnchor="end"
-                            height={60}
+                            label={{ value: 'Complexidade', position: 'insideBottom', offset: -10 }}
                           />
                           <YAxis 
                             type="number" 
                             dataKey="value" 
                             name="Valor" 
                             domain={[0, 5]}
-                            ticks={[1, 2, 3, 4]}
-                            tickFormatter={(value) => {
-                              const level = classicMLLevels.find(l => l.value === value);
-                              return level ? level.title.split('(')[0].trim() : '';
-                            }}
-                            width={80}
+                            label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
                           />
-                          <RechartsTooltip 
-                            cursor={{ strokeDasharray: '3 3' }}
-                            content={({ active, payload }) => {
-                              if (active && payload && payload.length) {
-                                const data = payload[0].payload;
-                                return (
-                                  <div className="bg-card border rounded-lg p-3 shadow-lg">
-                                    <p className="font-bold text-sm mb-1">{data.title}</p>
-                                    <p className="text-xs text-muted-foreground">{data.description}</p>
-                                  </div>
-                                );
-                              }
-                              return null;
-                            }}
-                          />
+                          <RechartsTooltip cursor={{ strokeDasharray: '3 3' }} />
                           <Scatter data={classicMLLevels} fill="hsl(var(--primary))">
                             {classicMLLevels.map((entry, index) => (
                               <Cell 
@@ -452,51 +426,25 @@ const WhatIsDataScience = () => {
                   <>
                     {/* Chart 2: GenAI */}
                     <div className="mb-8 bg-card rounded-lg p-6 border">
-                      <h4 className="text-lg font-semibold mb-4 text-left">Jornada de Maturidade</h4>
+                      <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={300}>
-                        <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 80 }}>
+                        <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
                             name="Complexidade" 
                             domain={[0, 5]}
-                            ticks={[1, 2, 3, 4]}
-                            tickFormatter={(value) => {
-                              const level = genAILevels.find(l => l.complexity === value);
-                              return level ? level.title.split('(')[0].trim() : '';
-                            }}
-                            angle={-45}
-                            textAnchor="end"
-                            height={60}
+                            label={{ value: 'Complexidade', position: 'insideBottom', offset: -10 }}
                           />
                           <YAxis 
                             type="number" 
                             dataKey="value" 
                             name="Valor" 
                             domain={[0, 5]}
-                            ticks={[1, 2, 3, 4]}
-                            tickFormatter={(value) => {
-                              const level = genAILevels.find(l => l.value === value);
-                              return level ? level.title.split('(')[0].trim() : '';
-                            }}
-                            width={80}
+                            label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
                           />
-                          <RechartsTooltip 
-                            cursor={{ strokeDasharray: '3 3' }}
-                            content={({ active, payload }) => {
-                              if (active && payload && payload.length) {
-                                const data = payload[0].payload;
-                                return (
-                                  <div className="bg-card border rounded-lg p-3 shadow-lg">
-                                    <p className="font-bold text-sm mb-1">{data.title}</p>
-                                    <p className="text-xs text-muted-foreground">{data.description}</p>
-                                  </div>
-                                );
-                              }
-                              return null;
-                            }}
-                          />
+                          <RechartsTooltip cursor={{ strokeDasharray: '3 3' }} />
                           <Scatter data={genAILevels} fill="hsl(var(--wine))">
                             {genAILevels.map((entry, index) => (
                               <Cell 
