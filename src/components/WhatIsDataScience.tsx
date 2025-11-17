@@ -78,11 +78,100 @@ const WhatIsDataScience = () => {
             O que é Ciência de Dados?
           </h2>
           <p className="text-xl text-muted-foreground text-center leading-relaxed">
-            A ciência de dados combina <span className="text-primary font-semibold">estatística</span> e{" "}
-            <span className="text-primary font-semibold">ciência da computação</span>, 
-            utilizando o método científico e algoritmos para extrair insights e tomar decisões 
-            a partir de diversos tipos de dados, sejam eles estruturados ou não.
+            Em 2012, um artigo da <span className="font-semibold">Harvard Business Review</span> definiu o Cientista de Dados como{" "}
+            <span className="text-primary font-semibold">"O Trabalho Mais Sexy do Século XXI"</span>. 
+            Essa definição marcou um ponto de virada: ela posicionou a análise de dados como um pilar central da estratégia de negócio.
           </p>
+          <p className="text-xl text-muted-foreground text-center leading-relaxed mt-6">
+            O modelo conceitual que melhor define essa disciplina é um <span className="font-semibold">Diagrama de Venn</span> que 
+            a posiciona na interseção de três pilares fundamentais:
+          </p>
+        </div>
+
+        {/* Three Pillars Section */}
+        <div className="max-w-6xl mx-auto mb-16">
+          <div
+            className={`text-center mb-12 transition-all duration-1000 delay-300 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}
+          >
+            <h3 className="text-3xl md:text-4xl font-bold mb-12">
+              Os Três Pilares da Ciência de Dados
+            </h3>
+
+            {/* Venn Diagram */}
+            <div className="relative w-full max-w-2xl mx-auto h-96 mb-16">
+              {/* Programming Circle */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-primary/20 border-4 border-primary flex items-center justify-center">
+                <span className="text-primary font-bold text-lg">Programação</span>
+              </div>
+              
+              {/* Statistics Circle */}
+              <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-gold/20 border-4 border-gold flex items-center justify-center">
+                <span className="text-gold font-bold text-lg">Estatística</span>
+              </div>
+              
+              {/* Business Circle */}
+              <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-wine/20 border-4 border-wine flex items-center justify-center">
+                <span className="text-wine font-bold text-lg">Negócio</span>
+              </div>
+              
+              {/* Center - Data Science */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 flex items-center justify-center z-10">
+                <div className="text-center bg-background/90 rounded-full p-4 border-2 border-foreground">
+                  <span className="font-bold text-sm">Ciência de<br />Dados<br />(Valor)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Three Columns Explanation */}
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              {/* Programming */}
+              <div className="text-left">
+                <h4 className="text-2xl font-bold mb-4 text-primary">
+                  1. Programação<br />(O Motor)
+                </h4>
+                <p className="text-muted-foreground leading-relaxed">
+                  Também chamado de 'Hacking Skills', é o motor que nos permite coletar, processar e analisar bilhões 
+                  de informações em alta velocidade, tornando a análise em larga escala viável.
+                </p>
+              </div>
+
+              {/* Statistics */}
+              <div className="text-left">
+                <h4 className="text-2xl font-bold mb-4 text-gold">
+                  2. Estatística<br />(A Lógica)
+                </h4>
+                <p className="text-muted-foreground leading-relaxed">
+                  Este pilar é a lógica que valida a análise. Fornece os métodos rigorosos para encontrar padrões, 
+                  testar hipóteses e diferenciar um sinal verdadeiro de um ruído aleatório.
+                </p>
+              </div>
+
+              {/* Business */}
+              <div className="text-left">
+                <h4 className="text-2xl font-bold mb-4 text-wine">
+                  3. Negócio<br />(O Propósito)
+                </h4>
+                <p className="text-muted-foreground leading-relaxed">
+                  A 'Expertise Substantiva' é o que dá propósito a tudo. É o entendimento profundo dos objetivos 
+                  estratégicos da empresa e quais problemas realmente importam.
+                </p>
+              </div>
+            </div>
+
+            {/* Conclusion */}
+            <div className="max-w-3xl mx-auto text-center">
+              <h4 className="text-2xl font-bold mb-4">
+                A Interseção: Onde a Estratégia Nasce
+              </h4>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                "Meu trabalho como Especialista de Dados reside precisamente onde esses três pilares se encontram. 
+                O valor é gerado ao aplicar a lógica estatística e o motor computacional para resolver os problemas corretos, 
+                transformando dados brutos em resultados mensuráveis."
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Approach */}
