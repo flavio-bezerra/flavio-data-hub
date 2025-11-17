@@ -115,13 +115,13 @@ const Methodology = () => {
           <h3 className="text-3xl font-bold mb-4 text-primary">Por que Data Science é Diferente de Agile?</h3>
           <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
             <p>
-              Metodologias Ágeis (como o Scrum) são excelentes para **Desenvolvimento de Software**, onde o objetivo final é claro (ex: "construir um botão de login"). O risco é o *tempo*.
+              Metodologias Ágeis (como o Scrum) são excelentes para <strong>Desenvolvimento de Software</strong>, onde o objetivo final é claro (ex: "construir um botão de login"). O risco é o <em>tempo</em>.
             </p>
             <p>
-              **Data Science é Pesquisa & Descoberta.** Não sabemos a resposta (ou se ela existe nos dados) quando começamos. O risco é a *viabilidade*.
+              <strong>Data Science é Pesquisa & Descoberta.</strong> Não sabemos a resposta (ou se ela existe nos dados) quando começamos. O risco é a <em>viabilidade</em>.
             </p>
             <p className="text-foreground font-semibold">
-              Por isso, usamos o <span className="text-gold">CRISP-DM</span>: um processo padrão da indústria focado em mitigar o risco da descoberta. Ele é iterativo como o Agile, mas força o foco total no entendimento do negócio e dos dados *antes* de construir a solução.
+              Por isso, usamos o <span className="text-gold font-bold">CRISP-DM</span>: um processo padrão da indústria focado em mitigar o risco da descoberta. Ele é iterativo como o Agile, mas força o foco total no entendimento do negócio e dos dados <em>antes</em> de construir a solução.
             </p>
           </div>
         </div>
