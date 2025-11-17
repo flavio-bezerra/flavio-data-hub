@@ -42,7 +42,7 @@ const Contact = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className={`text-4xl md:text-5xl font-bold mb-8 gradient-text ${isVisible ? 'animate-fade-in' : ''}`}>
+          <h2 className={`text-4xl md:text-5xl font-bold mb-8 gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
             Vamos nos Conectar?
           </h2>
           <p className={`text-xl text-muted-foreground mb-10 ${isVisible ? 'animate-fade-in stagger-1' : ''}`}>
