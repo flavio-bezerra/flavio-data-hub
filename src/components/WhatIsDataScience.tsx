@@ -111,7 +111,7 @@ const WhatIsDataScience = () => {
                     </pattern>
                   </defs>
                   {/* Central intersection circle with hatching */}
-                  <circle cx="50%" cy="50%" r="60" fill="url(#hatch)" />
+                  <circle cx="50%" cy="50%" r="30" fill="url(#hatch)" />
                 </svg>
 
                 {/* Programming Circle - Top */}
