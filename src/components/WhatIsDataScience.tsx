@@ -427,7 +427,7 @@ const WhatIsDataScience = () => {
                     details: "A Engenharia de Prompt é a prática de desenhar, testar e otimizar as instruções (prompts) dadas a um Modelo de Linguagem de Larga Escala (LLM) para obter as respostas mais precisas, relevantes e úteis. É uma habilidade fundamental que envolve não apenas fazer a pergunta certa, mas também fornecer contexto suficiente, exemplos (técnica conhecida como few-shot learning) e restrições claras para guiar o modelo a executar tarefas complexas com alta qualidade, desde resumir textos até gerar código.", 
                     value: 1, 
                     complexity: 1, 
-                    color: "hsl(var(--wine))" 
+                    color: "hsl(var(--wine-light))" 
                   },
                   { 
                     id: "rag", 
@@ -437,7 +437,7 @@ const WhatIsDataScience = () => {
                     details: "O RAG (Retrieval-Augmented Generation) é uma técnica que potencializa um LLM ao conectá-lo a uma base de conhecimento externa, como documentos privados da empresa, e-mails ou um banco de dados. Em vez de depender apenas do conhecimento estático com o qual foi treinado, o modelo primeiro \"busca\" (retrieve) informações relevantes dessa fonte de dados externa e, em seguida, usa esses dados \"aumentados\" como contexto para gerar uma resposta precisa, atualizada e baseada em informações privadas que o modelo originalmente desconhecia.", 
                     value: 2, 
                     complexity: 2, 
-                    color: "hsl(var(--wine))" 
+                    color: "hsl(var(--wine-medium))" 
                   },
                   { 
                     id: "finetuning", 
@@ -447,7 +447,7 @@ const WhatIsDataScience = () => {
                     details: "O Fine-tuning (Ajuste Fino ou Especialização) é o processo de continuar o treinamento de um LLM pré-treinado, mas agora com um conjunto de dados menor e específico de um domínio ou tarefa. Diferente do RAG, que injeta conhecimento no prompt, o fine-tuning modifica os \"pesos\" internos do próprio modelo. Isso o torna um especialista em um estilo de linguagem particular (como o tom de voz de uma marca), em um formato de dados específico (como laudos médicos) ou em uma tarefa muito nichada, melhorando drasticamente seu desempenho e comportamento naquela área.", 
                     value: 3, 
                     complexity: 3, 
-                    color: "hsl(var(--wine))" 
+                    color: "hsl(var(--wine-dark))" 
                   },
                   { 
                     id: "agents", 
@@ -457,7 +457,7 @@ const WhatIsDataScience = () => {
                     details: "Os sistemas Multi-Agentes representam um nível avançado de autonomia, onde múltiplas \"IAs\" (agentes), cada uma muitas vezes impulsionada por um LLM, colaboram para resolver um problema complexo que seria difícil para um único modelo. Um agente \"planejador\" pode quebrar uma tarefa grande (ex: \"analisar concorrentes e criar um plano de marketing\") em subtarefas, que são então delegadas e executadas por agentes \"especialistas\" (ex: um agente de pesquisa, um agente redator, um agente analista), que trabalham de forma coordenada para entregar um resultado final completo.", 
                     value: 4, 
                     complexity: 4, 
-                    color: "hsl(var(--wine))" 
+                    color: "hsl(var(--wine-deeper))" 
                   }
                 ];
 
