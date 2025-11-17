@@ -103,6 +103,17 @@ const WhatIsDataScience = () => {
             <div className="relative w-full max-w-4xl mx-auto h-[450px] mb-16 flex items-center justify-center">
               {/* Diagram */}
               <div className="relative w-full max-w-2xl h-[450px] flex items-center justify-center">
+                {/* SVG Pattern for Hatching */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}>
+                  <defs>
+                    <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                      <line x1="0" y1="0" x2="0" y2="8" stroke="white" strokeWidth="2" opacity="0.6" />
+                    </pattern>
+                  </defs>
+                  {/* Central intersection circle with hatching */}
+                  <circle cx="50%" cy="50%" r="60" fill="url(#hatch)" />
+                </svg>
+
                 {/* Programming Circle - Top */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8">
                   <span className="text-primary font-bold text-xl">Programação</span>
