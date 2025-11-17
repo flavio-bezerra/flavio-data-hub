@@ -245,36 +245,62 @@ const Methodology = () => {
 
                     {/* Seta de retorno da Avaliação (5) para Entendimento do Negócio (1) */}
                     {index === 4 && (
-                      <div className="absolute -right-20 top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center">
-                        <div className="flex flex-col items-center">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div 
-                              className="px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap"
-                              style={{
-                                backgroundColor: `hsl(var(--gold) / 0.2)`,
-                                color: `hsl(var(--gold))`
-                              }}
-                            >
-                              Iteração
-                            </div>
-                          </div>
-                          <ArrowUp 
-                            className="w-6 h-6 animate-bounce" 
+                      <div className="absolute left-full top-0 ml-8 hidden xl:block">
+                        {/* Linha Horizontal */}
+                        <div 
+                          className="absolute top-8 left-0 w-12 h-0.5"
+                          style={{
+                            backgroundColor: `hsl(var(--gold))`
+                          }}
+                        />
+                        
+                        {/* Linha Vertical */}
+                        <div 
+                          className="absolute top-8 left-12 w-0.5"
+                          style={{
+                            height: 'calc(-780px)',
+                            backgroundColor: `hsl(var(--gold))`
+                          }}
+                        />
+                        
+                        {/* Linha Horizontal de Volta */}
+                        <div 
+                          className="absolute left-0 w-12 h-0.5"
+                          style={{
+                            top: 'calc(-772px)',
+                            backgroundColor: `hsl(var(--gold))`
+                          }}
+                        />
+                        
+                        {/* Seta Apontando para Baixo (na etapa 1) */}
+                        <div 
+                          className="absolute"
+                          style={{
+                            top: 'calc(-772px)',
+                            left: '-4px'
+                          }}
+                        >
+                          <ArrowDown 
+                            className="w-5 h-5 animate-bounce" 
                             style={{ color: `hsl(var(--gold))` }}
                           />
-                          <div 
-                            className="w-0.5 h-[780px]"
-                            style={{
-                              background: `linear-gradient(to bottom, hsl(var(--gold)), transparent)`
-                            }}
-                          />
                         </div>
-                        <p 
-                          className="text-xs font-semibold -rotate-90 whitespace-nowrap mt-96 ml-12"
-                          style={{ color: `hsl(var(--gold))` }}
+                        
+                        {/* Label */}
+                        <div 
+                          className="absolute top-1/2 left-16 -translate-y-1/2"
                         >
-                          Se métricas não forem boas
-                        </p>
+                          <div 
+                            className="px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap shadow-lg"
+                            style={{
+                              backgroundColor: `hsl(var(--gold) / 0.2)`,
+                              color: `hsl(var(--gold))`,
+                              border: `2px solid hsl(var(--gold))`
+                            }}
+                          >
+                            ⚠️ Se métricas não<br/>forem satisfatórias
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>
