@@ -118,7 +118,7 @@ const WhatIsDataScience = () => {
               
               {/* Center Text - Data Science in the intersection */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-center">
-                <span className="font-bold text-lg text-foreground bg-background/80 px-4 py-2 rounded-lg border-2 border-foreground shadow-lg">
+                <span className="font-bold text-xl text-foreground">
                   Ciência de Dados<br />(Valor)
                 </span>
               </div>
