@@ -309,12 +309,13 @@ const WhatIsDataScience = () => {
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={300}>
                         <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                          <CartesianGrid strokeDasharray="3 3" />
+                          <CartesianGrid strokeDasharray="0" />
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
                             name="Complexidade" 
                             domain={[0, 5]}
+                            ticks={[1, 2, 3, 4]}
                             label={{ value: 'Complexidade', position: 'insideBottom', offset: -10 }}
                           />
                           <YAxis 
@@ -322,6 +323,7 @@ const WhatIsDataScience = () => {
                             dataKey="value" 
                             name="Valor" 
                             domain={[0, 5]}
+                            ticks={[1, 2, 3, 4]}
                             label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
                           />
                           <RechartsTooltip 
@@ -344,7 +346,7 @@ const WhatIsDataScience = () => {
                               <Cell 
                                 key={`cell-${index}`} 
                                 fill={entry.color}
-                                radius={activeClassic === entry.id ? 18 : 10}
+                                radius={activeClassic === entry.id ? 180 : 100}
                                 opacity={activeClassic === entry.id ? 1 : 0.5}
                                 className="cursor-pointer transition-all duration-300"
                                 onClick={() => setActiveClassic(entry.id)}
@@ -446,12 +448,13 @@ const WhatIsDataScience = () => {
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={300}>
                         <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                          <CartesianGrid strokeDasharray="3 3" />
+                          <CartesianGrid strokeDasharray="0" />
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
                             name="Complexidade" 
                             domain={[0, 5]}
+                            ticks={[1, 2, 3, 4]}
                             label={{ value: 'Complexidade', position: 'insideBottom', offset: -10 }}
                           />
                           <YAxis 
@@ -459,6 +462,7 @@ const WhatIsDataScience = () => {
                             dataKey="value" 
                             name="Valor" 
                             domain={[0, 5]}
+                            ticks={[1, 2, 3, 4]}
                             label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
                           />
                           <RechartsTooltip 
@@ -481,7 +485,7 @@ const WhatIsDataScience = () => {
                               <Cell 
                                 key={`cell-${index}`} 
                                 fill={entry.color}
-                                radius={activeGenAI === entry.id ? 18 : 10}
+                                radius={activeGenAI === entry.id ? 180 : 100}
                                 opacity={activeGenAI === entry.id ? 1 : 0.5}
                                 className="cursor-pointer transition-all duration-300"
                                 onClick={() => setActiveGenAI(entry.id)}
