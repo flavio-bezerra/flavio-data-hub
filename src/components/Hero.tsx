@@ -35,19 +35,19 @@ const Hero = () => {
           {/* Profile Image */}
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-primary to-gold rounded-full blur-lg opacity-75 group-hover:opacity-100 transition duration-500"></div>
-            <img src={profileImage} alt="Flávio Bezerra" className="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-background shadow-2xl" />
+            <img src={profileImage} alt="Flávio Bezerra" className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full object-cover border-4 border-background shadow-2xl" />
           </div>
 
           {/* Name */}
-          <div className="space-y-4">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground">
+          <div className="space-y-4 px-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground break-words">
               Flávio Menegueço Bezerra
             </h1>
           </div>
 
           {/* Tagline */}
-          <div className="min-h-[4rem] flex items-center animate-fade-in animation-delay-500">
-            <p className="text-3xl md:text-4xl lg:text-5xl font-script text-foreground">
+          <div className="min-h-[4rem] flex items-center animate-fade-in animation-delay-500 px-4">
+            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-script text-foreground">
               {highlightWords(fullText)}
               
             </p>

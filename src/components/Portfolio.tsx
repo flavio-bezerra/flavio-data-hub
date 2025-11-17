@@ -57,50 +57,50 @@ const Portfolio = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center gradient-text animate-fade-in leading-tight pb-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center gradient-text animate-fade-in leading-tight pb-2">
             Projetos e Artigos
           </h2>
 
-          <Card className={`p-8 mb-12 bg-card/50 backdrop-blur-sm border-primary/20 hover-lift ${isVisible ? 'animate-scale-in' : ''}`}>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6 animate-fade-in">
+          <Card className={`p-4 sm:p-6 md:p-8 mb-12 bg-card/50 backdrop-blur-sm border-primary/20 hover-lift ${isVisible ? 'animate-scale-in' : ''}`}>
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 animate-fade-in">
               Esta é a seção onde a teoria encontra a prática. Mais do que apenas listar tecnologias, 
               acredito em demonstrar valor real. Meu trabalho se concentra em transformar desafios de 
               negócio complexos em soluções de dados funcionais.
             </p>
             
-            <p className="text-lg font-semibold text-foreground mb-8 animate-fade-in stagger-1">
+            <p className="text-base sm:text-lg font-semibold text-foreground mb-6 sm:mb-8 animate-fade-in stagger-1">
               Convido você a explorar os projetos, códigos e artigos onde detalho essas implementações.
             </p>
 
             {/* Expertise Topics */}
-            <div className="space-y-6 mb-8">
+            <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
               {expertise.map((item, index) => (
                 <div
                   key={index}
-                  className={`p-6 rounded-lg bg-gradient-to-r from-card to-card/50 border border-primary/10 hover:border-primary/30 hover-lift transition-all duration-500 ${
+                  className={`p-4 sm:p-6 rounded-lg bg-gradient-to-r from-card to-card/50 border border-primary/10 hover:border-primary/30 hover-lift transition-all duration-500 ${
                     isVisible ? 'animate-fade-in-left' : 'opacity-0'
                   }`}
                   style={{ transitionDelay: `${(index + 2) * 150}ms` }}
                 >
-                  <h3 className="text-lg font-bold text-primary mb-3 flex items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-bold text-primary mb-2 sm:mb-3 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-primary animate-glow-pulse"></span>
-                    {item.title}
+                    <span className="break-words">{item.title}</span>
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{item.description}</p>
                 </div>
               ))}
             </div>
 
-            <p className={`text-lg font-semibold text-foreground text-center py-4 ${isVisible ? 'animate-fade-in stagger-5' : ''}`}>
+            <p className={`text-base sm:text-lg font-semibold text-foreground text-center py-4 ${isVisible ? 'animate-fade-in stagger-5' : ''}`}>
               Veja como esses conceitos são aplicados na prática:
             </p>
           </Card>
 
           {/* CTA Buttons */}
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <Button
               size="lg"
-              className={`w-full h-auto py-6 bg-primary hover:bg-primary/90 transform hover:scale-110 transition-all duration-300 tech-glow hover:shadow-2xl group ${
+              className={`w-full h-auto py-4 sm:py-6 bg-primary hover:bg-primary/90 transform hover:scale-110 transition-all duration-300 tech-glow hover:shadow-2xl group ${
                 isVisible ? 'animate-fade-in stagger-3' : ''
               }`}
               asChild
@@ -111,9 +111,9 @@ const Portfolio = () => {
                 rel="noopener noreferrer"
                 className="flex flex-col items-center gap-2"
               >
-                <Linkedin className="h-8 w-8 group-hover:animate-float" />
+                <Linkedin className="h-6 w-6 sm:h-8 sm:w-8 group-hover:animate-float" />
                 <div className="text-center">
-                  <div className="font-bold">LinkedIn</div>
+                  <div className="font-bold text-sm sm:text-base">LinkedIn</div>
                   <div className="text-xs opacity-90">Ver Resumo dos Projetos</div>
                 </div>
               </a>
@@ -122,7 +122,7 @@ const Portfolio = () => {
             <Button
               size="lg"
               variant="outline"
-              className={`w-full h-auto py-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-110 transition-all duration-300 hover:shadow-2xl group ${
+              className={`w-full h-auto py-4 sm:py-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-110 transition-all duration-300 hover:shadow-2xl group ${
                 isVisible ? 'animate-fade-in stagger-4' : ''
               }`}
               asChild
@@ -133,9 +133,9 @@ const Portfolio = () => {
                 rel="noopener noreferrer"
                 className="flex flex-col items-center gap-2"
               >
-                <Github className="h-8 w-8 group-hover:animate-float" />
+                <Github className="h-6 w-6 sm:h-8 sm:w-8 group-hover:animate-float" />
                 <div className="text-center">
-                  <div className="font-bold">GitHub</div>
+                  <div className="font-bold text-sm sm:text-base">GitHub</div>
                   <div className="text-xs opacity-90">Ver Códigos</div>
                 </div>
               </a>
@@ -144,7 +144,7 @@ const Portfolio = () => {
             <Button
               size="lg"
               variant="outline"
-              className={`w-full h-auto py-6 border-gold text-gold hover:bg-gold hover:text-background transform hover:scale-110 transition-all duration-300 tech-glow-gold hover:shadow-2xl group ${
+              className={`w-full h-auto py-4 sm:py-6 border-gold text-gold hover:bg-gold hover:text-background transform hover:scale-110 transition-all duration-300 tech-glow-gold hover:shadow-2xl group sm:col-span-2 md:col-span-1 ${
                 isVisible ? 'animate-fade-in stagger-5' : ''
               }`}
               asChild
@@ -155,9 +155,9 @@ const Portfolio = () => {
                 rel="noopener noreferrer"
                 className="flex flex-col items-center gap-2"
               >
-                <BookOpen className="h-8 w-8 group-hover:animate-float" />
+                <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 group-hover:animate-float" />
                 <div className="text-center">
-                  <div className="font-bold">Medium</div>
+                  <div className="font-bold text-sm sm:text-base">Medium</div>
                   <div className="text-xs opacity-90">Ler Artigos</div>
                 </div>
               </a>

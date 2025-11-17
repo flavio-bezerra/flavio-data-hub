@@ -87,15 +87,15 @@ const WhatIsDataScience = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className={`text-4xl md:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
+          <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
             O que é Ciência de Dados?
           </h2>
-          <p className="text-xl text-muted-foreground text-center leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed">
             Em 2012, um artigo da <span className="font-semibold">Harvard Business Review</span> definiu o Cientista de Dados como{" "}
             <span className="text-primary font-semibold">"O Trabalho Mais Sexy do Século XXI"</span>. 
             Essa definição marcou um ponto de virada: ela posicionou a análise de dados como um pilar central da estratégia de negócio.
           </p>
-          <p className="text-xl text-muted-foreground text-center leading-relaxed mt-6">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed mt-4 sm:mt-6">
             O modelo conceitual que melhor define essa disciplina é um <span className="font-semibold">Diagrama de Venn</span> que 
             a posiciona na interseção de três pilares fundamentais:
           </p>
@@ -108,14 +108,14 @@ const WhatIsDataScience = () => {
               diagramVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            <h3 className="text-3xl md:text-4xl font-bold mb-12">
+            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 px-4">
               Os Três Pilares da Ciência de Dados
             </h3>
 
             {/* Venn Diagram Container with Label */}
-            <div className="relative w-full max-w-4xl mx-auto h-[450px] mb-16 flex items-center justify-center">
+            <div className="relative w-full max-w-4xl mx-auto mb-16 flex items-center justify-center px-4">
               {/* Diagram */}
-              <div className="relative w-full max-w-2xl h-[450px] flex items-center justify-center">
+              <div className="relative w-full max-w-2xl flex items-center justify-center" style={{ minHeight: '300px', height: 'clamp(300px, 50vw, 450px)' }}>
                 {/* SVG Pattern for Hatching */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 20 }}>
                   <defs>
@@ -127,7 +127,7 @@ const WhatIsDataScience = () => {
                   <circle 
                     cx="50%" 
                     cy="56%" 
-                    r="30" 
+                    r="clamp(20, 6vw, 30)" 
                     fill="url(#hatch)"
                     className={`transition-all duration-300 cursor-pointer pointer-events-auto ${
                       circlesVisible.length >= 3 ? "opacity-100" : "opacity-0"
@@ -139,75 +139,89 @@ const WhatIsDataScience = () => {
 
                 {/* Programming Circle - Top */}
                 <div 
-                  className={`absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute top-0 left-1/2 -translate-x-1/2 rounded-full bg-primary/30 border-2 sm:border-4 border-primary flex items-start justify-center pt-4 sm:pt-6 md:pt-8 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30" : "hover:scale-105"}`}
+                  style={{ 
+                    width: 'clamp(180px, 40vw, 288px)',
+                    height: 'clamp(180px, 40vw, 288px)'
+                  }}
                   onMouseEnter={() => setHoveredPillar(0)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-primary font-bold text-xl pointer-events-none">Programação</span>
+                  <span className="text-primary font-bold text-sm sm:text-base md:text-lg lg:text-xl pointer-events-none">Programação</span>
                 </div>
                 
                 {/* Statistics Circle - Bottom Left */}
                 <div 
-                  className={`absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute bottom-0 rounded-full bg-gold/30 border-2 sm:border-4 border-gold flex items-end justify-start pb-4 sm:pb-6 md:pb-8 pl-6 sm:pl-8 md:pl-12 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30" : "hover:scale-105"}`}
+                  style={{ 
+                    width: 'clamp(180px, 40vw, 288px)',
+                    height: 'clamp(180px, 40vw, 288px)',
+                    left: 'clamp(5%, 15%, 15%)'
+                  }}
                   onMouseEnter={() => setHoveredPillar(1)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-gold font-bold text-xl pointer-events-none">Estatística</span>
+                  <span className="text-gold font-bold text-sm sm:text-base md:text-lg lg:text-xl pointer-events-none">Estatística</span>
                 </div>
                 
                 {/* Business Circle - Bottom Right */}
                 <div 
-                  className={`absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute bottom-0 rounded-full bg-wine/30 border-2 sm:border-4 border-wine flex items-end justify-end pb-4 sm:pb-6 md:pb-8 pr-6 sm:pr-8 md:pr-12 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30" : "hover:scale-105"}`}
+                  style={{ 
+                    width: 'clamp(180px, 40vw, 288px)',
+                    height: 'clamp(180px, 40vw, 288px)',
+                    right: 'clamp(5%, 15%, 15%)'
+                  }}
                   onMouseEnter={() => setHoveredPillar(2)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-wine font-bold text-xl pointer-events-none">Negócio</span>
+                  <span className="text-wine font-bold text-sm sm:text-base md:text-lg lg:text-xl pointer-events-none">Negócio</span>
                 </div>
               </div>
             </div>
 
             {/* Three Columns Explanation */}
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12 px-4">
               {/* Programming */}
-              <div className={`text-left transition-all duration-300 ${
+              <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
                 columnsVisible.includes(0) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 0 ? "scale-105 ring-2 ring-primary rounded-lg p-4 -m-4 bg-primary/5" : ""}`}>
-                <h4 className="text-2xl font-bold mb-4 text-primary">
+              } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 0 ? "scale-105 ring-2 ring-primary bg-primary/5" : "bg-card/30"}`}>
+                <h4 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">
                   1. Programação<br />(O Motor)
                 </h4>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   Também chamado de 'Hacking Skills', é o motor que nos permite coletar, processar e analisar bilhões 
                   de informações em alta velocidade, tornando a análise em larga escala viável.
                 </p>
               </div>
 
               {/* Statistics */}
-              <div className={`text-left transition-all duration-300 ${
+              <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
                 columnsVisible.includes(1) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 1 ? "scale-105 ring-2 ring-gold rounded-lg p-4 -m-4 bg-gold/5" : ""}`}>
-                <h4 className="text-2xl font-bold mb-4 text-gold">
+              } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 1 ? "scale-105 ring-2 ring-gold bg-gold/5" : "bg-card/30"}`}>
+                <h4 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gold">
                   2. Estatística<br />(A Lógica)
                 </h4>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   Este pilar é a lógica que valida a análise. Fornece os métodos rigorosos para encontrar padrões, 
                   testar hipóteses e diferenciar um sinal verdadeiro de um ruído aleatório.
                 </p>
               </div>
 
               {/* Business */}
-              <div className={`text-left transition-all duration-300 ${
+              <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
                 columnsVisible.includes(2) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 2 ? "scale-105 ring-2 ring-wine rounded-lg p-4 -m-4 bg-wine/5" : ""}`}>
-                <h4 className="text-2xl font-bold mb-4 text-wine">
+              } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 2 ? "scale-105 ring-2 ring-wine bg-wine/5" : "bg-card/30"}`}>
+                <h4 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-wine">
                   3. Negócio<br />(O Propósito)
                 </h4>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   A 'Expertise Substantiva' é o que dá propósito a tudo. É o entendimento profundo dos objetivos 
                   estratégicos da empresa e quais problemas realmente importam.
                 </p>
