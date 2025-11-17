@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Briefcase, Database, Filter, BrainCircuit, CheckCheck, Rocket, ArrowDown } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Briefcase, Database, Filter, BrainCircuit, CheckCheck, Rocket, ArrowDown, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Dados para as 6 etapas do CRISP-DM
@@ -87,188 +88,197 @@ const Methodology = () => {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="metodologia"
-      className="py-20 bg-gradient-to-b from-background to-background/50"
-    >
+    <section ref={sectionRef} className="py-20 bg-secondary/50">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto space-y-12">
-          
-          {/* Título Principal da Seção */}
-          <div className={cn(
-            "text-center space-y-4 transition-all duration-1000",
+        
+        {/* Título da Seção */}
+        <div
+          className={`max-w-4xl mx-auto mb-12 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          )}>
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-gold to-wine bg-clip-text text-transparent">
-              Metodologia CRISP-DM
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              O padrão da indústria para projetos de Ciência de Dados
+          }`}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">
+            Minha Metodologia de Projeto
+          </h2>
+          <p className="text-xl text-muted-foreground text-center leading-relaxed">
+            Um bom resultado não vem do acaso. Ele é fruto de um processo estruturado, 
+            iterativo e focado no problema de negócio.
+          </p>
+        </div>
+
+        {/* Bloco 1: CRISP-DM vs. Agile */}
+        <div 
+          className={`max-w-6xl mx-auto mb-16 p-8 bg-card rounded-lg border border-border shadow-lg transition-all duration-1000 delay-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
+          <h3 className="text-3xl font-bold mb-4 text-primary">Por que Data Science é Diferente de Agile?</h3>
+          <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
+            <p>
+              Metodologias Ágeis (como o Scrum) são excelentes para **Desenvolvimento de Software**, onde o objetivo final é claro (ex: "construir um botão de login"). O risco é o *tempo*.
+            </p>
+            <p>
+              **Data Science é Pesquisa & Descoberta.** Não sabemos a resposta (ou se ela existe nos dados) quando começamos. O risco é a *viabilidade*.
+            </p>
+            <p className="text-foreground font-semibold">
+              Por isso, usamos o <span className="text-gold">CRISP-DM</span>: um processo padrão da indústria focado em mitigar o risco da descoberta. Ele é iterativo como o Agile, mas força o foco total no entendimento do negócio e dos dados *antes* de construir a solução.
             </p>
           </div>
+        </div>
 
-          {/* Explicação: Por que não Agile? */}
-          <div className={cn(
-            "bg-muted/30 rounded-xl p-8 border border-border/50 transition-all duration-1000 delay-200",
+        {/* Bloco 2: O Ciclo Interativo */}
+        <div 
+          className={`max-w-6xl mx-auto transition-all duration-1000 delay-500 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          )}>
-            <div className="flex items-start gap-4">
-              <div className="shrink-0 w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
-                <BrainCircuit className="w-6 h-6 text-primary" />
-              </div>
-              <div className="space-y-3">
-                <h3 className="text-2xl font-bold">Por que Ciência de Dados não usa Agile?</h3>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Projetos de Ciência de Dados são <span className="font-semibold text-foreground">exploratórios</span> e <span className="font-semibold text-foreground">experimentais</span>. 
-                  Você não sabe se os dados vão "funcionar" ou se o modelo será bom o suficiente até tentar. 
-                  Por isso, usamos <span className="font-semibold text-primary">CRISP-DM</span> (Cross-Industry Standard Process for Data Mining), 
-                  uma metodologia <span className="font-semibold text-foreground">iterativa</span> e <span className="font-semibold text-foreground">adaptável</span>, 
-                  onde cada etapa pode exigir retornar à anterior (ex: modelo ruim → voltar aos dados).
-                </p>
-              </div>
-            </div>
-          </div>
+          }`}
+        >
+          <h3 className="text-3xl md:text-4xl font-bold mb-8 text-center">
+            As 6 Etapas do Ciclo CRISP-DM
+          </h3>
 
-          {/* Imagem do Ciclo CRISP-DM */}
-          <div className={cn(
-            "flex justify-center transition-all duration-1000 delay-300",
-            isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-          )}>
-            <div className="relative max-w-2xl w-full">
-              <img 
-                src="/src/assets/crisp-dm-cycle.png" 
-                alt="Diagrama do Ciclo CRISP-DM mostrando as 6 etapas: Business Understanding, Data Understanding, Data Preparation, Modeling, Evaluation e Deployment, conectadas em um fluxo circular iterativo" 
-                className="w-full h-auto rounded-lg shadow-xl border border-border/30"
-              />
-            </div>
-          </div>
-
-          {/* Descrição das 6 Etapas do CRISP-DM */}
-          <div 
-            className={cn(
-              "transition-all duration-1000 delay-500",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            )}
-          >
-            <h3 className="text-3xl md:text-4xl font-bold mb-8 text-center">
-              As 6 Etapas do Ciclo CRISP-DM
-            </h3>
-
-            {/* Fluxo Linear do Ciclo CRISP-DM */}
-            <div className="relative w-full max-w-4xl mx-auto mb-16">
-              <div className="relative">
-                {crispSteps.map((step, index) => {
-                  const Icon = step.icon;
-                  const isActive = activeCrispStep === index;
-                  
-                  return (
-                    <div key={step.id} className="relative">
-                      {/* Card da Etapa - Clicável e Expansível */}
-                      <div
-                        className={cn(
-                          "rounded-xl border-2 cursor-pointer transition-all duration-300 mb-4 overflow-hidden",
-                          isActive 
-                            ? "shadow-lg" 
-                            : "hover:shadow-md"
-                        )}
-                        style={{
-                          borderColor: isActive 
-                            ? `hsl(var(--${step.color}))` 
-                            : `hsl(var(--border))`,
-                          backgroundColor: isActive 
-                            ? `hsl(var(--${step.color}) / 0.05)` 
-                            : `hsl(var(--background))`
-                        }}
+          {/* Fluxo Linear do Ciclo CRISP-DM */}
+          <div className="relative w-full max-w-4xl mx-auto mb-16">
+            {/* Grid de Etapas */}
+            <div className="relative">
+              {crispSteps.map((step, index) => {
+                const Icon = step.icon;
+                const isActive = activeCrispStep === index;
+                
+                return (
+                  <div key={step.id} className="relative">
+                    {/* Card da Etapa - Clicável e Expansível */}
+                    <div
+                      className={cn(
+                        "rounded-xl border-2 cursor-pointer transition-all duration-300 mb-4 overflow-hidden",
+                        isActive 
+                          ? "shadow-lg" 
+                          : "hover:scale-[1.01]"
+                      )}
+                      style={{
+                        backgroundColor: isActive ? `hsl(var(--${step.color}) / 0.15)` : `hsl(var(--card) / 0.5)`,
+                        borderColor: isActive ? `hsl(var(--${step.color}))` : `hsl(var(--border) / 0.5)`,
+                        boxShadow: isActive ? `0 10px 30px -10px hsl(var(--${step.color}) / 0.3)` : undefined
+                      }}
+                    >
+                      {/* Header - Sempre Visível */}
+                      <div 
                         onClick={() => setActiveCrispStep(isActive ? -1 : index)}
+                        className="p-6"
                       >
-                        {/* Header do Card - Sempre Visível */}
-                        <div className="p-6">
-                          <div className="flex items-center gap-4">
-                            {/* Número e Ícone */}
-                            <div 
-                              className="flex items-center justify-center w-16 h-16 rounded-xl shrink-0 transition-all duration-300"
-                              style={{
-                                backgroundColor: `hsl(var(--${step.color}) / 0.2)`
-                              }}
-                            >
-                              <div className="relative">
-                                <span 
-                                  className="absolute -top-1 -right-1 text-xs font-bold"
-                                  style={{ color: `hsl(var(--${step.color}))` }}
-                                >
-                                  {step.number}
-                                </span>
-                                <Icon 
-                                  className="w-8 h-8" 
-                                  style={{ color: `hsl(var(--${step.color}))` }}
-                                />
-                              </div>
-                            </div>
-                            
-                            {/* Título */}
-                            <div className="flex-1">
-                              <h4 className="font-bold text-lg mb-1">{step.shortTitle}</h4>
-                              <p className="text-sm text-muted-foreground">
-                                {isActive ? "Clique para recolher" : "Clique para expandir"}
-                              </p>
-                            </div>
-
-                            {/* Indicador Ativo */}
-                            <div 
-                              className={cn(
-                                "w-3 h-3 rounded-full transition-all duration-300",
-                                isActive ? "animate-pulse" : "opacity-30"
-                              )}
-                              style={{ backgroundColor: `hsl(var(--${step.color}))` }}
-                            />
-                          </div>
-                        </div>
-
-                        {/* Conteúdo Expansível */}
-                        <div 
-                          className={cn(
-                            "overflow-hidden transition-all duration-300",
-                            isActive ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                          )}
-                        >
-                          <div className="px-6 pb-6 pt-0">
-                            <div 
-                              className="p-4 rounded-lg"
-                              style={{
-                                backgroundColor: `hsl(var(--${step.color}) / 0.1)`
-                              }}
-                            >
-                              <p className="text-lg text-foreground leading-relaxed">
-                                {step.details}
-                              </p>
+                        <div className="flex items-center gap-4">
+                          {/* Número e Ícone */}
+                          <div 
+                            className="flex items-center justify-center w-16 h-16 rounded-xl shrink-0 transition-all duration-300"
+                            style={{
+                              backgroundColor: `hsl(var(--${step.color}) / 0.2)`
+                            }}
+                          >
+                            <div className="relative">
+                              <span 
+                                className="absolute -top-1 -right-1 text-xs font-bold"
+                                style={{ color: `hsl(var(--${step.color}))` }}
+                              >
+                                {step.number}
+                              </span>
+                              <Icon 
+                                className="w-8 h-8" 
+                                style={{ color: `hsl(var(--${step.color}))` }}
+                              />
                             </div>
                           </div>
+                          
+                          {/* Título */}
+                          <div className="flex-1">
+                            <h4 className="font-bold text-lg mb-1">{step.shortTitle}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              {isActive ? "Clique para recolher" : "Clique para expandir"}
+                            </p>
+                          </div>
+
+                          {/* Indicador Ativo */}
+                          <div 
+                            className={cn(
+                              "w-3 h-3 rounded-full transition-all duration-300",
+                              isActive ? "animate-pulse" : "opacity-30"
+                            )}
+                            style={{ backgroundColor: `hsl(var(--${step.color}))` }}
+                          />
                         </div>
                       </div>
 
-                      {/* Seta para a próxima etapa */}
-                      {index < crispSteps.length - 1 && (
-                        <div className="flex justify-center my-2">
-                          <ArrowDown 
-                            className={cn(
-                              "w-6 h-6 transition-all duration-300",
-                              isActive ? "scale-125" : ""
-                            )}
-                            style={{ 
-                              color: isActive ? `hsl(var(--${step.color}))` : `hsl(var(--muted-foreground))` 
+                      {/* Conteúdo Expansível */}
+                      <div 
+                        className={cn(
+                          "overflow-hidden transition-all duration-300",
+                          isActive ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                        )}
+                      >
+                        <div className="px-6 pb-6 pt-0">
+                          <div 
+                            className="p-4 rounded-lg"
+                            style={{
+                              backgroundColor: `hsl(var(--${step.color}) / 0.1)`
+                            }}
+                          >
+                            <p className="text-lg text-foreground leading-relaxed">
+                              {step.details}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Seta para a próxima etapa */}
+                    {index < crispSteps.length - 1 && (
+                      <div className="flex justify-center my-2">
+                        <ArrowDown 
+                          className={cn(
+                            "w-6 h-6 transition-all duration-300",
+                            isActive ? "scale-125" : ""
+                          )}
+                          style={{ 
+                            color: isActive ? `hsl(var(--${step.color}))` : `hsl(var(--muted-foreground))` 
+                          }}
+                        />
+                      </div>
+                    )}
+
+                    {/* Seta de retorno da Avaliação (5) para Dados (2) */}
+                    {index === 4 && (
+                      <div className="absolute -right-20 top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center">
+                        <div className="flex flex-col items-center">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div 
+                              className="px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap"
+                              style={{
+                                backgroundColor: `hsl(var(--gold) / 0.2)`,
+                                color: `hsl(var(--gold))`
+                              }}
+                            >
+                              Iteração
+                            </div>
+                          </div>
+                          <ArrowUp 
+                            className="w-6 h-6 animate-bounce" 
+                            style={{ color: `hsl(var(--gold))` }}
+                          />
+                          <div 
+                            className="w-0.5 h-[380px]"
+                            style={{
+                              background: `linear-gradient(to bottom, hsl(var(--gold)), transparent)`
                             }}
                           />
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
         </div>
+
       </div>
     </section>
   );
