@@ -36,7 +36,11 @@ const analyticsLevels = [
 const WhatIsDataScience = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
+  const [diagramVisible, setDiagramVisible] = useState(false);
+  const [circlesVisible, setCirclesVisible] = useState<number[]>([]);
+  const [columnsVisible, setColumnsVisible] = useState<number[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const diagramRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -65,6 +69,39 @@ const WhatIsDataScience = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const diagramObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setDiagramVisible(true);
+          // Animate circles one by one
+          [0, 1, 2].forEach((index) => {
+            setTimeout(() => {
+              setCirclesVisible((prev) => [...prev, index]);
+            }, index * 300);
+          });
+          // Animate columns after circles
+          [0, 1, 2].forEach((index) => {
+            setTimeout(() => {
+              setColumnsVisible((prev) => [...prev, index]);
+            }, 1200 + index * 200);
+          });
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (diagramRef.current) {
+      diagramObserver.observe(diagramRef.current);
+    }
+
+    return () => {
+      if (diagramRef.current) {
+        diagramObserver.unobserve(diagramRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section ref={sectionRef} className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -89,10 +126,10 @@ const WhatIsDataScience = () => {
         </div>
 
         {/* Three Pillars Section */}
-        <div className="max-w-6xl mx-auto mb-16">
+        <div ref={diagramRef} className="max-w-6xl mx-auto mb-16">
           <div
-            className={`text-center mb-12 transition-all duration-1000 delay-300 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            className={`text-center mb-12 transition-all duration-1000 ${
+              diagramVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
             <h3 className="text-3xl md:text-4xl font-bold mb-12">
@@ -111,27 +148,43 @@ const WhatIsDataScience = () => {
                     </pattern>
                   </defs>
                   {/* Central intersection circle with hatching */}
-                  <circle cx="50%" cy="56%" r="30" fill="url(#hatch)" />
+                  <circle 
+                    cx="50%" 
+                    cy="56%" 
+                    r="30" 
+                    fill="url(#hatch)"
+                    className={`transition-opacity duration-1000 delay-[900ms] ${
+                      circlesVisible.length >= 3 ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
                 </svg>
 
                 {/* Programming Circle - Top */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8">
+                <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8 transition-all duration-700 ${
+                  circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                }`}>
                   <span className="text-primary font-bold text-xl">Programação</span>
                 </div>
                 
                 {/* Statistics Circle - Bottom Left */}
-                <div className="absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12">
+                <div className={`absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12 transition-all duration-700 ${
+                  circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                }`}>
                   <span className="text-gold font-bold text-xl">Estatística</span>
                 </div>
                 
                 {/* Business Circle - Bottom Right */}
-                <div className="absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12">
+                <div className={`absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12 transition-all duration-700 ${
+                  circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                }`}>
                   <span className="text-wine font-bold text-xl">Negócio</span>
                 </div>
               </div>
 
               {/* Label with Arrow - Positioned to the right */}
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-4">
+              <div className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-4 transition-all duration-700 delay-[1000ms] ${
+                circlesVisible.length >= 3 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+              }`}>
                 <ArrowLeft className="w-12 h-12 text-foreground" strokeWidth={3} />
                 <div className="text-left">
                   <span className="font-bold text-xl text-foreground block">Ciência de Dados</span>
@@ -143,7 +196,9 @@ const WhatIsDataScience = () => {
             {/* Three Columns Explanation */}
             <div className="grid md:grid-cols-3 gap-8 mb-12">
               {/* Programming */}
-              <div className="text-left">
+              <div className={`text-left transition-all duration-700 ${
+                columnsVisible.includes(0) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}>
                 <h4 className="text-2xl font-bold mb-4 text-primary">
                   1. Programação<br />(O Motor)
                 </h4>
@@ -154,7 +209,9 @@ const WhatIsDataScience = () => {
               </div>
 
               {/* Statistics */}
-              <div className="text-left">
+              <div className={`text-left transition-all duration-700 ${
+                columnsVisible.includes(1) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}>
                 <h4 className="text-2xl font-bold mb-4 text-gold">
                   2. Estatística<br />(A Lógica)
                 </h4>
@@ -165,7 +222,9 @@ const WhatIsDataScience = () => {
               </div>
 
               {/* Business */}
-              <div className="text-left">
+              <div className={`text-left transition-all duration-700 ${
+                columnsVisible.includes(2) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}>
                 <h4 className="text-2xl font-bold mb-4 text-wine">
                   3. Negócio<br />(O Propósito)
                 </h4>
