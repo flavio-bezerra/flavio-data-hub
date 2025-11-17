@@ -87,7 +87,7 @@ const WhatIsDataScience = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className={`text-4xl md:text-5xl font-bold mb-8 text-center gradient-text ${isVisible ? 'animate-fade-in' : ''}`}>
+          <h2 className={`text-4xl md:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
             O que é Ciência de Dados?
           </h2>
           <p className="text-xl text-muted-foreground text-center leading-relaxed">

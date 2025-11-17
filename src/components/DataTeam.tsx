@@ -83,7 +83,7 @@ const DataTeam = () => {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <h2 className={`text-4xl md:text-5xl font-bold mb-8 text-center gradient-text ${isVisible ? 'animate-fade-in' : ''}`}>
+        <h2 className={`text-4xl md:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
           Data Science é um Esporte Coletivo
         </h2>
         <p className="text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-12">
