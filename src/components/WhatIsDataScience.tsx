@@ -107,8 +107,8 @@ const WhatIsDataScience = () => {
             </h3>
 
             {/* Venn Diagram Container with Label */}
-            <div className="relative w-full max-w-4xl mx-auto h-[450px] mb-16 flex items-center justify-center overflow-visible scale-[0.40] md:scale-100 origin-center">
-              {/* Diagram - Scaled proportionally on mobile */}
+            <div className="relative w-full max-w-4xl mx-auto h-[450px] mb-16 flex items-center justify-center overflow-visible">
+              {/* Diagram */}
               <div className="relative w-full max-w-2xl h-[450px] flex items-center justify-center">
                 {/* SVG Pattern for Hatching */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 20 }}>
@@ -121,11 +121,11 @@ const WhatIsDataScience = () => {
                   <circle 
                     cx="50%" 
                     cy="56%" 
-                    r="30" 
+                    r="20"
+                    className="md:r-[30px]"
                     fill="url(#hatch)"
-                    className={`transition-all duration-300 cursor-pointer pointer-events-auto ${
-                      circlesVisible.length >= 3 ? "opacity-100" : "opacity-0"
-                    } ${hoveredPillar === 3 ? "opacity-100" : ""}`}
+                    opacity={circlesVisible.length >= 3 ? (hoveredPillar === 3 ? 1 : 0.8) : 0}
+                    style={{ transition: 'opacity 0.3s', cursor: 'pointer', pointerEvents: 'auto' }}
                     onMouseEnter={() => setHoveredPillar(3)}
                     onMouseLeave={() => setHoveredPillar(null)}
                   />
@@ -133,46 +133,46 @@ const WhatIsDataScience = () => {
 
                 {/* Programming Circle - Top */}
                 <div 
-                  className={`absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute top-0 left-1/2 -translate-x-1/2 w-36 h-36 md:w-56 md:h-56 lg:w-72 lg:h-72 rounded-full bg-primary/30 border-2 md:border-4 border-primary flex items-start justify-center pt-4 md:pt-6 lg:pt-8 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30" : "hover:scale-105"}`}
                   onMouseEnter={() => setHoveredPillar(0)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-primary font-bold text-xl pointer-events-none">Programação</span>
+                  <span className="text-primary font-bold text-sm md:text-lg lg:text-xl pointer-events-none">Programação</span>
                 </div>
                 
                 {/* Statistics Circle - Bottom Left */}
                 <div 
-                  className={`absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute bottom-0 left-[15%] md:left-[15%] w-36 h-36 md:w-56 md:h-56 lg:w-72 lg:h-72 rounded-full bg-gold/30 border-2 md:border-4 border-gold flex items-end justify-start pb-4 md:pb-6 lg:pb-8 pl-6 md:pl-10 lg:pl-12 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30" : "hover:scale-105"}`}
                   onMouseEnter={() => setHoveredPillar(1)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-gold font-bold text-xl pointer-events-none">Estatística</span>
+                  <span className="text-gold font-bold text-sm md:text-lg lg:text-xl pointer-events-none">Estatística</span>
                 </div>
                 
                 {/* Business Circle - Bottom Right */}
                 <div 
-                  className={`absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute bottom-0 right-[15%] md:right-[15%] w-36 h-36 md:w-56 md:h-56 lg:w-72 lg:h-72 rounded-full bg-wine/30 border-2 md:border-4 border-wine flex items-end justify-end pb-4 md:pb-6 lg:pb-8 pr-6 md:pr-10 lg:pr-12 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30" : "hover:scale-105"}`}
                   onMouseEnter={() => setHoveredPillar(2)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-wine font-bold text-xl pointer-events-none">Negócio</span>
+                  <span className="text-wine font-bold text-sm md:text-lg lg:text-xl pointer-events-none">Negócio</span>
                 </div>
               </div>
 
               {/* Label with Arrow - Positioned to the right */}
-              <div className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-4 transition-all duration-700 delay-[1000ms] ${
+              <div className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 md:gap-4 transition-all duration-700 delay-[1000ms] ${
                 circlesVisible.length >= 3 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
               }`}>
-                <ArrowLeft className="w-12 h-12 text-foreground" strokeWidth={3} />
+                <ArrowLeft className="w-6 h-6 md:w-10 md:h-10 lg:w-12 lg:h-12 text-foreground" strokeWidth={3} />
                 <div className="text-left">
-                  <span className="font-bold text-xl text-foreground block">Ciência de Dados</span>
-                  <span className="font-bold text-lg text-muted-foreground">(Valor)</span>
+                  <span className="font-bold text-base md:text-lg lg:text-xl text-foreground block">Ciência de Dados</span>
+                  <span className="font-bold text-xs md:text-sm lg:text-lg text-muted-foreground">(Valor)</span>
                 </div>
               </div>
             </div>
