@@ -57,7 +57,7 @@ const Portfolio = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center gradient-text animate-fade-in">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center gradient-text animate-fade-in leading-tight pb-2">
             Projetos e Artigos
           </h2>
 
