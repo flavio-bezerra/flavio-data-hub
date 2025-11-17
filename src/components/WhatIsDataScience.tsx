@@ -369,6 +369,8 @@ const WhatIsDataScience = () => {
                                   opacity={isActive ? 1 : 0.5}
                                   className="cursor-pointer transition-all duration-300"
                                   onClick={() => setActiveClassic(payload.id)}
+                                  style={{ outline: 'none' }}
+                                  focusable="false"
                                 />
                               );
                             }}
@@ -514,6 +516,8 @@ const WhatIsDataScience = () => {
                                   opacity={isActive ? 1 : 0.5}
                                   className="cursor-pointer transition-all duration-300"
                                   onClick={() => setActiveGenAI(payload.id)}
+                                  style={{ outline: 'none' }}
+                                  focusable="false"
                                 />
                               );
                             }}
