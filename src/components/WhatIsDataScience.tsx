@@ -265,7 +265,7 @@ const WhatIsDataScience = () => {
                     icon: Search, 
                     title: "1. Descrevendo (O que aconteceu?)", 
                     description: "Visão consolidada do histórico.", 
-                    details: "A Análise Descritiva é a base. Ela usa dados históricos para criar dashboards e relatórios que mostram métricas-chave (KPIs) e tendências passadas.", 
+                    details: "A Análise Descritiva é o primeiro nível e se concentra em responder à pergunta: \"O que aconteceu?\". Seu principal objetivo é consolidar e resumir dados históricos para fornecer uma visão clara do passado. Isso é comumente alcançado através de relatórios, dashboards e visualizações de dados que mostram métricas e KPIs (Indicadores-Chave de Performance), permitindo que a organização tenha uma compreensão básica de seu desempenho, como o total de vendas do último trimestre.", 
                     value: 1, 
                     complexity: 1, 
                     color: "hsl(var(--primary))" 
@@ -275,7 +275,7 @@ const WhatIsDataScience = () => {
                     icon: AlertCircle, 
                     title: "2. Diagnosticando (Por que aconteceu?)", 
                     description: "Investigação para encontrar a causa raiz.", 
-                    details: "A Análise Diagnóstica vai além do 'o quê' e pergunta 'por quê'. Ela usa técnicas de drill-down e correlação para identificar os fatores que causaram um determinado resultado.", 
+                    details: "Subindo um nível, a Análise Diagnóstica busca entender \"Por que aconteceu?\". Em vez de apenas observar os dados, este estágio envolve uma investigação mais profunda para descobrir as causas raízes por trás de um evento ou tendência. Utilizando técnicas como drill-down (aprofundamento nos dados) e análise de correlação, ela tenta explicar por que, por exemplo, as vendas caíram em uma determinada região, talvez identificando uma nova campanha de um concorrente ou um problema logístico.", 
                     value: 2, 
                     complexity: 2, 
                     color: "#a855f7" 
@@ -285,7 +285,7 @@ const WhatIsDataScience = () => {
                     icon: TrendingUp, 
                     title: "3. Prevendo (O que vai acontecer?)", 
                     description: "Uso de Machine Learning para prever o futuro.", 
-                    details: "A Análise Preditiva usa os dados do passado para criar modelos que estimam o futuro. Essencial para prever demanda, estimar o risco de churn de clientes ou identificar tendências de vendas.", 
+                    details: "A Análise Preditiva muda o foco do passado para o futuro, respondendo à pergunta: \"O que vai acontecer?\". Neste nível, são aplicados modelos estatísticos e de Machine Learning sobre dados históricos para prever tendências e comportamentos futuros. Exemplos clássicos incluem a previsão de demanda de produtos (forecasting), a identificação de clientes com alto risco de cancelamento (churn) ou a estimativa da probabilidade de fraude em uma transação.", 
                     value: 3, 
                     complexity: 3, 
                     color: "hsl(var(--primary))" 
@@ -295,7 +295,7 @@ const WhatIsDataScience = () => {
                     icon: Lightbulb, 
                     title: "4. Prescrevendo (O que devemos fazer?)", 
                     description: "Modelos de otimização para recomendar ações.", 
-                    details: "A Análise Prescritiva é o nível mais alto. Ela não apenas prevê o futuro, mas recomenda as melhores ações e simula o impacto de cada decisão, ajudando a otimizar estratégias.", 
+                    details: "Por fim, a Análise Prescritiva representa o nível mais avançado de maturidade, focado em determinar \"O que devemos fazer?\". Ela vai além da simples previsão, utilizando modelos de otimização e simulação para recomendar as melhores ações possíveis e o impacto esperado de cada decisão. Em vez de apenas prever a demanda, a análise prescritiva sugeriria, por exemplo, qual o nível ideal de estoque e o melhor preço para maximizar o lucro, ajudando a otimizar ativamente as estratégias de negócio.", 
                     value: 4, 
                     complexity: 4, 
                     color: "hsl(var(--gold))" 
@@ -410,7 +410,7 @@ const WhatIsDataScience = () => {
                     icon: Brain, 
                     title: "1. Engenharia de Prompt", 
                     description: "Otimização de comandos para LLMs.", 
-                    details: "Esta é a habilidade fundamental de construir instruções claras e contextuais para que os Modelos de Linguagem (LLMs) executem tarefas específicas com precisão.", 
+                    details: "A Engenharia de Prompt é a prática de desenhar, testar e otimizar as instruções (prompts) dadas a um Modelo de Linguagem de Larga Escala (LLM) para obter as respostas mais precisas, relevantes e úteis. É uma habilidade fundamental que envolve não apenas fazer a pergunta certa, mas também fornecer contexto suficiente, exemplos (técnica conhecida como few-shot learning) e restrições claras para guiar o modelo a executar tarefas complexas com alta qualidade, desde resumir textos até gerar código.", 
                     value: 1, 
                     complexity: 1, 
                     color: "hsl(var(--wine))" 
@@ -420,7 +420,7 @@ const WhatIsDataScience = () => {
                     icon: Brain, 
                     title: "2. RAG (Busca Aumentada)", 
                     description: "Conectando LLMs a dados privados.", 
-                    details: "O RAG (Retrieval-Augmented Generation) permite que a IA responda perguntas usando como base seus documentos internos, garantindo respostas seguras e precisas baseadas em fontes de dados privadas.", 
+                    details: "O RAG (Retrieval-Augmented Generation) é uma técnica que potencializa um LLM ao conectá-lo a uma base de conhecimento externa, como documentos privados da empresa, e-mails ou um banco de dados. Em vez de depender apenas do conhecimento estático com o qual foi treinado, o modelo primeiro \"busca\" (retrieve) informações relevantes dessa fonte de dados externa e, em seguida, usa esses dados \"aumentados\" como contexto para gerar uma resposta precisa, atualizada e baseada em informações privadas que o modelo originalmente desconhecia.", 
                     value: 2, 
                     complexity: 2, 
                     color: "hsl(var(--wine))" 
@@ -430,7 +430,7 @@ const WhatIsDataScience = () => {
                     icon: Brain, 
                     title: "3. Fine-tuning (Especialização)", 
                     description: "Treinando o modelo em tarefas específicas.", 
-                    details: "O Fine-tuning ajusta um modelo de IA pré-treinado para uma tarefa ou estilo de linguagem muito específico, aumentando drasticamente sua performance e especialização.", 
+                    details: "O Fine-tuning (Ajuste Fino ou Especialização) é o processo de continuar o treinamento de um LLM pré-treinado, mas agora com um conjunto de dados menor e específico de um domínio ou tarefa. Diferente do RAG, que injeta conhecimento no prompt, o fine-tuning modifica os \"pesos\" internos do próprio modelo. Isso o torna um especialista em um estilo de linguagem particular (como o tom de voz de uma marca), em um formato de dados específico (como laudos médicos) ou em uma tarefa muito nichada, melhorando drasticamente seu desempenho e comportamento naquela área.", 
                     value: 3, 
                     complexity: 3, 
                     color: "hsl(var(--wine))" 
@@ -440,7 +440,7 @@ const WhatIsDataScience = () => {
                     icon: Brain, 
                     title: "4. Multi-Agentes (Autonomia)", 
                     description: "IAs que planejam e executam tarefas.", 
-                    details: "Este é o nível mais avançado, onde múltiplos 'Agentes' de IA colaboram, planejam e executam sequências de tarefas complexas de forma autônoma para atingir um objetivo.", 
+                    details: "Os sistemas Multi-Agentes representam um nível avançado de autonomia, onde múltiplas \"IAs\" (agentes), cada uma muitas vezes impulsionada por um LLM, colaboram para resolver um problema complexo que seria difícil para um único modelo. Um agente \"planejador\" pode quebrar uma tarefa grande (ex: \"analisar concorrentes e criar um plano de marketing\") em subtarefas, que são então delegadas e executadas por agentes \"especialistas\" (ex: um agente de pesquisa, um agente redator, um agente analista), que trabalham de forma coordenada para entregar um resultado final completo.", 
                     value: 4, 
                     complexity: 4, 
                     color: "hsl(var(--wine))" 
