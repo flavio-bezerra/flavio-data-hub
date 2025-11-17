@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Search, AlertCircle, TrendingUp, Lightbulb, Brain, ArrowLeft } from "lucide-react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ResponsiveContainer, ScatterChart, CartesianGrid, XAxis, YAxis, Tooltip as RechartsTooltip, Scatter, Cell } from "recharts";
 
 
@@ -248,11 +249,14 @@ const WhatIsDataScience = () => {
               Meu trabalho é guiar as decisões de negócio através de jornadas de maturidade analítica:
             </p>
 
-            {/* Section 1: ML Clássico */}
-            <div className="mb-20">
-              <h3 className="text-2xl md:text-3xl font-bold mb-8 text-left">
-                Jornada de Maturidade Analítica (ML Clássico)
-              </h3>
+            <Tabs defaultValue="classic" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-8 bg-card-foreground/5">
+                <TabsTrigger value="classic">Maturidade (ML Clássico)</TabsTrigger>
+                <TabsTrigger value="gen-ai">Maturidade (IA Generativa)</TabsTrigger>
+              </TabsList>
+
+              {/* Tab Content 1: ML Clássico */}
+              <TabsContent value="classic">
               
               {(() => {
                 const classicMLLevels = [
@@ -325,8 +329,10 @@ const WhatIsDataScience = () => {
                             {classicMLLevels.map((entry, index) => (
                               <Cell 
                                 key={`cell-${index}`} 
-                                fill={entry.color} 
-                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                                fill={entry.color}
+                                radius={activeClassic === entry.id ? 12 : 6}
+                                opacity={activeClassic === entry.id ? 1 : 0.5}
+                                className="cursor-pointer transition-all duration-300"
                                 onClick={() => setActiveClassic(entry.id)}
                               />
                             ))}
@@ -347,14 +353,14 @@ const WhatIsDataScience = () => {
                         const Icon = item.icon;
                         return (
                           <AccordionItem key={item.id} value={item.id}>
-                            <AccordionTrigger className="text-left hover:no-underline">
-                              <div className="flex items-center gap-4">
-                                <div className="p-2 rounded-lg" style={{ backgroundColor: item.color, opacity: 0.2 }}>
-                                  <Icon className="w-5 h-5" style={{ color: item.color }} />
+                            <AccordionTrigger className="p-4 hover:no-underline rounded-lg hover:bg-card-foreground/5 data-[state=open]:bg-card-foreground/10">
+                              <div className="flex items-center gap-4 w-full pr-4 text-left">
+                                <div className="p-3 rounded-lg bg-card-foreground/10" style={{ color: item.color }}>
+                                  <Icon className="w-6 h-6 shrink-0" />
                                 </div>
                                 <div className="flex-1">
-                                  <h4 className="font-bold text-lg">{item.title}</h4>
-                                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                                  <h4 className="font-bold text-base text-foreground">{item.title}</h4>
+                                  <p className="text-sm text-muted-foreground font-normal mt-1">{item.description}</p>
                                 </div>
                               </div>
                             </AccordionTrigger>
@@ -370,13 +376,10 @@ const WhatIsDataScience = () => {
                   </>
                 );
               })()}
-            </div>
+              </TabsContent>
 
-            {/* Section 2: IA Generativa */}
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-8 text-left">
-                Jornada de Maturidade em IA Generativa
-              </h3>
+              {/* Tab Content 2: IA Generativa */}
+              <TabsContent value="gen-ai">
               
               {(() => {
                 const genAILevels = [
@@ -449,8 +452,10 @@ const WhatIsDataScience = () => {
                             {genAILevels.map((entry, index) => (
                               <Cell 
                                 key={`cell-${index}`} 
-                                fill={entry.color} 
-                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                                fill={entry.color}
+                                radius={activeGenAI === entry.id ? 12 : 6}
+                                opacity={activeGenAI === entry.id ? 1 : 0.5}
+                                className="cursor-pointer transition-all duration-300"
                                 onClick={() => setActiveGenAI(entry.id)}
                               />
                             ))}
@@ -471,14 +476,14 @@ const WhatIsDataScience = () => {
                         const Icon = item.icon;
                         return (
                           <AccordionItem key={item.id} value={item.id}>
-                            <AccordionTrigger className="text-left hover:no-underline">
-                              <div className="flex items-center gap-4">
-                                <div className="p-2 rounded-lg" style={{ backgroundColor: item.color, opacity: 0.2 }}>
-                                  <Icon className="w-5 h-5" style={{ color: item.color }} />
+                            <AccordionTrigger className="p-4 hover:no-underline rounded-lg hover:bg-card-foreground/5 data-[state=open]:bg-card-foreground/10">
+                              <div className="flex items-center gap-4 w-full pr-4 text-left">
+                                <div className="p-3 rounded-lg bg-card-foreground/10" style={{ color: item.color }}>
+                                  <Icon className="w-6 h-6 shrink-0" />
                                 </div>
                                 <div className="flex-1">
-                                  <h4 className="font-bold text-lg">{item.title}</h4>
-                                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                                  <h4 className="font-bold text-base text-foreground">{item.title}</h4>
+                                  <p className="text-sm text-muted-foreground font-normal mt-1">{item.description}</p>
                                 </div>
                               </div>
                             </AccordionTrigger>
@@ -494,7 +499,8 @@ const WhatIsDataScience = () => {
                   </>
                 );
               })()}
-            </div>
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </div>
