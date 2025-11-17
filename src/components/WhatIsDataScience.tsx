@@ -100,27 +100,27 @@ const WhatIsDataScience = () => {
             </h3>
 
             {/* Venn Diagram */}
-            <div className="relative w-full max-w-2xl mx-auto h-96 mb-16">
-              {/* Programming Circle */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-primary/20 border-4 border-primary flex items-center justify-center">
-                <span className="text-primary font-bold text-lg">Programação</span>
+            <div className="relative w-full max-w-2xl mx-auto h-[450px] mb-16 flex items-center justify-center">
+              {/* Programming Circle - Top */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8">
+                <span className="text-primary font-bold text-xl">Programação</span>
               </div>
               
-              {/* Statistics Circle */}
-              <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-gold/20 border-4 border-gold flex items-center justify-center">
-                <span className="text-gold font-bold text-lg">Estatística</span>
+              {/* Statistics Circle - Bottom Left */}
+              <div className="absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12">
+                <span className="text-gold font-bold text-xl">Estatística</span>
               </div>
               
-              {/* Business Circle */}
-              <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-wine/20 border-4 border-wine flex items-center justify-center">
-                <span className="text-wine font-bold text-lg">Negócio</span>
+              {/* Business Circle - Bottom Right */}
+              <div className="absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12">
+                <span className="text-wine font-bold text-xl">Negócio</span>
               </div>
               
-              {/* Center - Data Science */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 flex items-center justify-center z-10">
-                <div className="text-center bg-background/90 rounded-full p-4 border-2 border-foreground">
-                  <span className="font-bold text-sm">Ciência de<br />Dados<br />(Valor)</span>
-                </div>
+              {/* Center Text - Data Science in the intersection */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-center">
+                <span className="font-bold text-lg text-foreground bg-background/80 px-4 py-2 rounded-lg border-2 border-foreground shadow-lg">
+                  Ciência de Dados<br />(Valor)
+                </span>
               </div>
             </div>
 
