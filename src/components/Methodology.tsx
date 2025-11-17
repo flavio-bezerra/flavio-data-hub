@@ -1,44 +1,71 @@
 import { useEffect, useRef, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Briefcase, Database, Filter, BrainCircuit, CheckCheck, Rocket } from "lucide-react";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from "recharts";
+import { cn } from "@/lib/utils";
 import crispDmImage from "@/assets/crisp-dm-cycle.png";
 
 // Dados para as 6 etapas do CRISP-DM
 const crispSteps = [
   {
+    id: 0,
     icon: Briefcase,
-    title: "1. Entendimento do Negócio (Business Understanding)",
-    details: "Esta é a etapa mais crucial. Antes de escrever qualquer código, focamos em definir o problema de negócio. Qual pergunta estamos tentando responder? Qual métrica de sucesso (KPI) estamos tentando mover? Uma definição clara do problema evita desperdício de tempo e garante que o resultado final gere valor real."
+    shortTitle: "1. Negócio",
+    fullTitle: "1. Entendimento do Negócio (Business Understanding)",
+    details: "Esta é a etapa mais crucial. Antes de escrever qualquer código, focamos em definir o problema de negócio, os objetivos e as métricas de sucesso (KPIs).",
+    color: "hsl(var(--primary))",
+    value: 1
   },
   {
+    id: 1,
     icon: Database,
-    title: "2. Entendimento dos Dados (Data Understanding)",
-    details: "Aqui, agimos como detetives. Fazemos uma coleta inicial de dados e realizamos uma análise exploratória para identificar a qualidade, a disponibilidade e os padrões iniciais. Respondemos perguntas como: 'Os dados que temos são suficientes para resolver o problema?'."
+    shortTitle: "2. Dados",
+    fullTitle: "2. Entendimento dos Dados (Data Understanding)",
+    details: "Agimos como detetives, coletando e explorando os dados para identificar qualidade, disponibilidade e padrões iniciais. Respondemos: 'Os dados são suficientes?'.",
+    color: "hsl(var(--gold))",
+    value: 1
   },
   {
+    id: 2,
     icon: Filter,
-    title: "3. Preparação dos Dados (Data Preparation)",
-    details: "Frequentemente a etapa mais demorada (90% do trabalho). Aqui limpamos, formatamos, enriquecemos e transformamos os dados brutos em um formato limpo e estruturado (features) que o modelo de Machine Learning possa consumir."
+    shortTitle: "3. Preparação",
+    fullTitle: "3. Preparação dos Dados (Data Preparation)",
+    details: "Frequentemente a etapa mais demorada (90% do trabalho). Aqui limpamos, formatamos, enriquecemos e transformamos os dados brutos (features) para o modelo consumir.",
+    color: "hsl(var(--primary))",
+    value: 1
   },
   {
+    id: 3,
     icon: BrainCircuit,
-    title: "4. Modelagem (Modeling)",
-    details: "Esta é a etapa onde o Machine Learning acontece. Selecionamos, treinamos e ajustamos (fine-tuning) diversos algoritmos para encontrar o que melhor aprende os padrões nos dados e responde ao problema de negócio definido na Etapa 1."
+    shortTitle: "4. Modelagem",
+    fullTitle: "4. Modelagem (Modeling)",
+    details: "Aqui o Machine Learning acontece. Selecionamos, treinamos e ajustamos (fine-tuning) algoritmos para encontrar o que melhor responde ao problema de negócio.",
+    color: "hsl(var(--wine))",
+    value: 1
   },
   {
+    id: 4,
     icon: CheckCheck,
-    title: "5. Avaliação (Evaluation)",
-    details: "Um modelo com 99% de acurácia pode ser inútil se não resolver o problema de negócio. Nesta fase, avaliamos o desempenho do modelo não apenas tecnicamente, mas contra as métricas de sucesso definidas na Etapa 1. Decidimos se o modelo está pronto ou se precisamos voltar para a prancheta."
+    shortTitle: "5. Avaliação",
+    fullTitle: "5. Avaliação (Evaluation)",
+    details: "Um modelo com 99% de acurácia pode ser inútil se não resolver o problema de negócio. Avaliamos o modelo contra as métricas da Etapa 1 e decidimos se ele está pronto.",
+    color: "hsl(var(--gold))",
+    value: 1
   },
   {
+    id: 5,
     icon: Rocket,
-    title: "6. Implantação (Deployment)",
-    details: "O modelo só gera valor quando está em produção. Esta etapa envolve colocar o modelo 'no ar' (geralmente como uma API) para que outros sistemas possam consumi-lo, ou entregar um dashboard final. O ciclo não termina aqui, pois iniciamos o monitoramento contínuo."
+    shortTitle: "6. Implantação",
+    fullTitle: "6. Implantação (Deployment)",
+    details: "O modelo só gera valor em produção. Esta etapa envolve colocar o modelo 'no ar' (como uma API) para consumo. O ciclo não termina aqui, pois iniciamos o monitoramento.",
+    color: "hsl(var(--wine))",
+    value: 1
   }
 ];
 
 const Methodology = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeCrispStep, setActiveCrispStep] = useState<number>(0);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -111,27 +138,68 @@ const Methodology = () => {
             As 6 Etapas do Ciclo CRISP-DM
           </h3>
 
-          {/* Imagem do Ciclo */}
-          <div className="flex justify-center mb-8 px-4">
-            <img 
-              src={crispDmImage} 
-              alt="Ciclo CRISP-DM associada a Metodologia Agile" 
-              className="max-w-full h-auto rounded-lg shadow-lg"
-            />
+          {/* Visual Interativo do Ciclo CRISP-DM (Gráfico de Rosca) */}
+          <div className="w-full h-96 md:h-[450px] mb-8">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <RechartsTooltip content={({ payload }) => {
+                  if (payload && payload.length) {
+                    return (
+                      <div className="bg-popover p-2 rounded border border-border shadow-lg">
+                        <p className="text-popover-foreground font-bold">{payload[0].payload.fullTitle}</p>
+                      </div>
+                    );
+                  }
+                  return null;
+                }} />
+                <Pie
+                  data={crispSteps}
+                  dataKey="value"
+                  nameKey="shortTitle"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="60%"
+                  outerRadius="80%"
+                  cornerRadius={5}
+                  paddingAngle={5}
+                  onClick={(_, index) => setActiveCrispStep(index)}
+                >
+                  {crispSteps.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.color}
+                      opacity={activeCrispStep === index ? 1 : 0.4}
+                      className="cursor-pointer transition-opacity"
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
           </div>
 
           {/* Acordeão Interativo */}
-          <Accordion type="single" collapsible className="w-full" defaultValue="item-0">
+          <Accordion 
+            type="single" 
+            collapsible 
+            className="w-full" 
+            value={`item-${activeCrispStep}`}
+            onValueChange={(val) => setActiveCrispStep(parseInt(val.replace('item-', '')) || 0)}
+          >
             {crispSteps.map((step, index) => {
               const Icon = step.icon;
               return (
                 <AccordionItem value={`item-${index}`} key={index} className="border-border">
-                  <AccordionTrigger className="p-4 hover:no-underline rounded-lg hover:bg-card-foreground/5 data-[state=open]:bg-card-foreground/10">
+                  <AccordionTrigger 
+                    className={cn(
+                      "p-4 hover:no-underline rounded-lg hover:bg-card-foreground/5 data-[state=open]:bg-card-foreground/10",
+                      activeCrispStep === index && "bg-card-foreground/10 ring-2 ring-primary/50"
+                    )}
+                  >
                     <div className="flex items-center gap-4 w-full pr-4 text-left">
                       <div className="p-3 rounded-lg bg-card-foreground/10 text-primary">
                         <Icon className="w-6 h-6 shrink-0" />
                       </div>
-                      <h4 className="flex-1 font-bold text-base md:text-lg text-foreground">{step.title}</h4>
+                      <h4 className="flex-1 font-bold text-base md:text-lg text-foreground">{step.fullTitle}</h4>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pt-0 pb-4 px-4 md:px-6">
