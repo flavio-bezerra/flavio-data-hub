@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Search, AlertCircle, TrendingUp, Lightbulb, Brain, ArrowLeft, ArrowRight } from "lucide-react";
+import { Search, AlertCircle, TrendingUp, Lightbulb, Brain, ArrowLeft } from "lucide-react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ResponsiveContainer, ScatterChart, XAxis, YAxis, Tooltip as RechartsTooltip, Scatter } from "recharts";
@@ -106,51 +106,75 @@ const WhatIsDataScience = () => {
               Os Três Pilares da Ciência de Dados
             </h3>
 
-            {/* Diagrama de Venn (Ilustração) */}
-            <div className="relative flex flex-col md:flex-row justify-center items-center min-h-[300px] md:min-h-[300px] mb-16 p-4 overflow-hidden">
-              
-              {/* O Rótulo com a Seta (Aparece em cima no mobile, à esquerda no desktop) */}
-              <div 
-                className="flex-shrink-0 flex items-center justify-center md:flex-col md:justify-end text-center md:text-right p-4 md:pr-8 animate-fade-in-up order-1 md:order-none" 
-                style={{ animationDelay: '800ms' }}
-              >
-                <span className="text-xl md:text-2xl font-bold text-foreground leading-tight">
-                  Ciência de Dados
-                  <br />
-                  <span className="text-sm font-normal text-muted-foreground">(Valor)</span>
-                </span>
-                {/* A Seta: gira no mobile para apontar para baixo */}
-                <ArrowRight className="w-8 h-8 md:w-16 md:h-16 text-primary ml-4 md:ml-0 md:mt-4 transform rotate-90 md:rotate-0" />
+            {/* Venn Diagram Container with Label */}
+            <div className="relative w-full max-w-4xl mx-auto h-[450px] mb-16 flex items-center justify-center">
+              {/* Diagram */}
+              <div className="relative w-full max-w-2xl h-[450px] flex items-center justify-center">
+                {/* SVG Pattern for Hatching */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 20 }}>
+                  <defs>
+                    <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                      <line x1="0" y1="0" x2="0" y2="8" stroke="white" strokeWidth="2" opacity="0.6" />
+                    </pattern>
+                  </defs>
+                  {/* Central intersection circle with hatching */}
+                  <circle 
+                    cx="50%" 
+                    cy="56%" 
+                    r="30" 
+                    fill="url(#hatch)"
+                    className={`transition-all duration-300 cursor-pointer pointer-events-auto ${
+                      circlesVisible.length >= 3 ? "opacity-100" : "opacity-0"
+                    } ${hoveredPillar === 3 ? "opacity-100" : ""}`}
+                    onMouseEnter={() => setHoveredPillar(3)}
+                    onMouseLeave={() => setHoveredPillar(null)}
+                  />
+                </svg>
+
+                {/* Programming Circle - Top */}
+                <div 
+                  className={`absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8 transition-all duration-300 cursor-pointer z-10 ${
+                    circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                  } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30" : "hover:scale-105"}`}
+                  onMouseEnter={() => setHoveredPillar(0)}
+                  onMouseLeave={() => setHoveredPillar(null)}
+                >
+                  <span className="text-primary font-bold text-xl pointer-events-none">Programação</span>
+                </div>
+                
+                {/* Statistics Circle - Bottom Left */}
+                <div 
+                  className={`absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12 transition-all duration-300 cursor-pointer z-10 ${
+                    circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                  } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30" : "hover:scale-105"}`}
+                  onMouseEnter={() => setHoveredPillar(1)}
+                  onMouseLeave={() => setHoveredPillar(null)}
+                >
+                  <span className="text-gold font-bold text-xl pointer-events-none">Estatística</span>
+                </div>
+                
+                {/* Business Circle - Bottom Right */}
+                <div 
+                  className={`absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12 transition-all duration-300 cursor-pointer z-10 ${
+                    circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                  } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30" : "hover:scale-105"}`}
+                  onMouseEnter={() => setHoveredPillar(2)}
+                  onMouseLeave={() => setHoveredPillar(null)}
+                >
+                  <span className="text-wine font-bold text-xl pointer-events-none">Negócio</span>
+                </div>
               </div>
 
-              {/* Os Círculos Sobrepostos */}
-              <div className="relative w-64 h-64 md:w-80 md:h-80 flex justify-center items-center order-2 md:order-none">
-                
-                {/* Círculo 1: Programação */}
-                <div 
-                  className="absolute w-44 h-44 md:w-56 md:h-56 rounded-full bg-primary/20 border-2 border-primary animate-fade-in-up flex items-center justify-center p-2"
-                  style={{ animationDelay: '200ms', transform: 'translate(-25%, -20%)' }}
-                >
-                  <span className="text-sm md:text-lg font-bold text-primary-foreground">Programação</span>
-                </div>
-                
-                {/* Círculo 2: Estatística */}
-                <div 
-                  className="absolute w-44 h-44 md:w-56 md:h-56 rounded-full bg-gold/20 border-2 border-gold animate-fade-in-up flex items-center justify-center p-2"
-                  style={{ animationDelay: '400ms', transform: 'translate(25%, -20%)' }}
-                >
-                  <span className="text-sm md:text-lg font-bold text-foreground">Estatística</span>
-                </div>
-                
-                {/* Círculo 3: Negócio */}
-                <div 
-                  className="absolute w-44 h-44 md:w-56 md:h-56 rounded-full bg-wine/20 border-2 border-wine animate-fade-in-up flex items-center justify-center p-2"
-                  style={{ animationDelay: '600ms', transform: 'translateY(35%)' }}
-                >
-                  <span className="text-sm md:text-lg font-bold text-foreground">Negócio</span>
+              {/* Label with Arrow - Positioned to the right */}
+              <div className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-4 transition-all duration-700 delay-[1000ms] ${
+                circlesVisible.length >= 3 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+              }`}>
+                <ArrowLeft className="w-12 h-12 text-foreground" strokeWidth={3} />
+                <div className="text-left">
+                  <span className="font-bold text-xl text-foreground block">Ciência de Dados</span>
+                  <span className="font-bold text-lg text-muted-foreground">(Valor)</span>
                 </div>
               </div>
-
             </div>
 
             {/* Three Columns Explanation */}
