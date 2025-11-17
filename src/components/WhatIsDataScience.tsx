@@ -120,11 +120,11 @@ const WhatIsDataScience = () => {
               </div>
 
               {/* Label with Arrow - Positioned to the right */}
-              <div className="absolute right-[-150px] top-1/2 -translate-y-1/2 flex items-center gap-2">
-                <ArrowLeft className="w-10 h-10 text-foreground" strokeWidth={3} />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-4">
+                <ArrowLeft className="w-12 h-12 text-foreground" strokeWidth={3} />
                 <div className="text-left">
-                  <span className="font-bold text-lg text-foreground block whitespace-nowrap">Ciência de Dados</span>
-                  <span className="font-bold text-base text-muted-foreground whitespace-nowrap">(Valor)</span>
+                  <span className="font-bold text-xl text-foreground block">Ciência de Dados</span>
+                  <span className="font-bold text-lg text-muted-foreground">(Valor)</span>
                 </div>
               </div>
             </div>
