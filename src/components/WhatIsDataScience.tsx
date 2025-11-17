@@ -142,7 +142,7 @@ const WhatIsDataScience = () => {
               {/* Diagram */}
               <div className="relative w-full max-w-2xl h-[450px] flex items-center justify-center">
                 {/* SVG Pattern for Hatching */}
-                <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
+                <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 20 }}>
                   <defs>
                     <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
                       <line x1="0" y1="0" x2="0" y2="8" stroke="white" strokeWidth="2" opacity="0.6" />
@@ -154,7 +154,7 @@ const WhatIsDataScience = () => {
                     cy="56%" 
                     r="30" 
                     fill="url(#hatch)"
-                    className={`transition-all duration-300 cursor-pointer ${
+                    className={`transition-all duration-300 cursor-pointer pointer-events-auto ${
                       circlesVisible.length >= 3 ? "opacity-100" : "opacity-0"
                     } ${hoveredPillar === 3 ? "opacity-100" : ""}`}
                     onMouseEnter={() => setHoveredPillar(3)}
@@ -164,7 +164,7 @@ const WhatIsDataScience = () => {
 
                 {/* Programming Circle - Top */}
                 <div 
-                  className={`absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8 transition-all duration-300 cursor-pointer ${
+                  className={`absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30" : "hover:scale-105"}`}
                   onMouseEnter={() => setHoveredPillar(0)}
@@ -175,7 +175,7 @@ const WhatIsDataScience = () => {
                 
                 {/* Statistics Circle - Bottom Left */}
                 <div 
-                  className={`absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12 transition-all duration-300 cursor-pointer ${
+                  className={`absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30" : "hover:scale-105"}`}
                   onMouseEnter={() => setHoveredPillar(1)}
@@ -186,7 +186,7 @@ const WhatIsDataScience = () => {
                 
                 {/* Business Circle - Bottom Right */}
                 <div 
-                  className={`absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12 transition-all duration-300 cursor-pointer ${
+                  className={`absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30" : "hover:scale-105"}`}
                   onMouseEnter={() => setHoveredPillar(2)}
