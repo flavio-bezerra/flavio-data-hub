@@ -31,32 +31,38 @@ const DataTeam = () => {
     {
       icon: Briefcase,
       roleName: "Business Stakeholder (O Patrocinador)",
-      description: "Define o problema de negócio, alinha as expectativas e é o dono da métrica de sucesso (KPI) que queremos impactar."
+      description: "Define o problema de negócio, alinha as expectativas e é o dono da métrica de sucesso (KPI) que queremos impactar.",
+      color: "primary"
     },
     {
       icon: Target,
       roleName: "Product Owner (O Tradutor)",
-      description: "Faz a ponte entre o negócio e o time técnico. Prioriza o backlog, define critérios de aceite e garante que o produto de dados entregue valor incremental."
+      description: "Faz a ponte entre o negócio e o time técnico. Prioriza o backlog, define critérios de aceite e garante que o produto de dados entregue valor incremental.",
+      color: "gold"
     },
     {
       icon: Database,
       roleName: "Engenheiro de Dados (O Arquiteto)",
-      description: "Constrói e mantém os 'canos' (pipelines) que coletam, armazenam e disponibilizam os dados de forma confiável e escalável."
+      description: "Constrói e mantém os 'canos' (pipelines) que coletam, armazenam e disponibilizam os dados de forma confiável e escalável.",
+      color: "wine"
     },
     {
       icon: BarChartHorizontalBig,
       roleName: "Analista de Dados / BI (O Historiador)",
-      description: "Foca no passado e presente. Responde 'O que aconteceu?' e 'Onde?' através de dashboards e relatórios analíticos."
+      description: "Foca no passado e presente. Responde 'O que aconteceu?' e 'Onde?' através de dashboards e relatórios analíticos.",
+      color: "primary"
     },
     {
       icon: BrainCircuit,
       roleName: "Cientista de Dados (O Estrategista/Preditivo)",
-      description: "Foca no futuro. Responde 'Por que aconteceu?' e 'O que vai acontecer?' usando estatística e Machine Learning para criar modelos preditivos."
+      description: "Foca no futuro. Responde 'Por que aconteceu?' e 'O que vai acontecer?' usando estatística e Machine Learning para criar modelos preditivos.",
+      color: "gold"
     },
     {
       icon: Server,
       roleName: "Engenheiro de MLOps (O Piloto)",
-      description: "Garante que o modelo criado pelo Cientista de Dados funcione em produção, 24/7, monitorando sua performance e gerenciando o deploy."
+      description: "Garante que o modelo criado pelo Cientista de Dados funcione em produção, 24/7, monitorando sua performance e gerenciando o deploy.",
+      color: "wine"
     }
   ];
 
@@ -84,15 +90,33 @@ const DataTeam = () => {
             return (
               <Card
                 key={index}
-                className="p-6 flex flex-col items-center text-center bg-card/50 hover:bg-card/80 transition-all duration-300 hover:shadow-lg"
+                className={`p-6 flex flex-col items-center text-center transition-all duration-500 hover:scale-105 hover:-translate-y-2 border-2 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                }`}
                 style={{
                   transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
+                  backgroundColor: `hsl(var(--${role.color}) / 0.1)`,
+                  borderColor: `hsl(var(--${role.color}) / 0.3)`,
+                  boxShadow: `0 4px 12px hsl(var(--${role.color}) / 0.15)`
                 }}
               >
-                <div className="p-3 rounded-full bg-primary/10 text-primary mb-4">
-                  <Icon className="w-8 h-8" />
+                <div 
+                  className="p-4 rounded-full mb-4 transition-transform duration-300 hover:rotate-12"
+                  style={{
+                    backgroundColor: `hsl(var(--${role.color}) / 0.2)`
+                  }}
+                >
+                  <Icon 
+                    className="w-8 h-8" 
+                    style={{ color: `hsl(var(--${role.color}))` }}
+                  />
                 </div>
-                <h4 className="text-xl font-bold text-foreground mb-2">{role.roleName}</h4>
+                <h4 
+                  className="text-xl font-bold mb-2"
+                  style={{ color: `hsl(var(--${role.color}))` }}
+                >
+                  {role.roleName}
+                </h4>
                 <p className="text-muted-foreground">{role.description}</p>
               </Card>
             );
