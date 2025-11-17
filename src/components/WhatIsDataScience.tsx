@@ -164,17 +164,6 @@ const WhatIsDataScience = () => {
                   <span className="text-wine font-bold text-xl pointer-events-none">Negócio</span>
                 </div>
               </div>
-
-              {/* Label with Arrow - Positioned to the right */}
-              <div className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-4 transition-all duration-700 delay-[1000ms] ${
-                circlesVisible.length >= 3 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-              }`}>
-                <ArrowLeft className="w-12 h-12 text-foreground" strokeWidth={3} />
-                <div className="text-left">
-                  <span className="font-bold text-xl text-foreground block">Ciência de Dados</span>
-                  <span className="font-bold text-lg text-muted-foreground">(Valor)</span>
-                </div>
-              </div>
             </div>
 
             {/* Three Columns Explanation */}
