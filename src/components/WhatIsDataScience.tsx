@@ -109,7 +109,7 @@ const WhatIsDataScience = () => {
             {/* Venn Diagram Container with Label */}
             <div className="relative w-full max-w-4xl mx-auto h-[450px] mb-16 flex items-center justify-center overflow-visible">
               {/* Diagram - Scaled proportionally on mobile */}
-              <div className="relative w-full max-w-2xl h-[450px] flex items-center justify-center scale-[0.65] md:scale-100 origin-center">
+              <div className="relative w-full max-w-2xl h-[450px] flex items-center justify-center scale-[0.40] md:scale-100 origin-center">
                 {/* SVG Pattern for Hatching */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 20 }}>
                   <defs>
