@@ -243,7 +243,7 @@ const Methodology = () => {
                       </div>
                     )}
 
-                    {/* Seta de retorno da Avaliação (5) para Dados (2) */}
+                    {/* Seta de retorno da Avaliação (5) para Entendimento do Negócio (1) */}
                     {index === 4 && (
                       <div className="absolute -right-20 top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center">
                         <div className="flex flex-col items-center">
@@ -263,12 +263,18 @@ const Methodology = () => {
                             style={{ color: `hsl(var(--gold))` }}
                           />
                           <div 
-                            className="w-0.5 h-[380px]"
+                            className="w-0.5 h-[780px]"
                             style={{
                               background: `linear-gradient(to bottom, hsl(var(--gold)), transparent)`
                             }}
                           />
                         </div>
+                        <p 
+                          className="text-xs font-semibold -rotate-90 whitespace-nowrap mt-96 ml-12"
+                          style={{ color: `hsl(var(--gold))` }}
+                        >
+                          Se métricas não forem boas
+                        </p>
                       </div>
                     )}
                   </div>
