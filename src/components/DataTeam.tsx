@@ -70,14 +70,20 @@ const DataTeam = () => {
     <section
       ref={sectionRef}
       id="data-team"
-      className="py-20 px-4 md:px-8 bg-gradient-to-b from-background to-muted/20"
+      className="py-20 px-4 md:px-8 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden"
     >
+      {/* Animated Background */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-wine rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-primary rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }}></div>
+      </div>
+      
       <div
-        className={`container mx-auto transition-all duration-1000 ${
+        className={`container mx-auto transition-all duration-1000 relative z-10 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">
+        <h2 className={`text-4xl md:text-5xl font-bold mb-8 text-center gradient-text ${isVisible ? 'animate-fade-in' : ''}`}>
           Data Science é um Esporte Coletivo
         </h2>
         <p className="text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-12">
@@ -90,24 +96,26 @@ const DataTeam = () => {
             return (
               <Card
                 key={index}
-                className={`p-6 flex flex-col items-center text-center transition-all duration-500 hover:scale-105 hover:-translate-y-2 border-2 ${
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                className={`p-6 flex flex-col items-center text-center transition-all duration-500 hover:scale-110 hover:-translate-y-3 hover-lift border-2 group ${
+                  isVisible ? "opacity-100 translate-y-0 animate-fade-in" : "opacity-0 translate-y-10"
                 }`}
                 style={{
                   transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
                   backgroundColor: `hsl(var(--${role.color}) / 0.1)`,
                   borderColor: `hsl(var(--${role.color}) / 0.3)`,
-                  boxShadow: `0 4px 12px hsl(var(--${role.color}) / 0.15)`
+                  boxShadow: `0 4px 12px hsl(var(--${role.color}) / 0.15)`,
+                  animationDelay: `${index * 150}ms`
                 }}
               >
                 <div 
-                  className="p-4 rounded-full mb-4 transition-transform duration-300 hover:rotate-12"
+                  className="flex items-center justify-center w-16 h-16 mb-4 rounded-full transition-all duration-500 group-hover:rotate-[360deg] group-hover:scale-125 animate-glow-pulse"
                   style={{
-                    backgroundColor: `hsl(var(--${role.color}) / 0.2)`
+                    backgroundColor: `hsl(var(--${role.color}) / 0.2)`,
+                    boxShadow: `0 0 20px hsl(var(--${role.color}) / 0.3)`
                   }}
                 >
                   <Icon 
-                    className="w-8 h-8" 
+                    className="w-8 h-8 group-hover:animate-float" 
                     style={{ color: `hsl(var(--${role.color}))` }}
                   />
                 </div>
