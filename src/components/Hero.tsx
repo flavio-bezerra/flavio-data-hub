@@ -55,13 +55,13 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 justify-center pt-8">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-primary/50" asChild>
+            <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 transition-all duration-200" asChild>
               <a href="https://www.linkedin.com/in/flavio-m-bezerra" target="_blank" rel="noopener noreferrer">
                 <Linkedin className="mr-2 h-5 w-5" />
                 LinkedIn
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 transition-all duration-200" asChild>
+            <Button size="lg" variant="outline" className="border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white transform hover:scale-105 transition-all duration-200" asChild>
               <a href="https://github.com/flavio-bezerra" target="_blank" rel="noopener noreferrer">
                 <Github className="mr-2 h-5 w-5" />
                 GitHub
