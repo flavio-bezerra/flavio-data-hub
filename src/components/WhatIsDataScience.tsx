@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Search, AlertCircle, TrendingUp, Lightbulb, Brain } from "lucide-react";
+import { Search, AlertCircle, TrendingUp, Lightbulb, Brain, ArrowLeft } from "lucide-react";
 
 const analyticsLevels = [
   {
@@ -99,28 +99,33 @@ const WhatIsDataScience = () => {
               Os Três Pilares da Ciência de Dados
             </h3>
 
-            {/* Venn Diagram */}
-            <div className="relative w-full max-w-2xl mx-auto h-[450px] mb-16 flex items-center justify-center">
-              {/* Programming Circle - Top */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8">
-                <span className="text-primary font-bold text-xl">Programação</span>
+            {/* Venn Diagram Container with Label */}
+            <div className="relative w-full max-w-4xl mx-auto h-[450px] mb-16 flex items-center justify-center">
+              {/* Diagram */}
+              <div className="relative w-full max-w-2xl h-[450px] flex items-center justify-center">
+                {/* Programming Circle - Top */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8">
+                  <span className="text-primary font-bold text-xl">Programação</span>
+                </div>
+                
+                {/* Statistics Circle - Bottom Left */}
+                <div className="absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12">
+                  <span className="text-gold font-bold text-xl">Estatística</span>
+                </div>
+                
+                {/* Business Circle - Bottom Right */}
+                <div className="absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12">
+                  <span className="text-wine font-bold text-xl">Negócio</span>
+                </div>
               </div>
-              
-              {/* Statistics Circle - Bottom Left */}
-              <div className="absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12">
-                <span className="text-gold font-bold text-xl">Estatística</span>
-              </div>
-              
-              {/* Business Circle - Bottom Right */}
-              <div className="absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12">
-                <span className="text-wine font-bold text-xl">Negócio</span>
-              </div>
-              
-              {/* Center Text - Data Science in the intersection */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-center">
-                <span className="font-bold text-xl text-foreground">
-                  Ciência de Dados<br />(Valor)
-                </span>
+
+              {/* Label with Arrow - Positioned to the right */}
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-4">
+                <ArrowLeft className="w-12 h-12 text-foreground" strokeWidth={3} />
+                <div className="text-left">
+                  <span className="font-bold text-xl text-foreground block">Ciência de Dados</span>
+                  <span className="font-bold text-lg text-muted-foreground">(Valor)</span>
+                </div>
               </div>
             </div>
 
