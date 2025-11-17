@@ -107,9 +107,9 @@ const WhatIsDataScience = () => {
             </h3>
 
             {/* Venn Diagram Container with Label */}
-            <div className="relative w-full max-w-4xl mx-auto h-[450px] mb-16 flex items-center justify-center">
+            <div className="relative w-full max-w-4xl mx-auto h-[350px] md:h-[450px] mb-16 flex items-center justify-center">
               {/* Diagram */}
-              <div className="relative w-full max-w-2xl h-[450px] flex items-center justify-center">
+              <div className="relative w-full max-w-2xl h-[350px] md:h-[450px] flex items-center justify-center">
                 {/* SVG Pattern for Hatching */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 20 }}>
                   <defs>
@@ -121,11 +121,11 @@ const WhatIsDataScience = () => {
                   <circle 
                     cx="50%" 
                     cy="56%" 
-                    r="30" 
-                    fill="url(#hatch)"
-                    className={`transition-all duration-300 cursor-pointer pointer-events-auto ${
+                    r="20" 
+                    className={`transition-all duration-300 cursor-pointer pointer-events-auto md:r-[30px] ${
                       circlesVisible.length >= 3 ? "opacity-100" : "opacity-0"
                     } ${hoveredPillar === 3 ? "opacity-100" : ""}`}
+                    fill="url(#hatch)"
                     onMouseEnter={() => setHoveredPillar(3)}
                     onMouseLeave={() => setHoveredPillar(null)}
                   />
@@ -133,46 +133,46 @@ const WhatIsDataScience = () => {
 
                 {/* Programming Circle - Top */}
                 <div 
-                  className={`absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 md:w-72 md:h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-4 md:pt-8 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30" : "hover:scale-105"}`}
                   onMouseEnter={() => setHoveredPillar(0)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-primary font-bold text-xl pointer-events-none">Programação</span>
+                  <span className="text-primary font-bold text-base md:text-xl pointer-events-none">Programação</span>
                 </div>
                 
                 {/* Statistics Circle - Bottom Left */}
                 <div 
-                  className={`absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute bottom-0 left-[5%] md:left-[15%] w-48 h-48 md:w-72 md:h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-4 md:pb-8 pl-6 md:pl-12 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30" : "hover:scale-105"}`}
                   onMouseEnter={() => setHoveredPillar(1)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-gold font-bold text-xl pointer-events-none">Estatística</span>
+                  <span className="text-gold font-bold text-base md:text-xl pointer-events-none">Estatística</span>
                 </div>
                 
                 {/* Business Circle - Bottom Right */}
                 <div 
-                  className={`absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12 transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute bottom-0 right-[5%] md:right-[15%] w-48 h-48 md:w-72 md:h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-4 md:pb-8 pr-6 md:pr-12 transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30" : "hover:scale-105"}`}
                   onMouseEnter={() => setHoveredPillar(2)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-wine font-bold text-xl pointer-events-none">Negócio</span>
+                  <span className="text-wine font-bold text-base md:text-xl pointer-events-none">Negócio</span>
                 </div>
               </div>
 
               {/* Label with Arrow - Positioned to the right */}
-              <div className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-4 transition-all duration-700 delay-[1000ms] ${
+              <div className={`absolute right-0 md:right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 md:gap-4 transition-all duration-700 delay-[1000ms] ${
                 circlesVisible.length >= 3 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
               }`}>
-                <ArrowLeft className="w-12 h-12 text-foreground" strokeWidth={3} />
+                <ArrowLeft className="w-8 h-8 md:w-12 md:h-12 text-foreground" strokeWidth={3} />
                 <div className="text-left">
-                  <span className="font-bold text-xl text-foreground block">Ciência de Dados</span>
-                  <span className="font-bold text-lg text-muted-foreground">(Valor)</span>
+                  <span className="font-bold text-sm md:text-xl text-foreground block">Ciência de Dados</span>
+                  <span className="font-bold text-xs md:text-lg text-muted-foreground">(Valor)</span>
                 </div>
               </div>
             </div>
