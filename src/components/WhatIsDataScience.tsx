@@ -139,13 +139,12 @@ const WhatIsDataScience = () => {
 
                 {/* Programming Circle - Top */}
                 <div 
-                  className={`absolute top-0 left-1/2 -translate-x-1/2 rounded-full bg-primary/30 border-2 sm:border-3 md:border-4 border-primary flex items-start justify-center transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute top-0 left-1/2 -translate-x-1/2 rounded-full bg-primary/30 border-2 sm:border-3 md:border-4 border-primary flex items-center justify-center transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30" : "hover:scale-105"}`}
                   style={{ 
                     width: 'clamp(140px, 37vw, 288px)',
-                    height: 'clamp(140px, 37vw, 288px)',
-                    paddingTop: 'clamp(18px, 4.5vw, 42px)'
+                    height: 'clamp(140px, 37vw, 288px)'
                   }}
                   onMouseEnter={() => setHoveredPillar(0)}
                   onMouseLeave={() => setHoveredPillar(null)}
@@ -155,15 +154,13 @@ const WhatIsDataScience = () => {
                 
                 {/* Statistics Circle - Bottom Left */}
                 <div 
-                  className={`absolute bottom-0 rounded-full bg-gold/30 border-2 sm:border-3 md:border-4 border-gold flex items-end justify-start transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute bottom-0 rounded-full bg-gold/30 border-2 sm:border-3 md:border-4 border-gold flex items-center justify-center transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30" : "hover:scale-105"}`}
                   style={{ 
                     width: 'clamp(140px, 37vw, 288px)',
                     height: 'clamp(140px, 37vw, 288px)',
-                    left: 'clamp(2%, 10%, 15%)',
-                    paddingBottom: 'clamp(18px, 4.5vw, 42px)',
-                    paddingLeft: 'clamp(20px, 5vw, 52px)'
+                    left: 'clamp(2%, 10%, 15%)'
                   }}
                   onMouseEnter={() => setHoveredPillar(1)}
                   onMouseLeave={() => setHoveredPillar(null)}
@@ -173,15 +170,13 @@ const WhatIsDataScience = () => {
                 
                 {/* Business Circle - Bottom Right */}
                 <div 
-                  className={`absolute bottom-0 rounded-full bg-wine/30 border-2 sm:border-3 md:border-4 border-wine flex items-end justify-end transition-all duration-300 cursor-pointer z-10 ${
+                  className={`absolute bottom-0 rounded-full bg-wine/30 border-2 sm:border-3 md:border-4 border-wine flex items-center justify-center transition-all duration-300 cursor-pointer z-10 ${
                     circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
                   } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30" : "hover:scale-105"}`}
                   style={{ 
                     width: 'clamp(140px, 37vw, 288px)',
                     height: 'clamp(140px, 37vw, 288px)',
-                    right: 'clamp(2%, 10%, 15%)',
-                    paddingBottom: 'clamp(18px, 4.5vw, 42px)',
-                    paddingRight: 'clamp(20px, 5vw, 52px)'
+                    right: 'clamp(2%, 10%, 15%)'
                   }}
                   onMouseEnter={() => setHoveredPillar(2)}
                   onMouseLeave={() => setHoveredPillar(null)}
