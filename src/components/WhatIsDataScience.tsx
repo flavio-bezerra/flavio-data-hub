@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Search, AlertCircle, TrendingUp, Lightbulb, Brain, ArrowLeft } from "lucide-react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ResponsiveContainer, ScatterChart, CartesianGrid, XAxis, YAxis, Tooltip as RechartsTooltip, Scatter, Cell } from "recharts";
+import { ResponsiveContainer, ScatterChart, XAxis, YAxis, Tooltip as RechartsTooltip, Scatter } from "recharts";
 
 
 const WhatIsDataScience = () => {
@@ -309,7 +309,6 @@ const WhatIsDataScience = () => {
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={300}>
                         <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                          <CartesianGrid strokeDasharray="0" />
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
@@ -327,7 +326,7 @@ const WhatIsDataScience = () => {
                             label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
                           />
                           <RechartsTooltip 
-                            cursor={{ strokeDasharray: '3 3' }}
+                            cursor={false}
                             content={({ payload }) => {
                               if (payload && payload.length > 0) {
                                 const data = payload[0].payload;
@@ -341,18 +340,25 @@ const WhatIsDataScience = () => {
                               return null;
                             }}
                           />
-                          <Scatter data={classicMLLevels} fill="hsl(var(--primary))">
-                            {classicMLLevels.map((entry, index) => (
-                              <Cell 
-                                key={`cell-${index}`} 
-                                fill={entry.color}
-                                radius={activeClassic === entry.id ? 180 : 100}
-                                opacity={activeClassic === entry.id ? 1 : 0.5}
-                                className="cursor-pointer transition-all duration-300"
-                                onClick={() => setActiveClassic(entry.id)}
-                              />
-                            ))}
-                          </Scatter>
+                          <Scatter 
+                            data={classicMLLevels}
+                            shape={(props: any) => {
+                              const { cx, cy, payload } = props;
+                              const isActive = activeClassic === payload.id;
+                              const r = isActive ? 120 : 60; // 10x maior (antes ~12 e ~6)
+                              return (
+                                <circle
+                                  cx={cx}
+                                  cy={cy}
+                                  r={r}
+                                  fill={payload.color}
+                                  opacity={isActive ? 1 : 0.5}
+                                  className="cursor-pointer transition-all duration-300"
+                                  onClick={() => setActiveClassic(payload.id)}
+                                />
+                              );
+                            }}
+                          />
                         </ScatterChart>
                       </ResponsiveContainer>
                     </div>
@@ -448,7 +454,6 @@ const WhatIsDataScience = () => {
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={300}>
                         <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                          <CartesianGrid strokeDasharray="0" />
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
@@ -466,7 +471,7 @@ const WhatIsDataScience = () => {
                             label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
                           />
                           <RechartsTooltip 
-                            cursor={{ strokeDasharray: '3 3' }}
+                            cursor={false}
                             content={({ payload }) => {
                               if (payload && payload.length > 0) {
                                 const data = payload[0].payload;
@@ -480,18 +485,25 @@ const WhatIsDataScience = () => {
                               return null;
                             }}
                           />
-                          <Scatter data={genAILevels} fill="hsl(var(--wine))">
-                            {genAILevels.map((entry, index) => (
-                              <Cell 
-                                key={`cell-${index}`} 
-                                fill={entry.color}
-                                radius={activeGenAI === entry.id ? 180 : 100}
-                                opacity={activeGenAI === entry.id ? 1 : 0.5}
-                                className="cursor-pointer transition-all duration-300"
-                                onClick={() => setActiveGenAI(entry.id)}
-                              />
-                            ))}
-                          </Scatter>
+                          <Scatter 
+                            data={genAILevels}
+                            shape={(props: any) => {
+                              const { cx, cy, payload } = props;
+                              const isActive = activeGenAI === payload.id;
+                              const r = isActive ? 120 : 60; // 10x maior (antes ~12 e ~6)
+                              return (
+                                <circle
+                                  cx={cx}
+                                  cy={cy}
+                                  r={r}
+                                  fill={payload.color}
+                                  opacity={isActive ? 1 : 0.5}
+                                  className="cursor-pointer transition-all duration-300"
+                                  onClick={() => setActiveGenAI(payload.id)}
+                                />
+                              );
+                            }}
+                          />
                         </ScatterChart>
                       </ResponsiveContainer>
                     </div>
