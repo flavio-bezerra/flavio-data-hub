@@ -65,9 +65,6 @@ const Methodology = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeCrispStep, setActiveCrispStep] = useState<number>(0);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const flowRef = useRef<HTMLDivElement>(null);
-  const stepRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const [loopPath, setLoopPath] = useState<{ d: string; label: { x: number; y: number } } | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -89,37 +86,6 @@ const Methodology = () => {
       }
     };
   }, []);
-
-  useEffect(() => {
-    const compute = () => {
-      const container = flowRef.current;
-      const s1 = stepRefs.current[0];
-      const s5 = stepRefs.current[4];
-      if (!container || !s1 || !s5) return;
-      const c = container.getBoundingClientRect();
-      const r1 = s1.getBoundingClientRect();
-      const r5 = s5.getBoundingClientRect();
-
-      const startX = r5.right - c.left; // meio da etapa 5, lado direito
-      const startY = r5.top + r5.height / 2 - c.top;
-      const rightX = c.width - 16; // margem direita
-      const topY = r1.top - c.top + 8; // topo da etapa 1
-      const leftX = 16; // margem esquerda
-
-      const d = `M ${startX} ${startY} H ${rightX} V ${topY} H ${leftX}`;
-      const label = { x: rightX - 4, y: (startY + topY) / 2 };
-      setLoopPath({ d, label });
-    };
-
-    compute();
-    const onResize = () => compute();
-    window.addEventListener("resize", onResize);
-    const t = setTimeout(compute, 350); // após transições
-    return () => {
-      window.removeEventListener("resize", onResize);
-      clearTimeout(t);
-    };
-  }, [activeCrispStep]);
 
   return (
     <section ref={sectionRef} className="py-20 bg-secondary/50">
@@ -173,13 +139,13 @@ const Methodology = () => {
           {/* Fluxo Linear do Ciclo CRISP-DM */}
           <div className="relative w-full max-w-4xl mx-auto mb-16">
             {/* Grid de Etapas */}
-            <div className="relative" ref={flowRef}>
+            <div className="relative">
               {crispSteps.map((step, index) => {
                 const Icon = step.icon;
                 const isActive = activeCrispStep === index;
                 
                 return (
-                  <div key={step.id} className="relative" ref={(el) => (stepRefs.current[index] = el)}>
+                  <div key={step.id} className="relative">
                     {/* Card da Etapa - Clicável e Expansível */}
                     <div
                       className={cn(
