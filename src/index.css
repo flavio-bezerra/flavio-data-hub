@@ -40,6 +40,10 @@ All colors MUST be HSL.
 
     --gold: 43 74% 53%;
     --wine: 345 75% 40%;
+    --wine-light: 345 70% 55%;
+    --wine-medium: 345 73% 47%;
+    --wine-dark: 345 78% 33%;
+    --wine-deeper: 345 82% 25%;
     
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -90,6 +94,22 @@ All colors MUST be HSL.
   
   .text-wine {
     color: hsl(var(--wine));
+  }
+  
+  .text-wine-light {
+    color: hsl(var(--wine-light));
+  }
+  
+  .text-wine-medium {
+    color: hsl(var(--wine-medium));
+  }
+  
+  .text-wine-dark {
+    color: hsl(var(--wine-dark));
+  }
+  
+  .text-wine-deeper {
+    color: hsl(var(--wine-deeper));
   }
   
   .bg-wine {
