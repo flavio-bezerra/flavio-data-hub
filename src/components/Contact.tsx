@@ -69,7 +69,7 @@ const Contact = () => {
 
           {/* Logo */}
           <div className={`flex justify-center mb-6 ${isVisible ? 'animate-fade-in stagger-3' : ''}`}>
-            <img src={logo} alt="FMB Logo" className="h-20 opacity-80 hover:opacity-100 transition-opacity duration-300 animate-float" />
+            <img src={logo} alt="FMB Logo" className="h-20 opacity-80 hover:opacity-100 transition-opacity duration-300" />
           </div>
 
           {/* Tagline */}
