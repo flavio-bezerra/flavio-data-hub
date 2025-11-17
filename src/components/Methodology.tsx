@@ -243,28 +243,9 @@ const Methodology = () => {
                       </div>
                     )}
 
-                    {/* Seta de retorno da Avaliação (5) para Entendimento do Negócio (1) */}
-                    {index === 4 && (
-                      null
-                    )}
                   </div>
                 );
               })}
-
-              {/* Overlay da seta de iteração 5 -> 1 */}
-              {loopPath && (
-                <svg className="pointer-events-none absolute inset-0 z-10" aria-hidden="true">
-                  <defs>
-                    <marker id="arrow-head" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
-                      <path d="M0,0 L10,5 L0,10 Z" fill="hsl(var(--gold))" />
-                    </marker>
-                  </defs>
-                  <path d={loopPath.d} stroke="hsl(var(--gold))" strokeWidth="3" fill="none" markerEnd="url(#arrow-head)" />
-                  <text x={loopPath.label.x} y={loopPath.label.y} fill="hsl(var(--gold))" fontSize="12" fontWeight="700" transform={`rotate(-90, ${loopPath.label.x}, ${loopPath.label.y})`}>
-                    Iteração (5 → 1)
-                  </text>
-                </svg>
-              )}
             </div>
           </div>
 
