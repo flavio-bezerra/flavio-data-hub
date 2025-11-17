@@ -104,7 +104,7 @@ const Methodology = () => {
           }`}
         >
           <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
-            Minha Metodologia de Projeto
+            Metodologia de Projeto
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed px-4">
             Um bom resultado não vem do acaso. Ele é fruto de um processo estruturado, 
