@@ -146,58 +146,85 @@ const Methodology = () => {
                 
                 return (
                   <div key={step.id} className="relative">
-                    {/* Card da Etapa */}
+                    {/* Card da Etapa - Clicável e Expansível */}
                     <div
-                      onClick={() => setActiveCrispStep(index)}
                       className={cn(
-                        "p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] mb-4",
+                        "rounded-xl border-2 cursor-pointer transition-all duration-300 mb-4 overflow-hidden",
                         isActive 
-                          ? `bg-${step.color}/20 border-${step.color} shadow-lg shadow-${step.color}/30` 
-                          : "bg-card/50 border-border/50 hover:border-primary/50"
+                          ? "shadow-lg" 
+                          : "hover:scale-[1.01]"
                       )}
                       style={{
-                        backgroundColor: isActive ? `hsl(var(--${step.color}) / 0.2)` : undefined,
-                        borderColor: isActive ? `hsl(var(--${step.color}))` : undefined,
+                        backgroundColor: isActive ? `hsl(var(--${step.color}) / 0.15)` : `hsl(var(--card) / 0.5)`,
+                        borderColor: isActive ? `hsl(var(--${step.color}))` : `hsl(var(--border) / 0.5)`,
                         boxShadow: isActive ? `0 10px 30px -10px hsl(var(--${step.color}) / 0.3)` : undefined
                       }}
                     >
-                      <div className="flex items-center gap-4">
-                        {/* Número e Ícone */}
-                        <div 
-                          className="flex items-center justify-center w-16 h-16 rounded-xl shrink-0 transition-all duration-300"
-                          style={{
-                            backgroundColor: `hsl(var(--${step.color}) / 0.2)`
-                          }}
-                        >
-                          <div className="relative">
-                            <span 
-                              className="absolute -top-1 -right-1 text-xs font-bold"
-                              style={{ color: `hsl(var(--${step.color}))` }}
-                            >
-                              {step.number}
-                            </span>
-                            <Icon 
-                              className="w-8 h-8" 
-                              style={{ color: `hsl(var(--${step.color}))` }}
-                            />
-                          </div>
-                        </div>
-                        
-                        {/* Título */}
-                        <div className="flex-1">
-                          <h4 className="font-bold text-lg mb-1">{step.shortTitle}</h4>
-                          <p className="text-sm text-muted-foreground line-clamp-1">
-                            {step.details.substring(0, 80)}...
-                          </p>
-                        </div>
-
-                        {/* Indicador Ativo */}
-                        {isActive && (
+                      {/* Header - Sempre Visível */}
+                      <div 
+                        onClick={() => setActiveCrispStep(isActive ? -1 : index)}
+                        className="p-6"
+                      >
+                        <div className="flex items-center gap-4">
+                          {/* Número e Ícone */}
                           <div 
-                            className="w-3 h-3 rounded-full animate-pulse"
+                            className="flex items-center justify-center w-16 h-16 rounded-xl shrink-0 transition-all duration-300"
+                            style={{
+                              backgroundColor: `hsl(var(--${step.color}) / 0.2)`
+                            }}
+                          >
+                            <div className="relative">
+                              <span 
+                                className="absolute -top-1 -right-1 text-xs font-bold"
+                                style={{ color: `hsl(var(--${step.color}))` }}
+                              >
+                                {step.number}
+                              </span>
+                              <Icon 
+                                className="w-8 h-8" 
+                                style={{ color: `hsl(var(--${step.color}))` }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Título */}
+                          <div className="flex-1">
+                            <h4 className="font-bold text-lg mb-1">{step.shortTitle}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              {isActive ? "Clique para recolher" : "Clique para expandir"}
+                            </p>
+                          </div>
+
+                          {/* Indicador Ativo */}
+                          <div 
+                            className={cn(
+                              "w-3 h-3 rounded-full transition-all duration-300",
+                              isActive ? "animate-pulse" : "opacity-30"
+                            )}
                             style={{ backgroundColor: `hsl(var(--${step.color}))` }}
                           />
+                        </div>
+                      </div>
+
+                      {/* Conteúdo Expansível */}
+                      <div 
+                        className={cn(
+                          "overflow-hidden transition-all duration-300",
+                          isActive ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                         )}
+                      >
+                        <div className="px-6 pb-6 pt-0">
+                          <div 
+                            className="p-4 rounded-lg"
+                            style={{
+                              backgroundColor: `hsl(var(--${step.color}) / 0.1)`
+                            }}
+                          >
+                            <p className="text-lg text-foreground leading-relaxed">
+                              {step.details}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -207,22 +234,41 @@ const Methodology = () => {
                         <ArrowDown 
                           className={cn(
                             "w-6 h-6 transition-all duration-300",
-                            isActive ? "text-primary scale-125" : "text-muted-foreground"
-                          )} 
+                            isActive ? "scale-125" : ""
+                          )}
+                          style={{ 
+                            color: isActive ? `hsl(var(--${step.color}))` : `hsl(var(--muted-foreground))` 
+                          }}
                         />
                       </div>
                     )}
 
                     {/* Seta de retorno da Avaliação (5) para Dados (2) */}
                     {index === 4 && (
-                      <div className="absolute -right-16 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-2">
-                        <div className="flex flex-col items-center gap-1">
-                          <ArrowUp className="w-5 h-5 text-gold animate-pulse" />
-                          <div className="h-[400%] w-0.5 bg-gradient-to-b from-gold to-transparent" />
+                      <div className="absolute -right-20 top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center">
+                        <div className="flex flex-col items-center">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div 
+                              className="px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap"
+                              style={{
+                                backgroundColor: `hsl(var(--gold) / 0.2)`,
+                                color: `hsl(var(--gold))`
+                              }}
+                            >
+                              Iteração
+                            </div>
+                          </div>
+                          <ArrowUp 
+                            className="w-6 h-6 animate-bounce" 
+                            style={{ color: `hsl(var(--gold))` }}
+                          />
+                          <div 
+                            className="w-0.5 h-[380px]"
+                            style={{
+                              background: `linear-gradient(to bottom, hsl(var(--gold)), transparent)`
+                            }}
+                          />
                         </div>
-                        <p className="text-xs text-gold font-semibold -rotate-90 whitespace-nowrap mt-32">
-                          Iteração
-                        </p>
                       </div>
                     )}
                   </div>
@@ -231,40 +277,6 @@ const Methodology = () => {
             </div>
           </div>
 
-          {/* Acordeão Interativo */}
-          <Accordion 
-            type="single" 
-            collapsible 
-            className="w-full" 
-            value={`item-${activeCrispStep}`}
-            onValueChange={(val) => setActiveCrispStep(parseInt(val.replace('item-', '')) || 0)}
-          >
-            {crispSteps.map((step, index) => {
-              const Icon = step.icon;
-              return (
-                <AccordionItem value={`item-${index}`} key={index} className="border-border">
-                  <AccordionTrigger 
-                    className={cn(
-                      "p-4 hover:no-underline rounded-lg hover:bg-card-foreground/5 data-[state=open]:bg-card-foreground/10",
-                      activeCrispStep === index && "bg-card-foreground/10 ring-2 ring-primary/50"
-                    )}
-                  >
-                    <div className="flex items-center gap-4 w-full pr-4 text-left">
-                      <div className="p-3 rounded-lg bg-card-foreground/10 text-primary">
-                        <Icon className="w-6 h-6 shrink-0" />
-                      </div>
-                      <h4 className="flex-1 font-bold text-base md:text-lg text-foreground">{step.fullTitle}</h4>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-0 pb-4 px-4 md:px-6">
-                    <p className="text-lg text-muted-foreground leading-relaxed">
-                      {step.details}
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
         </div>
 
       </div>
