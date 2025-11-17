@@ -248,7 +248,7 @@ const Methodology = () => {
             </div>
 
             {/* Seta de retorno da Avaliação (5) para Dados (2) - Fora do Loop */}
-            <div className="absolute -right-24 top-[62%] -translate-y-1/2 hidden xl:flex flex-col items-center">
+            <div className="absolute -right-40 top-[62%] -translate-y-1/2 hidden xl:flex flex-col items-center">
               <div className="flex flex-col items-center">
                 <div className="flex flex-col items-center gap-2 mb-3">
                   <div 
