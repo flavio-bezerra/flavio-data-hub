@@ -1,71 +1,63 @@
 import { useEffect, useRef, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Briefcase, Database, Filter, BrainCircuit, CheckCheck, Rocket } from "lucide-react";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from "recharts";
+import { Briefcase, Database, Filter, BrainCircuit, CheckCheck, Rocket, ArrowDown, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
-import crispDmImage from "@/assets/crisp-dm-cycle.png";
 
 // Dados para as 6 etapas do CRISP-DM
 const crispSteps = [
   {
     id: 0,
     icon: Briefcase,
-    shortTitle: "1. Negócio",
+    number: "1",
+    shortTitle: "Entendimento do Negócio",
     fullTitle: "1. Entendimento do Negócio (Business Understanding)",
     details: "Esta é a etapa mais crucial. Antes de escrever qualquer código, focamos em definir o problema de negócio, os objetivos e as métricas de sucesso (KPIs).",
-    color: "hsl(var(--primary))",
-    value: 1,
-    showInCycle: false // Fica fora do ciclo visual
+    color: "primary"
   },
   {
     id: 1,
     icon: Database,
-    shortTitle: "2. Dados",
+    number: "2",
+    shortTitle: "Entendimento dos Dados",
     fullTitle: "2. Entendimento dos Dados (Data Understanding)",
     details: "Agimos como detetives, coletando e explorando os dados para identificar qualidade, disponibilidade e padrões iniciais. Respondemos: 'Os dados são suficientes?'.",
-    color: "hsl(var(--gold))",
-    value: 1,
-    showInCycle: true
+    color: "gold"
   },
   {
     id: 2,
     icon: Filter,
-    shortTitle: "3. Preparação",
+    number: "3",
+    shortTitle: "Preparação dos Dados",
     fullTitle: "3. Preparação dos Dados (Data Preparation)",
     details: "Frequentemente a etapa mais demorada (90% do trabalho). Aqui limpamos, formatamos, enriquecemos e transformamos os dados brutos (features) para o modelo consumir.",
-    color: "hsl(var(--primary))",
-    value: 1,
-    showInCycle: true
+    color: "primary"
   },
   {
     id: 3,
     icon: BrainCircuit,
-    shortTitle: "4. Modelagem",
+    number: "4",
+    shortTitle: "Modelagem",
     fullTitle: "4. Modelagem (Modeling)",
     details: "Aqui o Machine Learning acontece. Selecionamos, treinamos e ajustamos (fine-tuning) algoritmos para encontrar o que melhor responde ao problema de negócio.",
-    color: "hsl(var(--wine))",
-    value: 1,
-    showInCycle: true
+    color: "wine"
   },
   {
     id: 4,
     icon: CheckCheck,
-    shortTitle: "5. Avaliação",
+    number: "5",
+    shortTitle: "Avaliação",
     fullTitle: "5. Avaliação (Evaluation)",
     details: "Um modelo com 99% de acurácia pode ser inútil se não resolver o problema de negócio. Avaliamos o modelo contra as métricas da Etapa 1 e decidimos se ele está pronto.",
-    color: "hsl(var(--gold))",
-    value: 1,
-    showInCycle: true
+    color: "gold"
   },
   {
     id: 5,
     icon: Rocket,
-    shortTitle: "6. Implantação",
+    number: "6",
+    shortTitle: "Implantação",
     fullTitle: "6. Implantação (Deployment)",
     details: "O modelo só gera valor em produção. Esta etapa envolve colocar o modelo 'no ar' (como uma API) para consumo. O ciclo não termina aqui, pois iniciamos o monitoramento.",
-    color: "hsl(var(--wine))",
-    value: 1,
-    showInCycle: false // Fica fora do ciclo visual
+    color: "wine"
   }
 ];
 
@@ -144,121 +136,98 @@ const Methodology = () => {
             As 6 Etapas do Ciclo CRISP-DM
           </h3>
 
-          {/* Visual Interativo do Ciclo CRISP-DM */}
-          <div className="relative w-full max-w-5xl mx-auto mb-16">
-            {/* Cards das Etapas 1 e 6 (fora do ciclo) */}
-            <div className="flex justify-between items-center mb-8 gap-8">
-              {/* Etapa 1 - Negócio */}
-              <div 
-                onClick={() => setActiveCrispStep(0)}
-                className={cn(
-                  "flex-1 p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-105",
-                  activeCrispStep === 0 
-                    ? "bg-primary/20 border-primary shadow-lg shadow-primary/30" 
-                    : "bg-card/50 border-border/50 hover:border-primary/50"
-                )}
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-3 rounded-lg bg-primary/20">
-                    <Briefcase className="w-6 h-6 text-primary" />
-                  </div>
-                  <h4 className="font-bold text-lg">Início</h4>
-                </div>
-                <p className="text-sm text-muted-foreground">Entendimento do Negócio</p>
-              </div>
-
-              {/* Etapa 6 - Implantação */}
-              <div 
-                onClick={() => setActiveCrispStep(5)}
-                className={cn(
-                  "flex-1 p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-105",
-                  activeCrispStep === 5 
-                    ? "bg-wine/20 border-wine shadow-lg shadow-wine/30" 
-                    : "bg-card/50 border-border/50 hover:border-wine/50"
-                )}
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-3 rounded-lg bg-wine/20">
-                    <Rocket className="w-6 h-6 text-wine" />
-                  </div>
-                  <h4 className="font-bold text-lg">Fim</h4>
-                </div>
-                <p className="text-sm text-muted-foreground">Implantação em Produção</p>
-              </div>
-            </div>
-
-            {/* Gráfico de Rosca Interativo (apenas etapas 2-5) */}
+          {/* Fluxo Linear do Ciclo CRISP-DM */}
+          <div className="relative w-full max-w-4xl mx-auto mb-16">
+            {/* Grid de Etapas */}
             <div className="relative">
-              {/* Texto Central */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-                <div className="text-center p-6 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-xl">
-                  <p className="text-sm text-muted-foreground mb-1">Etapa</p>
-                  <p className="text-4xl font-bold text-primary">{activeCrispStep + 1}</p>
-                  <p className="text-xs text-muted-foreground mt-1">de 6</p>
-                </div>
-              </div>
-
-              {/* Gráfico */}
-              <div className="w-full h-[500px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <defs>
-                      <filter id="glow">
-                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                        <feMerge>
-                          <feMergeNode in="coloredBlur"/>
-                          <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                      </filter>
-                    </defs>
-                    <RechartsTooltip 
-                      content={({ payload }) => {
-                        if (payload && payload.length) {
-                          return (
-                            <div className="bg-popover p-3 rounded-lg border-2 border-primary/50 shadow-xl backdrop-blur-sm">
-                              <p className="text-popover-foreground font-bold text-sm">{payload[0].payload.fullTitle}</p>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }} 
-                    />
-                    <Pie
-                      data={crispSteps.filter(step => step.showInCycle)}
-                      dataKey="value"
-                      nameKey="shortTitle"
-                      cx="50%"
-                      cy="50%"
-                      innerRadius="45%"
-                      outerRadius="75%"
-                      cornerRadius={8}
-                      paddingAngle={8}
-                      onClick={(_, index) => {
-                        // Mapear o índice do gráfico filtrado para o índice real
-                        const realIndex = crispSteps.findIndex((step, i) => 
-                          step.showInCycle && crispSteps.filter(s => s.showInCycle).indexOf(step) === index
-                        );
-                        setActiveCrispStep(realIndex);
+              {crispSteps.map((step, index) => {
+                const Icon = step.icon;
+                const isActive = activeCrispStep === index;
+                
+                return (
+                  <div key={step.id} className="relative">
+                    {/* Card da Etapa */}
+                    <div
+                      onClick={() => setActiveCrispStep(index)}
+                      className={cn(
+                        "p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] mb-4",
+                        isActive 
+                          ? `bg-${step.color}/20 border-${step.color} shadow-lg shadow-${step.color}/30` 
+                          : "bg-card/50 border-border/50 hover:border-primary/50"
+                      )}
+                      style={{
+                        backgroundColor: isActive ? `hsl(var(--${step.color}) / 0.2)` : undefined,
+                        borderColor: isActive ? `hsl(var(--${step.color}))` : undefined,
+                        boxShadow: isActive ? `0 10px 30px -10px hsl(var(--${step.color}) / 0.3)` : undefined
                       }}
                     >
-                      {crispSteps.filter(step => step.showInCycle).map((entry, index) => {
-                        const realIndex = crispSteps.indexOf(entry);
-                        return (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={entry.color}
-                            opacity={activeCrispStep === realIndex ? 1 : 0.3}
-                            className="cursor-pointer transition-all duration-300 hover:opacity-100"
-                            stroke={activeCrispStep === realIndex ? entry.color : "transparent"}
-                            strokeWidth={activeCrispStep === realIndex ? 3 : 0}
-                            filter={activeCrispStep === realIndex ? "url(#glow)" : undefined}
+                      <div className="flex items-center gap-4">
+                        {/* Número e Ícone */}
+                        <div 
+                          className="flex items-center justify-center w-16 h-16 rounded-xl shrink-0 transition-all duration-300"
+                          style={{
+                            backgroundColor: `hsl(var(--${step.color}) / 0.2)`
+                          }}
+                        >
+                          <div className="relative">
+                            <span 
+                              className="absolute -top-1 -right-1 text-xs font-bold"
+                              style={{ color: `hsl(var(--${step.color}))` }}
+                            >
+                              {step.number}
+                            </span>
+                            <Icon 
+                              className="w-8 h-8" 
+                              style={{ color: `hsl(var(--${step.color}))` }}
+                            />
+                          </div>
+                        </div>
+                        
+                        {/* Título */}
+                        <div className="flex-1">
+                          <h4 className="font-bold text-lg mb-1">{step.shortTitle}</h4>
+                          <p className="text-sm text-muted-foreground line-clamp-1">
+                            {step.details.substring(0, 80)}...
+                          </p>
+                        </div>
+
+                        {/* Indicador Ativo */}
+                        {isActive && (
+                          <div 
+                            className="w-3 h-3 rounded-full animate-pulse"
+                            style={{ backgroundColor: `hsl(var(--${step.color}))` }}
                           />
-                        );
-                      })}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Seta para a próxima etapa */}
+                    {index < crispSteps.length - 1 && (
+                      <div className="flex justify-center my-2">
+                        <ArrowDown 
+                          className={cn(
+                            "w-6 h-6 transition-all duration-300",
+                            isActive ? "text-primary scale-125" : "text-muted-foreground"
+                          )} 
+                        />
+                      </div>
+                    )}
+
+                    {/* Seta de retorno da Avaliação (5) para Dados (2) */}
+                    {index === 4 && (
+                      <div className="absolute -right-16 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-2">
+                        <div className="flex flex-col items-center gap-1">
+                          <ArrowUp className="w-5 h-5 text-gold animate-pulse" />
+                          <div className="h-[400%] w-0.5 bg-gradient-to-b from-gold to-transparent" />
+                        </div>
+                        <p className="text-xs text-gold font-semibold -rotate-90 whitespace-nowrap mt-32">
+                          Iteração
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
