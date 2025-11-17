@@ -142,6 +142,15 @@ All colors MUST be HSL.
     background-size: cover;
   }
   
+  /* Remove outline from SVG elements */
+  svg, svg * {
+    outline: none !important;
+  }
+  
+  svg:focus, svg *:focus {
+    outline: none !important;
+  }
+  
   /* Tech Glow Effects */
   .tech-glow {
     box-shadow: 0 0 20px rgba(91, 131, 232, 0.3),
