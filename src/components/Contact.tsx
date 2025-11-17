@@ -76,6 +76,7 @@ const Contact = () => {
           <div className={`p-6 rounded-lg bg-gradient-to-r from-primary/10 to-gold/10 border border-primary/20 mb-8 ${isVisible ? 'animate-scale-in stagger-4' : ''}`}>
             <p className="text-2xl md:text-3xl font-script text-foreground">
               Mais que dados, <span className="text-gold">estratégia</span>.{" "}
+              <br />
               Mais que insights, <span className="text-primary">resultados</span>.
             </p>
           </div>
