@@ -88,6 +88,18 @@ All colors MUST be HSL.
     color: hsl(var(--gold));
   }
   
+  .text-wine {
+    color: hsl(var(--wine));
+  }
+  
+  .bg-wine {
+    background-color: hsl(var(--wine));
+  }
+  
+  .border-wine {
+    border-color: hsl(var(--wine));
+  }
+  
   .animate-fade-in-up {
     animation: fadeInUp 0.8s ease-out forwards;
   }
@@ -109,4 +121,56 @@ All colors MUST be HSL.
     background-repeat: no-repeat;
     background-size: cover;
   }
+  
+  /* Tech Glow Effects */
+  .tech-glow {
+    box-shadow: 0 0 20px rgba(91, 131, 232, 0.3),
+                0 0 40px rgba(91, 131, 232, 0.2);
+  }
+  
+  .tech-glow-gold {
+    box-shadow: 0 0 20px rgba(218, 165, 32, 0.3),
+                0 0 40px rgba(218, 165, 32, 0.2);
+  }
+  
+  .tech-glow-wine {
+    box-shadow: 0 0 20px rgba(190, 30, 60, 0.3),
+                0 0 40px rgba(190, 30, 60, 0.2);
+  }
+  
+  /* Gradient Text */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--gold)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Shimmer Effect */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(91, 131, 232, 0.3) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+  }
+  
+  /* Hover Scale with Glow */
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 40px rgba(91, 131, 232, 0.4);
+  }
+  
+  /* Stagger Animation Delays */
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
 }

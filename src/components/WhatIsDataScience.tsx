@@ -73,15 +73,21 @@ const WhatIsDataScience = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <section ref={sectionRef} className="py-20 bg-background relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 right-1/4 w-96 h-96 bg-primary rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 left-1/4 w-96 h-96 bg-wine rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         {/* Definition */}
         <div
           className={`max-w-4xl mx-auto mb-16 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">
+          <h2 className={`text-4xl md:text-5xl font-bold mb-8 text-center gradient-text ${isVisible ? 'animate-fade-in' : ''}`}>
             O que é Ciência de Dados?
           </h2>
           <p className="text-xl text-muted-foreground text-center leading-relaxed">
