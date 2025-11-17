@@ -29,11 +29,18 @@ const Portfolio = () => {
   }, []);
 
   const expertise = [
-    "Machine Learning (Modelos Supervisionados e Não Supervisionados)",
-    "IA Generativa (Large Language Models - LLMs)",
-    "Análise Exploratória de Dados (EDA)",
-    "MLOps e Deployment de Modelos",
-    "Aplicações em Varejo, Indústria e Supply Chain",
+    {
+      title: "De Modelos de Machine Learning à Produção (MLOps)",
+      description: "Não basta criar um modelo; ele precisa gerar valor em produção. Minha experiência cobre o ciclo completo, desde a Análise Exploratória (EDA) e o treinamento de modelos (supervisionados e não supervisionados) até o deployment e monitoramento."
+    },
+    {
+      title: "IA Generativa (LLMs) para Negócios",
+      description: "Vou além do hype. Aplico LLMs para criar soluções práticas, como assistentes virtuais (chatbots) e otimização de processos, focando em aplicações que trazem um ROI claro."
+    },
+    {
+      title: "Aplicações Setoriais (Varejo, Indústria e Supply Chain)",
+      description: "Cada setor tem um desafio único. Minha especialização é traduzir as necessidades específicas do Varejo, Indústria e Supply Chain em modelos de dados eficientes."
+    }
   ];
 
   return (
@@ -50,24 +57,32 @@ const Portfolio = () => {
 
           <Card className="p-8 mb-12 bg-card/50 backdrop-blur-sm">
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              Minha experiência é focada na aplicação prática de tecnologias de ponta para 
-              resolver desafios reais de negócio. Você pode explorar os detalhes, códigos e 
-              artigos sobre meus projetos nos links abaixo.
+              Esta é a seção onde a teoria encontra a prática. Mais do que apenas listar tecnologias, 
+              acredito em demonstrar valor real. Meu trabalho se concentra em transformar desafios de 
+              negócio complexos em soluções de dados funcionais.
+            </p>
+            
+            <p className="text-lg font-semibold text-foreground mb-8">
+              Convido você a explorar os projetos, códigos e artigos onde detalho essas implementações.
             </p>
 
-            {/* Expertise List */}
-            <div className="space-y-3 mb-8">
+            {/* Expertise Topics */}
+            <div className="space-y-6 mb-8">
               {expertise.map((item, index) => (
                 <div
                   key={index}
-                  className={`flex items-start gap-3 transition-all duration-500 delay-${index * 100}`}
+                  className="transition-all duration-500"
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
-                  <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
-                  <p className="text-foreground">{item}</p>
+                  <h3 className="text-lg font-bold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
                 </div>
               ))}
             </div>
+
+            <p className="text-lg font-semibold text-foreground">
+              Veja como esses conceitos são aplicados na prática:
+            </p>
           </Card>
 
           {/* CTA Buttons */}
