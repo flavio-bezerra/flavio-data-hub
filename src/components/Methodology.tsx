@@ -245,9 +245,9 @@ const Methodology = () => {
 
                     {/* Seta de retorno da Avaliação (5) para Dados (2) */}
                     {index === 4 && (
-                      <div className="absolute -right-20 top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center">
+                      <div className="absolute -right-24 top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center">
                         <div className="flex flex-col items-center">
-                          <div className="flex items-center gap-2 mb-2">
+                          <div className="flex flex-col items-center gap-2 mb-3">
                             <div 
                               className="px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap"
                               style={{
@@ -257,13 +257,19 @@ const Methodology = () => {
                             >
                               Iteração
                             </div>
+                            <p 
+                              className="text-xs text-center max-w-[140px] leading-tight"
+                              style={{ color: `hsl(var(--gold))` }}
+                            >
+                              Se as métricas não forem benéficas, voltamos aos dados
+                            </p>
                           </div>
                           <ArrowUp 
                             className="w-6 h-6 animate-bounce" 
                             style={{ color: `hsl(var(--gold))` }}
                           />
                           <div 
-                            className="w-0.5 h-[380px]"
+                            className="w-0.5 h-[340px]"
                             style={{
                               background: `linear-gradient(to bottom, hsl(var(--gold)), transparent)`
                             }}
