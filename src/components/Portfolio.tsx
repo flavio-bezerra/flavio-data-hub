@@ -100,7 +100,8 @@ const Portfolio = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <Button
               size="lg"
-              className={`w-full h-auto py-4 sm:py-6 bg-primary hover:bg-primary/90 transform hover:scale-110 transition-all duration-300 tech-glow hover:shadow-2xl group ${
+              variant="outline"
+              className={`w-full h-auto py-4 sm:py-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-110 transition-all duration-300 hover:shadow-2xl group ${
                 isVisible ? 'animate-fade-in stagger-3' : ''
               }`}
               asChild
@@ -122,7 +123,7 @@ const Portfolio = () => {
             <Button
               size="lg"
               variant="outline"
-              className={`w-full h-auto py-4 sm:py-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-110 transition-all duration-300 hover:shadow-2xl group ${
+              className={`w-full h-auto py-4 sm:py-6 border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white transform hover:scale-110 transition-all duration-300 hover:shadow-2xl group ${
                 isVisible ? 'animate-fade-in stagger-4' : ''
               }`}
               asChild
