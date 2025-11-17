@@ -345,7 +345,7 @@ const WhatIsDataScience = () => {
                             shape={(props: any) => {
                               const { cx, cy, payload } = props;
                               const isActive = activeClassic === payload.id;
-                              const r = isActive ? 120 : 60; // 10x maior (antes ~12 e ~6)
+                              const r = isActive ? 36 : 18; // 30% do anterior (120 e 60)
                               return (
                                 <circle
                                   cx={cx}
@@ -490,7 +490,7 @@ const WhatIsDataScience = () => {
                             shape={(props: any) => {
                               const { cx, cy, payload } = props;
                               const isActive = activeGenAI === payload.id;
-                              const r = isActive ? 120 : 60; // 10x maior (antes ~12 e ~6)
+                              const r = isActive ? 36 : 18; // 30% do anterior (120 e 60)
                               return (
                                 <circle
                                   cx={cx}
