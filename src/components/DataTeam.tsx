@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Card } from "@/components/ui/card";
-import { Briefcase, Database, BarChartHorizontalBig, BrainCircuit, Server } from "lucide-react";
+import { Briefcase, Target, Database, BarChartHorizontalBig, BrainCircuit, Server } from "lucide-react";
 
 const DataTeam = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,6 +32,11 @@ const DataTeam = () => {
       icon: Briefcase,
       roleName: "Business Stakeholder (O Patrocinador)",
       description: "Define o problema de negócio, alinha as expectativas e é o dono da métrica de sucesso (KPI) que queremos impactar."
+    },
+    {
+      icon: Target,
+      roleName: "Product Owner (O Tradutor)",
+      description: "Faz a ponte entre o negócio e o time técnico. Prioriza o backlog, define critérios de aceite e garante que o produto de dados entregue valor incremental."
     },
     {
       icon: Database,
