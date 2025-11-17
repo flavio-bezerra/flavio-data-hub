@@ -324,13 +324,27 @@ const WhatIsDataScience = () => {
                             domain={[0, 5]}
                             label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
                           />
-                          <RechartsTooltip cursor={{ strokeDasharray: '3 3' }} />
+                          <RechartsTooltip 
+                            cursor={{ strokeDasharray: '3 3' }}
+                            content={({ payload }) => {
+                              if (payload && payload.length > 0) {
+                                const data = payload[0].payload;
+                                return (
+                                  <div className="bg-card border rounded-lg p-3 shadow-lg">
+                                    <p className="font-semibold text-foreground">{data.title}</p>
+                                    <p className="text-sm text-muted-foreground mt-1">{data.description}</p>
+                                  </div>
+                                );
+                              }
+                              return null;
+                            }}
+                          />
                           <Scatter data={classicMLLevels} fill="hsl(var(--primary))">
                             {classicMLLevels.map((entry, index) => (
                               <Cell 
                                 key={`cell-${index}`} 
                                 fill={entry.color}
-                                radius={activeClassic === entry.id ? 12 : 6}
+                                radius={activeClassic === entry.id ? 18 : 10}
                                 opacity={activeClassic === entry.id ? 1 : 0.5}
                                 className="cursor-pointer transition-all duration-300"
                                 onClick={() => setActiveClassic(entry.id)}
@@ -447,13 +461,27 @@ const WhatIsDataScience = () => {
                             domain={[0, 5]}
                             label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
                           />
-                          <RechartsTooltip cursor={{ strokeDasharray: '3 3' }} />
+                          <RechartsTooltip 
+                            cursor={{ strokeDasharray: '3 3' }}
+                            content={({ payload }) => {
+                              if (payload && payload.length > 0) {
+                                const data = payload[0].payload;
+                                return (
+                                  <div className="bg-card border rounded-lg p-3 shadow-lg">
+                                    <p className="font-semibold text-foreground">{data.title}</p>
+                                    <p className="text-sm text-muted-foreground mt-1">{data.description}</p>
+                                  </div>
+                                );
+                              }
+                              return null;
+                            }}
+                          />
                           <Scatter data={genAILevels} fill="hsl(var(--wine))">
                             {genAILevels.map((entry, index) => (
                               <Cell 
                                 key={`cell-${index}`} 
                                 fill={entry.color}
-                                radius={activeGenAI === entry.id ? 12 : 6}
+                                radius={activeGenAI === entry.id ? 18 : 10}
                                 opacity={activeGenAI === entry.id ? 1 : 0.5}
                                 className="cursor-pointer transition-all duration-300"
                                 onClick={() => setActiveGenAI(entry.id)}
