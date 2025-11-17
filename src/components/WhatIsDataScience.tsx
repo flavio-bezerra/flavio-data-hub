@@ -39,6 +39,7 @@ const WhatIsDataScience = () => {
   const [diagramVisible, setDiagramVisible] = useState(false);
   const [circlesVisible, setCirclesVisible] = useState<number[]>([]);
   const [columnsVisible, setColumnsVisible] = useState<number[]>([]);
+  const [hoveredPillar, setHoveredPillar] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const diagramRef = useRef<HTMLDivElement>(null);
 
@@ -141,7 +142,7 @@ const WhatIsDataScience = () => {
               {/* Diagram */}
               <div className="relative w-full max-w-2xl h-[450px] flex items-center justify-center">
                 {/* SVG Pattern for Hatching */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}>
+                <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
                   <defs>
                     <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
                       <line x1="0" y1="0" x2="0" y2="8" stroke="white" strokeWidth="2" opacity="0.6" />
@@ -153,31 +154,45 @@ const WhatIsDataScience = () => {
                     cy="56%" 
                     r="30" 
                     fill="url(#hatch)"
-                    className={`transition-opacity duration-1000 delay-[900ms] ${
+                    className={`transition-all duration-300 cursor-pointer ${
                       circlesVisible.length >= 3 ? "opacity-100" : "opacity-0"
-                    }`}
+                    } ${hoveredPillar === 3 ? "opacity-100" : ""}`}
+                    onMouseEnter={() => setHoveredPillar(3)}
+                    onMouseLeave={() => setHoveredPillar(null)}
                   />
                 </svg>
 
                 {/* Programming Circle - Top */}
-                <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8 transition-all duration-700 ${
-                  circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
-                }`}>
-                  <span className="text-primary font-bold text-xl">Programação</span>
+                <div 
+                  className={`absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-primary/30 border-4 border-primary flex items-start justify-center pt-8 transition-all duration-300 cursor-pointer ${
+                    circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                  } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30" : "hover:scale-105"}`}
+                  onMouseEnter={() => setHoveredPillar(0)}
+                  onMouseLeave={() => setHoveredPillar(null)}
+                >
+                  <span className="text-primary font-bold text-xl pointer-events-none">Programação</span>
                 </div>
                 
                 {/* Statistics Circle - Bottom Left */}
-                <div className={`absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12 transition-all duration-700 ${
-                  circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
-                }`}>
-                  <span className="text-gold font-bold text-xl">Estatística</span>
+                <div 
+                  className={`absolute bottom-0 left-[15%] w-72 h-72 rounded-full bg-gold/30 border-4 border-gold flex items-end justify-start pb-8 pl-12 transition-all duration-300 cursor-pointer ${
+                    circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                  } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30" : "hover:scale-105"}`}
+                  onMouseEnter={() => setHoveredPillar(1)}
+                  onMouseLeave={() => setHoveredPillar(null)}
+                >
+                  <span className="text-gold font-bold text-xl pointer-events-none">Estatística</span>
                 </div>
                 
                 {/* Business Circle - Bottom Right */}
-                <div className={`absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12 transition-all duration-700 ${
-                  circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
-                }`}>
-                  <span className="text-wine font-bold text-xl">Negócio</span>
+                <div 
+                  className={`absolute bottom-0 right-[15%] w-72 h-72 rounded-full bg-wine/30 border-4 border-wine flex items-end justify-end pb-8 pr-12 transition-all duration-300 cursor-pointer ${
+                    circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                  } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30" : "hover:scale-105"}`}
+                  onMouseEnter={() => setHoveredPillar(2)}
+                  onMouseLeave={() => setHoveredPillar(null)}
+                >
+                  <span className="text-wine font-bold text-xl pointer-events-none">Negócio</span>
                 </div>
               </div>
 
@@ -196,9 +211,9 @@ const WhatIsDataScience = () => {
             {/* Three Columns Explanation */}
             <div className="grid md:grid-cols-3 gap-8 mb-12">
               {/* Programming */}
-              <div className={`text-left transition-all duration-700 ${
+              <div className={`text-left transition-all duration-300 ${
                 columnsVisible.includes(0) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}>
+              } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 0 ? "scale-105 ring-2 ring-primary rounded-lg p-4 -m-4 bg-primary/5" : ""}`}>
                 <h4 className="text-2xl font-bold mb-4 text-primary">
                   1. Programação<br />(O Motor)
                 </h4>
@@ -209,9 +224,9 @@ const WhatIsDataScience = () => {
               </div>
 
               {/* Statistics */}
-              <div className={`text-left transition-all duration-700 ${
+              <div className={`text-left transition-all duration-300 ${
                 columnsVisible.includes(1) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}>
+              } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 1 ? "scale-105 ring-2 ring-gold rounded-lg p-4 -m-4 bg-gold/5" : ""}`}>
                 <h4 className="text-2xl font-bold mb-4 text-gold">
                   2. Estatística<br />(A Lógica)
                 </h4>
@@ -222,9 +237,9 @@ const WhatIsDataScience = () => {
               </div>
 
               {/* Business */}
-              <div className={`text-left transition-all duration-700 ${
+              <div className={`text-left transition-all duration-300 ${
                 columnsVisible.includes(2) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}>
+              } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 2 ? "scale-105 ring-2 ring-wine rounded-lg p-4 -m-4 bg-wine/5" : ""}`}>
                 <h4 className="text-2xl font-bold mb-4 text-wine">
                   3. Negócio<br />(O Propósito)
                 </h4>
@@ -236,7 +251,9 @@ const WhatIsDataScience = () => {
             </div>
 
             {/* Conclusion */}
-            <div className="max-w-3xl mx-auto text-center">
+            <div className={`max-w-3xl mx-auto text-center transition-all duration-300 ${
+              hoveredPillar === 3 ? "scale-105 ring-2 ring-foreground/20 rounded-lg p-6 -m-6 bg-foreground/5" : ""
+            } ${hoveredPillar !== null && hoveredPillar !== 3 ? "opacity-30" : ""}`}>
               <h4 className="text-2xl font-bold mb-4">
                 A Interseção: Onde a Estratégia Nasce
               </h4>
