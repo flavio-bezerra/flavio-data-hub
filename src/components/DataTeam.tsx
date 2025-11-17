@@ -83,10 +83,10 @@ const DataTeam = () => {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <h2 className={`text-4xl md:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
+        <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
           Data Science é um Esporte Coletivo
         </h2>
-        <p className="text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-12">
+        <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-8 sm:mb-12 px-4">
           Embora um único profissional possa abranger várias áreas, projetos de alto impacto são quase sempre resultado de uma equipe colaborativa, onde cada especialista domina uma parte crucial do processo.
         </p>
 

@@ -103,10 +103,10 @@ const Methodology = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className={`text-4xl md:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
+          <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
             Minha Metodologia de Projeto
           </h2>
-          <p className="text-xl text-muted-foreground text-center leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed px-4">
             Um bom resultado não vem do acaso. Ele é fruto de um processo estruturado, 
             iterativo e focado no problema de negócio.
           </p>
@@ -114,12 +114,12 @@ const Methodology = () => {
 
         {/* Bloco 1: CRISP-DM vs. Agile */}
         <div 
-          className={`max-w-6xl mx-auto mb-16 p-8 bg-card rounded-lg border border-border shadow-lg transition-all duration-1000 delay-300 ${
+          className={`max-w-6xl mx-auto mb-16 p-4 sm:p-6 md:p-8 bg-card rounded-lg border border-border shadow-lg transition-all duration-1000 delay-300 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h3 className="text-3xl font-bold mb-4 text-primary">Por que Data Science é Diferente de Agile?</h3>
-          <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-primary">Por que Data Science é Diferente de Agile?</h3>
+          <div className="space-y-4 text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed">
             <p>
               Metodologias Ágeis (como o Scrum) são excelentes para <strong>Desenvolvimento de Software</strong>, onde o objetivo final é claro (ex: "construir um botão de login"). O risco é o <em>tempo</em>.
             </p>
@@ -138,7 +138,7 @@ const Methodology = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h3 className="text-3xl md:text-4xl font-bold mb-8 text-center">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-center px-4">
             As 6 Etapas do Ciclo CRISP-DM
           </h3>
 
