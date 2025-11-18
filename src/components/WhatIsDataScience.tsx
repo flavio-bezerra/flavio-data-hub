@@ -321,7 +321,7 @@ const WhatIsDataScience = () => {
                     <div className="mb-8 bg-card rounded-lg p-3 sm:p-6 border">
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={320}>
-                        <ScatterChart margin={{ top: 30, right: 20, bottom: 40, left: 40 }}>
+                        <ScatterChart margin={{ top: 30, right: 20, bottom: 40, left: 25 }}>
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
@@ -470,7 +470,7 @@ const WhatIsDataScience = () => {
                     <div className="mb-8 bg-card rounded-lg p-3 sm:p-6 border">
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={320}>
-                        <ScatterChart margin={{ top: 30, right: 20, bottom: 40, left: 40 }}>
+                        <ScatterChart margin={{ top: 30, right: 20, bottom: 40, left: 25 }}>
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
