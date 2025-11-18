@@ -231,7 +231,7 @@ const WhatIsDataScience = () => {
             {/* Conclusion */}
             <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
                 columnsVisible.includes(2) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 2 ? "scale-105 ring-2 ring-wine bg-wine/5" : "bg-card/30"}`}>
+              } ${hoveredPillar !== null && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 3 ? "scale-105 ring-2 ring-foreground bg-foreground/5" : "bg-card/30"}`}>
               <h4 className="text-2xl font-bold mb-4">
                4. Interseção<br />(Onde a Estratégia Nasce)
               </h4>
