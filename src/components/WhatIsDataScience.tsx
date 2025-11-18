@@ -322,37 +322,13 @@ const WhatIsDataScience = () => {
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={300}>
                         <ScatterChart margin={{ top: 40, right: 40, bottom: 40, left: 40 }}>
-                          <defs>
-                            <marker
-                              id="arrow-x"
-                              markerWidth="10"
-                              markerHeight="10"
-                              refX="8"
-                              refY="3"
-                              orient="auto"
-                              markerUnits="strokeWidth"
-                            >
-                              <path d="M0,0 L0,6 L9,3 z" fill="hsl(var(--muted-foreground))" />
-                            </marker>
-                            <marker
-                              id="arrow-y"
-                              markerWidth="10"
-                              markerHeight="10"
-                              refX="5"
-                              refY="2"
-                              orient="auto"
-                              markerUnits="strokeWidth"
-                            >
-                              <path d="M0,6 L10,6 L5,0 z" fill="hsl(var(--muted-foreground))" />
-                            </marker>
-                          </defs>
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
                             name="Complexidade" 
                             domain={[0, 5]}
                             ticks={[]}
-                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerEnd: 'url(#arrow-x)' }}
+                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2 }}
                             label={{ value: 'Complexidade', position: 'insideBottom', offset: -15 }}
                           />
                           <YAxis 
@@ -361,7 +337,7 @@ const WhatIsDataScience = () => {
                             name="Valor" 
                             domain={[0, 7]}
                             ticks={[]}
-                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerEnd: 'url(#arrow-y)' }}
+                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2 }}
                             label={{ value: 'Valor', angle: -90, position: 'insideLeft', offset: 10 }}
                           />
                           <RechartsTooltip 
@@ -495,37 +471,13 @@ const WhatIsDataScience = () => {
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={300}>
                         <ScatterChart margin={{ top: 40, right: 40, bottom: 40, left: 40 }}>
-                          <defs>
-                            <marker
-                              id="arrow-x-gen"
-                              markerWidth="10"
-                              markerHeight="10"
-                              refX="8"
-                              refY="3"
-                              orient="auto"
-                              markerUnits="strokeWidth"
-                            >
-                              <path d="M0,0 L0,6 L9,3 z" fill="hsl(var(--muted-foreground))" />
-                            </marker>
-                            <marker
-                              id="arrow-y-gen"
-                              markerWidth="10"
-                              markerHeight="10"
-                              refX="5"
-                              refY="2"
-                              orient="auto"
-                              markerUnits="strokeWidth"
-                            >
-                              <path d="M0,6 L10,6 L5,0 z" fill="hsl(var(--muted-foreground))" />
-                            </marker>
-                          </defs>
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
                             name="Complexidade" 
                             domain={[0, 5]}
                             ticks={[]}
-                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerEnd: 'url(#arrow-x-gen)' }}
+                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2 }}
                             label={{ value: 'Complexidade', position: 'insideBottom', offset: -15 }}
                           />
                           <YAxis 
@@ -534,7 +486,7 @@ const WhatIsDataScience = () => {
                             name="Valor" 
                             domain={[0, 7]}
                             ticks={[]}
-                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerEnd: 'url(#arrow-y-gen)' }}
+                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2 }}
                             label={{ value: 'Valor', angle: -90, position: 'insideLeft', offset: 10 }}
                           />
                           <RechartsTooltip 
