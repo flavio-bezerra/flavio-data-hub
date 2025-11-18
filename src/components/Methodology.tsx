@@ -179,18 +179,10 @@ const Methodology = () => {
                               backgroundColor: `hsl(var(--${step.color}) / 0.2)`
                             }}
                           >
-                            <div className="relative">
-                              <span 
-                                className="absolute -top-1 -right-1 text-xs font-bold"
-                                style={{ color: `hsl(var(--${step.color}))` }}
-                              >
-                                {step.number}
-                              </span>
-                              <Icon 
-                                className="w-8 h-8" 
-                                style={{ color: `hsl(var(--${step.color}))` }}
-                              />
-                            </div>
+                            <Icon 
+                              className="w-8 h-8" 
+                              style={{ color: `hsl(var(--${step.color}))` }}
+                            />
                           </div>
                           
                           {/* Título */}
