@@ -290,7 +290,7 @@ const WhatIsDataScience = () => {
                     description: "Investigação para encontrar a causa raiz.", 
                     details: "Subindo um nível, a Análise Diagnóstica busca entender \"Por que aconteceu?\". Em vez de apenas observar os dados, este estágio envolve uma investigação mais profunda para descobrir as causas raízes por trás de um evento ou tendência. Utilizando técnicas como drill-down (aprofundamento nos dados) e análise de correlação, ela tenta explicar por que, por exemplo, as vendas caíram em uma determinada região, talvez identificando uma nova campanha de um concorrente ou um problema logístico.", 
                     value: 1.8, 
-                    complexity: 1.8, 
+                    complexity: 2, 
                     color: "#a855f7" 
                   },
                   { 
@@ -300,7 +300,7 @@ const WhatIsDataScience = () => {
                     description: "Uso de Machine Learning para prever o futuro.", 
                     details: "A Análise Preditiva muda o foco do passado para o futuro, respondendo à pergunta: \"O que vai acontecer?\". Neste nível, são aplicados modelos estatísticos e de Machine Learning sobre dados históricos para prever tendências e comportamentos futuros. Exemplos clássicos incluem a previsão de demanda de produtos (forecasting), a identificação de clientes com alto risco de cancelamento (churn) ou a estimativa da probabilidade de fraude em uma transação.", 
                     value: 3.2, 
-                    complexity: 3.2, 
+                    complexity: 3, 
                     color: "hsl(var(--primary))" 
                   },
                   { 
@@ -310,7 +310,7 @@ const WhatIsDataScience = () => {
                     description: "Modelos de otimização para recomendar ações.", 
                     details: "Por fim, a Análise Prescritiva representa o nível mais avançado de maturidade, focado em determinar \"O que devemos fazer?\". Ela vai além da simples previsão, utilizando modelos de otimização e simulação para recomendar as melhores ações possíveis e o impacto esperado de cada decisão. Em vez de apenas prever a demanda, a análise prescritiva sugeriria, por exemplo, qual o nível ideal de estoque e o melhor preço para maximizar o lucro, ajudando a otimizar ativamente as estratégias de negócio.", 
                     value: 5.8, 
-                    complexity: 5.8, 
+                    complexity: 4, 
                     color: "hsl(var(--gold))" 
                   }
                 ];
@@ -321,22 +321,48 @@ const WhatIsDataScience = () => {
                     <div className="mb-8 bg-card rounded-lg p-6 border">
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={300}>
-                        <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                        <ScatterChart margin={{ top: 40, right: 40, bottom: 40, left: 40 }}>
+                          <defs>
+                            <marker
+                              id="arrow-x"
+                              markerWidth="10"
+                              markerHeight="10"
+                              refX="8"
+                              refY="3"
+                              orient="auto"
+                              markerUnits="strokeWidth"
+                            >
+                              <path d="M0,0 L0,6 L9,3 z" fill="hsl(var(--muted-foreground))" />
+                            </marker>
+                            <marker
+                              id="arrow-y"
+                              markerWidth="10"
+                              markerHeight="10"
+                              refX="3"
+                              refY="1"
+                              orient="auto"
+                              markerUnits="strokeWidth"
+                            >
+                              <path d="M0,9 L6,9 L3,0 z" fill="hsl(var(--muted-foreground))" />
+                            </marker>
+                          </defs>
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
                             name="Complexidade" 
                             domain={[0, 5]}
-                            ticks={[1, 2, 3, 4]}
-                            label={{ value: 'Complexidade', position: 'insideBottom', offset: -10 }}
+                            ticks={[]}
+                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerEnd: 'url(#arrow-x)' }}
+                            label={{ value: 'Complexidade', position: 'insideBottom', offset: -15 }}
                           />
                           <YAxis 
                             type="number" 
                             dataKey="value" 
                             name="Valor" 
-                            domain={[0, 5]}
-                            ticks={[1, 2, 3, 4]}
-                            label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
+                            domain={[0, 7]}
+                            ticks={[]}
+                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerEnd: 'url(#arrow-y)' }}
+                            label={{ value: 'Valor', angle: -90, position: 'insideLeft', offset: 10 }}
                           />
                           <RechartsTooltip 
                             cursor={false}
@@ -358,7 +384,7 @@ const WhatIsDataScience = () => {
                             shape={(props: any) => {
                               const { cx, cy, payload } = props;
                               const isActive = activeClassic === payload.id;
-                              const r = isActive ? 36 : 18; // 30% do anterior (120 e 60)
+                              const r = isActive ? 30 : 18;
                               return (
                                 <circle
                                   cx={cx}
@@ -437,7 +463,7 @@ const WhatIsDataScience = () => {
                     description: "Conectando LLMs a dados privados.", 
                     details: "O RAG (Retrieval-Augmented Generation) é uma técnica que potencializa um LLM ao conectá-lo a uma base de conhecimento externa, como documentos privados da empresa, e-mails ou um banco de dados. Em vez de depender apenas do conhecimento estático com o qual foi treinado, o modelo primeiro \"busca\" (retrieve) informações relevantes dessa fonte de dados externa e, em seguida, usa esses dados \"aumentados\" como contexto para gerar uma resposta precisa, atualizada e baseada em informações privadas que o modelo originalmente desconhecia.", 
                     value: 1.8, 
-                    complexity: 1.8, 
+                    complexity: 2, 
                     color: "hsl(var(--wine-medium))" 
                   },
                   { 
@@ -447,7 +473,7 @@ const WhatIsDataScience = () => {
                     description: "Treinando o modelo em tarefas específicas.", 
                     details: "O Fine-tuning (Ajuste Fino ou Especialização) é o processo de continuar o treinamento de um LLM pré-treinado, mas agora com um conjunto de dados menor e específico de um domínio ou tarefa. Diferente do RAG, que injeta conhecimento no prompt, o fine-tuning modifica os \"pesos\" internos do próprio modelo. Isso o torna um especialista em um estilo de linguagem particular (como o tom de voz de uma marca), em um formato de dados específico (como laudos médicos) ou em uma tarefa muito nichada, melhorando drasticamente seu desempenho e comportamento naquela área.", 
                     value: 3.2, 
-                    complexity: 3.2, 
+                    complexity: 3, 
                     color: "hsl(var(--wine-dark))" 
                   },
                   { 
@@ -457,7 +483,7 @@ const WhatIsDataScience = () => {
                     description: "IAs que planejam e executam tarefas.", 
                     details: "Os sistemas Multi-Agentes representam um nível avançado de autonomia, onde múltiplas \"IAs\" (agentes), cada uma muitas vezes impulsionada por um LLM, colaboram para resolver um problema complexo que seria difícil para um único modelo. Um agente \"planejador\" pode quebrar uma tarefa grande (ex: \"analisar concorrentes e criar um plano de marketing\") em subtarefas, que são então delegadas e executadas por agentes \"especialistas\" (ex: um agente de pesquisa, um agente redator, um agente analista), que trabalham de forma coordenada para entregar um resultado final completo.", 
                     value: 5.8, 
-                    complexity: 5.8, 
+                    complexity: 4, 
                     color: "hsl(var(--wine-deeper))" 
                   }
                 ];
@@ -468,22 +494,48 @@ const WhatIsDataScience = () => {
                     <div className="mb-8 bg-card rounded-lg p-6 border">
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
                       <ResponsiveContainer width="100%" height={300}>
-                        <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                        <ScatterChart margin={{ top: 40, right: 40, bottom: 40, left: 40 }}>
+                          <defs>
+                            <marker
+                              id="arrow-x-gen"
+                              markerWidth="10"
+                              markerHeight="10"
+                              refX="8"
+                              refY="3"
+                              orient="auto"
+                              markerUnits="strokeWidth"
+                            >
+                              <path d="M0,0 L0,6 L9,3 z" fill="hsl(var(--muted-foreground))" />
+                            </marker>
+                            <marker
+                              id="arrow-y-gen"
+                              markerWidth="10"
+                              markerHeight="10"
+                              refX="3"
+                              refY="1"
+                              orient="auto"
+                              markerUnits="strokeWidth"
+                            >
+                              <path d="M0,9 L6,9 L3,0 z" fill="hsl(var(--muted-foreground))" />
+                            </marker>
+                          </defs>
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
                             name="Complexidade" 
                             domain={[0, 5]}
-                            ticks={[1, 2, 3, 4]}
-                            label={{ value: 'Complexidade', position: 'insideBottom', offset: -10 }}
+                            ticks={[]}
+                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerEnd: 'url(#arrow-x-gen)' }}
+                            label={{ value: 'Complexidade', position: 'insideBottom', offset: -15 }}
                           />
                           <YAxis 
                             type="number" 
                             dataKey="value" 
                             name="Valor" 
-                            domain={[0, 5]}
-                            ticks={[1, 2, 3, 4]}
-                            label={{ value: 'Valor', angle: -90, position: 'insideLeft' }}
+                            domain={[0, 7]}
+                            ticks={[]}
+                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerEnd: 'url(#arrow-y-gen)' }}
+                            label={{ value: 'Valor', angle: -90, position: 'insideLeft', offset: 10 }}
                           />
                           <RechartsTooltip 
                             cursor={false}
@@ -505,7 +557,7 @@ const WhatIsDataScience = () => {
                             shape={(props: any) => {
                               const { cx, cy, payload } = props;
                               const isActive = activeGenAI === payload.id;
-                              const r = isActive ? 36 : 18; // 30% do anterior (120 e 60)
+                              const r = isActive ? 30 : 18;
                               return (
                                 <circle
                                   cx={cx}
