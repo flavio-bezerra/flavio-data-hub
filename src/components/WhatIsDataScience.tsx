@@ -318,10 +318,10 @@ const WhatIsDataScience = () => {
                 return (
                   <>
                     {/* Chart 1: Classic ML */}
-                    <div className="mb-8 bg-card rounded-lg p-4 sm:p-6 border">
+                    <div className="mb-8 bg-card rounded-lg p-3 sm:p-6 border">
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
-                      <ResponsiveContainer width="100%" height={400}>
-                        <ScatterChart margin={{ top: 50, right: 30, bottom: 50, left: 50 }}>
+                      <ResponsiveContainer width="100%" height={320}>
+                        <ScatterChart margin={{ top: 30, right: 20, bottom: 40, left: 40 }}>
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
@@ -360,7 +360,7 @@ const WhatIsDataScience = () => {
                             shape={(props: any) => {
                               const { cx, cy, payload } = props;
                               const isActive = activeClassic === payload.id;
-                              const r = isActive ? 24 : 16;
+                              const r = isActive ? 20 : 14;
                               return (
                                 <circle
                                   cx={cx}
@@ -467,10 +467,10 @@ const WhatIsDataScience = () => {
                 return (
                   <>
                     {/* Chart 2: GenAI */}
-                    <div className="mb-8 bg-card rounded-lg p-4 sm:p-6 border">
+                    <div className="mb-8 bg-card rounded-lg p-3 sm:p-6 border">
                       <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
-                      <ResponsiveContainer width="100%" height={400}>
-                        <ScatterChart margin={{ top: 50, right: 30, bottom: 50, left: 50 }}>
+                      <ResponsiveContainer width="100%" height={320}>
+                        <ScatterChart margin={{ top: 30, right: 20, bottom: 40, left: 40 }}>
                           <XAxis 
                             type="number" 
                             dataKey="complexity" 
@@ -509,7 +509,7 @@ const WhatIsDataScience = () => {
                             shape={(props: any) => {
                               const { cx, cy, payload } = props;
                               const isActive = activeGenAI === payload.id;
-                              const r = isActive ? 24 : 16;
+                              const r = isActive ? 20 : 14;
                               return (
                                 <circle
                                   cx={cx}
