@@ -233,7 +233,7 @@ const WhatIsDataScience = () => {
               hoveredPillar === 3 ? "scale-105 ring-2 ring-foreground/20 rounded-lg p-6 -m-6 bg-foreground/5" : ""
             } ${hoveredPillar !== null && hoveredPillar !== 3 ? "opacity-30" : ""}`}>
               <h4 className="text-2xl font-bold mb-4">
-               4. Interseção (Onde a Estratégia Nasce)
+               4. Interseção<br />(Onde a Estratégia Nasce)
               </h4>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 "Meu trabalho como Especialista de Dados reside precisamente onde esses três pilares se encontram. 
