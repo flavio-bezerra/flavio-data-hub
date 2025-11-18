@@ -338,12 +338,12 @@ const WhatIsDataScience = () => {
                               id="arrow-y"
                               markerWidth="10"
                               markerHeight="10"
-                              refX="3"
-                              refY="1"
+                              refX="5"
+                              refY="2"
                               orient="auto"
                               markerUnits="strokeWidth"
                             >
-                              <path d="M0,9 L6,9 L3,0 z" fill="hsl(var(--muted-foreground))" />
+                              <path d="M0,6 L10,6 L5,0 z" fill="hsl(var(--muted-foreground))" />
                             </marker>
                           </defs>
                           <XAxis 
@@ -511,12 +511,12 @@ const WhatIsDataScience = () => {
                               id="arrow-y-gen"
                               markerWidth="10"
                               markerHeight="10"
-                              refX="3"
-                              refY="1"
+                              refX="5"
+                              refY="2"
                               orient="auto"
                               markerUnits="strokeWidth"
                             >
-                              <path d="M0,9 L6,9 L3,0 z" fill="hsl(var(--muted-foreground))" />
+                              <path d="M0,6 L10,6 L5,0 z" fill="hsl(var(--muted-foreground))" />
                             </marker>
                           </defs>
                           <XAxis 
