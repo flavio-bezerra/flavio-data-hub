@@ -10,7 +10,8 @@ import {
   PiggyBank, 
   Banknote,
   ArrowRight,
-  Equal
+  Crown,
+  X
 } from "lucide-react";
 
 const RoiCalculator = () => {
@@ -156,27 +157,54 @@ const RoiCalculator = () => {
           </div>
         </div>
 
-        {/* Fórmula ROI */}
-                <div className={`mt-16 max-w-3xl mx-auto transition-all duration-1000 delay-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-          <Card className="p-8 bg-secondary/50 backdrop-blur-sm border-primary/30 text-center relative overflow-hidden group">
-             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent group-hover:via-primary/10 transition-all duration-500"></div>
-             
-             <h3 className="text-xl text-muted-foreground mb-6 relative z-10">A Fórmula de Ouro</h3>
-             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-2xl sm:text-3xl md:text-4xl font-bold font-mono relative z-10">
-                <div className="flex flex-col items-center">
-                  <span className="border-b-2 border-foreground px-4 mb-2">(Ganhos - Custos)</span>
-                  <span>Custos</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <span className="text-gold">× 100</span>
-                  <Equal className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
-                  <span className="text-primary animate-pulse">% ROI</span>
-                </div>
-             </div>
-             <p className="mt-6 text-sm text-muted-foreground relative z-10">
-               *Um projeto viável deve ter um ROI positivo claro, pagando seu investimento em curto/médio prazo.
-             </p>
-          </Card>
+        {/* Fórmula ROI - Redesenhada */}
+        <div className={`mt-20 max-w-4xl mx-auto transition-all duration-1000 delay-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          {/* Wrapper com Gradiente na Borda */}
+          <div className="relative p-[2px] rounded-2xl bg-gradient-to-r from-primary/30 via-gold/30 to-primary/30 shadow-2xl">
+            <Card className="relative p-8 sm:p-10 bg-black/40 backdrop-blur-xl border-none rounded-2xl text-center overflow-hidden">
+               
+               {/* Efeito de Glow Interno */}
+               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-1 bg-gradient-to-r from-transparent via-gold/50 to-transparent blur-sm"></div>
+               
+               <div className="flex items-center justify-center gap-3 mb-8">
+                 <Crown className="w-6 h-6 text-gold animate-pulse" />
+                 <h3 className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground via-gold to-foreground tracking-wide">
+                   A FÓRMULA DE OURO
+                 </h3>
+                 <Crown className="w-6 h-6 text-gold animate-pulse" />
+               </div>
+
+               {/* A Equação */}
+               <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 text-lg sm:text-2xl md:text-3xl font-bold font-mono text-foreground">
+                  
+                  {/* Fração Matemática */}
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="border-b-2 border-border px-2 pb-2 mb-2 tracking-tight">
+                      (<span className="text-gold">Ganhos</span> - <span className="text-wine-light">Custos</span>)
+                    </div>
+                    <div className="px-2 text-wine-light tracking-tight">Custos</div>
+                  </div>
+
+                  {/* Multiplicador */}
+                  <div className="flex items-center gap-2 sm:gap-4 mt-2 sm:mt-0">
+                    <X className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
+                    <span className="text-foreground">100</span>
+                  </div>
+
+                  {/* Resultado */}
+                  <div className="flex items-center gap-2 sm:gap-4 mt-2 sm:mt-0">
+                    <span className="text-muted-foreground text-4xl sm:text-5xl font-light">=</span>
+                    <div className="px-4 py-2 rounded-lg bg-primary/10 border border-primary/30 text-primary shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                      % ROI
+                    </div>
+                  </div>
+               </div>
+
+               <p className="mt-8 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                 <span className="text-gold font-semibold">*Regra de Ouro:</span> Um projeto de dados viável deve ter um ROI positivo claro, pagando seu investimento em curto/médio prazo e gerando valor exponencial ao longo do tempo.
+               </p>
+            </Card>
+          </div>
         </div>
 
       </div>
