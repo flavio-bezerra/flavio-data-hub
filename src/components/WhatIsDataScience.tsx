@@ -191,7 +191,7 @@ const WhatIsDataScience = () => {
               {/* Programming */}
               <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
                 columnsVisible.includes(0) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 0 ? "scale-105 ring-2 ring-primary bg-primary/5" : "bg-card/30"}`}>
+              } ${hoveredPillar !== null && hoveredPillar !== 0 && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 0 || hoveredPillar === 3 ? "scale-105 ring-2 ring-primary bg-primary/5" : "bg-card/30"}`}>
                 <h4 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">
                   1. Programação<br />(O Motor)
                 </h4>
@@ -204,7 +204,7 @@ const WhatIsDataScience = () => {
               {/* Statistics */}
               <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
                 columnsVisible.includes(1) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 1 ? "scale-105 ring-2 ring-gold bg-gold/5" : "bg-card/30"}`}>
+              } ${hoveredPillar !== null && hoveredPillar !== 1 && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 1 || hoveredPillar === 3 ? "scale-105 ring-2 ring-gold bg-gold/5" : "bg-card/30"}`}>
                 <h4 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gold">
                   2. Estatística<br />(A Lógica)
                 </h4>
@@ -217,7 +217,7 @@ const WhatIsDataScience = () => {
               {/* Business */}
               <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
                 columnsVisible.includes(2) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 2 ? "scale-105 ring-2 ring-wine bg-wine/5" : "bg-card/30"}`}>
+              } ${hoveredPillar !== null && hoveredPillar !== 2 && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 2 || hoveredPillar === 3 ? "scale-105 ring-2 ring-wine bg-wine/5" : "bg-card/30"}`}>
                 <h4 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-wine">
                   3. Negócio<br />(O Propósito)
                 </h4>
@@ -229,9 +229,13 @@ const WhatIsDataScience = () => {
             </div>
 
             {/* Conclusion */}
-            <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
+            <div 
+              className={`text-left transition-all duration-300 p-4 rounded-lg cursor-pointer ${
                 columnsVisible.includes(2) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 3 ? "scale-105 ring-2 ring-foreground bg-foreground/5" : "bg-card/30"}`}>
+              } ${hoveredPillar !== null && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 3 ? "scale-105 ring-2 ring-foreground bg-foreground/5" : "bg-card/30"}`}
+              onMouseEnter={() => setHoveredPillar(3)}
+              onMouseLeave={() => setHoveredPillar(null)}
+            >
               <h4 className="text-2xl font-bold mb-4">
                4. Interseção<br />(Onde a Estratégia Nasce)
               </h4>
