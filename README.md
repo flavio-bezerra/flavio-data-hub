@@ -1,73 +1,50 @@
-# Welcome to your Lovable project
-
-## Project info
-
-**URL**: https://lovable.dev/projects/f9d339c5-bfce-496a-975e-6b4d9e5ca7c4
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/f9d339c5-bfce-496a-975e-6b4d9e5ca7c4) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
+# Bem-vindo ao Flávio Data Hub
+Este repositório contém o código-fonte do projeto "Flávio Data Hub".
+**URL do Projeto no Lovable**: https://lovable.dev/projects/f9d339c5-bfce-496a-975e-6b4d9e5ca7c4
+## Como Editar o Código
+Este projeto foi iniciado no [Lovable](https://lovable.dev/projects/f9d339c5-bfce-496a-975e-6b4d9e5ca7c4) para um bootstrap rápido (vibe code), mas o desenvolvimento principal é feito localmente via VS Code (ou outro IDE).
+O projeto é sincronizado entre o Lovable e o GitHub, permitindo flexibilidade:
+**1. Usando seu IDE preferido (Ex: VS Code) - (Recomendado)**
+Você pode clonar este repositório e trabalhar localmente. As alterações enviadas (push) para o repositório serão refletidas de volta no Lovable.
+O único requisito é ter o Node.js e o npm instalados - [instale com o nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Siga estes passos:
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
+# Passo 1: Clone o repositório usando a URL Git do projeto.
+git clone <URL_DO_SEU_GIT>
+# Passo 2: Navegue até o diretório do projeto.
+cd <NOME_DO_SEU_PROJETO>
+# Passo 3: Instale as dependências necessárias.
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Passo 4: Inicie o servidor de desenvolvimento com auto-reloading e preview instantâneo.
 npm run dev
 ```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/f9d339c5-bfce-496a-975e-6b4d9e5ca7c4) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**2. Usando o Lovable**
+Você ainda pode visitar a [página do projeto no Lovable](https://lovable.dev/projects/f9d339c5-bfce-496a-975e-6b4d9e5ca7c4) para edições rápidas por prompts. As alterações feitas no Lovable serão comitadas automaticamente ste repositório.
+**Outras formas de editar:**
+* **Diretamente no GitHub:**
+    * Navegue até o arquivo desejado.
+    * Clique no botão "Edit" (ícone de lápis) no canto superior direito da visualização do arquivo.
+    * Faça suas alterações e faça o commit.
+* **Usando GitHub Codespaces:**
+    * Navegue até a página principal do seu repositório.
+    * Clique no botão "Code" (verde) no canto superior direito.
+    * Selecione a aba "Codespaces".
+    * Clique em "New codespace" para iniciar um novo ambiente Codespace.
+    * Edite os arquivos diretamente no Codespace, faça o commit e envie (push) suas alterações.
+## Tecnologias Utilizadas
+Este projeto é construído com:
+* Vite
+* TypeScript
+* React
+* shadcn-ui
+* Tailwind CSS
+## Como fazer o deploy?
+O deploy de produção deste projeto é feito na **HostGator**. O processo de automação (CI/CD) está detalhado no artigo:
+* *Desbloqueando o Portfólio: Do Low-Code ao Deploy Automático com Lovable, GitHub e HostGator | by Flavio Bezerra | Nov, 2025 | Medium*
+Os métodos de deploy configurados são:
+* **Via GitHub Actions (CI/CD) - (Método Principal):**
+    Este repositório possui um workflow (`.github/workflows/deploy.yml`) que faz o build (`npm run build`) e o deploy automático via FTP para a HostGator sempre que um push é feito para a branch `main`.
+* **Via cPanel:**
+    O arquivo `.cpanel.yml` também está configurado para executar o build e copiar os arquivos da pasta `dist/` para o diretório de deploy.
+* **Via Lovable (Para Previews):**
+    O deploy do Lovable (Share -> Publish) pode ser usado para previews rápidos, embora o deploy de produção seja na HostGator.
