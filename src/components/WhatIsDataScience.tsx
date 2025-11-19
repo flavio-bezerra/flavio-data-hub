@@ -164,8 +164,8 @@ const WhatIsDataScience = () => {
             <div className="relative z-10">
               <h3 className="text-xl font-bold mb-4 text-foreground">A Definição Unificadora</h3>
               <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-                "Embora as lentes variem, a essência é simples: Ciência de Dados não é sobre computadores, é sobre <span className="text-foreground font-medium">resolver problemas reais</span>.
-                É a arte de usar as informações que você já tem para tomar decisões melhores, mais rápidas e com menos "achismo"."
+                "Ciência de Dados não é sobre complexidade de código, é sobre <span className="text-foreground font-medium">redução de incerteza</span>.
+                É a arte de usar o histórico da empresa para tomar decisões futuras com maior probabilidade de acerto."
               </p>
             </div>
           </motion.div>
@@ -840,6 +840,12 @@ const WhatIsDataScience = () => {
                 })()}
               </TabsContent>
             </Tabs>
+            <motion.p
+              className="text-lg text-muted-foreground text-center mt-12 italic"
+              variants={itemVariants}
+            >
+              Com o conceito claro, surge o desafio: como gerir estes projetos num ambiente onde a incerteza é alta? É aqui que entra o método.
+            </motion.p>
           </motion.div>
         </div>
       </div>

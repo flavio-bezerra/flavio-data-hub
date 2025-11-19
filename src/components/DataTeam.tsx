@@ -11,7 +11,7 @@ const DataTeam = () => {
     {
       icon: Briefcase,
       roleName: "Business Stakeholder (O Patrocinador)",
-      description: "Quem paga a conta e define o que precisa ser resolvido. É o 'dono do problema' e quem vai medir se deu certo ou não.",
+      description: "O Patrocinador Estratégico. Define as dores do negócio e valida se a solução entrega o valor esperado (ROI).",
       color: "primary",
       crispStages: ["Entendimento do Negócio", "Avaliação"]
     },
@@ -46,7 +46,7 @@ const DataTeam = () => {
     {
       icon: Server,
       roleName: "Engenheiro de MLOps (O Piloto)",
-      description: "Coloca o modelo 'no ar' e garante que ele funcione 24/7 sem quebrar. É o responsável por manter tudo rodando em produção.",
+      description: "Garante a escalabilidade e governança. Assegura que o modelo opera em ambiente produtivo com segurança e estabilidade.",
       color: "wine",
       crispStages: ["Implantação"]
     }
@@ -182,6 +182,15 @@ const DataTeam = () => {
           })}
         </div>
       </motion.div>
+      <motion.p
+        className="text-lg text-muted-foreground text-center mt-12 italic relative z-10"
+        variants={itemVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        Com o método definido e a equipa montada, resta a pergunta mais importante de qualquer executivo: Quanto vou ganhar com isso?
+      </motion.p>
     </section>
   );
 };

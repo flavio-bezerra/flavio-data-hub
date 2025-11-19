@@ -87,7 +87,7 @@ const About = () => {
                 <div>
                   <h3 className="text-lg font-bold text-foreground mb-2">Objetivo deste Hub</h3>
                   <p className="text-base sm:text-lg text-muted-foreground">
-                    Este hub tem como objetivo centralizar os links das minhas principais redes profissionais e apresentar conceitos que considero relevantes no cenário corporativo de Ciência de Dados, oferecendo uma visão clara do meu trabalho e das ideias compartilhadas aqui.
+                    Este hub é o ponto de convergência entre dados técnicos e decisão estratégica. Aqui, traduzo algoritmos complexos em alavancas de negócio, demonstrando como a Ciência de Dados deixa de ser um custo para se tornar um motor de eficiência.
                   </p>
                 </div>
               </div>
@@ -127,6 +127,12 @@ const About = () => {
                 Mais que insights, <span className="text-primary">resultados</span>.
               </motion.p>
             </motion.div>
+            <motion.p
+              className="text-lg text-muted-foreground text-center mt-12 italic"
+              variants={itemVariants}
+            >
+              Mas para gerar este valor, primeiro precisamos de alinhar o que realmente significa fazer Ciência de Dados no mundo corporativo.
+            </motion.p>
           </div>
         </motion.div>
       </div>

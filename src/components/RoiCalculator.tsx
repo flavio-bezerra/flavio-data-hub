@@ -126,7 +126,7 @@ const RoiCalculator = () => {
                 <div className="flex items-start gap-3">
                   <Banknote className="w-5 h-5 text-primary mt-1" />
                   <div>
-                    <h4 className="font-bold text-foreground">Economia Real (Hard Saving)</h4>
+                    <h4 className="font-bold text-foreground">Impacto direto no P&L (Lucros e Perdas)</h4>
                     <p className="text-sm text-muted-foreground">Dinheiro que deixa de sair do caixa. Ex: Redução de estoque parado, menos desperdício.</p>
                   </div>
                 </div>
@@ -136,7 +136,7 @@ const RoiCalculator = () => {
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-primary mt-1" />
                   <div>
-                    <h4 className="font-bold text-foreground">Ganho de Eficiência (Soft Saving)</h4>
+                    <h4 className="font-bold text-foreground">Custo de Oportunidade e Eficiência Operacional</h4>
                     <p className="text-sm text-muted-foreground">O time faz mais em menos tempo. Ex: Automação de relatórios que liberava 10h/semana.</p>
                   </div>
                 </div>
@@ -199,12 +199,17 @@ const RoiCalculator = () => {
               </div>
 
               <p className="mt-8 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                <span className="text-gold font-semibold">*Regra de Ouro:</span> Se o projeto não tem um ROI positivo claro e mensurável, ele não sai do papel. Priorizamos o que traz retorno real, não o que é apenas "legal" ou "inovador".
+                <span className="text-gold font-semibold">*Regra de Ouro:</span> Se o projeto não tem um ROI positivo claro e mensurável, ele não sai do papel. Priorizamos o que traz retorno real, não o que é apenas "legal" ou "inovador". A Ciência de Dados deve pagar-se a si mesma.
               </p>
             </Card>
           </div>
         </div>
 
+      </div>
+      <div className="text-center mt-12 relative z-10">
+        <p className="text-lg text-muted-foreground italic">
+          A teoria financeira é clara. Agora, convido-o a ver como apliquei esta mentalidade em cenários reais.
+        </p>
       </div>
     </section>
   );

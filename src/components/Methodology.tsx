@@ -386,7 +386,7 @@ const Methodology = () => {
               <div className="p-6 rounded-lg bg-primary/10 border border-primary/20">
                 <h4 className="font-bold text-lg text-foreground mb-3">Data Science</h4>
                 <p className="text-lg">
-                  É <strong>Pesquisa & Descoberta</strong>. Não sabemos se os dados vão responder a pergunta. O risco é investir tempo e não achar nada (viabilidade).
+                  O risco é a viabilidade técnica. O CRISP-DM existe para 'falhar rápido' (fail fast) ou validar o valor antes de escalar o investimento, protegendo o orçamento do projeto.
                 </p>
               </div>
 
@@ -399,6 +399,15 @@ const Methodology = () => {
         </div>
 
       </div>
+      <motion.p
+        className="text-lg text-muted-foreground text-center mt-12 italic relative z-10"
+        variants={itemVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        Um método robusto é essencial, mas não roda sozinho. Quem são as peças-chave para executar este ciclo?
+      </motion.p>
     </section>
   );
 };
