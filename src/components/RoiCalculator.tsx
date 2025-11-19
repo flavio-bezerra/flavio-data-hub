@@ -60,8 +60,7 @@ const RoiCalculator = () => {
             Priorização pelo ROI
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
-            Em um mar de possibilidades, como escolhemos qual projeto atacar? A resposta é financeira.
-            Priorizamos iniciativas onde a mensuração do retorno é <span className="text-foreground font-semibold">fácil, concreta e supera o investimento</span>.
+            No mundo dos negócios, toda decisão é um investimento. A pergunta é simples: <span className="text-foreground font-semibold">o que eu ganho vai superar o que eu gastei?</span> Essa é a essência do ROI (Retorno sobre Investimento).
           </p>
         </div>
 
@@ -78,9 +77,9 @@ const RoiCalculator = () => {
               <div className="flex gap-4">
                 <Users className="w-8 h-8 text-wine-light shrink-0" />
                 <div>
-                  <h4 className="font-bold text-lg mb-1">Pessoas (Horas-Homem)</h4>
+                  <h4 className="font-bold text-lg mb-1">Pessoas (Tempo da Equipe)</h4>
                   <p className="text-sm text-muted-foreground">
-                    Cálculo: <code>(Horas dedicadas × Valor Hora do Profissional)</code>. Inclui Data Scientists, Engenheiros e Stakeholders envolvidos.
+                    Quanto tempo a equipe vai dedicar ao projeto? Multiplique pelas horas e pelo salário. Esse é o custo de oportunidade: o que eles poderiam estar fazendo?
                   </p>
                 </div>
               </div>
@@ -90,9 +89,9 @@ const RoiCalculator = () => {
               <div className="flex gap-4">
                 <Server className="w-8 h-8 text-wine-light shrink-0" />
                 <div>
-                  <h4 className="font-bold text-lg mb-1">Infraestrutura & Tools</h4>
+                  <h4 className="font-bold text-lg mb-1">Tecnologia & Ferramentas</h4>
                   <p className="text-sm text-muted-foreground">
-                    Custo computacional (Cloud/GPU), armazenamento e licenças de software necessárias para rodar o modelo.
+                    Servidores na nuvem, licenças de software, armazenamento de dados. Tudo que é necessário para rodar a solução.
                   </p>
                 </div>
               </div>
@@ -118,8 +117,8 @@ const RoiCalculator = () => {
                 <div className="flex items-start gap-3">
                   <TrendingUp className="w-5 h-5 text-gold mt-1" />
                   <div>
-                    <h4 className="font-bold text-foreground">Incremento de Vendas</h4>
-                    <p className="text-sm text-muted-foreground">Novas receitas geradas diretamente pelo modelo (ex: Recomendação).</p>
+                    <h4 className="font-bold text-foreground">Aumento de Receita</h4>
+                    <p className="text-sm text-muted-foreground">Dinheiro novo entrando. Ex: Sistema de recomendação que aumenta vendas.</p>
                   </div>
                 </div>
               </Card>
@@ -128,8 +127,8 @@ const RoiCalculator = () => {
                 <div className="flex items-start gap-3">
                   <Banknote className="w-5 h-5 text-primary mt-1" />
                   <div>
-                    <h4 className="font-bold text-foreground">Hard Saving</h4>
-                    <p className="text-sm text-muted-foreground">Dinheiro que sai do orçamento. Redução direta de custo (ex: Menor estoque).</p>
+                    <h4 className="font-bold text-foreground">Economia Real (Hard Saving)</h4>
+                    <p className="text-sm text-muted-foreground">Dinheiro que deixa de sair do caixa. Ex: Redução de estoque parado, menos desperdício.</p>
                   </div>
                 </div>
               </Card>
@@ -138,8 +137,8 @@ const RoiCalculator = () => {
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-primary mt-1" />
                   <div>
-                    <h4 className="font-bold text-foreground">Soft Saving</h4>
-                    <p className="text-sm text-muted-foreground">Ganho de eficiência. O time faz mais em menos tempo (ex: Automação).</p>
+                    <h4 className="font-bold text-foreground">Ganho de Eficiência (Soft Saving)</h4>
+                    <p className="text-sm text-muted-foreground">O time faz mais em menos tempo. Ex: Automação de relatórios que liberava 10h/semana.</p>
                   </div>
                 </div>
               </Card>
@@ -148,8 +147,8 @@ const RoiCalculator = () => {
                 <div className="flex items-start gap-3">
                   <ShieldCheck className="w-5 h-5 text-gold mt-1" />
                   <div>
-                    <h4 className="font-bold text-foreground">Cost Avoidance</h4>
-                    <p className="text-sm text-muted-foreground">Custos futuros evitados (ex: Prevenção de multas, churn ou fraudes).</p>
+                    <h4 className="font-bold text-foreground">Evitar Perdas Futuras</h4>
+                    <p className="text-sm text-muted-foreground">Problemas que não aconteceram. Ex: Detectar fraude antes do prejuízo, evitar multas, reter clientes.</p>
                   </div>
                 </div>
               </Card>
@@ -201,7 +200,7 @@ const RoiCalculator = () => {
                </div>
 
                <p className="mt-8 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                 <span className="text-gold font-semibold">*Regra de Ouro:</span> Um projeto de dados viável deve ter um ROI positivo claro, pagando seu investimento em curto/médio prazo e gerando valor exponencial ao longo do tempo.
+                 <span className="text-gold font-semibold">*Regra de Ouro:</span> Se o projeto não tem um ROI positivo claro e mensurável, ele não sai do papel. Priorizamos o que traz retorno real, não o que é apenas "legal" ou "inovador".
                </p>
             </Card>
           </div>

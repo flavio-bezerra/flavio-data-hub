@@ -1,266 +1,392 @@
-import { useEffect, useRef, useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Search, AlertCircle, TrendingUp, Lightbulb, Brain, ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { Search, AlertCircle, TrendingUp, Lightbulb, Brain } from "lucide-react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ResponsiveContainer, ScatterChart, XAxis, YAxis, Tooltip as RechartsTooltip, Scatter } from "recharts";
-
+import { ResponsiveContainer, ScatterChart, XAxis, YAxis, Tooltip as RechartsTooltip, Scatter, CartesianGrid, ReferenceLine } from "recharts";
+import { motion } from "framer-motion";
 
 const WhatIsDataScience = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [visibleCards, setVisibleCards] = useState<number[]>([]);
-  const [diagramVisible, setDiagramVisible] = useState(false);
-  const [circlesVisible, setCirclesVisible] = useState<number[]>([]);
-  const [columnsVisible, setColumnsVisible] = useState<number[]>([]);
   const [hoveredPillar, setHoveredPillar] = useState<number | null>(null);
   const [activeClassic, setActiveClassic] = useState<string | undefined>("descritiva");
   const [activeGenAI, setActiveGenAI] = useState<string | undefined>("prompt");
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const diagramRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3
       }
-    };
-  }, []);
-
-  useEffect(() => {
-    const diagramObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setDiagramVisible(true);
-          // Animate circles one by one
-          [0, 1, 2].forEach((index) => {
-            setTimeout(() => {
-              setCirclesVisible((prev) => [...prev, index]);
-            }, index * 300);
-          });
-          // Animate columns after circles
-          [0, 1, 2].forEach((index) => {
-            setTimeout(() => {
-              setColumnsVisible((prev) => [...prev, index]);
-            }, 1200 + index * 200);
-          });
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (diagramRef.current) {
-      diagramObserver.observe(diagramRef.current);
     }
+  };
 
-    return () => {
-      if (diagramRef.current) {
-        diagramObserver.unobserve(diagramRef.current);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6
       }
-    };
-  }, []);
+    }
+  };
+
+  const circleVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: (i: number) => ({
+      scale: 1,
+      opacity: 1,
+      transition: {
+        delay: i * 0.2,
+        type: "spring",
+        stiffness: 100,
+        damping: 10
+      } as const
+    })
+  };
 
   return (
-    <section ref={sectionRef} className="py-20 bg-background relative overflow-hidden">
+    <section className="py-20 bg-background relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 right-1/4 w-96 h-96 bg-primary rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 left-1/4 w-96 h-96 bg-wine rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <motion.div 
+          className="absolute top-20 right-1/4 w-96 h-96 bg-primary rounded-full blur-3xl"
+          animate={{ 
+            y: [0, 30, 0],
+            opacity: [0.5, 0.8, 0.5]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 left-1/4 w-96 h-96 bg-wine rounded-full blur-3xl"
+          animate={{ 
+            y: [0, -30, 0],
+            opacity: [0.5, 0.8, 0.5]
+          }}
+          transition={{ 
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Definition */}
-        <div
-          className={`max-w-4xl mx-auto mb-16 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+        <motion.div
+          className="max-w-4xl mx-auto mb-16"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
         >
-          <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
+          <motion.h2 
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center gradient-text leading-tight pb-2"
+            variants={itemVariants}
+          >
             O que é Ciência de Dados?
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed">
-            Em 2012, um artigo da <span className="font-semibold">Harvard Business Review</span> definiu o Cientista de Dados como{" "}
-            <span className="text-primary font-semibold">"O Trabalho Mais Sexy do Século XXI"</span>. 
-            Essa definição marcou um ponto de virada: ela posicionou a análise de dados como um pilar central da estratégia de negócio.
-          </p>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed mt-4 sm:mt-6">
+          </motion.h2>
+
+          {/* Market Perspectives Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            {/* McKinsey */}
+            <motion.div 
+              className="bg-card p-6 rounded-xl border border-primary/20 shadow-lg hover:shadow-primary/10 hover:border-primary/40 transition-all duration-300 group" 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="flex items-center gap-3 mb-4 border-b border-primary/20 pb-3">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
+                  <TrendingUp size={20} />
+                </div>
+                <h4 className="font-bold text-primary">McKinsey</h4>
+              </div>
+              <p className="text-sm text-muted-foreground italic leading-relaxed">
+                "Analytics é a ferramenta essencial para transformar dados brutos em <span className="text-foreground font-medium">vantagem competitiva</span>, otimizando operações e criando novos modelos de negócio."
+              </p>
+            </motion.div>
+            
+            {/* Gartner */}
+            <motion.div 
+              className="bg-card p-6 rounded-xl border border-gold/20 shadow-lg hover:shadow-gold/10 hover:border-gold/40 transition-all duration-300 group" 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className="flex items-center gap-3 mb-4 border-b border-gold/20 pb-3">
+                <div className="p-2 rounded-lg bg-gold/10 text-gold group-hover:bg-gold/20 transition-colors">
+                  <Search size={20} />
+                </div>
+                <h4 className="font-bold text-gold">Gartner</h4>
+              </div>
+              <p className="text-sm text-muted-foreground italic leading-relaxed">
+                "Uma disciplina que une <span className="text-foreground font-medium">métodos científicos</span>, algoritmos e sistemas para extrair conhecimento e insights valiosos de grandes volumes de dados."
+              </p>
+            </motion.div>
+
+            {/* Bain */}
+            <motion.div 
+              className="bg-card p-6 rounded-xl border border-wine/20 shadow-lg hover:shadow-wine/10 hover:border-wine/40 transition-all duration-300 group" 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <div className="flex items-center gap-3 mb-4 border-b border-wine/20 pb-3">
+                <div className="p-2 rounded-lg bg-wine/10 text-wine group-hover:bg-wine/20 transition-colors">
+                  <Lightbulb size={20} />
+                </div>
+                <h4 className="font-bold text-wine">Bain & Company</h4>
+              </div>
+              <p className="text-sm text-muted-foreground italic leading-relaxed">
+                "Advanced Analytics permite descobrir padrões ocultos e <span className="text-foreground font-medium">prever comportamentos futuros</span> para resolver os problemas mais complexos e críticos."
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Unifying Definition */}
+          <motion.div 
+            className="bg-gradient-to-r from-primary/5 via-gold/5 to-wine/5 p-8 rounded-xl border border-white/10 text-center relative overflow-hidden" 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px]" />
+            <div className="relative z-10">
+              <h3 className="text-xl font-bold mb-4 text-foreground">A Definição Unificadora</h3>
+              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+                "Embora as lentes variem, a essência é simples: Ciência de Dados não é sobre computadores, é sobre <span className="text-foreground font-medium">resolver problemas reais</span>. 
+                É a arte de usar as informações que você já tem para tomar decisões melhores, mais rápidas e com menos "achismo"."
+              </p>
+            </div>
+          </motion.div>
+          <motion.p 
+            className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed mt-4 sm:mt-6"
+            variants={itemVariants}
+          >
             O modelo conceitual que melhor define essa disciplina é um <span className="font-semibold">Diagrama de Venn</span> que 
             a posiciona na interseção de três pilares fundamentais:
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Three Pillars Section */}
-        <div ref={diagramRef} className="max-w-6xl mx-auto mb-16">
-          <div
-            className={`text-center mb-12 transition-all duration-1000 ${
-              diagramVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}
+        <motion.div 
+          className="max-w-6xl mx-auto mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <motion.div
+            className="text-center mb-12"
+            variants={containerVariants}
           >
-            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 px-4">
+            <motion.h3 
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 px-4"
+              variants={itemVariants}
+            >
               Os Três Pilares da Ciência de Dados
-            </h3>
+            </motion.h3>
 
-            {/* Venn Diagram Container with Label */}
-            <div className="relative w-full max-w-4xl mx-auto mb-16 flex items-center justify-center px-2 sm:px-4">
-              {/* Diagram */}
-              <div className="relative w-full max-w-2xl flex items-center justify-center" style={{ minHeight: '250px', height: 'clamp(250px, 45vw, 450px)' }}>
-                {/* SVG Pattern for Hatching */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 20 }}>
-                  <defs>
-                    <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
-                      <line x1="0" y1="0" x2="0" y2="8" stroke="white" strokeWidth="2" opacity="0.6" />
-                    </pattern>
-                  </defs>
-                  {/* Central intersection circle with hatching */}
-                  <circle 
-                    cx="50%" 
-                    cy="56%" 
-                    r="clamp(15, 5vw, 30)" 
-                    fill="url(#hatch)"
-                    className={`transition-all duration-300 cursor-pointer pointer-events-auto ${
-                      circlesVisible.length >= 3 ? "opacity-100" : "opacity-0"
-                    } ${hoveredPillar === 3 ? "opacity-100" : ""}`}
-                    onMouseEnter={() => setHoveredPillar(3)}
+            {/* Main Content Grid: Diagram (Left) + Cards (Right) */}
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center justify-items-center mb-12 px-4">
+              
+              {/* Left Column: Venn Diagram */}
+              <div className="w-full flex justify-center lg:justify-end relative z-10">
+                <div className="relative w-full max-w-lg flex items-center justify-center" style={{ minHeight: '280px', height: 'clamp(280px, 40vw, 400px)' }}>
+                  {/* SVG Pattern for Hatching */}
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 20 }}>
+                    <defs>
+                      <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+                        <line x1="0" y1="0" x2="0" y2="6" stroke="white" strokeWidth="1.5" opacity="0.8" />
+                      </pattern>
+                    </defs>
+                    {/* Central intersection circle with hatching */}
+                    <motion.circle 
+                      cx="50%" 
+                      cy="58%" 
+                      r="clamp(20, 6vw, 40)" 
+                      fill="url(#hatch)"
+                      className="cursor-pointer pointer-events-auto transition-opacity duration-300"
+                      initial={{ opacity: 0.3 }}
+                      animate={{ opacity: hoveredPillar === 3 ? 1 : 0.4 }}
+                      whileHover={{ scale: 1.1 }}
+                      onMouseEnter={() => setHoveredPillar(3)}
+                      onMouseLeave={() => setHoveredPillar(null)}
+                    />
+                  </svg>
+
+                  {/* Programming Circle - Top Center */}
+                  <motion.div 
+                    className={`absolute top-0 left-1/2 rounded-full bg-primary/30 border-2 sm:border-3 md:border-4 border-primary flex items-center justify-center pb-8 sm:pb-12 md:pb-16 cursor-pointer z-10 transition-all duration-300 ${hoveredPillar !== null && hoveredPillar !== 0 && hoveredPillar !== 3 ? "opacity-30" : ""}`}
+                    style={{ 
+                      width: 'clamp(160px, 42vw, 260px)',
+                      height: 'clamp(160px, 42vw, 260px)',
+                      right: 'auto',
+                      bottom: 'auto',
+                      x: "-50%" 
+                    }}
+                    custom={0}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={circleVariants}
+                    whileHover={{ scale: 1.05 }}
+                    onMouseEnter={() => setHoveredPillar(0)}
                     onMouseLeave={() => setHoveredPillar(null)}
-                  />
-                </svg>
+                  >
+                    <span className="text-primary font-bold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-base pointer-events-none px-1 text-center break-words w-full">Programação</span>
+                  </motion.div>
 
-                {/* Programming Circle - Top */}
-                <div 
-                  className={`absolute top-0 left-1/2 -translate-x-1/2 rounded-full bg-primary/30 border-2 sm:border-3 md:border-4 border-primary flex items-center justify-center transition-all duration-300 cursor-pointer z-10 ${
-                    circlesVisible.includes(0) ? "opacity-100 scale-100" : "opacity-0 scale-75"
-                  } ${hoveredPillar !== null && hoveredPillar !== 0 ? "opacity-30" : "hover:scale-105"}`}
-                  style={{ 
-                    width: 'clamp(140px, 37vw, 288px)',
-                    height: 'clamp(140px, 37vw, 288px)'
-                  }}
+                  {/* Statistics Circle - Bottom Left */}
+                  <motion.div 
+                    className={`absolute bottom-0 rounded-full bg-gold/30 border-2 sm:border-3 md:border-4 border-gold flex items-center justify-center pt-8 pr-8 sm:pt-12 sm:pr-12 md:pt-16 md:pr-16 cursor-pointer z-10 transition-all duration-300 ${hoveredPillar !== null && hoveredPillar !== 1 && hoveredPillar !== 3 ? "opacity-30" : ""}`}
+                    style={{ 
+                      width: 'clamp(160px, 42vw, 260px)',
+                      height: 'clamp(160px, 42vw, 260px)',
+                      left: 'clamp(5%, 10%, 15%)'
+                    }}
+                    custom={1}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={circleVariants}
+                    whileHover={{ scale: 1.05 }}
+                    onMouseEnter={() => setHoveredPillar(1)}
+                    onMouseLeave={() => setHoveredPillar(null)}
+                  >
+                    <span className="text-gold font-bold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-base pointer-events-none text-center break-words leading-tight w-full px-1">Estatística</span>
+                  </motion.div>
+                  
+                  {/* Business Circle - Bottom Right */}
+                  <motion.div 
+                    className={`absolute bottom-0 rounded-full bg-wine/30 border-2 sm:border-3 md:border-4 border-wine flex items-center justify-center pt-8 pl-8 sm:pt-12 sm:pl-12 md:pt-16 md:pl-16 cursor-pointer z-10 transition-all duration-300 ${hoveredPillar !== null && hoveredPillar !== 2 && hoveredPillar !== 3 ? "opacity-30" : ""}`}
+                    style={{ 
+                      width: 'clamp(160px, 42vw, 260px)',
+                      height: 'clamp(160px, 42vw, 260px)',
+                      right: 'clamp(5%, 10%, 15%)'
+                    }}
+                    custom={2}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={circleVariants}
+                    whileHover={{ scale: 1.05 }}
+                    onMouseEnter={() => setHoveredPillar(2)}
+                    onMouseLeave={() => setHoveredPillar(null)}
+                  >
+                    <span className="text-wine font-bold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-base pointer-events-none text-center break-words leading-tight w-full px-1">Negócio</span>
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Right Column: Cards 1, 2, 3 */}
+              <div className="w-full flex flex-col gap-4 lg:justify-center text-left relative z-20">
+                {/* Programming */}
+                <motion.div 
+                  className={`w-full p-4 rounded-lg ${hoveredPillar !== null && hoveredPillar !== 0 && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 0 || hoveredPillar === 3 ? "scale-105 ring-2 ring-primary bg-primary/5" : "bg-card/30"}`}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
                   onMouseEnter={() => setHoveredPillar(0)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-primary font-bold text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl pointer-events-none">Programação</span>
-                </div>
-                
-                {/* Statistics Circle - Bottom Left */}
-                <div 
-                  className={`absolute bottom-0 rounded-full bg-gold/30 border-2 sm:border-3 md:border-4 border-gold flex items-center justify-center transition-all duration-300 cursor-pointer z-10 ${
-                    circlesVisible.includes(1) ? "opacity-100 scale-100" : "opacity-0 scale-75"
-                  } ${hoveredPillar !== null && hoveredPillar !== 1 ? "opacity-30" : "hover:scale-105"}`}
-                  style={{ 
-                    width: 'clamp(140px, 37vw, 288px)',
-                    height: 'clamp(140px, 37vw, 288px)',
-                    left: 'clamp(2%, 10%, 15%)'
-                  }}
+                  <h4 className="text-lg sm:text-xl font-bold mb-2 text-primary">
+                    1. Programação (A Ferramenta)
+                  </h4>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    Não é apenas sobre escrever código. É a capacidade de automatizar tarefas manuais e criar soluções robustas que funcionam em escala, 24 horas por dia.
+                  </p>
+                </motion.div>
+
+                {/* Statistics */}
+                <motion.div 
+                  className={`w-full p-4 rounded-lg ${hoveredPillar !== null && hoveredPillar !== 1 && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 1 || hoveredPillar === 3 ? "scale-105 ring-2 ring-gold bg-gold/5" : "bg-card/30"}`}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
                   onMouseEnter={() => setHoveredPillar(1)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-gold font-bold text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl pointer-events-none">Estatística</span>
-                </div>
-                
-                {/* Business Circle - Bottom Right */}
-                <div 
-                  className={`absolute bottom-0 rounded-full bg-wine/30 border-2 sm:border-3 md:border-4 border-wine flex items-center justify-center transition-all duration-300 cursor-pointer z-10 ${
-                    circlesVisible.includes(2) ? "opacity-100 scale-100" : "opacity-0 scale-75"
-                  } ${hoveredPillar !== null && hoveredPillar !== 2 ? "opacity-30" : "hover:scale-105"}`}
-                  style={{ 
-                    width: 'clamp(140px, 37vw, 288px)',
-                    height: 'clamp(140px, 37vw, 288px)',
-                    right: 'clamp(2%, 10%, 15%)'
-                  }}
+                  <h4 className="text-lg sm:text-xl font-bold mb-2 text-gold">
+                    2. Estatística (A Bússola)
+                  </h4>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    Não é apenas matemática complexa. É o rigor necessário para separar o que é um sinal real do que é apenas ruído ou coincidência, garantindo segurança na decisão.
+                  </p>
+                </motion.div>
+
+                {/* Business */}
+                <motion.div 
+                  className={`w-full p-4 rounded-lg ${hoveredPillar !== null && hoveredPillar !== 2 && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 2 || hoveredPillar === 3 ? "scale-105 ring-2 ring-wine bg-wine/5" : "bg-card/30"}`}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
                   onMouseEnter={() => setHoveredPillar(2)}
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
-                  <span className="text-wine font-bold text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl pointer-events-none">Negócio</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Three Columns Explanation */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12 px-4">
-              {/* Programming */}
-              <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
-                columnsVisible.includes(0) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 0 && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 0 || hoveredPillar === 3 ? "scale-105 ring-2 ring-primary bg-primary/5" : "bg-card/30"}`}>
-                <h4 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">
-                  1. Programação<br />(O Motor)
-                </h4>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  Também chamado de 'Hacking Skills', é o motor que nos permite coletar, processar e analisar bilhões 
-                  de informações em alta velocidade, tornando a análise em larga escala viável.
-                </p>
-              </div>
-
-              {/* Statistics */}
-              <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
-                columnsVisible.includes(1) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 1 && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 1 || hoveredPillar === 3 ? "scale-105 ring-2 ring-gold bg-gold/5" : "bg-card/30"}`}>
-                <h4 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gold">
-                  2. Estatística<br />(A Lógica)
-                </h4>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  Este pilar é a lógica que valida a análise. Fornece os métodos rigorosos para encontrar padrões, 
-                  testar hipóteses e diferenciar um sinal verdadeiro de um ruído aleatório.
-                </p>
-              </div>
-
-              {/* Business */}
-              <div className={`text-left transition-all duration-300 p-4 rounded-lg ${
-                columnsVisible.includes(2) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 2 && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 2 || hoveredPillar === 3 ? "scale-105 ring-2 ring-wine bg-wine/5" : "bg-card/30"}`}>
-                <h4 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-wine">
-                  3. Negócio<br />(O Propósito)
-                </h4>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  A 'Expertise Substantiva' é o que dá propósito a tudo. É o entendimento profundo dos objetivos 
-                  estratégicos da empresa e quais problemas realmente importam.
-                </p>
+                  <h4 className="text-lg sm:text-xl font-bold mb-2 text-wine">
+                    3. Negócio (O Alvo)
+                  </h4>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    O pilar mais importante. Sem um problema de negócio claro para resolver, todo o resto é apenas um exercício acadêmico. É o que transforma dados em dinheiro ou eficiência.
+                  </p>
+                </motion.div>
               </div>
             </div>
 
             {/* Conclusion */}
-            <div 
-              className={`text-left transition-all duration-300 p-4 rounded-lg cursor-pointer ${
-                columnsVisible.includes(2) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              } ${hoveredPillar !== null && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 3 ? "scale-105 ring-2 ring-foreground bg-foreground/5" : "bg-card/30"}`}
+            <motion.div 
+              className={`max-w-4xl mx-auto text-left p-6 rounded-lg cursor-pointer relative z-20 ${hoveredPillar !== null && hoveredPillar !== 3 ? "opacity-30 scale-95" : ""} ${hoveredPillar === 3 ? "scale-105 ring-2 ring-foreground bg-foreground/5" : "bg-card/30"}`}
               onMouseEnter={() => setHoveredPillar(3)}
               onMouseLeave={() => setHoveredPillar(null)}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <h4 className="text-2xl font-bold mb-4">
-               4. Interseção<br />(Onde a Estratégia Nasce)
+              <h4 className="text-2xl font-bold mb-4 text-center">
+               4. A Interseção<br />(Onde o Valor Nasce)
               </h4>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                "Meu trabalho como Especialista de Dados reside precisamente onde esses três pilares se encontram. 
-                O valor é gerado ao aplicar a lógica estatística e o motor computacional para resolver os problemas corretos, 
-                transformando dados brutos em resultados mensuráveis."
+              <p className="text-lg text-muted-foreground leading-relaxed text-center">
+                "Meu trabalho acontece onde esses três mundos se encontram. Uso a tecnologia e a matemática não como fim, mas como meio para responder às perguntas que tiram o sono dos gestores e entregar resultados concretos."
               </p>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
         {/* Approach - New Maturity Sections */}
         <div className="max-w-6xl mx-auto">
-          <div
-            className={`text-center mb-12 transition-all duration-1000 delay-300 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}
+          <motion.div
+            className="text-center mb-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
           >
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">
+            <motion.h3 
+              className="text-3xl md:text-4xl font-bold mb-4"
+              variants={itemVariants}
+            >
               Da Pergunta ao Resultado
-            </h3>
-            <p className="text-xl text-muted-foreground mb-16">
+            </motion.h3>
+            <motion.p 
+              className="text-xl text-muted-foreground mb-16"
+              variants={itemVariants}
+            >
               Meu trabalho é guiar as decisões de negócio através de jornadas de maturidade analítica:
-            </p>
+            </motion.p>
 
             <Tabs defaultValue="classic" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-8 bg-card-foreground/5">
@@ -316,103 +442,177 @@ const WhatIsDataScience = () => {
                 ];
 
                 return (
-                  <>
-                    {/* Chart 1: Classic ML */}
-                    <div className="mb-8 bg-card rounded-lg p-3 sm:p-6 border">
-                      <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
-                      <ResponsiveContainer width="100%" height={320}>
-                        <ScatterChart margin={{ top: 30, right: 20, bottom: 40, left: 25 }}>
-                          <XAxis 
-                            type="number" 
-                            dataKey="complexity" 
-                            name="Complexidade" 
-                            domain={[0, 5]}
-                            ticks={[]}
-                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2 }}
-                            label={{ value: 'Complexidade', position: 'insideBottom', offset: -15 }}
-                          />
-                          <YAxis 
-                            type="number" 
-                            dataKey="value" 
-                            name="Valor" 
-                            domain={[0, 7]}
-                            ticks={[]}
-                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2 }}
-                            label={{ value: 'Valor', angle: -90, position: 'insideLeft', offset: 10 }}
-                          />
-                          <RechartsTooltip 
-                            cursor={false}
-                            content={({ payload }) => {
-                              if (payload && payload.length > 0) {
-                                const data = payload[0].payload;
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start"
+                  >
+                    {/* Chart 1: Classic ML (Left Column) */}
+                    <div className="bg-card rounded-lg p-1 sm:p-6 border aspect-square flex flex-col max-w-md mx-auto w-full">
+                      <h4 className="text-lg font-semibold mb-4 text-left px-2 sm:px-0">Valor vs. Complexidade</h4>
+                      <div className="flex-1 w-full min-h-0">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <ScatterChart margin={{ top: 20, right: 25, bottom: 20, left: 0 }}>
+                            <defs>
+                              <marker id="arrowhead-classic-x" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="hsl(var(--muted-foreground))" />
+                              </marker>
+                              <marker id="arrowhead-classic-y" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="-90">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="hsl(var(--muted-foreground))" />
+                              </marker>
+                            </defs>
+                            <XAxis 
+                              type="number" 
+                              dataKey="complexity" 
+                              name="Complexidade" 
+                              domain={[0, 5]}
+                              ticks={[]}
+                              axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerEnd: 'url(#arrowhead-classic-x)' }}
+                              label={{ value: 'Complexidade', position: 'insideBottomRight', offset: -5, fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                            />
+                            <YAxis 
+                              type="number" 
+                              dataKey="value" 
+                              name="Valor" 
+                              domain={[0, 7]}
+                              ticks={[]}
+                              axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerStart: 'url(#arrowhead-classic-y)' }}
+                              label={{ value: 'Valor', angle: 0, position: 'insideTopLeft', offset: 10, dy: 20, dx: 5, fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                            />
+                            <RechartsTooltip 
+                              cursor={false}
+                              content={({ payload }) => {
+                                if (payload && payload.length > 0) {
+                                  const data = payload[0].payload;
+                                  return (
+                                    <div className="bg-popover border border-border p-3 rounded shadow-lg">
+                                      <p className="font-bold text-popover-foreground">{data.title}</p>
+                                      <p className="text-sm text-muted-foreground mt-1">{data.description}</p>
+                                    </div>
+                                  );
+                                }
+                                return null;
+                              }}
+                            />
+                            <Scatter 
+                              data={classicMLLevels}
+                              shape={(props: any) => {
+                                const { cx, cy, payload } = props;
+                                const isActive = activeClassic === payload.id;
+                                const index = classicMLLevels.findIndex(item => item.id === payload.id);
+                                
+                                // Satellite configuration: Chaotic, organic scatter
+                                const satelliteCount = 100; 
+                                const satellites = Array.from({ length: satelliteCount }).map((_, i) => {
+                                  const seed = index * 100 + i;
+                                  // Pseudo-random generator
+                                  const rand = (s: number) => {
+                                    const x = Math.sin(s) * 43758.5453;
+                                    return x - Math.floor(x);
+                                  };
+                                  
+                                  const rX = rand(seed * 1.1);
+                                  const rY = rand(seed * 1.2);
+                                  const rSize = rand(seed * 1.3);
+
+                                  // Spread across the chart (approx 300x300)
+                                  // Using cubic power to bias towards center naturally but without radial lines
+                                  const spread = 280; 
+                                  const offsetX = (Math.pow(2 * rX - 1, 3)) * spread; 
+                                  const offsetY = (Math.pow(2 * rY - 1, 3)) * spread;
+
+                                  const size = 1 + rSize * 4; // 1-5px
+
+                                  return {
+                                    cx: cx + offsetX,
+                                    cy: cy + offsetY,
+                                    r: size
+                                  };
+                                });
+
                                 return (
-                                  <div className="bg-card border rounded-lg p-3 shadow-lg">
-                                    <p className="font-semibold text-foreground">{data.title}</p>
-                                    <p className="text-sm text-muted-foreground mt-1">{data.description}</p>
-                                  </div>
+                                  <g>
+                                    {isActive && satellites.map((sat, i) => (
+                                      <motion.circle
+                                        key={`sat-${i}`}
+                                        cx={sat.cx}
+                                        cy={sat.cy}
+                                        r={sat.r}
+                                        fill={payload.color}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 0.6, scale: 1 }}
+                                        transition={{ duration: 0.4, delay: i * 0.03 }}
+                                        style={{ pointerEvents: 'none' }}
+                                      />
+                                    ))}
+                                    <motion.circle
+                                      cx={cx}
+                                      cy={cy}
+                                      r={isActive ? 20 : 14}
+                                      fill={payload.color}
+                                      initial={{ scale: 0, opacity: 0 }}
+                                      animate={{ 
+                                        scale: isActive ? 1.2 : 1, 
+                                        opacity: isActive ? 1 : 0.6,
+                                        r: isActive ? 20 : 14
+                                      }}
+                                      transition={{ 
+                                        duration: 0.5, 
+                                        delay: index * 0.15,
+                                        type: "spring",
+                                        stiffness: 200,
+                                        damping: 15
+                                      }}
+                                      whileHover={{ scale: 1.3, opacity: 1 }}
+                                      className="cursor-pointer"
+                                      onClick={() => setActiveClassic(payload.id)}
+                                      style={{ outline: 'none' }}
+                                    />
+                                  </g>
                                 );
-                              }
-                              return null;
-                            }}
-                          />
-                          <Scatter 
-                            data={classicMLLevels}
-                            shape={(props: any) => {
-                              const { cx, cy, payload } = props;
-                              const isActive = activeClassic === payload.id;
-                              const r = isActive ? 20 : 14;
-                              return (
-                                <circle
-                                  cx={cx}
-                                  cy={cy}
-                                  r={r}
-                                  fill={payload.color}
-                                  opacity={isActive ? 1 : 0.5}
-                                  className="cursor-pointer transition-all duration-300"
-                                  onClick={() => setActiveClassic(payload.id)}
-                                  style={{ outline: 'none' }}
-                                  focusable="false"
-                                />
-                              );
-                            }}
-                          />
-                        </ScatterChart>
-                      </ResponsiveContainer>
+                              }}
+                            />
+                          </ScatterChart>
+                        </ResponsiveContainer>
+                      </div>
                     </div>
 
-                    {/* Accordion 1: Classic ML */}
-                    <Accordion 
-                      type="single" 
-                      collapsible 
-                      value={activeClassic} 
-                      onValueChange={setActiveClassic} 
-                      className="w-full"
-                    >
-                      {classicMLLevels.map((item) => {
-                        const Icon = item.icon;
-                        return (
-                          <AccordionItem key={item.id} value={item.id}>
-                            <AccordionTrigger className="p-4 hover:no-underline rounded-lg hover:bg-card-foreground/5 data-[state=open]:bg-card-foreground/10">
-                              <div className="flex items-center gap-4 w-full pr-4 text-left">
-                                <div className="p-3 rounded-lg bg-card-foreground/10" style={{ color: item.color }}>
-                                  <Icon className="w-6 h-6 shrink-0" />
+                    {/* Accordion 1: Classic ML (Right Column) */}
+                    <div className="flex flex-col justify-center h-full">
+                      <Accordion 
+                        type="single" 
+                        collapsible 
+                        value={activeClassic} 
+                        onValueChange={setActiveClassic} 
+                        className="w-full"
+                      >
+                        {classicMLLevels.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <AccordionItem key={item.id} value={item.id}>
+                              <AccordionTrigger className="p-4 hover:no-underline rounded-lg hover:bg-card-foreground/5 data-[state=open]:bg-card-foreground/10">
+                                <div className="flex items-center gap-4 w-full pr-4 text-left">
+                                  <div className="p-3 rounded-lg bg-card-foreground/10" style={{ color: item.color }}>
+                                    <Icon className="w-6 h-6 shrink-0" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <h4 className="font-bold text-base text-foreground">{item.title}</h4>
+                                    <p className="text-sm text-muted-foreground font-normal mt-1">{item.description}</p>
+                                  </div>
                                 </div>
-                                <div className="flex-1">
-                                  <h4 className="font-bold text-base text-foreground">{item.title}</h4>
-                                  <p className="text-sm text-muted-foreground font-normal mt-1">{item.description}</p>
+                              </AccordionTrigger>
+                              <AccordionContent>
+                                <div className="pl-16 pr-4 pt-2">
+                                  <p className="text-muted-foreground leading-relaxed">{item.details}</p>
                                 </div>
-                              </div>
-                            </AccordionTrigger>
-                            <AccordionContent>
-                              <div className="pl-16 pr-4 pt-2">
-                                <p className="text-muted-foreground leading-relaxed">{item.details}</p>
-                              </div>
-                            </AccordionContent>
-                          </AccordionItem>
-                        );
-                      })}
-                    </Accordion>
-                  </>
+                              </AccordionContent>
+                            </AccordionItem>
+                          );
+                        })}
+                      </Accordion>
+                    </div>
+                  </motion.div>
                 );
               })()}
               </TabsContent>
@@ -465,112 +665,185 @@ const WhatIsDataScience = () => {
                 ];
 
                 return (
-                  <>
-                    {/* Chart 2: GenAI */}
-                    <div className="mb-8 bg-card rounded-lg p-3 sm:p-6 border">
-                      <h4 className="text-lg font-semibold mb-4 text-left">Valor vs. Complexidade</h4>
-                      <ResponsiveContainer width="100%" height={320}>
-                        <ScatterChart margin={{ top: 30, right: 20, bottom: 40, left: 25 }}>
-                          <XAxis 
-                            type="number" 
-                            dataKey="complexity" 
-                            name="Complexidade" 
-                            domain={[0, 5]}
-                            ticks={[]}
-                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2 }}
-                            label={{ value: 'Complexidade', position: 'insideBottom', offset: -15 }}
-                          />
-                          <YAxis 
-                            type="number" 
-                            dataKey="value" 
-                            name="Valor" 
-                            domain={[0, 7]}
-                            ticks={[]}
-                            axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2 }}
-                            label={{ value: 'Valor', angle: -90, position: 'insideLeft', offset: 10 }}
-                          />
-                          <RechartsTooltip 
-                            cursor={false}
-                            content={({ payload }) => {
-                              if (payload && payload.length > 0) {
-                                const data = payload[0].payload;
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start"
+                  >
+                    {/* Chart 2: GenAI (Left Column) */}
+                    <div className="bg-card rounded-lg p-1 sm:p-6 border aspect-square flex flex-col max-w-md mx-auto w-full">
+                      <h4 className="text-lg font-semibold mb-4 text-left px-2 sm:px-0">Valor vs. Complexidade</h4>
+                      <div className="flex-1 w-full min-h-0">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <ScatterChart margin={{ top: 20, right: 25, bottom: 20, left: 0 }}>
+                            <defs>
+                              <marker id="arrowhead-genai-x" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="hsl(var(--muted-foreground))" />
+                              </marker>
+                              <marker id="arrowhead-genai-y" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="-90">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="hsl(var(--muted-foreground))" />
+                              </marker>
+                            </defs>
+                            <XAxis 
+                              type="number" 
+                              dataKey="complexity" 
+                              name="Complexidade" 
+                              domain={[0, 5]}
+                              ticks={[]}
+                              axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerEnd: 'url(#arrowhead-genai-x)' }}
+                              label={{ value: 'Complexidade', position: 'insideBottomRight', offset: -5, fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                            />
+                            <YAxis 
+                              type="number" 
+                              dataKey="value" 
+                              name="Valor" 
+                              domain={[0, 7]}
+                              ticks={[]}
+                              axisLine={{ stroke: 'hsl(var(--muted-foreground))', strokeWidth: 2, markerStart: 'url(#arrowhead-genai-y)' }}
+                              label={{ value: 'Valor', angle: 0, position: 'insideTopLeft', offset: 10, dy: 20, dx: 5, fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                            />
+                            <RechartsTooltip 
+                              cursor={false}
+                              content={({ payload }) => {
+                                if (payload && payload.length > 0) {
+                                  const data = payload[0].payload;
+                                  return (
+                                    <div className="bg-popover border border-border p-3 rounded shadow-lg">
+                                      <p className="font-bold text-popover-foreground">{data.title}</p>
+                                      <p className="text-sm text-muted-foreground mt-1">{data.description}</p>
+                                    </div>
+                                  );
+                                }
+                                return null;
+                              }}
+                            />
+                            <Scatter 
+                              data={genAILevels}
+                              shape={(props: any) => {
+                                const { cx, cy, payload } = props;
+                                const isActive = activeGenAI === payload.id;
+                                const index = genAILevels.findIndex(item => item.id === payload.id);
+                                
+                                // Satellite configuration: Chaotic, organic scatter
+                                const satelliteCount = 100; 
+                                const satellites = Array.from({ length: satelliteCount }).map((_, i) => {
+                                  const seed = index * 100 + i;
+                                  // Pseudo-random generator
+                                  const rand = (s: number) => {
+                                    const x = Math.sin(s) * 43758.5453;
+                                    return x - Math.floor(x);
+                                  };
+                                  
+                                  const rX = rand(seed * 1.1);
+                                  const rY = rand(seed * 1.2);
+                                  const rSize = rand(seed * 1.3);
+
+                                  // Spread across the chart (approx 300x300)
+                                  // Using cubic power to bias towards center naturally but without radial lines
+                                  const spread = 280; 
+                                  const offsetX = (Math.pow(2 * rX - 1, 3)) * spread; 
+                                  const offsetY = (Math.pow(2 * rY - 1, 3)) * spread;
+
+                                  const size = 1 + rSize * 4; // 1-5px
+
+                                  return {
+                                    cx: cx + offsetX,
+                                    cy: cy + offsetY,
+                                    r: size
+                                  };
+                                });
+
                                 return (
-                                  <div className="bg-card border rounded-lg p-3 shadow-lg">
-                                    <p className="font-semibold text-foreground">{data.title}</p>
-                                    <p className="text-sm text-muted-foreground mt-1">{data.description}</p>
-                                  </div>
+                                  <g>
+                                    {isActive && satellites.map((sat, i) => (
+                                      <motion.circle
+                                        key={`sat-${i}`}
+                                        cx={sat.cx}
+                                        cy={sat.cy}
+                                        r={sat.r}
+                                        fill={payload.color}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 0.6, scale: 1 }}
+                                        transition={{ duration: 0.4, delay: i * 0.03 }}
+                                        style={{ pointerEvents: 'none' }}
+                                      />
+                                    ))}
+                                    <motion.circle
+                                      cx={cx}
+                                      cy={cy}
+                                      r={isActive ? 20 : 14}
+                                      fill={payload.color}
+                                      initial={{ scale: 0, opacity: 0 }}
+                                      animate={{ 
+                                        scale: isActive ? 1.2 : 1, 
+                                        opacity: isActive ? 1 : 0.6,
+                                        r: isActive ? 20 : 14
+                                      }}
+                                      transition={{ 
+                                        duration: 0.5, 
+                                        delay: index * 0.15,
+                                        type: "spring",
+                                        stiffness: 200,
+                                        damping: 15
+                                      }}
+                                      whileHover={{ scale: 1.3, opacity: 1 }}
+                                      className="cursor-pointer"
+                                      onClick={() => setActiveGenAI(payload.id)}
+                                      style={{ outline: 'none' }}
+                                    />
+                                  </g>
                                 );
-                              }
-                              return null;
-                            }}
-                          />
-                          <Scatter 
-                            data={genAILevels}
-                            shape={(props: any) => {
-                              const { cx, cy, payload } = props;
-                              const isActive = activeGenAI === payload.id;
-                              const r = isActive ? 20 : 14;
-                              return (
-                                <circle
-                                  cx={cx}
-                                  cy={cy}
-                                  r={r}
-                                  fill={payload.color}
-                                  opacity={isActive ? 1 : 0.5}
-                                  className="cursor-pointer transition-all duration-300"
-                                  onClick={() => setActiveGenAI(payload.id)}
-                                  style={{ outline: 'none' }}
-                                  focusable="false"
-                                />
-                              );
-                            }}
-                          />
-                        </ScatterChart>
-                      </ResponsiveContainer>
+                              }}
+                            />
+                          </ScatterChart>
+                        </ResponsiveContainer>
+                      </div>
                     </div>
 
-                    {/* Accordion 2: GenAI */}
-                    <Accordion 
-                      type="single" 
-                      collapsible 
-                      value={activeGenAI} 
-                      onValueChange={setActiveGenAI} 
-                      className="w-full"
-                    >
-                      {genAILevels.map((item) => {
-                        const Icon = item.icon;
-                        return (
-                          <AccordionItem key={item.id} value={item.id}>
-                            <AccordionTrigger className="p-4 hover:no-underline rounded-lg hover:bg-card-foreground/5 data-[state=open]:bg-card-foreground/10">
-                              <div className="flex items-center gap-4 w-full pr-4 text-left">
-                                <div className="p-3 rounded-lg bg-card-foreground/10" style={{ color: item.color }}>
-                                  <Icon className="w-6 h-6 shrink-0" />
+                    {/* Accordion 2: GenAI (Right Column) */}
+                    <div className="flex flex-col justify-center h-full">
+                      <Accordion 
+                        type="single" 
+                        collapsible 
+                        value={activeGenAI} 
+                        onValueChange={setActiveGenAI} 
+                        className="w-full"
+                      >
+                        {genAILevels.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <AccordionItem key={item.id} value={item.id}>
+                              <AccordionTrigger className="p-4 hover:no-underline rounded-lg hover:bg-card-foreground/5 data-[state=open]:bg-card-foreground/10">
+                                <div className="flex items-center gap-4 w-full pr-4 text-left">
+                                  <div className="p-3 rounded-lg bg-card-foreground/10" style={{ color: item.color }}>
+                                    <Icon className="w-6 h-6 shrink-0" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <h4 className="font-bold text-base text-foreground">{item.title}</h4>
+                                    <p className="text-sm text-muted-foreground font-normal mt-1">{item.description}</p>
+                                  </div>
                                 </div>
-                                <div className="flex-1">
-                                  <h4 className="font-bold text-base text-foreground">{item.title}</h4>
-                                  <p className="text-sm text-muted-foreground font-normal mt-1">{item.description}</p>
+                              </AccordionTrigger>
+                              <AccordionContent>
+                                <div className="pl-16 pr-4 pt-2">
+                                  <p className="text-muted-foreground leading-relaxed">{item.details}</p>
                                 </div>
-                              </div>
-                            </AccordionTrigger>
-                            <AccordionContent>
-                              <div className="pl-16 pr-4 pt-2">
-                                <p className="text-muted-foreground leading-relaxed">{item.details}</p>
-                              </div>
-                            </AccordionContent>
-                          </AccordionItem>
-                        );
-                      })}
-                    </Accordion>
-                  </>
+                              </AccordionContent>
+                            </AccordionItem>
+                          );
+                        })}
+                      </Accordion>
+                    </div>
+                  </motion.div>
                 );
               })()}
               </TabsContent>
             </Tabs>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
 };
-
 export default WhatIsDataScience;

@@ -1,91 +1,213 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Linkedin } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Linkedin, Send, Mail } from "lucide-react";
 import logo from "@/assets/logo-white.png";
+import { motion } from "framer-motion";
 
 const Contact = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Contato via Site: ${formData.name}`);
+    const body = encodeURIComponent(`Nome: ${formData.name}\nEmail: ${formData.email}\n\nMensagem:\n${formData.message}`);
+    window.location.href = `mailto:flaviomenegueco@gmail.com?subject=${subject}&body=${body}`;
+  };
 
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
       }
-    };
-  }, []);
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
 
   return (
-    <section ref={sectionRef} className="py-20 bg-background border-t border-border relative overflow-hidden">
+    <section className="py-20 bg-background border-t border-border relative overflow-hidden">
       {/* Animated Background Glow */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-1/3 w-96 h-96 bg-primary rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-0 right-1/3 w-96 h-96 bg-gold rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <motion.div 
+          className="absolute top-0 left-1/3 w-96 h-96 bg-primary rounded-full blur-3xl"
+          animate={{ 
+            y: [0, 40, 0],
+            opacity: [0.5, 0.8, 0.5]
+          }}
+          transition={{ 
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-0 right-1/3 w-96 h-96 bg-gold rounded-full blur-3xl"
+          animate={{ 
+            y: [0, -40, 0],
+            opacity: [0.5, 0.8, 0.5]
+          }}
+          transition={{ 
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div
-          className={`max-w-3xl mx-auto text-center transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+        <motion.div
+          className="max-w-4xl mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
         >
-          <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 gradient-text leading-tight pb-2 ${isVisible ? 'animate-fade-in' : ''}`}>
-            Vamos nos Conectar?
-          </h2>
-          <p className={`text-base sm:text-lg md:text-xl text-muted-foreground mb-10 ${isVisible ? 'animate-fade-in stagger-1' : ''}`}>
-            Interessado em trocar ideias sobre dados e inovação? 
-            Meu principal canal de contato é o <span className="text-primary font-semibold">LinkedIn</span>.
-          </p>
-
-          <Button
-            size="lg"
-            className={`bg-primary hover:bg-primary/90 transform hover:scale-110 transition-all duration-300 tech-glow hover:shadow-2xl mb-12 group ${
-              isVisible ? 'animate-scale-in stagger-2' : ''
-            }`}
-            asChild
-          >
-            <a
-              href="https://www.linkedin.com/in/flavio-m-bezerra"
-              target="_blank"
-              rel="noopener noreferrer"
+          <div className="text-center mb-12">
+            <motion.h2 
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 gradient-text leading-tight pb-2"
+              variants={itemVariants}
             >
-              <Linkedin className="mr-2 h-5 w-5 group-hover:animate-float" />
-              Conectar no LinkedIn
-            </a>
-          </Button>
-
-          {/* Logo */}
-          <div className={`flex justify-center mb-6 ${isVisible ? 'animate-fade-in stagger-3' : ''}`}>
-            <img src={logo} alt="FMB Logo" className="h-20 opacity-80 hover:opacity-100 transition-opacity duration-300" />
+              Vamos nos Conectar?
+            </motion.h2>
+            
+            <motion.p 
+              className="text-base sm:text-lg md:text-xl text-muted-foreground"
+              variants={itemVariants}
+            >
+              Interessado em trocar ideias sobre dados e inovação? 
+              Envie uma mensagem ou conecte-se no LinkedIn.
+            </motion.p>
           </div>
 
-          {/* Tagline */}
-          <div className={`p-6 rounded-lg bg-gradient-to-r from-primary/10 to-gold/10 border border-primary/20 mb-8 ${isVisible ? 'animate-scale-in stagger-4' : ''}`}>
-            <p className="text-2xl md:text-3xl font-script text-foreground">
-              Mais que dados, <span className="text-gold">estratégia</span>.{" "}
-              <br />
-              Mais que insights, <span className="text-primary">resultados</span>.
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            
+            {/* Contact Form */}
+            <motion.div 
+              className="bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-border shadow-lg"
+              variants={itemVariants}
+            >
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <Mail className="w-5 h-5 text-primary" />
+                Envie uma Mensagem
+              </h3>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Input 
+                    placeholder="Seu Nome" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="bg-secondary/50 border-border/50 focus:border-primary"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Input 
+                    type="email" 
+                    placeholder="Seu Email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="bg-secondary/50 border-border/50 focus:border-primary"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Textarea 
+                    placeholder="Sua Mensagem" 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    className="min-h-[120px] bg-secondary/50 border-border/50 focus:border-primary"
+                  />
+                </div>
+                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 group">
+                  Enviar Email
+                  <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </form>
+            </motion.div>
+
+            {/* Social & Info */}
+            <motion.div 
+              className="flex flex-col items-center justify-center h-full space-y-8"
+              variants={itemVariants}
+            >
+              <div className="text-center space-y-6">
+                <p className="text-muted-foreground">
+                  Prefere redes sociais? Vamos conectar no LinkedIn!
+                </p>
+                
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button
+                    size="lg"
+                    className="bg-[#0077b5] hover:bg-[#006396] text-white w-full sm:w-auto transition-all duration-300 shadow-lg group"
+                    asChild
+                  >
+                    <a
+                      href="https://www.linkedin.com/in/flavio-m-bezerra"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Linkedin className="mr-2 h-5 w-5 group-hover:animate-bounce" />
+                      Conectar no LinkedIn
+                    </a>
+                  </Button>
+                </motion.div>
+              </div>
+
+              {/* Logo */}
+              <motion.div 
+                className="flex justify-center pt-8"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+              >
+                <img src={logo} alt="FMB Logo" className="h-24 opacity-80 hover:opacity-100 transition-opacity duration-300" />
+              </motion.div>
+
+              {/* Tagline */}
+              <div className="text-center">
+                <p className="text-xl font-script text-foreground">
+                  Mais que dados, <span className="text-gold">estratégia</span>.{" "}
+                  <br />
+                  Mais que insights, <span className="text-primary">resultados</span>.
+                </p>
+              </div>
+            </motion.div>
+
           </div>
 
           {/* Copyright */}
-          <p className={`text-sm text-muted-foreground ${isVisible ? 'animate-fade-in stagger-5' : ''}`}>
+          <motion.p 
+            className="text-sm text-muted-foreground text-center mt-16"
+            variants={itemVariants}
+          >
             © {new Date().getFullYear()} Flávio Menegueço Bezerra. Todos os direitos reservados.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </div>
     </section>
   );
