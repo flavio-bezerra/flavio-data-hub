@@ -2,27 +2,63 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Linkedin, Send, Mail } from "lucide-react";
+import { Linkedin, Send, Mail, Loader2 } from "lucide-react";
 import logo from "@/assets/logo-white.png";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Contato via Site: ${formData.name}`);
-    const body = encodeURIComponent(`Nome: ${formData.name}\nEmail: ${formData.email}\n\nMensagem:\n${formData.message}`);
-    window.location.href = `mailto:flaviomenegueco@gmail.com?subject=${subject}&body=${body}`;
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/flaviomenegueco@gmail.com", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          _subject: `Novo contato do site: ${formData.name}`,
+          _template: "table",
+          _captcha: "false"
+        })
+      });
+
+      if (response.ok) {
+        toast.success("Mensagem enviada com sucesso!", {
+          description: "Obrigado pelo contato. Retornarei em breve."
+        });
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        throw new Error("Falha ao enviar mensagem");
+      }
+    } catch (error) {
+      toast.error("Erro ao enviar mensagem", {
+        description: "Por favor, tente novamente mais tarde ou contate via LinkedIn."
+      });
+      console.error("Erro no envio:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const containerVariants = {
@@ -50,25 +86,25 @@ const Contact = () => {
     <section className="py-20 bg-background border-t border-border relative overflow-hidden">
       {/* Animated Background Glow */}
       <div className="absolute inset-0 opacity-10">
-        <motion.div 
+        <motion.div
           className="absolute top-0 left-1/3 w-96 h-96 bg-primary rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             y: [0, 40, 0],
             opacity: [0.5, 0.8, 0.5]
           }}
-          transition={{ 
+          transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-0 right-1/3 w-96 h-96 bg-gold rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             y: [0, -40, 0],
             opacity: [0.5, 0.8, 0.5]
           }}
-          transition={{ 
+          transition={{
             duration: 10,
             repeat: Infinity,
             ease: "easeInOut",
@@ -76,7 +112,7 @@ const Contact = () => {
           }}
         />
       </div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           className="max-w-4xl mx-auto"
@@ -86,26 +122,26 @@ const Contact = () => {
           variants={containerVariants}
         >
           <div className="text-center mb-12">
-            <motion.h2 
+            <motion.h2
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 gradient-text leading-tight pb-2"
               variants={itemVariants}
             >
               Vamos nos Conectar?
             </motion.h2>
-            
-            <motion.p 
+
+            <motion.p
               className="text-base sm:text-lg md:text-xl text-muted-foreground"
               variants={itemVariants}
             >
-              Interessado em trocar ideias sobre dados e inovação? 
+              Interessado em trocar ideias sobre dados e inovação?
               Envie uma mensagem ou conecte-se no LinkedIn.
             </motion.p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            
+
             {/* Contact Form */}
-            <motion.div 
+            <motion.div
               className="bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-border shadow-lg"
               variants={itemVariants}
             >
@@ -115,45 +151,72 @@ const Contact = () => {
               </h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Input 
-                    placeholder="Seu Nome" 
+                  <Input
+                    placeholder="Seu Nome"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    disabled={isSubmitting}
                     className="bg-secondary/50 border-border/50 focus:border-primary"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Input 
-                    type="email" 
-                    placeholder="Seu Email" 
+                  <Input
+                    type="email"
+                    placeholder="Seu Email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    disabled={isSubmitting}
                     className="bg-secondary/50 border-border/50 focus:border-primary"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Textarea 
-                    placeholder="Sua Mensagem" 
+                  <Input
+                    type="tel"
+                    placeholder="Seu Telefone (Opcional)"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                    className="bg-secondary/50 border-border/50 focus:border-primary"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Textarea
+                    placeholder="Sua Mensagem"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
+                    disabled={isSubmitting}
                     className="min-h-[120px] bg-secondary/50 border-border/50 focus:border-primary"
                   />
                 </div>
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 group">
-                  Enviar Email
-                  <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                <Button
+                  type="submit"
+                  className="w-full bg-primary hover:bg-primary/90 group"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      Enviando...
+                      <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      Enviar Email
+                      <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
                 </Button>
               </form>
             </motion.div>
 
             {/* Social & Info */}
-            <motion.div 
+            <motion.div
               className="flex flex-col items-center justify-center h-full space-y-8"
               variants={itemVariants}
             >
@@ -161,7 +224,7 @@ const Contact = () => {
                 <p className="text-muted-foreground">
                   Prefere redes sociais? Vamos conectar no LinkedIn!
                 </p>
-                
+
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     size="lg"
@@ -181,7 +244,7 @@ const Contact = () => {
               </div>
 
               {/* Logo */}
-              <motion.div 
+              <motion.div
                 className="flex justify-center pt-8"
                 whileHover={{ scale: 1.1, rotate: 5 }}
               >
@@ -201,7 +264,7 @@ const Contact = () => {
           </div>
 
           {/* Copyright */}
-          <motion.p 
+          <motion.p
             className="text-sm text-muted-foreground text-center mt-16"
             variants={itemVariants}
           >

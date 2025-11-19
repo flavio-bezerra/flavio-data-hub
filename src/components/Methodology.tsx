@@ -64,7 +64,7 @@ const crispSteps = [
 const StepCardDesktop = ({ step, isActive, onClick, labelPosition = "bottom" }: { step: typeof crispSteps[0], isActive: boolean, onClick: () => void, labelPosition?: "top" | "bottom" }) => {
   const Icon = step.icon;
   return (
-    <motion.div 
+    <motion.div
       className="relative cursor-pointer group"
       onClick={onClick}
       whileHover={{ scale: 1.1 }}
@@ -73,10 +73,10 @@ const StepCardDesktop = ({ step, isActive, onClick, labelPosition = "bottom" }: 
         "w-24 h-24 rounded-full border-2 flex items-center justify-center transition-all duration-300 z-20 relative bg-card",
         isActive ? "shadow-[0_0_20px_-5px_currentColor]" : "border-border group-hover:border-primary/50"
       )}
-      style={{
-        borderColor: isActive ? `hsl(var(--${step.color}))` : undefined,
-        color: isActive ? `hsl(var(--${step.color}))` : undefined
-      }}
+        style={{
+          borderColor: isActive ? `hsl(var(--${step.color}))` : undefined,
+          color: isActive ? `hsl(var(--${step.color}))` : undefined
+        }}
       >
         <Icon size={32} style={{ color: isActive ? `hsl(var(--${step.color}))` : `hsl(var(--muted-foreground))` }} />
       </div>
@@ -87,7 +87,7 @@ const StepCardDesktop = ({ step, isActive, onClick, labelPosition = "bottom" }: 
         <span className={cn(
           "text-sm font-bold transition-colors duration-300",
         )}
-        style={{ color: isActive ? `hsl(var(--${step.color}))` : `hsl(var(--muted-foreground))` }}
+          style={{ color: isActive ? `hsl(var(--${step.color}))` : `hsl(var(--muted-foreground))` }}
         >
           {step.number}. {step.shortTitle}
         </span>
@@ -124,25 +124,25 @@ const Methodology = () => {
     <section className="py-20 bg-secondary/50 relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-5">
-        <motion.div 
+        <motion.div
           className="absolute top-1/3 left-0 w-96 h-96 bg-gold rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             y: [0, 40, 0],
             opacity: [0.5, 0.8, 0.5]
           }}
-          transition={{ 
+          transition={{
             duration: 7,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-1/3 right-0 w-96 h-96 bg-primary rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             y: [0, -40, 0],
             opacity: [0.5, 0.8, 0.5]
           }}
-          transition={{ 
+          transition={{
             duration: 9,
             repeat: Infinity,
             ease: "easeInOut",
@@ -150,9 +150,9 @@ const Methodology = () => {
           }}
         />
       </div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        
+
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+
         {/* Título da Seção */}
         <motion.div
           className="max-w-4xl mx-auto mb-12"
@@ -161,13 +161,13 @@ const Methodology = () => {
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
         >
-          <motion.h2 
+          <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2"
             variants={itemVariants}
           >
             Metodologia de Projeto
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed px-4"
             variants={itemVariants}
           >
@@ -175,17 +175,17 @@ const Methodology = () => {
           </motion.p>
         </motion.div>
 
-        <div className="flex flex-col xl:flex-row items-center xl:items-start gap-12 xl:gap-8">
-          
+        <div className="flex flex-col 2xl:flex-row items-center 2xl:items-start gap-8 2xl:gap-12">
+
           {/* Bloco 2: O Ciclo Interativo (Fluxograma) */}
-          <motion.div 
-            className="w-full xl:flex-1 order-2 xl:order-1"
+          <motion.div
+            className="w-full 2xl:flex-1 order-2 2xl:order-1"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={containerVariants}
           >
-            <motion.h3 
+            <motion.h3
               className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-12 text-center px-4"
               variants={itemVariants}
             >
@@ -237,9 +237,9 @@ const Methodology = () => {
 
             {/* DESKTOP LAYOUT (Horizontal Flow) */}
             <div className="hidden lg:flex flex-row items-center justify-center gap-4 xl:gap-8 relative py-20">
-              
+
               {/* Step 1: Business Understanding (Left) */}
-              <motion.div 
+              <motion.div
                 className="relative z-20 cursor-pointer group shrink-0"
                 onClick={() => setActiveCrispStep(0)}
                 whileHover={{ scale: 1.05 }}
@@ -261,7 +261,7 @@ const Methodology = () => {
 
               {/* The Cycle Container (Center) */}
               <div className="relative w-[500px] h-[500px] shrink-0 flex items-center justify-center">
-                
+
                 {/* Connecting Lines (SVG) */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ overflow: 'visible' }}>
                   {/* 2 -> 3 (Top Arc) */}
@@ -272,7 +272,7 @@ const Methodology = () => {
                   <path d="M350 440 Q 250 490 150 440" fill="none" stroke="hsl(var(--wine))" strokeWidth="3" markerEnd="url(#arrowhead-wine)" />
                   {/* 5 -> 2 (Left Arc - Loop) */}
                   <path d="M60 350 Q 10 250 60 150" fill="none" stroke="hsl(var(--gold))" strokeWidth="3" strokeDasharray="4 4" markerEnd="url(#arrowhead-gold)" />
-                  
+
                   <defs>
                     <marker id="arrowhead-gold" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
                       <polygon points="0 0, 10 3.5, 0 7" fill="hsl(var(--gold))" />
@@ -288,7 +288,7 @@ const Methodology = () => {
 
                 {/* Central Details Panel */}
                 <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-                  <motion.div 
+                  <motion.div
                     className="w-64 h-64 bg-card/95 backdrop-blur-md border-2 border-border rounded-full p-5 flex flex-col items-center justify-center text-center shadow-2xl pointer-events-auto z-30"
                     key={activeCrispStep}
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -339,14 +339,14 @@ const Methodology = () => {
               </div>
 
               {/* Step 6: Deployment (Right) */}
-              <motion.div 
+              <motion.div
                 className="relative z-20 cursor-pointer group shrink-0"
                 onClick={() => setActiveCrispStep(5)}
                 whileHover={{ scale: 1.05 }}
               >
                 {/* Arrow from Cycle */}
                 <ArrowRight className="absolute -left-10 top-1/2 -translate-y-1/2 w-8 h-8 text-muted-foreground animate-pulse" />
-                
+
                 <div className={cn(
                   "w-48 p-4 rounded-xl border-2 text-center transition-all duration-300 bg-card",
                   activeCrispStep === 5 ? "bg-wine/20 border-wine shadow-[0_0_30px_-5px_hsl(var(--wine)/0.5)]" : "border-border hover:border-wine/50"
@@ -364,8 +364,8 @@ const Methodology = () => {
           </motion.div>
 
           {/* Bloco 1: CRISP-DM vs. Agile (Sidebar on XL) */}
-          <motion.div 
-            className="w-full max-w-4xl xl:w-[500px] shrink-0 order-1 xl:order-2 p-8 bg-card/50 backdrop-blur-sm rounded-xl border border-border shadow-lg xl:sticky xl:top-24 h-fit"
+          <motion.div
+            className="w-full max-w-4xl 2xl:w-[380px] shrink-0 order-1 2xl:order-2 p-6 bg-card/50 backdrop-blur-sm rounded-xl border border-border shadow-lg 2xl:sticky 2xl:top-24 h-fit"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -382,7 +382,7 @@ const Methodology = () => {
                   Metodologias Ágeis (Scrum) focam em <strong>velocidade de entrega</strong>. O objetivo é claro (ex: "criar login"), o risco é o tempo.
                 </p>
               </div>
-              
+
               <div className="p-6 rounded-lg bg-primary/10 border border-primary/20">
                 <h4 className="font-bold text-lg text-foreground mb-3">Data Science</h4>
                 <p className="text-lg">
@@ -390,7 +390,9 @@ const Methodology = () => {
                 </p>
               </div>
 
-                O <span className="text-gold font-bold text-xl">CRISP-DM</span> existe para reduzir esse risco: falhamos rápido se for preciso, ou acertamos o alvo com precisão antes de gastar recursos construindo.
+              <p>
+                O <span className="text-gold font-bold text-xl">CRISP-DM</span> existe para reduzir esse risco: <br className="hidden 2xl:block" /> falhamos rápido se for preciso, ou acertamos o alvo com precisão antes de gastar recursos construindo.
+              </p>
             </div>
           </motion.div>
 
