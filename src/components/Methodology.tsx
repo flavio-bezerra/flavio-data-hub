@@ -171,7 +171,7 @@ const Methodology = () => {
             className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed px-4"
             variants={itemVariants}
           >
-            Como transformamos uma dúvida vaga em uma solução que funciona? Seguindo um mapa testado e aprovado pelo mercado global.
+            Sabendo agora como podemos entregar um projeto (níveis de complexidade), vale mostrar como estruturamos as entregas, visto que, em Ciência de Dados, não podemos comprovar que seremos capazes de entregar um modelo treinado com boas métricas de assertividade antes de testar um cross validation com dados reais.
           </motion.p>
         </motion.div>
 

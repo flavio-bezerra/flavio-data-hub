@@ -12,37 +12,43 @@ const DataTeam = () => {
       icon: Briefcase,
       roleName: "Business Stakeholder (O Patrocinador)",
       description: "Quem paga a conta e define o que precisa ser resolvido. É o 'dono do problema' e quem vai medir se deu certo ou não.",
-      color: "primary"
+      color: "primary",
+      crispStages: ["Entendimento do Negócio", "Avaliação"]
     },
     {
       icon: Target,
       roleName: "Product Owner (O Tradutor)",
       description: "O tradutor entre 'linguagem de negócio' e 'linguagem técnica'. Garante que o time está construindo a coisa certa, na ordem certa.",
-      color: "gold"
+      color: "gold",
+      crispStages: ["Entendimento do Negócio", "Avaliação"]
     },
     {
       icon: Database,
       roleName: "Engenheiro de Dados (O Arquiteto)",
       description: "Constrói os 'canos' que trazem os dados dos sistemas. Sem ele, não tem matéria-prima para trabalhar.",
-      color: "wine"
+      color: "wine",
+      crispStages: ["Entendimento dos Dados", "Preparação dos Dados"]
     },
     {
       icon: BarChartHorizontalBig,
       roleName: "Analista de Dados / BI (O Historiador)",
       description: "Conta a história do que já aconteceu. Cria dashboards e relatórios para você entender o passado e o presente do negócio.",
-      color: "primary"
+      color: "primary",
+      crispStages: ["Entendimento dos Dados", "Avaliação"]
     },
     {
       icon: BrainCircuit,
       roleName: "Cientista de Dados (O Estrategista/Preditivo)",
       description: "Olha para o futuro. Usa matemática e algoritmos para prever o que vai acontecer e recomendar o que fazer.",
-      color: "gold"
+      color: "gold",
+      crispStages: ["Preparação dos Dados", "Modelagem", "Avaliação"]
     },
     {
       icon: Server,
       roleName: "Engenheiro de MLOps (O Piloto)",
       description: "Coloca o modelo 'no ar' e garante que ele funcione 24/7 sem quebrar. É o responsável por manter tudo rodando em produção.",
-      color: "wine"
+      color: "wine",
+      crispStages: ["Implantação"]
     }
   ];
 
@@ -77,25 +83,25 @@ const DataTeam = () => {
     >
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-5">
-        <motion.div 
+        <motion.div
           className="absolute top-1/4 left-1/3 w-96 h-96 bg-wine rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             y: [0, 30, 0],
             opacity: [0.5, 0.8, 0.5]
           }}
-          transition={{ 
+          transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-primary rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             y: [0, -30, 0],
             opacity: [0.5, 0.8, 0.5]
           }}
-          transition={{ 
+          transition={{
             duration: 10,
             repeat: Infinity,
             ease: "easeInOut",
@@ -103,20 +109,20 @@ const DataTeam = () => {
           }}
         />
       </div>
-      
+
       <motion.div
         className="container mx-auto relative z-10"
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
       >
-        <motion.h2 
+        <motion.h2
           className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2"
           variants={itemVariants}
         >
-          Data Science é um Esporte Coletivo
+          Composição de uma Squad de Dados
         </motion.h2>
-        <motion.p 
+        <motion.p
           className="text-base sm:text-lg md:text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-8 sm:mb-12 px-4"
           variants={itemVariants}
         >
@@ -135,25 +141,41 @@ const DataTeam = () => {
                     borderColor: `hsl(var(--${role.color}) / 0.2)`,
                   }}
                 >
-                  <div 
+                  <div
                     className="flex items-center justify-center w-16 h-16 mb-4 rounded-full transition-all duration-500 group-hover:rotate-[360deg] group-hover:scale-110"
                     style={{
                       backgroundColor: `hsl(var(--${role.color}) / 0.15)`,
                       boxShadow: `0 0 20px hsl(var(--${role.color}) / 0.2)`
                     }}
                   >
-                    <Icon 
-                      className="w-8 h-8" 
+                    <Icon
+                      className="w-8 h-8"
                       style={{ color: `hsl(var(--${role.color}))` }}
                     />
                   </div>
-                  <h4 
+                  <h4
                     className="text-xl font-bold mb-2"
                     style={{ color: `hsl(var(--${role.color}))` }}
                   >
                     {role.roleName}
                   </h4>
-                  <p className="text-muted-foreground">{role.description}</p>
+                  <p className="text-muted-foreground mb-6">{role.description}</p>
+
+                  <div className="mt-auto w-full pt-4 border-t border-border/30">
+                    <p className="text-xs font-bold uppercase tracking-wider mb-3 opacity-80" style={{ color: `hsl(var(--${role.color}))` }}>
+                      CRISP-DM
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      {role.crispStages.map((stage, i) => (
+                        <span
+                          key={i}
+                          className="text-[10px] sm:text-xs px-2 py-1 rounded-full bg-background/50 border border-border/50 font-medium text-muted-foreground"
+                        >
+                          {stage}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </Card>
               </motion.div>
             );

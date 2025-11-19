@@ -31,25 +31,25 @@ const About = () => {
     <section ref={sectionRef} className="py-20 bg-secondary/50 relative overflow-hidden">
       {/* Background Tech Pattern */}
       <div className="absolute inset-0 opacity-5">
-        <motion.div 
+        <motion.div
           className="absolute top-0 left-1/4 w-96 h-96 bg-primary rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             y: [0, 20, 0],
             opacity: [0.5, 0.8, 0.5]
           }}
-          transition={{ 
+          transition={{
             duration: 5,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-0 right-1/4 w-96 h-96 bg-gold rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             y: [0, -20, 0],
             opacity: [0.5, 0.8, 0.5]
           }}
-          transition={{ 
+          transition={{
             duration: 7,
             repeat: Infinity,
             ease: "easeInOut",
@@ -57,7 +57,7 @@ const About = () => {
           }}
         />
       </div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           className="max-w-4xl mx-auto"
@@ -65,7 +65,7 @@ const About = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <motion.h2 
+          <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center"
             variants={{
               hidden: { opacity: 0, y: -20 },
@@ -76,7 +76,7 @@ const About = () => {
           </motion.h2>
           <div className="space-y-8 text-xl text-muted-foreground leading-relaxed">
             {/* Site Objective Block */}
-            <motion.div 
+            <motion.div
               className="p-4 sm:p-6 rounded-lg bg-gradient-to-r from-primary/10 to-gold/10 border border-white/10 mb-8"
               variants={itemVariants}
             >
@@ -87,42 +87,42 @@ const About = () => {
                 <div>
                   <h3 className="text-lg font-bold text-foreground mb-2">Objetivo deste Hub</h3>
                   <p className="text-base sm:text-lg text-muted-foreground">
-                    O objetivo deste site é ajudar a centralizar as minhas principais redes profissionais e apresentar o que acho mais relevante no cenário de Ciência de Dados no meio corporativo, oferecendo ao leitor uma visão clara do meu trabalho e do conteúdo aqui compartilhado.
+                    Este hub tem como objetivo centralizar os links das minhas principais redes profissionais e apresentar conceitos que considero relevantes no cenário corporativo de Ciência de Dados, oferecendo uma visão clara do meu trabalho e das ideias compartilhadas aqui.
                   </p>
                 </div>
               </div>
             </motion.div>
-            <motion.p 
+            <motion.p
               className="p-4 sm:p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-primary/20 hover:border-primary/40 transition-colors duration-300"
               variants={itemVariants}
               whileHover={{ scale: 1.02 }}
             >
               <span className="text-foreground font-semibold text-xl sm:text-2xl">Data Science</span> foi a forma pela qual meu foco em{" "}
-              <span className="text-primary font-semibold">resolver problemas complexos</span> se concretizou. 
+              <span className="text-primary font-semibold">resolver problemas complexos</span> se concretizou.
               A partir de uma estrutura sólida baseada na{" "}
-              <span className="text-gold font-semibold">análise de dados internos</span>, 
-              tornou-se possível reduzir custos, otimizar processos e, principalmente, gerar resultados de alta performance 
+              <span className="text-gold font-semibold">análise de dados internos</span>,
+              tornou-se possível reduzir custos, otimizar processos e, principalmente, gerar resultados de alta performance
               de maneira <span className="text-gold font-semibold">mensurável</span> e alinhada ao core do negócio.
             </motion.p>
-            <motion.p 
+            <motion.p
               className="p-4 sm:p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-gold/20 hover:border-gold/40 transition-colors duration-300"
               variants={itemVariants}
               whileHover={{ scale: 1.02 }}
             >
-              Ao longo da confecção de diversos projetos nas áreas de <span className="font-semibold text-foreground">Varejo, Indústria e Supply Chain</span>, 
+              Ao longo da confecção de diversos projetos nas áreas de <span className="font-semibold text-foreground">Varejo, Indústria e Supply Chain</span>,
               aprofundei minha especialização em{" "}
               <span className="text-foreground font-semibold">Machine Learning, IA Generativa (LLMs), Análise Exploratória (EDA) e MLOps</span>.
             </motion.p>
-            <motion.div 
+            <motion.div
               className="text-center pt-4 sm:pt-8"
               variants={itemVariants}
             >
-              <motion.p 
+              <motion.p
                 className="text-xl sm:text-2xl md:text-3xl font-script text-foreground p-4 sm:p-6 rounded-lg bg-gradient-to-r from-primary/10 to-gold/10 border border-primary/30"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
-                Mais que dados, <span className="text-gold">estratégia</span>. 
+                Mais que dados, <span className="text-gold">estratégia</span>.
                 <br />
                 Mais que insights, <span className="text-primary">resultados</span>.
               </motion.p>
