@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Search, AlertCircle, TrendingUp, Lightbulb, Brain } from "lucide-react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ResponsiveContainer, ScatterChart, XAxis, YAxis, Tooltip as RechartsTooltip, Scatter, CartesianGrid, ReferenceLine } from "recharts";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 const WhatIsDataScience = () => {
   const [hoveredPillar, setHoveredPillar] = useState<number | null>(null);
   const [activeClassic, setActiveClassic] = useState<string | undefined>("descritiva");
   const [activeGenAI, setActiveGenAI] = useState<string | undefined>("prompt");
+
+  const vennRef = useRef<HTMLDivElement>(null);
+  const isVennInView = useInView(vennRef, { once: true, margin: "-100px" });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -42,7 +45,24 @@ const WhatIsDataScience = () => {
         stiffness: 100,
         damping: 10
       } as const
-    })
+    }),
+    hovered: { 
+      scale: 1.1, 
+      opacity: 1,
+      transition: { duration: 0.3 }
+    },
+    dimmed: { 
+      scale: 1, 
+      opacity: 0.3,
+      transition: { duration: 0.3 }
+    }
+  };
+
+  const getCircleVariant = (index: number) => {
+    if (!isVennInView) return "hidden";
+    if (hoveredPillar === index) return "hovered";
+    if (hoveredPillar !== null && hoveredPillar !== index && hoveredPillar !== 3) return "dimmed";
+    return "visible";
   };
 
   return (
@@ -201,89 +221,59 @@ const WhatIsDataScience = () => {
 
               {/* Left Column: Venn Diagram */}
               <div className="w-full flex justify-center lg:justify-end relative z-10">
-                <div className="relative w-full max-w-lg flex items-center justify-center" style={{ minHeight: '280px', height: 'clamp(280px, 40vw, 400px)' }}>
-                  {/* SVG Pattern for Hatching */}
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 20 }}>
-                    <defs>
-                      <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
-                        <line x1="0" y1="0" x2="0" y2="6" stroke="white" strokeWidth="1.5" opacity="0.8" />
-                      </pattern>
-                    </defs>
-                    {/* Central intersection circle with hatching */}
-                    <motion.circle
-                      cx="50%"
-                      cy="58%"
-                      r="clamp(20, 6vw, 40)"
-                      fill="url(#hatch)"
-                      className="cursor-pointer pointer-events-auto transition-opacity duration-300"
-                      initial={{ opacity: 0.3 }}
-                      animate={{ opacity: hoveredPillar === 3 ? 1 : 0.4 }}
-                      whileHover={{ scale: 1.1 }}
-                      onMouseEnter={() => setHoveredPillar(3)}
-                      onMouseLeave={() => setHoveredPillar(null)}
-                    />
-                  </svg>
+                <div ref={vennRef} className="relative w-full max-w-[400px] aspect-square mx-auto">
+
 
                   {/* Programming Circle - Top Center */}
                   <motion.div
-                    className={`absolute top-0 left-1/2 rounded-full bg-primary/30 border-2 sm:border-3 md:border-4 border-primary flex items-center justify-center pb-8 sm:pb-12 md:pb-16 cursor-pointer z-10 transition-all duration-300 ${hoveredPillar !== null && hoveredPillar !== 0 && hoveredPillar !== 3 ? "opacity-30" : ""}`}
+                    className={`absolute top-0 left-1/2 rounded-full border-2 sm:border-3 md:border-4 flex items-center justify-center pb-[15%] cursor-pointer z-10 transition-all duration-300 ${hoveredPillar === 3 ? "bg-white/30 border-white" : "bg-primary/30 border-primary"}`}
                     style={{
-                      width: 'clamp(160px, 42vw, 260px)',
-                      height: 'clamp(160px, 42vw, 260px)',
-                      right: 'auto',
-                      bottom: 'auto',
+                      width: '55%',
+                      height: '55%',
                       x: "-50%"
                     }}
                     custom={0}
                     initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
+                    animate={getCircleVariant(0)}
                     variants={circleVariants}
-                    whileHover={{ scale: 1.05 }}
                     onMouseEnter={() => setHoveredPillar(0)}
                     onMouseLeave={() => setHoveredPillar(null)}
                   >
-                    <span className="text-primary font-bold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-base pointer-events-none px-1 text-center break-words w-full">Programação</span>
+                    <span className={`font-bold text-xs sm:text-sm md:text-base pointer-events-none px-1 text-center break-words w-full ${hoveredPillar === 3 ? "text-white" : "text-primary"}`}>Programação</span>
                   </motion.div>
 
                   {/* Statistics Circle - Bottom Left */}
                   <motion.div
-                    className={`absolute bottom-0 rounded-full bg-gold/30 border-2 sm:border-3 md:border-4 border-gold flex items-center justify-center pt-8 pr-8 sm:pt-12 sm:pr-12 md:pt-16 md:pr-16 cursor-pointer z-10 transition-all duration-300 ${hoveredPillar !== null && hoveredPillar !== 1 && hoveredPillar !== 3 ? "opacity-30" : ""}`}
+                    className={`absolute bottom-[5%] left-[5%] rounded-full border-2 sm:border-3 md:border-4 flex items-center justify-center pt-[15%] pr-[15%] cursor-pointer z-10 transition-all duration-300 ${hoveredPillar === 3 ? "bg-white/30 border-white" : "bg-gold/30 border-gold"}`}
                     style={{
-                      width: 'clamp(160px, 42vw, 260px)',
-                      height: 'clamp(160px, 42vw, 260px)',
-                      left: 'clamp(5%, 10%, 15%)'
+                      width: '55%',
+                      height: '55%',
                     }}
                     custom={1}
                     initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
+                    animate={getCircleVariant(1)}
                     variants={circleVariants}
-                    whileHover={{ scale: 1.05 }}
                     onMouseEnter={() => setHoveredPillar(1)}
                     onMouseLeave={() => setHoveredPillar(null)}
                   >
-                    <span className="text-gold font-bold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-base pointer-events-none text-center break-words leading-tight w-full px-1">Estatística</span>
+                    <span className={`font-bold text-xs sm:text-sm md:text-base pointer-events-none text-center break-words leading-tight w-full px-1 ${hoveredPillar === 3 ? "text-white" : "text-gold"}`}>Estatística</span>
                   </motion.div>
 
                   {/* Business Circle - Bottom Right */}
                   <motion.div
-                    className={`absolute bottom-0 rounded-full bg-wine/30 border-2 sm:border-3 md:border-4 border-wine flex items-center justify-center pt-8 pl-8 sm:pt-12 sm:pl-12 md:pt-16 md:pl-16 cursor-pointer z-10 transition-all duration-300 ${hoveredPillar !== null && hoveredPillar !== 2 && hoveredPillar !== 3 ? "opacity-30" : ""}`}
+                    className={`absolute bottom-[5%] right-[5%] rounded-full border-2 sm:border-3 md:border-4 flex items-center justify-center pt-[15%] pl-[15%] cursor-pointer z-10 transition-all duration-300 ${hoveredPillar === 3 ? "bg-white/30 border-white" : "bg-wine/30 border-wine"}`}
                     style={{
-                      width: 'clamp(160px, 42vw, 260px)',
-                      height: 'clamp(160px, 42vw, 260px)',
-                      right: 'clamp(5%, 10%, 15%)'
+                      width: '55%',
+                      height: '55%',
                     }}
                     custom={2}
                     initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
+                    animate={getCircleVariant(2)}
                     variants={circleVariants}
-                    whileHover={{ scale: 1.05 }}
                     onMouseEnter={() => setHoveredPillar(2)}
                     onMouseLeave={() => setHoveredPillar(null)}
                   >
-                    <span className="text-wine font-bold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-base pointer-events-none text-center break-words leading-tight w-full px-1">Negócio</span>
+                    <span className={`font-bold text-xs sm:text-sm md:text-base pointer-events-none text-center break-words leading-tight w-full px-1 ${hoveredPillar === 3 ? "text-white" : "text-wine"}`}>Negócio</span>
                   </motion.div>
                 </div>
               </div>

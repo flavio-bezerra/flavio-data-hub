@@ -109,9 +109,9 @@ const About = () => {
               variants={itemVariants}
               whileHover={{ scale: 1.02 }}
             >
-              Ao longo da confecção de diversos projetos nas áreas de <span className="font-semibold text-foreground">Varejo, Indústria e Supply Chain</span>,
+              Ao longo da confecção de diversos projetos nas áreas de <span className="font-semibold text-gold">Varejo, Indústria, Supply Chain, P&D/Técnico, Jurídico, Financeiro, Administrativo, Marketing & Vendas, RH/People Analytics e Customer Success</span>,
               aprofundei minha especialização em{" "}
-              <span className="text-foreground font-semibold">Machine Learning, IA Generativa (LLMs), Análise Exploratória (EDA) e MLOps</span>.
+              <span className="text-primary font-semibold">Machine Learning, IA Generativa (LLMs), Análise Exploratória (EDA) e MLOps</span>.
             </motion.p>
             <motion.div
               className="text-center pt-4 sm:pt-8"
@@ -131,7 +131,7 @@ const About = () => {
               className="text-lg text-muted-foreground text-center mt-12 italic"
               variants={itemVariants}
             >
-              Mas para gerar este valor, primeiro precisamos de alinhar o que realmente significa fazer Ciência de Dados no mundo corporativo.
+              Antes de gerar valor, precisamos construir uma visão comum sobre o verdadeiro significado da Ciência de Dados no ambiente corporativo.
             </motion.p>
           </div>
         </motion.div>

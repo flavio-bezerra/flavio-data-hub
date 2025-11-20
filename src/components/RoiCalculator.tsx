@@ -67,9 +67,14 @@ const RoiCalculator = () => {
 
           {/* Lado Esquerdo: CUSTOS (Investimento) */}
           <div className={`lg:col-span-5 space-y-6 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-wine/20 rounded-lg"><Calculator className="w-6 h-6 text-wine" /></div>
-              <h3 className="text-2xl font-bold text-wine">1. Investimento (Custos)</h3>
+            <div className="flex flex-col gap-2 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-wine/20 rounded-lg"><Calculator className="w-6 h-6 text-wine" /></div>
+                <h3 className="text-2xl font-bold text-wine">1. Investimento (Custos)</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Recursos consumidos para executar o projeto. Inclui tempo da equipe, infraestrutura e ferramentas.
+              </p>
             </div>
 
             <Card className="p-6 bg-card/50 border-wine/20 hover:border-wine/50 transition-all hover:-translate-y-1">
@@ -106,9 +111,14 @@ const RoiCalculator = () => {
 
           {/* Lado Direito: GANHOS (Retorno) */}
           <div className={`lg:col-span-5 space-y-6 transition-all duration-1000 delay-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-gold/20 rounded-lg"><PiggyBank className="w-6 h-6 text-gold" /></div>
-              <h3 className="text-2xl font-bold text-gold">2. Retorno (Ganhos)</h3>
+            <div className="flex flex-col gap-2 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-gold/20 rounded-lg"><PiggyBank className="w-6 h-6 text-gold" /></div>
+                <h3 className="text-2xl font-bold text-gold">2. Retorno (Ganhos)</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Valor gerado para o negócio. Pode ser aumento de receita, redução de custos, eficiência ou mitigação de riscos.
+              </p>
             </div>
 
             <div className="grid gap-4">
@@ -208,7 +218,7 @@ const RoiCalculator = () => {
       </div>
       <div className="text-center mt-12 relative z-10">
         <p className="text-lg text-muted-foreground italic">
-          A teoria financeira é clara. Agora, convido-o a ver como apliquei esta mentalidade em cenários reais.
+          A teoria é clara. Agora, convido você a explorar minha página e ver como transformei essa mentalidade em cenários reais.
         </p>
       </div>
     </section>

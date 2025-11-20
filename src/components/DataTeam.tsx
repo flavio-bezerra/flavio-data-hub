@@ -11,42 +11,42 @@ const DataTeam = () => {
     {
       icon: Briefcase,
       roleName: "Business Stakeholder (O Patrocinador)",
-      description: "O Patrocinador Estratégico. Define as dores do negócio e valida se a solução entrega o valor esperado (ROI).",
+      description: "O Patrocinador Estratégico. Define os KPIs e requisitos de negócio, validando se a solução técnica atende à estratégia corporativa. É responsável pela aprovação da Prova de Conceito (PoC) e pela confirmação do retorno sobre o investimento (ROI).",
       color: "primary",
       crispStages: ["Entendimento do Negócio", "Avaliação"]
     },
     {
       icon: Target,
       roleName: "Product Owner (O Tradutor)",
-      description: "O tradutor entre 'linguagem de negócio' e 'linguagem técnica'. Garante que o time está construindo a coisa certa, na ordem certa.",
+      description: "A ponte entre a estratégia e a execução técnica. Gerencia o backlog do produto e prioriza as entregas baseadas em valor de negócio. Traduz necessidades complexas em User Stories claras, garantindo que o time desenvolva a feature certa no momento certo.",
       color: "gold",
       crispStages: ["Entendimento do Negócio", "Avaliação"]
     },
     {
       icon: Database,
       roleName: "Engenheiro de Dados (O Arquiteto)",
-      description: "Constrói os 'canos' que trazem os dados dos sistemas. Sem ele, não tem matéria-prima para trabalhar.",
+      description: "Projeta e mantém arquiteturas escaláveis (Data Lakes/Warehouses). Constrói pipelines de ETL/ELT robustos que integram, limpam e disponibilizam dados de diversas fontes, garantindo a qualidade e a governança da matéria-prima analítica.",
       color: "wine",
       crispStages: ["Entendimento dos Dados", "Preparação dos Dados"]
     },
     {
       icon: BarChartHorizontalBig,
       roleName: "Analista de Dados / BI (O Historiador)",
-      description: "Conta a história do que já aconteceu. Cria dashboards e relatórios para você entender o passado e o presente do negócio.",
+      description: "Especialista em análise descritiva e diagnóstica. Utiliza SQL e ferramentas de Data Viz para transformar dados brutos em dashboards interativos, monitorando métricas históricas e identificando padrões que explicam o comportamento do negócio.",
       color: "primary",
       crispStages: ["Entendimento dos Dados", "Avaliação"]
     },
     {
       icon: BrainCircuit,
       roleName: "Cientista de Dados (O Estrategista/Preditivo)",
-      description: "Olha para o futuro. Usa matemática e algoritmos para prever o que vai acontecer e recomendar o que fazer.",
+      description: "Foca em análise preditiva e prescritiva. Aplica estatística avançada e algoritmos de Machine Learning para treinar modelos que antecipam cenários futuros, realizam recomendações automatizadas e otimizam a tomada de decisão.",
       color: "gold",
       crispStages: ["Preparação dos Dados", "Modelagem", "Avaliação"]
     },
     {
       icon: Server,
       roleName: "Engenheiro de MLOps (O Piloto)",
-      description: "Garante a escalabilidade e governança. Assegura que o modelo opera em ambiente produtivo com segurança e estabilidade.",
+      description: "Operacionaliza o ciclo de vida do modelo. Implementa esteiras de CI/CD para automação, garante o deploy seguro em produção e monitora a saúde dos modelos (Data/Model Drift), assegurando escalabilidade e alta disponibilidade.",
       color: "wine",
       crispStages: ["Implantação"]
     }
@@ -141,25 +141,27 @@ const DataTeam = () => {
                     borderColor: `hsl(var(--${role.color}) / 0.2)`,
                   }}
                 >
-                  <div
-                    className="flex items-center justify-center w-16 h-16 mb-4 rounded-full transition-all duration-500 group-hover:rotate-[360deg] group-hover:scale-110"
-                    style={{
-                      backgroundColor: `hsl(var(--${role.color}) / 0.15)`,
-                      boxShadow: `0 0 20px hsl(var(--${role.color}) / 0.2)`
-                    }}
-                  >
-                    <Icon
-                      className="w-8 h-8"
+                  <div className="flex-1 flex flex-col items-center justify-center w-full">
+                    <div
+                      className="flex items-center justify-center w-16 h-16 mb-4 rounded-full transition-all duration-500 group-hover:rotate-[360deg] group-hover:scale-110"
+                      style={{
+                        backgroundColor: `hsl(var(--${role.color}) / 0.15)`,
+                        boxShadow: `0 0 20px hsl(var(--${role.color}) / 0.2)`
+                      }}
+                    >
+                      <Icon
+                        className="w-8 h-8"
+                        style={{ color: `hsl(var(--${role.color}))` }}
+                      />
+                    </div>
+                    <h4
+                      className="text-xl font-bold mb-2"
                       style={{ color: `hsl(var(--${role.color}))` }}
-                    />
+                    >
+                      {role.roleName}
+                    </h4>
+                    <p className="text-muted-foreground mb-6">{role.description}</p>
                   </div>
-                  <h4
-                    className="text-xl font-bold mb-2"
-                    style={{ color: `hsl(var(--${role.color}))` }}
-                  >
-                    {role.roleName}
-                  </h4>
-                  <p className="text-muted-foreground mb-6">{role.description}</p>
 
                   <div className="mt-auto w-full pt-4 border-t border-border/30">
                     <p className="text-xs font-bold uppercase tracking-wider mb-3 opacity-80" style={{ color: `hsl(var(--${role.color}))` }}>

@@ -390,9 +390,11 @@ const Methodology = () => {
                 </p>
               </div>
 
-              <p>
-                O <span className="text-gold font-bold text-xl">CRISP-DM</span> existe para reduzir esse risco: <br className="hidden 2xl:block" /> falhamos rápido se for preciso, ou acertamos o alvo com precisão antes de gastar recursos construindo.
-              </p>
+              <div className="mt-6 p-6 rounded-lg bg-gradient-to-r from-gold/10 to-transparent border-l-4 border-gold shadow-sm">
+                <p className="text-lg leading-relaxed text-foreground/90">
+                  O <span className="text-gold font-bold text-xl">CRISP-DM</span> atua como um escudo contra a incerteza: permite falhar rápido e barato na fase de testes, ou avançar com precisão cirúrgica antes de mobilizar grandes recursos de engenharia.
+                </p>
+              </div>
             </div>
           </motion.div>
 
