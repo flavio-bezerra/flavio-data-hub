@@ -544,7 +544,7 @@ const WhatIsDataScience = () => {
                                         initial={{ scale: 0, opacity: 0 }}
                                         animate={{
                                           scale: isActive ? 1.2 : 1,
-                                          opacity: isActive ? 1 : 0.6,
+                                          opacity: isActive ? 1 : (activeClassic ? 0.2 : 1),
                                           r: isActive ? 20 : 14
                                         }}
                                         transition={{
@@ -767,7 +767,7 @@ const WhatIsDataScience = () => {
                                         initial={{ scale: 0, opacity: 0 }}
                                         animate={{
                                           scale: isActive ? 1.2 : 1,
-                                          opacity: isActive ? 1 : 0.6,
+                                          opacity: isActive ? 1 : (activeGenAI ? 0.2 : 1),
                                           r: isActive ? 20 : 14
                                         }}
                                         transition={{
