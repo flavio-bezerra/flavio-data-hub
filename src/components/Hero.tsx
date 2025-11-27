@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Linkedin, Github } from "lucide-react";
 import profileImage from "@/assets/profile.jpg";
-import heroBackground from "@/assets/hero-background.png";
+import ThreeBackground from "./ThreeBackground";
 import { motion } from "framer-motion";
 
 const Hero = () => {
@@ -42,13 +42,9 @@ const Hero = () => {
   return (
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.75), rgba(17, 24, 39, 0.75)), url(${heroBackground})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
     >
+      <ThreeBackground />
+      <div className="absolute inset-0 bg-gray-900/75" />
       <div className="container mx-auto px-4 py-20 z-10">
         <div className="flex flex-col items-center text-center space-y-8">
           {/* Profile Image */}

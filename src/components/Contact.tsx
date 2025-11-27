@@ -6,6 +6,7 @@ import { Linkedin, Send, Mail, Loader2 } from "lucide-react";
 import logo from "@/assets/logo-white.png";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import ThreeBackground from "./ThreeBackground";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -84,34 +85,8 @@ const Contact = () => {
 
   return (
     <section className="py-20 bg-background border-t border-border relative overflow-hidden">
-      {/* Animated Background Glow */}
-      <div className="absolute inset-0 opacity-10">
-        <motion.div
-          className="absolute top-0 left-1/3 w-96 h-96 bg-primary rounded-full blur-3xl"
-          animate={{
-            y: [0, 40, 0],
-            opacity: [0.5, 0.8, 0.5]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-0 right-1/3 w-96 h-96 bg-gold rounded-full blur-3xl"
-          animate={{
-            y: [0, -40, 0],
-            opacity: [0.5, 0.8, 0.5]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-      </div>
+      <ThreeBackground />
+      <div className="absolute inset-0 bg-background/90" />
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
