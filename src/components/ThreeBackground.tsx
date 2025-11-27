@@ -101,7 +101,19 @@ const ThreeBackground = () => {
         mouseY = (event.clientY - windowHalfY) * 0.05;
     };
 
+    const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
+        if (event.gamma !== null && event.beta !== null) {
+            // Gamma: Left/Right tilt (-90 to 90)
+            // Beta: Front/Back tilt (-180 to 180)
+            // Multiplier adjusted to match the scale of mouse interaction
+            mouseX = event.gamma * 0.5; 
+            // Subtracting 45 to assume a natural holding position (45 degrees tilt) as center
+            mouseY = (event.beta - 45) * 0.5;
+        }
+    };
+
     document.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('deviceorientation', handleDeviceOrientation);
 
     // --- 5. ANIMAÇÃO ---
     let count = 0;
@@ -159,6 +171,7 @@ const ThreeBackground = () => {
     // Cleanup
     return () => {
         document.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('deviceorientation', handleDeviceOrientation);
         window.removeEventListener('resize', handleResize);
         cancelAnimationFrame(animationId);
         

@@ -213,8 +213,18 @@ const Contact = () => {
                   Prefere redes sociais? Vamos conectar no LinkedIn!
                 </p>
 
-                <div className="badge-base LI-profile-badge opacity-80" data-locale="pt_BR" data-size="large" data-theme="light" data-type="HORIZONTAL" data-vanity="flavio-m-bezerra" data-version="v1">
-                  <a className="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/flavio-m-bezerra?trk=profile-badge"></a>
+                {/* Desktop Badge (Horizontal) */}
+                <div className="hidden md:flex md:justify-center">
+                  <div className="badge-base LI-profile-badge opacity-80" data-locale="pt_BR" data-size="large" data-theme="light" data-type="HORIZONTAL" data-vanity="flavio-m-bezerra" data-version="v1">
+                    <a className="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/flavio-m-bezerra?trk=profile-badge"></a>
+                  </div>
+                </div>
+
+                {/* Mobile Badge (Vertical) */}
+                <div className="flex justify-center md:hidden">
+                  <div className="badge-base LI-profile-badge opacity-80" data-locale="pt_BR" data-size="large" data-theme="light" data-type="VERTICAL" data-vanity="flavio-m-bezerra" data-version="v1">
+                    <a className="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/flavio-m-bezerra?trk=profile-badge"></a>
+                  </div>
                 </div>
               </div>
 
