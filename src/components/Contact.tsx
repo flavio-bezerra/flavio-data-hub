@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,6 +16,19 @@ const Contact = () => {
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://platform.linkedin.com/badges/js/profile.js";
+    script.async = true;
+    script.defer = true;
+    script.type = "text/javascript";
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -200,22 +213,9 @@ const Contact = () => {
                   Prefere redes sociais? Vamos conectar no LinkedIn!
                 </p>
 
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button
-                    size="lg"
-                    className="bg-[#0077b5] hover:bg-[#006396] text-white w-full sm:w-auto transition-all duration-300 shadow-lg group"
-                    asChild
-                  >
-                    <a
-                      href="https://www.linkedin.com/in/flavio-m-bezerra"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Linkedin className="mr-2 h-5 w-5 group-hover:animate-bounce" />
-                      Conectar no LinkedIn
-                    </a>
-                  </Button>
-                </motion.div>
+                <div className="badge-base LI-profile-badge opacity-80" data-locale="pt_BR" data-size="large" data-theme="light" data-type="HORIZONTAL" data-vanity="flavio-m-bezerra" data-version="v1">
+                  <a className="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/flavio-m-bezerra?trk=profile-badge"></a>
+                </div>
               </div>
 
               {/* Logo */}
