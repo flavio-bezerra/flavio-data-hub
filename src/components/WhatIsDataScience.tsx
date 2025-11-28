@@ -59,11 +59,10 @@ const WhatIsDataScience = () => {
   };
 
   const circleVariants = {
-    hidden: { scale: 0, opacity: 0, rotate: -30 },
+    hidden: { scale: 0, opacity: 0 },
     visible: (i: number) => ({
       scale: 1,
       opacity: 1,
-      rotate: 0,
       transition: {
         delay: i * 0.4, // Increased delay for more distinct steps
         type: "spring",
