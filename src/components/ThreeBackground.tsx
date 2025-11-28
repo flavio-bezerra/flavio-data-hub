@@ -54,15 +54,15 @@ const ThreeBackground = () => {
     // --- 3. GRID DE PARTÍCULAS (ULTRA COMPACTO) ---
     const particlesGeometry = new THREE.BufferGeometry();
     
-    // Mantendo a contagem alta (~137.000)
-    const numParticlesX = 370; 
-    const numParticlesZ = 370;
+    // Mantendo a contagem otimizada (~22.500) para performance
+    const numParticlesX = 150; 
+    const numParticlesZ = 150;
     const totalParticles = numParticlesX * numParticlesZ;
     
     const posArray = new Float32Array(totalParticles * 3);
     
-    // DISTÂNCIA REDUZIDA: Pontos muito próximos
-    const separation = 0.8; 
+    // DISTÂNCIA: Ajustada para manter a proporção visual com menos pontos
+    const separation = 1.8; 
     
     const startX = (numParticlesX * separation) / -2;
     const startZ = (numParticlesZ * separation) / -2;
@@ -122,8 +122,19 @@ const ThreeBackground = () => {
     let count = 0;
     let animationId: number;
 
+    // --- VISIBILITY CHECK ---
+    let isVisible = true;
+    const observer = new IntersectionObserver((entries) => {
+        isVisible = entries[0].isIntersecting;
+    });
+    if (containerRef.current) {
+        observer.observe(containerRef.current);
+    }
+
     const animate = () => {
         animationId = requestAnimationFrame(animate);
+
+        if (!isVisible) return;
 
         count += 0.03; 
 

@@ -6,7 +6,7 @@ import SubtleBackground from "@/components/SubtleBackground";
 
 const DataTeam = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: false, margin: "-100px" });
 
   const teamRoles = [
     {
@@ -164,7 +164,7 @@ const DataTeam = () => {
         variants={itemVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={{ once: false }}
       >
         Com o método definido e a equipa montada, resta a pergunta mais importante de qualquer executivo: Quanto vou ganhar com isso?
       </motion.p>

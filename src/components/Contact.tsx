@@ -106,7 +106,7 @@ const Contact = () => {
           className="max-w-4xl mx-auto"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           variants={containerVariants}
         >
           <div className="text-center mb-12">

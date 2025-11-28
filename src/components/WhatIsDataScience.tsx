@@ -34,7 +34,7 @@ const WhatIsDataScience = () => {
   const [activeGenAI, setActiveGenAI] = useState<string | undefined>("prompt");
 
   const vennRef = useRef<HTMLDivElement>(null);
-  const isVennInView = useInView(vennRef, { once: true, margin: "-100px" });
+  const isVennInView = useInView(vennRef, { once: false, margin: "-100px" });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -105,7 +105,7 @@ const WhatIsDataScience = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
         >
           <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center gradient-text leading-tight pb-2"
@@ -121,7 +121,7 @@ const WhatIsDataScience = () => {
               className="bg-card p-6 rounded-xl border border-primary/20 shadow-lg hover:shadow-primary/10 hover:border-primary/40 transition-all duration-300 group"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <div className="flex items-center gap-3 mb-4 border-b border-primary/20 pb-3">
@@ -145,7 +145,7 @@ const WhatIsDataScience = () => {
               className="bg-card p-6 rounded-xl border border-gold/20 shadow-lg hover:shadow-gold/10 hover:border-gold/40 transition-all duration-300 group"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div className="flex items-center gap-3 mb-4 border-b border-gold/20 pb-3">
@@ -169,7 +169,7 @@ const WhatIsDataScience = () => {
               className="bg-card p-6 rounded-xl border border-wine/20 shadow-lg hover:shadow-wine/10 hover:border-wine/40 transition-all duration-300 group"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               <div className="flex items-center gap-3 mb-4 border-b border-wine/20 pb-3">
@@ -193,7 +193,7 @@ const WhatIsDataScience = () => {
             className="bg-gradient-to-r from-primary/5 via-gold/5 to-wine/5 p-8 rounded-xl border border-white/10 text-center relative overflow-hidden"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px]" />
@@ -226,7 +226,7 @@ const WhatIsDataScience = () => {
           className="max-w-6xl mx-auto mb-16"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
         >
           <motion.div
             className="text-center mb-12"
@@ -348,7 +348,7 @@ const WhatIsDataScience = () => {
                   }`}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ duration: 0.5, delay: 0.1 }}
                   onMouseEnter={() => setHoveredPillar(0)}
                   onMouseLeave={() => setHoveredPillar(null)}
@@ -379,7 +379,7 @@ const WhatIsDataScience = () => {
                   }`}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                   onMouseEnter={() => setHoveredPillar(1)}
                   onMouseLeave={() => setHoveredPillar(null)}
@@ -409,7 +409,7 @@ const WhatIsDataScience = () => {
                   }`}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                   onMouseEnter={() => setHoveredPillar(2)}
                   onMouseLeave={() => setHoveredPillar(null)}
@@ -441,7 +441,7 @@ const WhatIsDataScience = () => {
               onMouseLeave={() => setHoveredPillar(null)}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <h4 className="text-2xl font-bold mb-4 text-center">
@@ -465,7 +465,7 @@ const WhatIsDataScience = () => {
             className="text-center mb-12"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             variants={containerVariants}
           >
             <motion.h3

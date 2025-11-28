@@ -175,7 +175,7 @@ const Methodology = () => {
           className="max-w-4xl mx-auto mb-12"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           variants={containerVariants}
         >
           <motion.h2
@@ -202,7 +202,7 @@ const Methodology = () => {
             className="w-full 2xl:flex-1 order-2 2xl:order-1"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             variants={containerVariants}
           >
             <motion.h3
@@ -510,7 +510,7 @@ const Methodology = () => {
             className="w-full max-w-4xl 2xl:w-[380px] shrink-0 order-1 2xl:order-2 p-6 bg-card/50 backdrop-blur-sm rounded-xl border border-border shadow-lg 2xl:sticky 2xl:top-24 h-fit"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.7 }}
           >
             <h3 className="text-2xl font-bold mb-8 text-primary flex items-center gap-3">
@@ -558,7 +558,7 @@ const Methodology = () => {
         variants={itemVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={{ once: false }}
       >
         Um método robusto é essencial, mas não roda sozinho. Quem são as
         peças-chave para executar este ciclo?

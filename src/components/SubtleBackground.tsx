@@ -24,7 +24,7 @@ const NeuralNetwork = ({ isInView }: { isInView: boolean }) => {
 
     resizeCanvas();
     // Configuration
-    const spacing = 70; // Decreased spacing to increase density
+    const spacing = 100; // Increased spacing to reduce particle count for performance
     const baseConnectionDistance = 70; // Balanced connection range
     const mouseDistance = 300; // Interaction radius
 
@@ -349,8 +349,8 @@ const SubtleBackground = () => {
         }}
       />
 
-      {/* 3. Blur Layer (Fog) */}
-      <div className="absolute inset-0 backdrop-blur-[100px] bg-background/80" />
+      {/* 3. Blur Layer (Fog) - Removed for performance */}
+      <div className="absolute inset-0 bg-background/80" />
 
       {/* 4. Neural Network Overlay (On top of blur, but subtle) */}
       <NeuralNetwork isInView={isInView} />
