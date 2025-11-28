@@ -14,7 +14,10 @@ const ThreeBackground = () => {
     scene.background = new THREE.Color(bgColor);
     scene.fog = new THREE.FogExp2(bgColor, 0.005); // Neblina mais densa para escala menor
 
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+    const width = containerRef.current.clientWidth;
+    const height = containerRef.current.clientHeight;
+
+    const camera = new THREE.PerspectiveCamera(60, width / height, 1, 1000);
     
     // CÂMERA REPOSICIONADA:
     // Como reduzimos a distância entre pontos, o "mundo" encolheu.
@@ -23,7 +26,7 @@ const ThreeBackground = () => {
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: false });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
     containerRef.current.appendChild(renderer.domElement);
 
@@ -160,19 +163,33 @@ const ThreeBackground = () => {
 
     animate();
 
-    const handleResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
+    // --- 6. REDIMENSIONAMENTO (Baseado no Container) ---
+    const updateSize = () => {
+        if (!containerRef.current) return;
+        const width = containerRef.current.clientWidth;
+        const height = containerRef.current.clientHeight;
+        
+        camera.aspect = width / height;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(width, height);
     };
 
-    window.addEventListener('resize', handleResize);
+    // Usar ResizeObserver para detectar mudanças no tamanho do container pai
+    const resizeObserver = new ResizeObserver(() => {
+        updateSize();
+    });
+
+    if (containerRef.current) {
+        resizeObserver.observe(containerRef.current);
+        // Forçar um update inicial
+        updateSize();
+    }
 
     // Cleanup
     return () => {
         document.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('deviceorientation', handleDeviceOrientation);
-        window.removeEventListener('resize', handleResize);
+        resizeObserver.disconnect(); // Parar de observar
         cancelAnimationFrame(animationId);
         
         if (containerRef.current && renderer.domElement) {
