@@ -6,6 +6,7 @@ import {
   Lightbulb,
   Brain,
 } from "lucide-react";
+import CustomScatterShape from "./CustomScatterShape";
 import {
   Accordion,
   AccordionItem,
@@ -543,14 +544,15 @@ const WhatIsDataScience = () => {
                   ];
 
                   return (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start"
-                    >
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                       {/* Chart 1: Classic ML (Left Column) */}
-                      <div className="bg-card rounded-lg p-1 sm:p-6 border aspect-square flex flex-col max-w-md mx-auto w-full">
+                      <motion.div 
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        className="bg-card rounded-lg p-1 sm:p-6 border aspect-square flex flex-col max-w-md mx-auto w-full"
+                      >
                         <h4 className="text-lg font-semibold mb-4 text-left px-2 sm:px-0">
                           Valor vs. Complexidade
                         </h4>
@@ -654,105 +656,32 @@ const WhatIsDataScience = () => {
                               />
                               <Scatter
                                 data={classicMLLevels}
-                                shape={(props: any) => {
-                                  const { cx, cy, payload } = props;
-                                  const isActive = activeClassic === payload.id;
-                                  const index = classicMLLevels.findIndex(
-                                    (item) => item.id === payload.id
-                                  );
-
-                                  // Satellite configuration: Chaotic, organic scatter
-                                  const satelliteCount = 100;
-                                  const satellites = Array.from({
-                                    length: satelliteCount,
-                                  }).map((_, i) => {
-                                    const seed = index * 100 + i;
-                                    // Pseudo-random generator
-                                    const rand = (s: number) => {
-                                      const x = Math.sin(s) * 43758.5453;
-                                      return x - Math.floor(x);
-                                    };
-
-                                    const rX = rand(seed * 1.1);
-                                    const rY = rand(seed * 1.2);
-                                    const rSize = rand(seed * 1.3);
-
-                                    // Spread across the chart (approx 300x300)
-                                    // Using cubic power to bias towards center naturally but without radial lines
-                                    const spread = 280;
-                                    const offsetX =
-                                      Math.pow(2 * rX - 1, 3) * spread;
-                                    const offsetY =
-                                      Math.pow(2 * rY - 1, 3) * spread;
-
-                                    const size = 1 + rSize * 4; // 1-5px
-
-                                    return {
-                                      cx: cx + offsetX,
-                                      cy: cy + offsetY,
-                                      r: size,
-                                    };
-                                  });
-
-                                  return (
-                                    <g>
-                                      {isActive &&
-                                        satellites.map((sat, i) => (
-                                          <motion.circle
-                                            key={`sat-${i}`}
-                                            cx={sat.cx}
-                                            cy={sat.cy}
-                                            r={sat.r}
-                                            fill={payload.color}
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            animate={{ opacity: 0.6, scale: 1 }}
-                                            transition={{
-                                              duration: 0.4,
-                                              delay: i * 0.03,
-                                            }}
-                                            style={{ pointerEvents: "none" }}
-                                          />
-                                        ))}
-                                      <motion.circle
-                                        cx={cx}
-                                        cy={cy}
-                                        r={isActive ? 20 : 14}
-                                        fill={payload.color}
-                                        initial={{ scale: 0, opacity: 0 }}
-                                        animate={{
-                                          scale: isActive ? 1.2 : 1,
-                                          opacity: isActive
-                                            ? 1
-                                            : activeClassic
-                                            ? 0.2
-                                            : 1,
-                                          r: isActive ? 20 : 14,
-                                        }}
-                                        transition={{
-                                          duration: 0.5,
-                                          delay: index * 0.15,
-                                          type: "spring",
-                                          stiffness: 200,
-                                          damping: 15,
-                                        }}
-                                        whileHover={{ scale: 1.3, opacity: 1 }}
-                                        className="cursor-pointer"
-                                        onClick={() =>
-                                          setActiveClassic(payload.id)
-                                        }
-                                        style={{ outline: "none" }}
-                                      />
-                                    </g>
-                                  );
+                                shape={(props: any) => (
+                                  <CustomScatterShape
+                                    {...props}
+                                    activeId={activeClassic}
+                                    data={classicMLLevels}
+                                  />
+                                )}
+                                onClick={(data: any) => {
+                                  if (data && data.payload) {
+                                    setActiveClassic(data.payload.id);
+                                  }
                                 }}
                               />
                             </ScatterChart>
                           </ResponsiveContainer>
                         </div>
-                      </div>
+                      </motion.div>
 
                       {/* Accordion 1: Classic ML (Right Column) */}
-                      <div className="flex flex-col justify-center h-full">
+                      <motion.div 
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false }}
+                        transition={{ duration: 0.5 }}
+                        className="flex flex-col justify-start h-full lg:min-h-[600px]"
+                      >
                         <Accordion
                           type="single"
                           collapsible
@@ -793,8 +722,8 @@ const WhatIsDataScience = () => {
                             );
                           })}
                         </Accordion>
-                      </div>
-                    </motion.div>
+                      </motion.div>
+                    </div>
                   );
                 })()}
               </TabsContent>
@@ -850,14 +779,15 @@ const WhatIsDataScience = () => {
                   ];
 
                   return (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start"
-                    >
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                       {/* Chart 2: GenAI (Left Column) */}
-                      <div className="bg-card rounded-lg p-1 sm:p-6 border aspect-square flex flex-col max-w-md mx-auto w-full">
+                      <motion.div 
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        className="bg-card rounded-lg p-1 sm:p-6 border aspect-square flex flex-col max-w-md mx-auto w-full"
+                      >
                         <h4 className="text-lg font-semibold mb-4 text-left px-2 sm:px-0">
                           Valor vs. Complexidade
                         </h4>
@@ -961,105 +891,32 @@ const WhatIsDataScience = () => {
                               />
                               <Scatter
                                 data={genAILevels}
-                                shape={(props: any) => {
-                                  const { cx, cy, payload } = props;
-                                  const isActive = activeGenAI === payload.id;
-                                  const index = genAILevels.findIndex(
-                                    (item) => item.id === payload.id
-                                  );
-
-                                  // Satellite configuration: Chaotic, organic scatter
-                                  const satelliteCount = 100;
-                                  const satellites = Array.from({
-                                    length: satelliteCount,
-                                  }).map((_, i) => {
-                                    const seed = index * 100 + i;
-                                    // Pseudo-random generator
-                                    const rand = (s: number) => {
-                                      const x = Math.sin(s) * 43758.5453;
-                                      return x - Math.floor(x);
-                                    };
-
-                                    const rX = rand(seed * 1.1);
-                                    const rY = rand(seed * 1.2);
-                                    const rSize = rand(seed * 1.3);
-
-                                    // Spread across the chart (approx 300x300)
-                                    // Using cubic power to bias towards center naturally but without radial lines
-                                    const spread = 280;
-                                    const offsetX =
-                                      Math.pow(2 * rX - 1, 3) * spread;
-                                    const offsetY =
-                                      Math.pow(2 * rY - 1, 3) * spread;
-
-                                    const size = 1 + rSize * 4; // 1-5px
-
-                                    return {
-                                      cx: cx + offsetX,
-                                      cy: cy + offsetY,
-                                      r: size,
-                                    };
-                                  });
-
-                                  return (
-                                    <g>
-                                      {isActive &&
-                                        satellites.map((sat, i) => (
-                                          <motion.circle
-                                            key={`sat-${i}`}
-                                            cx={sat.cx}
-                                            cy={sat.cy}
-                                            r={sat.r}
-                                            fill={payload.color}
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            animate={{ opacity: 0.6, scale: 1 }}
-                                            transition={{
-                                              duration: 0.4,
-                                              delay: i * 0.03,
-                                            }}
-                                            style={{ pointerEvents: "none" }}
-                                          />
-                                        ))}
-                                      <motion.circle
-                                        cx={cx}
-                                        cy={cy}
-                                        r={isActive ? 20 : 14}
-                                        fill={payload.color}
-                                        initial={{ scale: 0, opacity: 0 }}
-                                        animate={{
-                                          scale: isActive ? 1.2 : 1,
-                                          opacity: isActive
-                                            ? 1
-                                            : activeGenAI
-                                            ? 0.2
-                                            : 1,
-                                          r: isActive ? 20 : 14,
-                                        }}
-                                        transition={{
-                                          duration: 0.5,
-                                          delay: index * 0.15,
-                                          type: "spring",
-                                          stiffness: 200,
-                                          damping: 15,
-                                        }}
-                                        whileHover={{ scale: 1.3, opacity: 1 }}
-                                        className="cursor-pointer"
-                                        onClick={() =>
-                                          setActiveGenAI(payload.id)
-                                        }
-                                        style={{ outline: "none" }}
-                                      />
-                                    </g>
-                                  );
+                                shape={(props: any) => (
+                                  <CustomScatterShape
+                                    {...props}
+                                    activeId={activeGenAI}
+                                    data={genAILevels}
+                                  />
+                                )}
+                                onClick={(data: any) => {
+                                  if (data && data.payload) {
+                                    setActiveGenAI(data.payload.id);
+                                  }
                                 }}
                               />
                             </ScatterChart>
                           </ResponsiveContainer>
                         </div>
-                      </div>
+                      </motion.div>
 
                       {/* Accordion 2: GenAI (Right Column) */}
-                      <div className="flex flex-col justify-center h-full">
+                      <motion.div 
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: false }}
+                        transition={{ duration: 0.5 }}
+                        className="flex flex-col justify-start h-full lg:min-h-[600px]"
+                      >
                         <Accordion
                           type="single"
                           collapsible
@@ -1100,8 +957,8 @@ const WhatIsDataScience = () => {
                             );
                           })}
                         </Accordion>
-                      </div>
-                    </motion.div>
+                      </motion.div>
+                    </div>
                   );
                 })()}
               </TabsContent>
