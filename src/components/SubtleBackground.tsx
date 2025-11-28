@@ -19,13 +19,13 @@ const NeuralNetwork = () => {
         canvas.height = parent.clientHeight;
       }
     };
-    
+
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
     // Configuration
-    const particleCount = 800; // Extreme density (performance limit)
-    const baseConnectionDistance = 80; // Reduced range to prevent clutter at high density
+    const particleCount = 150; // Reduced density for better performance
+    const baseConnectionDistance = 120; // Increased range to maintain connections with fewer particles
     const mouseDistance = 300; // Interaction radius
 
     // Particles array
@@ -39,7 +39,7 @@ const NeuralNetwork = () => {
           vx: (Math.random() - 0.5) * 0.2, // Slower natural movement
           vy: (Math.random() - 0.5) * 0.2,
           size: Math.random() * 1.5 + 0.5,
-          color: Math.random() > 0.5 ? "212, 175, 55" : "65, 105, 225" 
+          color: Math.random() > 0.5 ? "212, 175, 55" : "65, 105, 225"
         });
       }
     };
@@ -58,7 +58,7 @@ const NeuralNetwork = () => {
     let animationFrameId: number;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       // Update and draw particles
       particles.forEach(p => {
         // Move
@@ -92,26 +92,26 @@ const NeuralNetwork = () => {
           const midX = (p1.x + p2.x) / 2;
           const midY = (p1.y + p2.y) / 2;
           const distToMouse = Math.sqrt((midX - mouse.x) ** 2 + (midY - mouse.y) ** 2);
-          
+
           // Dynamic connection distance:
           // If near mouse, significantly increase the connection range to "create" more links
           let effectiveDistance = baseConnectionDistance;
           if (distToMouse < mouseDistance) {
-             effectiveDistance += 100 * (1 - distToMouse / mouseDistance); // Boost range by up to 100px
+            effectiveDistance += 100 * (1 - distToMouse / mouseDistance); // Boost range by up to 100px
           }
 
           if (dist < effectiveDistance) {
             ctx.beginPath();
             // Opacity based on distance relative to the effective distance
             const opacity = 0.2 * (1 - dist / effectiveDistance);
-            
+
             // Highlight lines near mouse
             if (distToMouse < mouseDistance) {
-                ctx.strokeStyle = `rgba(148, 163, 184, ${opacity * 2})`; // Brighter near mouse
+              ctx.strokeStyle = `rgba(148, 163, 184, ${opacity * 2})`; // Brighter near mouse
             } else {
-                ctx.strokeStyle = `rgba(148, 163, 184, ${opacity})`;
+              ctx.strokeStyle = `rgba(148, 163, 184, ${opacity})`;
             }
-            
+
             ctx.lineWidth = 0.5;
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
@@ -158,7 +158,7 @@ const Blob = ({ config, mouseX, mouseY }: { config: any, mouseX: any, mouseY: an
         style={{
           background: `radial-gradient(circle, ${config.color} 0%, transparent 60%)`,
           opacity: config.opacity,
-          filter: "blur(60px)", 
+          filter: "blur(60px)",
         }}
         animate={config.animate}
         transition={{
@@ -325,20 +325,20 @@ const SubtleBackground = () => {
       {/* 1. Base Gradient Blobs */}
       <div className="absolute inset-0 opacity-70">
         {blobs.map((blob) => (
-          <Blob 
-            key={blob.id} 
-            config={blob} 
-            mouseX={smoothX} 
-            mouseY={smoothY} 
+          <Blob
+            key={blob.id}
+            config={blob}
+            mouseX={smoothX}
+            mouseY={smoothY}
           />
         ))}
       </div>
 
       {/* 2. Noise Texture */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none"
-        style={{ 
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` 
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
         }}
       />
 
