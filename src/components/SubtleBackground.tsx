@@ -24,8 +24,8 @@ const NeuralNetwork = ({ isInView }: { isInView: boolean }) => {
 
     resizeCanvas();
     // Configuration
-    const spacing = 130; // Grid spacing for uniform distribution
-    const baseConnectionDistance = 100; // Reduced range
+    const spacing = 70; // Decreased spacing to increase density
+    const baseConnectionDistance = 70; // Balanced connection range
     const mouseDistance = 300; // Interaction radius
 
     // Particles array
