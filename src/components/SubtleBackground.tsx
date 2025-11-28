@@ -69,22 +69,8 @@ const NeuralNetwork = () => {
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-        // Mouse Interaction (Attraction - pulls particles closer to create density)
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < mouseDistance) {
-          const forceDirectionX = dx / distance;
-          const forceDirectionY = dy / distance;
-          const force = (mouseDistance - distance) / mouseDistance;
-          
-          // Gentle attraction towards mouse
-          const directionX = forceDirectionX * force * 0.6; 
-          const directionY = forceDirectionY * force * 0.6;
-          p.x += directionX;
-          p.y += directionY;
-        }
+        // Mouse Interaction (Attraction) - REMOVED for performance
+        // Particles no longer move towards the mouse, but lines still light up.
 
         // Draw Particle
         ctx.beginPath();
