@@ -21,29 +21,38 @@ const NeuralNetwork = () => {
     };
 
     resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
     // Configuration
-    const particleCount = 150; // Reduced density for better performance
-    const baseConnectionDistance = 120; // Increased range to maintain connections with fewer particles
+    const spacing = 130; // Grid spacing for uniform distribution
+    const baseConnectionDistance = 100; // Reduced range
     const mouseDistance = 300; // Interaction radius
 
     // Particles array
     const particles: any[] = [];
     const createParticles = () => {
       particles.length = 0;
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.2, // Slower natural movement
-          vy: (Math.random() - 0.5) * 0.2,
-          size: Math.random() * 1.5 + 0.5,
-          color: Math.random() > 0.5 ? "212, 175, 55" : "65, 105, 225"
-        });
+      const cols = Math.ceil(canvas.width / spacing);
+      const rows = Math.ceil(canvas.height / spacing);
+
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          particles.push({
+            x: i * spacing + Math.random() * spacing,
+            y: j * spacing + Math.random() * spacing,
+            vx: (Math.random() - 0.5) * 0.2,
+            vy: (Math.random() - 0.5) * 0.2,
+            size: Math.random() * 1.5 + 0.5,
+            color: Math.random() > 0.5 ? "212, 175, 55" : "65, 105, 225"
+          });
+        }
       }
     };
     createParticles();
+
+    const handleResize = () => {
+      resizeCanvas();
+      createParticles();
+    };
+    window.addEventListener("resize", handleResize);
 
     let mouse = { x: -1000, y: -1000 };
 
@@ -75,7 +84,7 @@ const NeuralNetwork = () => {
         // Draw Particle
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${p.color}, 0.5)`;
+        ctx.fillStyle = `rgba(${p.color}, 0.2)`;
         ctx.fill();
       });
 
@@ -103,14 +112,16 @@ const NeuralNetwork = () => {
           if (dist < effectiveDistance) {
             ctx.beginPath();
             // Opacity based on distance relative to the effective distance
-            const opacity = 0.2 * (1 - dist / effectiveDistance);
+            let alpha = 0.1 * (1 - dist / effectiveDistance);
 
             // Highlight lines near mouse
             if (distToMouse < mouseDistance) {
-              ctx.strokeStyle = `rgba(148, 163, 184, ${opacity * 2})`; // Brighter near mouse
-            } else {
-              ctx.strokeStyle = `rgba(148, 163, 184, ${opacity})`;
+              const mouseFactor = 1 - distToMouse / mouseDistance;
+              // Add a glow effect: boost opacity significantly near mouse
+              alpha += mouseFactor * 0.6;
             }
+
+            ctx.strokeStyle = `rgba(148, 163, 184, ${alpha})`;
 
             ctx.lineWidth = 0.5;
             ctx.moveTo(p1.x, p1.y);
@@ -126,7 +137,7 @@ const NeuralNetwork = () => {
     animate();
 
     return () => {
-      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
@@ -137,38 +148,27 @@ const NeuralNetwork = () => {
 
 // --- BLOB COMPONENT ---
 const Blob = ({ config, mouseX, mouseY }: { config: any, mouseX: any, mouseY: any }) => {
-  const movementRange = config.parallaxFactor || 30;
-  const x = useTransform(mouseX, [-1, 1], [-movementRange, movementRange]);
-  const y = useTransform(mouseY, [-1, 1], [-movementRange, movementRange]);
+  // Movement removed as requested
 
   return (
-    <motion.div
+    <div
       className="absolute"
       style={{
         top: config.initialTop,
         left: config.initialLeft,
         width: config.size,
         height: config.size,
-        x,
-        y,
       }}
     >
-      <motion.div
+      <div
         className="w-full h-full rounded-full"
         style={{
           background: `radial-gradient(circle, ${config.color} 0%, transparent 60%)`,
           opacity: config.opacity,
           filter: "blur(60px)",
         }}
-        animate={config.animate}
-        transition={{
-          duration: config.duration,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut",
-        }}
       />
-    </motion.div>
+    </div>
   );
 };
 
