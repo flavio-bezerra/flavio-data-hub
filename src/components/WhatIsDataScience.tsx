@@ -59,15 +59,16 @@ const WhatIsDataScience = () => {
   };
 
   const circleVariants = {
-    hidden: { scale: 0, opacity: 0 },
+    hidden: { scale: 0, opacity: 0, rotate: -30 },
     visible: (i: number) => ({
       scale: 1,
       opacity: 1,
+      rotate: 0,
       transition: {
-        delay: i * 0.2,
+        delay: i * 0.4, // Increased delay for more distinct steps
         type: "spring",
-        stiffness: 100,
-        damping: 10,
+        stiffness: 70, // Softer spring
+        damping: 15, // Smoother settle
       } as const,
     }),
     hovered: {
