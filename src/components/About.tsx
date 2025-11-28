@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Target } from "lucide-react";
+import SubtleBackground from "@/components/SubtleBackground";
 
 const About = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -30,33 +31,7 @@ const About = () => {
   return (
     <section ref={sectionRef} className="py-20 bg-secondary/50 relative overflow-hidden">
       {/* Background Tech Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <motion.div
-          className="absolute top-0 left-1/4 w-96 h-96 bg-primary rounded-full blur-3xl"
-          animate={{
-            y: [0, 20, 0],
-            opacity: [0.5, 0.8, 0.5]
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-0 right-1/4 w-96 h-96 bg-gold rounded-full blur-3xl"
-          animate={{
-            y: [0, -20, 0],
-            opacity: [0.5, 0.8, 0.5]
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
-      </div>
+      <SubtleBackground />
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div

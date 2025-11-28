@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import SubtleBackground from "@/components/SubtleBackground";
 
 // Dados para as 6 etapas do CRISP-DM
 const crispSteps = [
@@ -166,33 +167,7 @@ const Methodology = () => {
   return (
     <section className="py-20 bg-secondary/50 relative overflow-hidden">
       {/* Animated Background */}
-      <div className="absolute inset-0 opacity-5">
-        <motion.div
-          className="absolute top-1/3 left-0 w-96 h-96 bg-gold rounded-full blur-3xl"
-          animate={{
-            y: [0, 40, 0],
-            opacity: [0.5, 0.8, 0.5],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/3 right-0 w-96 h-96 bg-primary rounded-full blur-3xl"
-          animate={{
-            y: [0, -40, 0],
-            opacity: [0.5, 0.8, 0.5],
-          }}
-          transition={{
-            duration: 9,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-      </div>
+      <SubtleBackground />
 
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         {/* Título da Seção */}

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Linkedin, Github, BookOpen } from "lucide-react";
 import { motion, useInView } from "framer-motion";
+import SubtleBackground from "@/components/SubtleBackground";
 
 const Portfolio = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -55,33 +56,7 @@ const Portfolio = () => {
   return (
     <section ref={sectionRef} className="py-20 bg-background relative overflow-hidden">
       {/* Animated Background */}
-      <div className="absolute inset-0 opacity-10">
-        <motion.div 
-          className="absolute top-1/4 right-0 w-96 h-96 bg-[#4169E1] rounded-full blur-3xl"
-          animate={{ 
-            y: [0, 40, 0],
-            opacity: [0.5, 0.8, 0.5]
-          }}
-          transition={{ 
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-1/4 left-0 w-96 h-96 bg-[#D4AF37] rounded-full blur-3xl"
-          animate={{ 
-            y: [0, -40, 0],
-            opacity: [0.5, 0.8, 0.5]
-          }}
-          transition={{ 
-            duration: 9,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5
-          }}
-        />
-      </div>
+      <SubtleBackground />
       
       <div className="container mx-auto px-4 relative z-10">
         <motion.div

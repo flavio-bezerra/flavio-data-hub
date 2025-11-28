@@ -13,6 +13,7 @@ import {
   Crown,
   X
 } from "lucide-react";
+import SubtleBackground from "@/components/SubtleBackground";
 
 const RoiCalculator = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -45,9 +46,7 @@ const RoiCalculator = () => {
       className="py-20 bg-background relative overflow-hidden border-t border-border/50"
     >
       {/* Animated Background Elements */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold/20 rounded-full blur-3xl animate-pulse"></div>
-      </div>
+      <SubtleBackground />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}

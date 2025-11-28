@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Briefcase, Target, Database, BarChartHorizontalBig, BrainCircuit, Server } from "lucide-react";
 import { motion, useInView } from "framer-motion";
+import SubtleBackground from "@/components/SubtleBackground";
 
 const DataTeam = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -82,33 +83,7 @@ const DataTeam = () => {
       className="py-20 px-4 md:px-8 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden"
     >
       {/* Animated Background */}
-      <div className="absolute inset-0 opacity-5">
-        <motion.div
-          className="absolute top-1/4 left-1/3 w-96 h-96 bg-wine rounded-full blur-3xl"
-          animate={{
-            y: [0, 30, 0],
-            opacity: [0.5, 0.8, 0.5]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-primary rounded-full blur-3xl"
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.5, 0.8, 0.5]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5
-          }}
-        />
-      </div>
+      <SubtleBackground />
 
       <motion.div
         className="container mx-auto relative z-10"
