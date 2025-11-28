@@ -1,11 +1,13 @@
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 // --- NEURAL NETWORK CANVAS COMPONENT ---
-const NeuralNetwork = () => {
+const NeuralNetwork = ({ isInView }: { isInView: boolean }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    if (!isInView) return; // Optimization: Stop animation when not visible
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -141,7 +143,7 @@ const NeuralNetwork = () => {
       window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isInView]);
 
   return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />;
 };
@@ -174,6 +176,9 @@ const Blob = ({ config, mouseX, mouseY }: { config: any, mouseX: any, mouseY: an
 
 // --- MAIN BACKGROUND COMPONENT ---
 const SubtleBackground = () => {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { margin: "200px" }); // Pre-load when close to viewport
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -182,6 +187,8 @@ const SubtleBackground = () => {
   const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    if (!isInView) return; // Optimization: Only track mouse when visible
+
     const handleMouseMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
       const x = (e.clientX / innerWidth) * 2 - 1;
@@ -192,7 +199,7 @@ const SubtleBackground = () => {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, isInView]);
 
   const blobs = [
     // Large Blobs
@@ -321,7 +328,7 @@ const SubtleBackground = () => {
   ];
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none bg-background">
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none bg-background">
       {/* 1. Base Gradient Blobs */}
       <div className="absolute inset-0 opacity-70">
         {blobs.map((blob) => (
@@ -346,7 +353,7 @@ const SubtleBackground = () => {
       <div className="absolute inset-0 backdrop-blur-[100px] bg-background/80" />
 
       {/* 4. Neural Network Overlay (On top of blur, but subtle) */}
-      <NeuralNetwork />
+      <NeuralNetwork isInView={isInView} />
     </div>
   );
 };
