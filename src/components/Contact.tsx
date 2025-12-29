@@ -7,8 +7,10 @@ import logo from "@/assets/logo-white.png";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import ThreeBackground from "./ThreeBackground";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Contact = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,16 +60,16 @@ const Contact = () => {
       });
 
       if (response.ok) {
-        toast.success("Mensagem enviada com sucesso!", {
-          description: "Obrigado pelo contato. Retornarei em breve."
+        toast.success(t.contact.successMessage, {
+          description: t.contact.successDescription
         });
         setFormData({ name: "", email: "", phone: "", message: "" });
       } else {
         throw new Error("Falha ao enviar mensagem");
       }
     } catch (error) {
-      toast.error("Erro ao enviar mensagem", {
-        description: "Por favor, tente novamente mais tarde ou contate via LinkedIn."
+      toast.error(t.contact.errorMessage, {
+        description: t.contact.errorDescription
       });
       console.error("Erro no envio:", error);
     } finally {
@@ -114,15 +116,14 @@ const Contact = () => {
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 gradient-text leading-tight pb-2"
               variants={itemVariants}
             >
-              Vamos nos Conectar?
+              {t.contact.title}
             </motion.h2>
 
             <motion.p
               className="text-base sm:text-lg md:text-xl text-muted-foreground"
               variants={itemVariants}
             >
-              Interessado em trocar ideias sobre dados e inovação?
-              Envie uma mensagem ou conecte-se no LinkedIn.
+              {t.contact.subtitle}
             </motion.p>
           </div>
 
@@ -135,12 +136,12 @@ const Contact = () => {
             >
               <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
                 <Mail className="w-5 h-5 text-primary" />
-                Envie uma Mensagem
+                {t.contact.formTitle}
               </h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
                   <Input
-                    placeholder="Seu Nome"
+                    placeholder={t.contact.namePlaceholder}
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -152,7 +153,7 @@ const Contact = () => {
                 <div className="space-y-2">
                   <Input
                     type="email"
-                    placeholder="Seu Email"
+                    placeholder={t.contact.emailPlaceholder}
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
@@ -164,7 +165,7 @@ const Contact = () => {
                 <div className="space-y-2">
                   <Input
                     type="tel"
-                    placeholder="Seu Telefone (Opcional)"
+                    placeholder={t.contact.phonePlaceholder}
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
@@ -174,7 +175,7 @@ const Contact = () => {
                 </div>
                 <div className="space-y-2">
                   <Textarea
-                    placeholder="Sua Mensagem"
+                    placeholder={t.contact.messagePlaceholder}
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
@@ -190,12 +191,12 @@ const Contact = () => {
                 >
                   {isSubmitting ? (
                     <>
-                      Enviando...
+                      {t.contact.sendingButton}
                       <Loader2 className="ml-2 h-4 w-4 animate-spin" />
                     </>
                   ) : (
                     <>
-                      Enviar Email
+                      {t.contact.submitButton}
                       <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </>
                   )}
@@ -210,7 +211,7 @@ const Contact = () => {
             >
               <div className="text-center space-y-6">
                 <p className="text-muted-foreground">
-                  Prefere redes sociais? Vamos conectar no LinkedIn!
+                  {t.contact.socialText}
                 </p>
 
                 {/* Desktop Badge (Horizontal) */}
@@ -239,9 +240,9 @@ const Contact = () => {
               {/* Tagline */}
               <div className="text-center">
                 <p className="text-xl font-script text-foreground">
-                  Mais que dados, <span className="text-gold">estratégia</span>.{" "}
+                  {t.about.tagline.part1}<span className="text-gold">{t.about.tagline.highlight1}</span>.{" "}
                   <br />
-                  Mais que insights, <span className="text-primary">resultados</span>.
+                  {t.about.tagline.part2}<span className="text-primary">{t.about.tagline.highlight2}</span>.
                 </p>
               </div>
             </motion.div>
@@ -253,7 +254,7 @@ const Contact = () => {
             className="text-sm text-muted-foreground text-center mt-16"
             variants={itemVariants}
           >
-            © {new Date().getFullYear()} Flávio Menegueço Bezerra. Todos os direitos reservados.
+            © {new Date().getFullYear()} Flávio Menegueço Bezerra. {t.contact.copyright}
           </motion.p>
         </motion.div>
       </div>

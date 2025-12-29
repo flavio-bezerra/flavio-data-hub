@@ -15,70 +15,17 @@ import {
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import SubtleBackground from "@/components/SubtleBackground";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-// Dados para as 6 etapas do CRISP-DM
-const crispSteps = [
-  {
-    id: 0,
-    icon: Briefcase,
-    number: "1",
-    shortTitle: "Entendimento do Negócio",
-    fullTitle: "1. Entendimento do Negócio (Business Understanding)",
-    details:
-      "A etapa mais importante. Antes de escrever qualquer código, focamos em entender: Qual é a dor do negócio? O que queremos resolver? E como vamos medir o sucesso (KPIs)?",
-    color: "primary",
-  },
-  {
-    id: 1,
-    icon: Database,
-    number: "2",
-    shortTitle: "Entendimento dos Dados",
-    fullTitle: "2. Entendimento dos Dados (Data Understanding)",
-    details:
-      "Olhamos para o que temos em casa. Os dados existem? São confiáveis? Têm qualidade suficiente para responder nossas perguntas? Agimos como detetives.",
-    color: "gold",
-  },
-  {
-    id: 2,
-    icon: Filter,
-    number: "3",
-    shortTitle: "Preparação dos Dados",
-    fullTitle: "3. Preparação dos Dados (Data Preparation)",
-    details:
-      "A parte 'invisível' e mais trabalhosa (90% do tempo). Limpar, organizar e traduzir os dados brutos para uma linguagem que o computador entenda.",
-    color: "primary",
-  },
-  {
-    id: 3,
-    icon: BrainCircuit,
-    number: "4",
-    shortTitle: "Modelagem",
-    fullTitle: "4. Modelagem (Modeling)",
-    details:
-      "Aqui a 'mágica' acontece. Testamos diferentes algoritmos para encontrar aquele que melhor aprende com o passado para prever o futuro com precisão.",
-    color: "wine",
-  },
-  {
-    id: 4,
-    icon: CheckCheck,
-    number: "5",
-    shortTitle: "Avaliação",
-    fullTitle: "5. Avaliação (Evaluation)",
-    details:
-      "O teste de fogo. Verificamos se o modelo realmente aprendeu ou apenas decorou, testando-o em dados inéditos (Cross-Validation) para garantir sua eficácia.",
-    color: "gold",
-  },
-  {
-    id: 5,
-    icon: Rocket,
-    number: "6",
-    shortTitle: "Implantação",
-    fullTitle: "6. Implantação (Deployment)",
-    details:
-      "Tirar do laboratório e colocar na vida real. O modelo passa a tomar decisões ou gerar recomendações automaticamente, integrado aos sistemas da empresa.",
-    color: "wine",
-  },
-];
+interface CrispStep {
+  id: number;
+  icon: any;
+  number: string;
+  shortTitle: string;
+  fullTitle: string;
+  details: string;
+  color: string;
+}
 
 const StepCardDesktop = ({
   step,
@@ -86,7 +33,7 @@ const StepCardDesktop = ({
   onClick,
   labelPosition = "bottom",
 }: {
-  step: (typeof crispSteps)[0];
+  step: CrispStep;
   isActive: boolean;
   onClick: () => void;
   labelPosition?: "top" | "bottom";
@@ -141,7 +88,21 @@ const StepCardDesktop = ({
 };
 
 const Methodology = () => {
+  const { t } = useLanguage();
   const [activeCrispStep, setActiveCrispStep] = useState<number>(0);
+
+  const icons = [Briefcase, Database, Filter, BrainCircuit, CheckCheck, Rocket];
+  const colors = ["primary", "gold", "primary", "wine", "gold", "wine"];
+
+  const crispSteps: CrispStep[] = t.crispStages.map((stage, index) => ({
+    id: index,
+    icon: icons[index],
+    number: (index + 1).toString(),
+    shortTitle: stage.short,
+    fullTitle: stage.full,
+    details: stage.details,
+    color: colors[index]
+  }));
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -182,17 +143,13 @@ const Methodology = () => {
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2"
             variants={itemVariants}
           >
-            Metodologia de Projeto
+            {t.methodology.title}
           </motion.h2>
           <motion.p
             className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed px-4"
             variants={itemVariants}
           >
-            Sabendo agora como podemos entregar um projeto (níveis de
-            complexidade), vale mostrar como estruturamos as entregas, visto
-            que, em Ciência de Dados, não podemos comprovar que seremos capazes
-            de entregar um modelo treinado com boas métricas de assertividade
-            antes de testar um cross validation com dados reais.
+            {t.methodology.description}
           </motion.p>
         </motion.div>
 
@@ -209,7 +166,7 @@ const Methodology = () => {
               className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-12 text-center px-4"
               variants={itemVariants}
             >
-              As 6 Etapas do Ciclo CRISP-DM
+              {t.methodology.crispTitle}
             </motion.h3>
 
             {/* MOBILE LAYOUT (Vertical List) */}
@@ -302,7 +259,7 @@ const Methodology = () => {
                     </div>
                   </div>
                   <h4 className="font-bold text-base">
-                    1. Entendimento do Negócio
+                    1. {t.crispStages[0].short}
                   </h4>
                 </div>
                 {/* Arrow to Cycle */}
@@ -432,7 +389,7 @@ const Methodology = () => {
                     ) : (
                       <div className="flex flex-col items-center text-muted-foreground">
                         <RotateCw size={40} className="mb-2 opacity-20" />
-                        <p className="text-sm">Clique em uma etapa</p>
+                        <p className="text-sm">{t.methodology.clickPrompt}</p>
                       </div>
                     )}
                   </motion.div>
@@ -499,7 +456,7 @@ const Methodology = () => {
                       <Rocket size={24} />
                     </div>
                   </div>
-                  <h4 className="font-bold text-base">6. Implantação</h4>
+                  <h4 className="font-bold text-base">6. {t.crispStages[5].short}</h4>
                 </div>
               </motion.div>
             </div>
@@ -515,38 +472,30 @@ const Methodology = () => {
           >
             <h3 className="text-2xl font-bold mb-8 text-primary flex items-center gap-3">
               <BrainCircuit className="w-8 h-8" />
-              Data Science vs. Agile
+              {t.methodology.agileVsData}
             </h3>
             <div className="space-y-8 text-muted-foreground text-base leading-relaxed">
               <div className="p-6 rounded-lg bg-secondary/50 border border-border/50">
                 <h4 className="font-bold text-lg text-foreground mb-3">
-                  Desenvolvimento de Software
+                  {t.methodology.softwareDev.title}
                 </h4>
                 <p className="text-lg">
-                  Metodologias Ágeis (Scrum) focam em{" "}
-                  <strong>velocidade de entrega</strong>. O objetivo é claro
-                  (ex: "criar login"), o risco é o tempo.
+                  {t.methodology.softwareDev.text}
                 </p>
               </div>
 
               <div className="p-6 rounded-lg bg-primary/10 border border-primary/20">
                 <h4 className="font-bold text-lg text-foreground mb-3">
-                  Data Science
+                  {t.methodology.dataScience.title}
                 </h4>
                 <p className="text-lg">
-                  O risco é a viabilidade técnica. O CRISP-DM existe para
-                  'falhar rápido' (fail fast) ou validar o valor antes de
-                  escalar o investimento, protegendo o orçamento do projeto.
+                  {t.methodology.dataScience.text}
                 </p>
               </div>
 
               <div className="mt-6 p-6 rounded-lg bg-gradient-to-r from-gold/10 to-transparent border-l-4 border-gold shadow-sm">
                 <p className="text-lg leading-relaxed text-foreground/90">
-                  O{" "}
-                  <span className="text-gold font-bold text-xl">CRISP-DM</span>{" "}
-                  atua como um escudo contra a incerteza: permite falhar rápido
-                  e barato na fase de testes, ou avançar com precisão cirúrgica
-                  antes de mobilizar grandes recursos de engenharia.
+                  {t.methodology.highlight}
                 </p>
               </div>
             </div>
@@ -560,8 +509,7 @@ const Methodology = () => {
         whileInView="visible"
         viewport={{ once: false }}
       >
-        Um método robusto é essencial, mas não roda sozinho. Quem são as
-        peças-chave para executar este ciclo?
+        {t.methodology.finalText}
       </motion.p>
     </section>
   );

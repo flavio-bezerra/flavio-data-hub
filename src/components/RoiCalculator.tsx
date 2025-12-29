@@ -14,8 +14,10 @@ import {
   X
 } from "lucide-react";
 import SubtleBackground from "@/components/SubtleBackground";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const RoiCalculator = () => {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -53,10 +55,10 @@ const RoiCalculator = () => {
             }`}
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 gradient-text leading-tight pb-2">
-            Priorização pelo ROI
+            {t.roiCalculator.title}
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
-            Agora que entendemos o que é Ciência de Dados, quais são suas entregas e como as diferentes posições se relacionam, é hora de definir como mensurar o impacto de cada projeto. A seguir, apresento um esboço de cálculos baseado na metodologia World Class e Green Belt.
+            {t.roiCalculator.description}
           </p>
         </div>
 
@@ -67,10 +69,10 @@ const RoiCalculator = () => {
             <div className="flex flex-col gap-2 mb-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-wine/20 rounded-lg"><Calculator className="w-6 h-6 text-wine" /></div>
-                <h3 className="text-2xl font-bold text-wine">1. Investimento (Custos)</h3>
+                <h3 className="text-2xl font-bold text-wine">{t.roiCalculator.investment.title}</h3>
               </div>
               <p className="text-sm text-muted-foreground">
-                Recursos consumidos para executar o projeto. Inclui tempo da equipe, infraestrutura e ferramentas.
+                {t.roiCalculator.investment.description}
               </p>
             </div>
 
@@ -78,9 +80,9 @@ const RoiCalculator = () => {
               <div className="flex gap-4">
                 <Users className="w-8 h-8 text-wine-light shrink-0" />
                 <div>
-                  <h4 className="font-bold text-lg mb-1">Pessoas (Tempo da Equipe)</h4>
+                  <h4 className="font-bold text-lg mb-1">{t.roiCalculator.investment.people.title}</h4>
                   <p className="text-sm text-muted-foreground">
-                    Quanto tempo a equipe vai dedicar ao projeto? Multiplique pelas horas e pelo salário. Esse é o custo de oportunidade: o que eles poderiam estar fazendo?
+                    {t.roiCalculator.investment.people.description}
                   </p>
                 </div>
               </div>
@@ -90,9 +92,9 @@ const RoiCalculator = () => {
               <div className="flex gap-4">
                 <Server className="w-8 h-8 text-wine-light shrink-0" />
                 <div>
-                  <h4 className="font-bold text-lg mb-1">Tecnologia & Ferramentas</h4>
+                  <h4 className="font-bold text-lg mb-1">{t.roiCalculator.investment.technology.title}</h4>
                   <p className="text-sm text-muted-foreground">
-                    Servidores na nuvem, licenças de software, armazenamento de dados. Tudo que é necessário para rodar a solução.
+                    {t.roiCalculator.investment.technology.description}
                   </p>
                 </div>
               </div>
@@ -102,7 +104,7 @@ const RoiCalculator = () => {
           {/* Centro: Símbolo de VS/Operação */}
           <div className={`lg:col-span-2 flex flex-col items-center justify-center gap-4 text-muted-foreground/50 transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"}`}>
             <ArrowRight className="w-10 h-10 lg:rotate-0 rotate-90 hidden sm:block" />
-            <div className="text-xs font-mono uppercase tracking-widest">Gera</div>
+            <div className="text-xs font-mono uppercase tracking-widest">{t.roiCalculator.generates}</div>
             <ArrowRight className="w-10 h-10 lg:rotate-0 rotate-90 hidden sm:block" />
           </div>
 
@@ -111,10 +113,10 @@ const RoiCalculator = () => {
             <div className="flex flex-col gap-2 mb-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-gold/20 rounded-lg"><PiggyBank className="w-6 h-6 text-gold" /></div>
-                <h3 className="text-2xl font-bold text-gold">2. Retorno (Ganhos)</h3>
+                <h3 className="text-2xl font-bold text-gold">{t.roiCalculator.return.title}</h3>
               </div>
               <p className="text-sm text-muted-foreground">
-                Valor gerado para o negócio. Pode ser aumento de receita, redução de custos, eficiência ou mitigação de riscos.
+                {t.roiCalculator.return.description}
               </p>
             </div>
 
@@ -123,8 +125,8 @@ const RoiCalculator = () => {
                 <div className="flex items-start gap-3">
                   <TrendingUp className="w-5 h-5 text-gold mt-1" />
                   <div>
-                    <h4 className="font-bold text-foreground">Aumento de Receita</h4>
-                    <p className="text-sm text-muted-foreground">Dinheiro novo entrando. Ex: Sistema de recomendação que aumenta vendas.</p>
+                    <h4 className="font-bold text-foreground">{t.roiCalculator.return.revenue.title}</h4>
+                    <p className="text-sm text-muted-foreground">{t.roiCalculator.return.revenue.description}</p>
                   </div>
                 </div>
               </Card>
@@ -133,8 +135,8 @@ const RoiCalculator = () => {
                 <div className="flex items-start gap-3">
                   <Banknote className="w-5 h-5 text-primary mt-1" />
                   <div>
-                    <h4 className="font-bold text-foreground">Impacto direto no P&L (Lucros e Perdas)</h4>
-                    <p className="text-sm text-muted-foreground">Dinheiro que deixa de sair do caixa. Ex: Redução de estoque parado, menos desperdício.</p>
+                    <h4 className="font-bold text-foreground">{t.roiCalculator.return.pnl.title}</h4>
+                    <p className="text-sm text-muted-foreground">{t.roiCalculator.return.pnl.description}</p>
                   </div>
                 </div>
               </Card>
@@ -143,8 +145,8 @@ const RoiCalculator = () => {
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-primary mt-1" />
                   <div>
-                    <h4 className="font-bold text-foreground">Custo de Oportunidade e Eficiência Operacional</h4>
-                    <p className="text-sm text-muted-foreground">O time faz mais em menos tempo. Ex: Automação de relatórios que liberava 10h/semana.</p>
+                    <h4 className="font-bold text-foreground">{t.roiCalculator.return.efficiency.title}</h4>
+                    <p className="text-sm text-muted-foreground">{t.roiCalculator.return.efficiency.description}</p>
                   </div>
                 </div>
               </Card>
@@ -153,8 +155,8 @@ const RoiCalculator = () => {
                 <div className="flex items-start gap-3">
                   <ShieldCheck className="w-5 h-5 text-gold mt-1" />
                   <div>
-                    <h4 className="font-bold text-foreground">Evitar Perdas Futuras</h4>
-                    <p className="text-sm text-muted-foreground">Problemas que não aconteceram. Ex: Detectar fraude antes do prejuízo, evitar multas, reter clientes.</p>
+                    <h4 className="font-bold text-foreground">{t.roiCalculator.return.losses.title}</h4>
+                    <p className="text-sm text-muted-foreground">{t.roiCalculator.return.losses.description}</p>
                   </div>
                 </div>
               </Card>
@@ -174,7 +176,7 @@ const RoiCalculator = () => {
               <div className="flex items-center justify-center gap-3 mb-8">
                 <Crown className="w-6 h-6 text-gold animate-pulse" />
                 <h3 className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground via-gold to-foreground tracking-wide">
-                  A FÓRMULA DE OURO
+                  {t.roiCalculator.formula.title}
                 </h3>
                 <Crown className="w-6 h-6 text-gold animate-pulse" />
               </div>
@@ -185,9 +187,9 @@ const RoiCalculator = () => {
                 {/* Fração Matemática */}
                 <div className="flex flex-col items-center justify-center">
                   <div className="border-b-2 border-border px-2 pb-2 mb-2 tracking-tight">
-                    (<span className="text-gold">Ganhos</span> - <span className="text-wine-light">Custos</span>)
+                    (<span className="text-gold">{t.roiCalculator.formula.gains}</span> - <span className="text-wine-light">{t.roiCalculator.formula.costs}</span>)
                   </div>
-                  <div className="px-2 text-wine-light tracking-tight">Custos</div>
+                  <div className="px-2 text-wine-light tracking-tight">{t.roiCalculator.formula.costs}</div>
                 </div>
 
                 {/* Multiplicador */}
@@ -206,7 +208,7 @@ const RoiCalculator = () => {
               </div>
 
               <p className="mt-8 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                <span className="text-gold font-semibold">*Regra de Ouro:</span> Se o projeto não tem um ROI positivo claro e mensurável, ele não sai do papel. Priorizamos o que traz retorno real, não o que é apenas "legal" ou "inovador". A Ciência de Dados deve pagar-se a si mesma.
+                <span className="text-gold font-semibold">{t.roiCalculator.formula.rule}</span> {t.roiCalculator.formula.ruleText}
               </p>
             </Card>
           </div>
@@ -215,7 +217,7 @@ const RoiCalculator = () => {
       </div>
       <div className="text-center mt-12 relative z-10">
         <p className="text-lg text-muted-foreground italic">
-          A teoria é clara. Agora, convido você a explorar minha página e ver como transformei essa mentalidade em cenários reais.
+          {t.roiCalculator.finalText}
         </p>
       </div>
     </section>

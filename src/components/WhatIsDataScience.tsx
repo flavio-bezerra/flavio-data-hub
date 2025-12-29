@@ -26,8 +26,10 @@ import {
 } from "recharts";
 import { motion, useInView } from "framer-motion";
 import SubtleBackground from "@/components/SubtleBackground";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const WhatIsDataScience = () => {
+  const { t } = useLanguage();
   const [hoveredPillar, setHoveredPillar] = useState<number | null>(null);
   const [activeClassic, setActiveClassic] = useState<string | undefined>(
     "descritiva"
@@ -112,7 +114,7 @@ const WhatIsDataScience = () => {
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center gradient-text leading-tight pb-2"
             variants={itemVariants}
           >
-            O que é Ciência de Dados?
+            {t.whatIsData.title}
           </motion.h2>
 
           {/* Market Perspectives Grid */}
@@ -132,12 +134,7 @@ const WhatIsDataScience = () => {
                 <h4 className="font-bold text-primary">McKinsey</h4>
               </div>
               <p className="text-sm text-muted-foreground italic leading-relaxed">
-                "Analytics é a ferramenta essencial para transformar dados
-                brutos em{" "}
-                <span className="text-foreground font-medium">
-                  vantagem competitiva
-                </span>
-                , otimizando operações e criando novos modelos de negócio."
+                {t.whatIsData.mckinsey}
               </p>
             </motion.div>
 
@@ -156,12 +153,7 @@ const WhatIsDataScience = () => {
                 <h4 className="font-bold text-gold">Gartner</h4>
               </div>
               <p className="text-sm text-muted-foreground italic leading-relaxed">
-                "Uma disciplina que une{" "}
-                <span className="text-foreground font-medium">
-                  métodos científicos
-                </span>
-                , algoritmos e sistemas para extrair conhecimento e insights
-                valiosos de grandes volumes de dados."
+                {t.whatIsData.gartner}
               </p>
             </motion.div>
 
@@ -180,11 +172,7 @@ const WhatIsDataScience = () => {
                 <h4 className="font-bold text-wine">Bain & Company</h4>
               </div>
               <p className="text-sm text-muted-foreground italic leading-relaxed">
-                "Advanced Analytics permite descobrir padrões ocultos e{" "}
-                <span className="text-foreground font-medium">
-                  prever comportamentos futuros
-                </span>{" "}
-                para resolver os problemas mais complexos e críticos."
+                {t.whatIsData.bain}
               </p>
             </motion.div>
           </div>
@@ -200,15 +188,10 @@ const WhatIsDataScience = () => {
             <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px]" />
             <div className="relative z-10">
               <h3 className="text-xl font-bold mb-4 text-foreground">
-                A Definição Unificadora
+                {t.whatIsData.unifyingTitle}
               </h3>
               <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-                "Ciência de Dados não é sobre complexidade de código, é sobre{" "}
-                <span className="text-foreground font-medium">
-                  redução de incerteza
-                </span>
-                . É a arte de usar o histórico da empresa para tomar decisões
-                futuras com maior probabilidade de acerto."
+                {t.whatIsData.unifyingText}
               </p>
             </div>
           </motion.div>
@@ -216,9 +199,7 @@ const WhatIsDataScience = () => {
             className="text-base sm:text-lg md:text-xl text-muted-foreground text-center leading-relaxed mt-4 sm:mt-6"
             variants={itemVariants}
           >
-            O modelo conceitual que melhor define essa disciplina é um{" "}
-            <span className="font-semibold">Diagrama de Venn</span> que a
-            posiciona na interseção de três pilares fundamentais:
+            {t.whatIsData.vennIntro}
           </motion.p>
         </motion.div>
 
@@ -237,7 +218,7 @@ const WhatIsDataScience = () => {
               className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 px-4"
               variants={itemVariants}
             >
-              Os Três Pilares da Ciência de Dados
+              {t.whatIsData.pillarsTitle}
             </motion.h3>
 
             {/* Main Content Grid: Diagram (Left) + Cards (Right) */}
@@ -250,11 +231,10 @@ const WhatIsDataScience = () => {
                 >
                   {/* Programming Circle - Top Center */}
                   <motion.div
-                    className={`absolute top-0 left-1/2 rounded-full border-2 sm:border-3 md:border-4 flex items-center justify-center pb-[15%] cursor-pointer z-10 transition-all duration-300 ${
-                      hoveredPillar === 3
-                        ? "bg-white/30 border-white"
-                        : "bg-primary/30 border-primary"
-                    }`}
+                    className={`absolute top-0 left-1/2 rounded-full border-2 sm:border-3 md:border-4 flex items-center justify-center pb-[15%] cursor-pointer z-10 transition-all duration-300 ${hoveredPillar === 3
+                      ? "bg-white/30 border-white"
+                      : "bg-primary/30 border-primary"
+                      }`}
                     style={{
                       width: "55%",
                       height: "55%",
@@ -268,21 +248,19 @@ const WhatIsDataScience = () => {
                     onMouseLeave={() => setHoveredPillar(null)}
                   >
                     <span
-                      className={`font-bold text-xs sm:text-sm md:text-base pointer-events-none px-1 text-center break-words w-full ${
-                        hoveredPillar === 3 ? "text-white" : "text-primary"
-                      }`}
+                      className={`font-bold text-xs sm:text-sm md:text-base pointer-events-none px-1 text-center break-words w-full ${hoveredPillar === 3 ? "text-white" : "text-primary"
+                        }`}
                     >
-                      Programação
+                      {t.whatIsData.pillar1}
                     </span>
                   </motion.div>
 
                   {/* Statistics Circle - Bottom Left */}
                   <motion.div
-                    className={`absolute bottom-[5%] left-[5%] rounded-full border-2 sm:border-3 md:border-4 flex items-center justify-center pt-[15%] pr-[15%] cursor-pointer z-10 transition-all duration-300 ${
-                      hoveredPillar === 3
-                        ? "bg-white/30 border-white"
-                        : "bg-gold/30 border-gold"
-                    }`}
+                    className={`absolute bottom-[5%] left-[5%] rounded-full border-2 sm:border-3 md:border-4 flex items-center justify-center pt-[15%] pr-[15%] cursor-pointer z-10 transition-all duration-300 ${hoveredPillar === 3
+                      ? "bg-white/30 border-white"
+                      : "bg-gold/30 border-gold"
+                      }`}
                     style={{
                       width: "55%",
                       height: "55%",
@@ -295,21 +273,19 @@ const WhatIsDataScience = () => {
                     onMouseLeave={() => setHoveredPillar(null)}
                   >
                     <span
-                      className={`font-bold text-xs sm:text-sm md:text-base pointer-events-none text-center break-words leading-tight w-full px-1 ${
-                        hoveredPillar === 3 ? "text-white" : "text-gold"
-                      }`}
+                      className={`font-bold text-xs sm:text-sm md:text-base pointer-events-none text-center break-words leading-tight w-full px-1 ${hoveredPillar === 3 ? "text-white" : "text-gold"
+                        }`}
                     >
-                      Estatística
+                      {t.whatIsData.pillar2}
                     </span>
                   </motion.div>
 
                   {/* Business Circle - Bottom Right */}
                   <motion.div
-                    className={`absolute bottom-[5%] right-[5%] rounded-full border-2 sm:border-3 md:border-4 flex items-center justify-center pt-[15%] pl-[15%] cursor-pointer z-10 transition-all duration-300 ${
-                      hoveredPillar === 3
-                        ? "bg-white/30 border-white"
-                        : "bg-wine/30 border-wine"
-                    }`}
+                    className={`absolute bottom-[5%] right-[5%] rounded-full border-2 sm:border-3 md:border-4 flex items-center justify-center pt-[15%] pl-[15%] cursor-pointer z-10 transition-all duration-300 ${hoveredPillar === 3
+                      ? "bg-white/30 border-white"
+                      : "bg-wine/30 border-wine"
+                      }`}
                     style={{
                       width: "55%",
                       height: "55%",
@@ -322,11 +298,10 @@ const WhatIsDataScience = () => {
                     onMouseLeave={() => setHoveredPillar(null)}
                   >
                     <span
-                      className={`font-bold text-xs sm:text-sm md:text-base pointer-events-none text-center break-words leading-tight w-full px-1 ${
-                        hoveredPillar === 3 ? "text-white" : "text-wine"
-                      }`}
+                      className={`font-bold text-xs sm:text-sm md:text-base pointer-events-none text-center break-words leading-tight w-full px-1 ${hoveredPillar === 3 ? "text-white" : "text-wine"
+                        }`}
                     >
-                      Negócio
+                      {t.whatIsData.pillar3}
                     </span>
                   </motion.div>
                 </div>
@@ -336,17 +311,15 @@ const WhatIsDataScience = () => {
               <div className="w-full flex flex-col gap-4 lg:justify-center text-left relative z-20">
                 {/* Programming */}
                 <motion.div
-                  className={`w-full p-4 rounded-lg ${
-                    hoveredPillar !== null &&
+                  className={`w-full p-4 rounded-lg ${hoveredPillar !== null &&
                     hoveredPillar !== 0 &&
                     hoveredPillar !== 3
-                      ? "opacity-30 scale-95"
-                      : ""
-                  } ${
-                    hoveredPillar === 0 || hoveredPillar === 3
+                    ? "opacity-30 scale-95"
+                    : ""
+                    } ${hoveredPillar === 0 || hoveredPillar === 3
                       ? "scale-105 ring-2 ring-primary bg-primary/5"
                       : "bg-card/30"
-                  }`}
+                    }`}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: false }}
@@ -355,29 +328,24 @@ const WhatIsDataScience = () => {
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
                   <h4 className="text-lg sm:text-xl font-bold mb-2 text-primary">
-                    1. Programação (A Ferramenta)
+                    {t.whatIsData.card1Title}
                   </h4>
                   <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    Não é apenas sobre escrever código. É a capacidade de
-                    manipular grandes volumes de dados, assim como implementar
-                    algoritmos complexos em sistemas que funcionam em escala, 24
-                    horas por dia.
+                    {t.whatIsData.card1Text}
                   </p>
                 </motion.div>
 
                 {/* Statistics */}
                 <motion.div
-                  className={`w-full p-4 rounded-lg ${
-                    hoveredPillar !== null &&
+                  className={`w-full p-4 rounded-lg ${hoveredPillar !== null &&
                     hoveredPillar !== 1 &&
                     hoveredPillar !== 3
-                      ? "opacity-30 scale-95"
-                      : ""
-                  } ${
-                    hoveredPillar === 1 || hoveredPillar === 3
+                    ? "opacity-30 scale-95"
+                    : ""
+                    } ${hoveredPillar === 1 || hoveredPillar === 3
                       ? "scale-105 ring-2 ring-gold bg-gold/5"
                       : "bg-card/30"
-                  }`}
+                    }`}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: false }}
@@ -386,28 +354,24 @@ const WhatIsDataScience = () => {
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
                   <h4 className="text-lg sm:text-xl font-bold mb-2 text-gold">
-                    2. Estatística (A Bússola)
+                    {t.whatIsData.card2Title}
                   </h4>
                   <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    Não é apenas matemática complexa. É o rigor necessário para
-                    separar o que é um sinal real do que é apenas ruído ou
-                    coincidência, garantindo segurança na decisão.
+                    {t.whatIsData.card2Text}
                   </p>
                 </motion.div>
 
                 {/* Business */}
                 <motion.div
-                  className={`w-full p-4 rounded-lg ${
-                    hoveredPillar !== null &&
+                  className={`w-full p-4 rounded-lg ${hoveredPillar !== null &&
                     hoveredPillar !== 2 &&
                     hoveredPillar !== 3
-                      ? "opacity-30 scale-95"
-                      : ""
-                  } ${
-                    hoveredPillar === 2 || hoveredPillar === 3
+                    ? "opacity-30 scale-95"
+                    : ""
+                    } ${hoveredPillar === 2 || hoveredPillar === 3
                       ? "scale-105 ring-2 ring-wine bg-wine/5"
                       : "bg-card/30"
-                  }`}
+                    }`}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: false }}
@@ -416,12 +380,10 @@ const WhatIsDataScience = () => {
                   onMouseLeave={() => setHoveredPillar(null)}
                 >
                   <h4 className="text-lg sm:text-xl font-bold mb-2 text-wine">
-                    3. Negócio (O Alvo)
+                    {t.whatIsData.card3Title}
                   </h4>
                   <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    O pilar mais importante. Sem um problema de negócio claro
-                    para resolver, todo o resto é apenas um exercício acadêmico.
-                    É o que transforma dados em dinheiro ou eficiência.
+                    {t.whatIsData.card3Text}
                   </p>
                 </motion.div>
               </div>
@@ -429,15 +391,13 @@ const WhatIsDataScience = () => {
 
             {/* Conclusion */}
             <motion.div
-              className={`max-w-4xl mx-auto text-left p-6 rounded-lg cursor-pointer relative z-20 ${
-                hoveredPillar !== null && hoveredPillar !== 3
-                  ? "opacity-30 scale-95"
-                  : ""
-              } ${
-                hoveredPillar === 3
+              className={`max-w-4xl mx-auto text-left p-6 rounded-lg cursor-pointer relative z-20 ${hoveredPillar !== null && hoveredPillar !== 3
+                ? "opacity-30 scale-95"
+                : ""
+                } ${hoveredPillar === 3
                   ? "scale-105 ring-2 ring-foreground bg-foreground/5"
                   : "bg-card/30"
-              }`}
+                }`}
               onMouseEnter={() => setHoveredPillar(3)}
               onMouseLeave={() => setHoveredPillar(null)}
               initial={{ opacity: 0, y: 20 }}
@@ -446,15 +406,10 @@ const WhatIsDataScience = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <h4 className="text-2xl font-bold mb-4 text-center">
-                4. A Interseção
-                <br />
-                (Onde o Valor Nasce)
+                {t.whatIsData.intersectionTitle}
               </h4>
               <p className="text-lg text-muted-foreground leading-relaxed text-center">
-                "Meu trabalho acontece onde esses três mundos se encontram. Uso
-                a tecnologia e a matemática não como fim, mas como meio para
-                responder às perguntas que tiram o sono dos gestores e entregar
-                resultados concretos."
+                {t.whatIsData.intersectionText}
               </p>
             </motion.div>
           </motion.div>
@@ -473,22 +428,19 @@ const WhatIsDataScience = () => {
               className="text-3xl md:text-4xl font-bold mb-4"
               variants={itemVariants}
             >
-              Do Escopo ao Deploy
+              {t.whatIsData.scopeTitle}
             </motion.h3>
             <motion.p
               className="text-xl text-muted-foreground mb-16"
               variants={itemVariants}
             >
-              Cada projeto terá o seu grau de entrega, dependente do problema a
-              ser resolvido e do nível de maturidade do departamento.
-              Entretanto, podemos classificar um projeto de ML Clássico e
-              Generativo nos seguintes níveis:
+              {t.whatIsData.scopeText}
             </motion.p>
 
             <Tabs defaultValue="classic" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-8 bg-card-foreground/5">
-                <TabsTrigger value="classic">ML Clássico</TabsTrigger>
-                <TabsTrigger value="gen-ai">IA Generativa</TabsTrigger>
+                <TabsTrigger value="classic">{t.whatIsData.tabClassic}</TabsTrigger>
+                <TabsTrigger value="gen-ai">{t.whatIsData.tabGenAI}</TabsTrigger>
               </TabsList>
 
               {/* Tab Content 1: ML Clássico */}
@@ -498,10 +450,9 @@ const WhatIsDataScience = () => {
                     {
                       id: "descritiva",
                       icon: Search,
-                      title: "1. Descrevendo (O que aconteceu?)",
-                      description: "Visão consolidada do histórico.",
-                      details:
-                        'A Análise Descritiva é o primeiro nível e se concentra em responder à pergunta: "O que aconteceu?". Seu principal objetivo é consolidar e resumir dados históricos para fornecer uma visão clara do passado. Isso é comumente alcançado através de relatórios, dashboards e visualizações de dados que mostram métricas e KPIs (Indicadores-Chave de Performance), permitindo que a organização tenha uma compreensão básica de seu desempenho, como o total de vendas do último trimestre.',
+                      title: t.whatIsData.classicLevels[0].title,
+                      description: t.whatIsData.classicLevels[0].description,
+                      details: t.whatIsData.classicLevels[0].details,
                       value: 1,
                       complexity: 1,
                       color: "hsl(var(--primary))",
@@ -509,10 +460,9 @@ const WhatIsDataScience = () => {
                     {
                       id: "diagnostica",
                       icon: AlertCircle,
-                      title: "2. Diagnosticando (Por que aconteceu?)",
-                      description: "Investigação para encontrar a causa raiz.",
-                      details:
-                        'Subindo um nível, a Análise Diagnóstica busca entender "Por que aconteceu?". Em vez de apenas observar os dados, este estágio envolve uma investigação mais profunda para descobrir as causas raízes por trás de um evento ou tendência. Utilizando técnicas como drill-down (aprofundamento nos dados) e análise de correlação, ela tenta explicar por que, por exemplo, as vendas caíram em uma determinada região, talvez identificando uma nova campanha de um concorrente ou um problema logístico.',
+                      title: t.whatIsData.classicLevels[1].title,
+                      description: t.whatIsData.classicLevels[1].description,
+                      details: t.whatIsData.classicLevels[1].details,
                       value: 1.8,
                       complexity: 2,
                       color: "#a855f7",
@@ -520,11 +470,9 @@ const WhatIsDataScience = () => {
                     {
                       id: "preditiva",
                       icon: TrendingUp,
-                      title: "3. Prevendo (O que vai acontecer?)",
-                      description:
-                        "Uso de Machine Learning para prever o futuro.",
-                      details:
-                        'A Análise Preditiva muda o foco do passado para o futuro, respondendo à pergunta: "O que vai acontecer?". Neste nível, são aplicados modelos estatísticos e de Machine Learning sobre dados históricos para prever tendências e comportamentos futuros. Exemplos clássicos incluem a previsão de demanda de produtos (forecasting), a identificação de clientes com alto risco de cancelamento (churn) ou a estimativa da probabilidade de fraude em uma transação.',
+                      title: t.whatIsData.classicLevels[2].title,
+                      description: t.whatIsData.classicLevels[2].description,
+                      details: t.whatIsData.classicLevels[2].details,
                       value: 3.2,
                       complexity: 3,
                       color: "hsl(var(--primary))",
@@ -532,11 +480,9 @@ const WhatIsDataScience = () => {
                     {
                       id: "prescritiva",
                       icon: Lightbulb,
-                      title: "4. Prescrevendo (O que devemos fazer?)",
-                      description:
-                        "Modelos de otimização para recomendar ações.",
-                      details:
-                        'Por fim, a Análise Prescritiva representa o nível mais avançado de maturidade, focado em determinar "O que devemos fazer?". Ela vai além da simples previsão, utilizando modelos de otimização e simulação para recomendar as melhores ações possíveis e o impacto esperado de cada decisão. Em vez de apenas prever a demanda, a análise prescritiva sugeriria, por exemplo, qual o nível ideal de estoque e o melhor preço para maximizar o lucro, ajudando a otimizar ativamente as estratégias de negócio.',
+                      title: t.whatIsData.classicLevels[3].title,
+                      description: t.whatIsData.classicLevels[3].description,
+                      details: t.whatIsData.classicLevels[3].details,
                       value: 5.8,
                       complexity: 4,
                       color: "hsl(var(--gold))",
@@ -546,7 +492,7 @@ const WhatIsDataScience = () => {
                   return (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                       {/* Chart 1: Classic ML (Left Column) */}
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: false }}
@@ -675,7 +621,7 @@ const WhatIsDataScience = () => {
                       </motion.div>
 
                       {/* Accordion 1: Classic ML (Right Column) */}
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: false }}
@@ -735,10 +681,9 @@ const WhatIsDataScience = () => {
                     {
                       id: "prompt",
                       icon: Brain,
-                      title: "1. Engenharia de Prompt",
-                      description: "Otimização de comandos para LLMs.",
-                      details:
-                        "A Engenharia de Prompt é a prática de desenhar, testar e otimizar as instruções (prompts) dadas a um Modelo de Linguagem de Larga Escala (LLM) para obter as respostas mais precisas, relevantes e úteis. É uma habilidade fundamental que envolve não apenas fazer a pergunta certa, mas também fornecer contexto suficiente, exemplos (técnica conhecida como few-shot learning) e restrições claras para guiar o modelo a executar tarefas complexas com alta qualidade, desde resumir textos até gerar código.",
+                      title: t.whatIsData.genAILevels[0].title,
+                      description: t.whatIsData.genAILevels[0].description,
+                      details: t.whatIsData.genAILevels[0].details,
                       value: 1,
                       complexity: 1,
                       color: "hsl(var(--wine-light))",
@@ -746,10 +691,9 @@ const WhatIsDataScience = () => {
                     {
                       id: "rag",
                       icon: Brain,
-                      title: "2. RAG (Busca Aumentada)",
-                      description: "Conectando LLMs a dados privados.",
-                      details:
-                        'O RAG (Retrieval-Augmented Generation) é uma técnica que potencializa um LLM ao conectá-lo a uma base de conhecimento externa, como documentos privados da empresa, e-mails ou um banco de dados. Em vez de depender apenas do conhecimento estático com o qual foi treinado, o modelo primeiro "busca" (retrieve) informações relevantes dessa fonte de dados externa e, em seguida, usa esses dados "aumentados" como contexto para gerar uma resposta precisa, atualizada e baseada em informações privadas que o modelo originalmente desconhecia.',
+                      title: t.whatIsData.genAILevels[1].title,
+                      description: t.whatIsData.genAILevels[1].description,
+                      details: t.whatIsData.genAILevels[1].details,
                       value: 1.8,
                       complexity: 2,
                       color: "hsl(var(--wine-medium))",
@@ -757,10 +701,9 @@ const WhatIsDataScience = () => {
                     {
                       id: "finetuning",
                       icon: Brain,
-                      title: "3. Fine-tuning (Especialização)",
-                      description: "Treinando o modelo em tarefas específicas.",
-                      details:
-                        'O Fine-tuning (Ajuste Fino ou Especialização) é o processo de continuar o treinamento de um LLM pré-treinado, mas agora com um conjunto de dados menor e específico de um domínio ou tarefa. Diferente do RAG, que injeta conhecimento no prompt, o fine-tuning modifica os "pesos" internos do próprio modelo. Isso o torna um especialista em um estilo de linguagem particular (como o tom de voz de uma marca), em um formato de dados específico (como laudos médicos) ou em uma tarefa muito nichada, melhorando drasticamente seu desempenho e comportamento naquela área.',
+                      title: t.whatIsData.genAILevels[2].title,
+                      description: t.whatIsData.genAILevels[2].description,
+                      details: t.whatIsData.genAILevels[2].details,
                       value: 3.2,
                       complexity: 3,
                       color: "hsl(var(--wine-dark))",
@@ -768,10 +711,9 @@ const WhatIsDataScience = () => {
                     {
                       id: "agents",
                       icon: Brain,
-                      title: "4. Multi-Agentes (Autonomia)",
-                      description: "IAs que planejam e executam tarefas.",
-                      details:
-                        'Os sistemas Multi-Agentes representam um nível avançado de autonomia, onde múltiplas "IAs" (agentes), cada uma muitas vezes impulsionada por um LLM, colaboram para resolver um problema complexo que seria difícil para um único modelo. Um agente "planejador" pode quebrar uma tarefa grande (ex: "analisar concorrentes e criar um plano de marketing") em subtarefas, que são então delegadas e executadas por agentes "especialistas" (ex: um agente de pesquisa, um agente redator, um agente analista), que trabalham de forma coordenada para entregar um resultado final completo.',
+                      title: t.whatIsData.genAILevels[3].title,
+                      description: t.whatIsData.genAILevels[3].description,
+                      details: t.whatIsData.genAILevels[3].details,
                       value: 5.8,
                       complexity: 4,
                       color: "hsl(var(--wine-deeper))",
@@ -781,7 +723,7 @@ const WhatIsDataScience = () => {
                   return (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                       {/* Chart 2: GenAI (Left Column) */}
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: false }}
@@ -910,7 +852,7 @@ const WhatIsDataScience = () => {
                       </motion.div>
 
                       {/* Accordion 2: GenAI (Right Column) */}
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: false }}
@@ -967,8 +909,7 @@ const WhatIsDataScience = () => {
               className="text-lg text-muted-foreground text-center mt-12 italic"
               variants={itemVariants}
             >
-              Com o conceito claro, surge o desafio: como gerir estes projetos
-              num ambiente onde a incerteza é alta? É aqui que entra o método.
+              {t.whatIsData.finalText}
             </motion.p>
           </motion.div>
         </div>

@@ -3,55 +3,38 @@ import { Card } from "@/components/ui/card";
 import { Briefcase, Target, Database, BarChartHorizontalBig, BrainCircuit, Server } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import SubtleBackground from "@/components/SubtleBackground";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const DataTeam = () => {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-100px" });
 
-  const teamRoles = [
-    {
-      icon: Briefcase,
-      roleName: "Business Stakeholder (O Patrocinador)",
-      description: "O Patrocinador Estratégico. Define os KPIs e requisitos de negócio, validando se a solução técnica atende à estratégia corporativa. É responsável pela aprovação da Prova de Conceito (PoC) e pela confirmação do retorno sobre o investimento (ROI).",
-      color: "primary",
-      crispStages: ["Entendimento do Negócio", "Avaliação"]
-    },
-    {
-      icon: Target,
-      roleName: "Product Owner (O Tradutor)",
-      description: "A ponte entre a estratégia e a execução técnica. Gerencia o backlog do produto e prioriza as entregas baseadas em valor de negócio. Traduz necessidades complexas em User Stories claras, garantindo que o time desenvolva a feature certa no momento certo.",
-      color: "gold",
-      crispStages: ["Entendimento do Negócio", "Avaliação"]
-    },
-    {
-      icon: Database,
-      roleName: "Engenheiro de Dados (O Arquiteto)",
-      description: "Projeta e mantém arquiteturas escaláveis (Data Lakes/Warehouses). Constrói pipelines de ETL/ELT robustos que integram, limpam e disponibilizam dados de diversas fontes, garantindo a qualidade e a governança da matéria-prima analítica.",
-      color: "wine",
-      crispStages: ["Entendimento dos Dados", "Preparação dos Dados"]
-    },
-    {
-      icon: BarChartHorizontalBig,
-      roleName: "Analista de Dados / BI (O Historiador)",
-      description: "Especialista em análise descritiva e diagnóstica. Utiliza SQL e ferramentas de Data Viz para transformar dados brutos em dashboards interativos, monitorando métricas históricas e identificando padrões que explicam o comportamento do negócio.",
-      color: "primary",
-      crispStages: ["Entendimento dos Dados", "Avaliação"]
-    },
-    {
-      icon: BrainCircuit,
-      roleName: "Cientista de Dados (O Estrategista/Preditivo)",
-      description: "Foca em análise preditiva e prescritiva. Aplica estatística avançada e algoritmos de Machine Learning para treinar modelos que antecipam cenários futuros, realizam recomendações automatizadas e otimizam a tomada de decisão.",
-      color: "gold",
-      crispStages: ["Preparação dos Dados", "Modelagem", "Avaliação"]
-    },
-    {
-      icon: Server,
-      roleName: "Engenheiro de MLOps (O Piloto)",
-      description: "Operacionaliza o ciclo de vida do modelo. Implementa esteiras de CI/CD para automação, garante o deploy seguro em produção e monitora a saúde dos modelos (Data/Model Drift), assegurando escalabilidade e alta disponibilidade.",
-      color: "wine",
-      crispStages: ["Implantação"]
-    }
+  const icons = [
+    Briefcase,
+    Target,
+    Database,
+    BarChartHorizontalBig,
+    BrainCircuit,
+    Server,
   ];
+  const colors = ["primary", "gold", "wine", "primary", "gold", "wine"];
+  const stagesIndices = [
+    [0, 4], // Stakeholder
+    [0, 4], // PO
+    [1, 2], // DE
+    [1, 4], // DA
+    [2, 3, 4], // DS
+    [5], // MLOps
+  ];
+
+  const teamRoles = t.dataTeam.roles.map((role, index) => ({
+    icon: icons[index],
+    roleName: role.name,
+    description: role.desc,
+    color: colors[index],
+    crispStages: stagesIndices[index].map((i) => t.crispStages[i].short),
+  }));
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -95,13 +78,13 @@ const DataTeam = () => {
           className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center gradient-text leading-tight pb-2"
           variants={itemVariants}
         >
-          Composição de uma Squad de Dados
+          {t.dataTeam.title}
         </motion.h2>
         <motion.p
           className="text-base sm:text-lg md:text-xl text-muted-foreground text-center max-w-4xl mx-auto mb-8 sm:mb-12 px-4"
           variants={itemVariants}
         >
-          Nenhum projeto de dados de sucesso é feito por uma pessoa só. É como um time de futebol: cada jogador tem sua posição, e juntos vencem o jogo. Aqui estão os papéis essenciais:
+          {t.dataTeam.description}
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -166,7 +149,7 @@ const DataTeam = () => {
         whileInView="visible"
         viewport={{ once: false }}
       >
-        Com o método definido e a equipa montada, resta a pergunta mais importante de qualquer executivo: Quanto vou ganhar com isso?
+        {t.dataTeam.finalText}
       </motion.p>
     </section>
   );

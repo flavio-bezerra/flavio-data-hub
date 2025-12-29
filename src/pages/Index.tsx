@@ -6,10 +6,12 @@ import DataTeam from "@/components/DataTeam";
 import RoiCalculator from "@/components/RoiCalculator"; // Importar o novo componente
 import Portfolio from "@/components/Portfolio";
 import Contact from "@/components/Contact";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Index = () => {
   return (
     <main className="min-h-screen">
+      <LanguageSwitcher />
       <Hero />
       <About />
       <WhatIsDataScience />
