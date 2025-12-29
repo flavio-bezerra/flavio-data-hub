@@ -202,7 +202,7 @@ export const translations = {
                     desc: "Operacionaliza o ciclo de vida do modelo. Implementa esteiras de CI/CD para automação, garante o deploy seguro em produção e monitora a saúde dos modelos (Data/Model Drift), assegurando escalabilidade e alta disponibilidade.",
                 }
             ],
-            finalText: "Com o método definido e a equipa montada, resta a pergunta mais importante de qualquer executivo: Quanto vou ganhar com isso?"
+            finalText: "Com o método definido e a equipe montada, resta a pergunta mais importante de qualquer executivo: Quanto vou ganhar com isso?"
         },
         roiCalculator: {
             title: "Priorização pelo ROI",
@@ -233,7 +233,7 @@ export const translations = {
                 },
                 efficiency: {
                     title: "Custo de Oportunidade e Eficiência Operacional",
-                    description: "O time faz mais em menos tempo. Ex: Automação de relatórios que liberaba 10h/semana."
+                    description: "O time faz mais em menos tempo. Ex: Automação de relatórios que liberava 10h/semana."
                 },
                 losses: {
                     title: "Evitar Perdas Futuras",
@@ -409,7 +409,7 @@ export const translations = {
         },
         methodology: {
             title: "Project Methodology",
-            description: "Knowing now how we can deliver a project (levels of complexity), it is worth showing how we structure deliveries, given that in Data Science, we cannot prove that we will be able to deliver a trained model with good assertiveness metrics before testing a cross validation with real data.",
+            description: "Knowing now how we can deliver a project (levels of complexity), it is worth showing how we structure deliveries, given that in Data Science, we cannot prove that we will be able to deliver a trained model with good assertiveness metrics before testing a cross-validation with real data.",
             crispTitle: "The 6 Steps of the CRISP-DM Cycle",
             clickPrompt: "Click on a step",
             agileVsData: "Data Science vs. Agile",
@@ -527,7 +527,7 @@ export const translations = {
                 title: "THE GOLD FORMULA",
                 gains: "Gains",
                 costs: "Costs",
-                rule: "*Gold Rule:",
+                rule: "*Golden Rule:",
                 ruleText: "If the project doesn't have a clear and measurable positive ROI, it doesn't get off the ground. We prioritize what brings real return, not just what is \"cool\" or \"innovative\". Data Science must pay for itself."
             },
             finalText: "The theory is clear. Now, I invite you to explore my page and see how I transformed this mindset into real scenarios."
@@ -818,7 +818,7 @@ export const translations = {
         portfolio: {
             title: "Portafolio de Soluciones",
             subtitle: "Donde la Teoría Encuentra la Práctica",
-            description: "Más que solo enumerar tecnologías, creo en demostrar valor real. Mi trabajo se centra en transformar desafíos de negocio complejos en soluciones de datos funcionales, con una entrega de extremo a extremo: desde el código hasta la documentación técnica y de negocio detallada, asegurando que el proyecto sea sostenible, auditable y comprensible para todos los interesados.",
+            description: "Más que solo enumerar tecnologías, creo en demostrar valor real. Mi trabajo se centra en transformar desafíos de negocio complejos en soluciones de datos funcionales, con una entrega de punta a punta: desde el código hasta la documentación técnica y de negocio detallada, asegurando que el proyecto sea sostenible, auditable y comprensible para todos los interesados.",
             invite: "Te invito a explorar los proyectos, códigos y artículos donde detallo estas implementaciones:",
             cta: "Mira cómo se aplican estos conceptos en la práctica:",
             items: [
@@ -840,7 +840,7 @@ export const translations = {
                 },
                 {
                     title: "Negocio Principal vs. Back-Office",
-                    description: "La ciencia de datos es transversal y debe impregnar toda la organización. Mi especialización es traducir las necesidades específicas de varios frentes (Minorista, Industria, Cadena de Suministro, I+D/Técnico, Legal, Financiero, Administrativo, Marketing y Ventas, RRHH/People Analytics y Éxito del Cliente) en modelos de datos eficientes que resuelven problemas reales de negocio."
+                    description: "La ciencia de datos es transversal y debe impregnar toda la organización. Mi especialización es traducir las necesidades específicas de varios frentes (Minorista, Industria, Cadena de Suministro, I+D/Técnico, Legal, Financiero, Administrativo, Marketing y Ventas, RRHH/People Analytics y Customer Success) en modelos de datos eficientes que resuelven problemas reales de negocio."
                 }
             ],
             buttons: {
