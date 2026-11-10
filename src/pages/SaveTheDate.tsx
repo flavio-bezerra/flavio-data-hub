@@ -6,99 +6,125 @@ const SaveTheDate = () => {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center p-6 text-[#1F2820] font-serif antialiased">
-      <div className="max-w-lg w-full bg-white p-12 md:p-20 border border-gray-100 shadow-[0_25px_50px_-12px_rgba(31,40,32,0.15)] relative overflow-hidden">
+    <main className="min-h-screen flex items-center justify-center p-8 md:p-16 bg-[#FAF8F5] text-[#2A2A2A] antialiased select-none">
+      <article className="w-full max-w-xl mx-auto text-center px-6">
         
-        {/* Elementos decorativos botânicos sutis (topo e base) */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[2px] bg-gradient-to-r from-transparent via-gray-300 to-transparent pointer-events-none" />
-
-        {/* Seção 1: Citação */}
-        <div className="text-center mb-16 relative">
-          <p className="text-[15px] text-[#6D7E6B] font-serif italic leading-relaxed mb-2 uppercase">
+        {/* Quote Section */}
+        <section className="mb-16 md:mb-20 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <blockquote className="font-[Cormorant_Garamond] italic text-[1.75rem] md:text-[2.25rem] lg:text-[2.5rem] leading-[1.4] tracking-[0.02em] text-[#3A3A3A] font-light">
             &ldquo;O amor é uma companhia.&rdquo;
-          </p>
-          <p className="text-[12px] text-[#4F5F4C] font-serif tracking-wider uppercase">
+          </blockquote>
+          <cite className="block mt-6 font-[Montserrat] uppercase tracking-[0.3em] text-[0.7rem] text-[#8A8A8A] font-normal">
             Alberto Caeiro
-          </p>
-        </div>
+          </cite>
+        </section>
 
-        {/* Seção 2: Texto introdutório */}
-        <div className="text-center mb-14">
-          <p className="text-[16px] text-[#333D34] font-serif leading-relaxed tracking-wide">
+        {/* Divider Line */}
+        <hr className="w-24 mx-auto border-0 h-[1px] bg-gradient-to-r from-transparent via-[#C9B896]/60 to-transparent mb-16 md:mb-20 animate-scale-in" style={{ animationDelay: '0.3s' }} />
+
+        {/* Intro Text */}
+        <section className="mb-14 md:mb-16 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <p className="font-[Cormorant_Garamond] text-[1.125rem] md:text-[1.25rem] leading-[1.7] tracking-[0.01em] text-[#4A4A4A] font-normal">
             Com a alegria de estarmos juntos e o desejo de celebrar este momento ao lado de quem amamos,
           </p>
-        </div>
+        </section>
 
-        {/* Seção 3: Nomes */}
-        <div className="text-center mb-14">
-          <h1 className="text-[34px] md:text-[42px] font-light leading-none text-[#1F2820] tracking-widest mb-3 uppercase">
+        {/* Names Section */}
+        <section className="mb-16 md:mb-20 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+          <h1 className="font-[Cormorant_Garamond] text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] leading-[1.1] tracking-[0.08em] text-[#2A2A2A] font-light uppercase mb-4">
             Victoria
           </h1>
-          <div className="flex items-center justify-center gap-2">
-            <div className="w-[60px] h-[0.5px] bg-[#7A8D77]"></div>
-            <span className="text-[18px] text-[#4A5947] font-serif italic">&amp;</span>
-            <div className="w-[60px] h-[0.5px] bg-[#7A8D77]"></div>
+          
+          <div className="flex items-center justify-center gap-3 my-6">
+            <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#C9B896] to-transparent"></div>
+            <span className="font-[Great_Vibes] text-[2.5rem] text-[#C9B896] leading-none select-none">
+              &
+            </span>
+            <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#C9B896] to-transparent"></div>
           </div>
-          <h1 className="text-[34px] md:text-[42px] font-light leading-none text-[#1F2820] tracking-widest mt-3 uppercase">
+          
+          <h1 className="font-[Cormorant_Garamond] text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] leading-[1.1] tracking-[0.08em] text-[#2A2A2A] font-light uppercase">
             Flávio
           </h1>
-        </div>
+        </section>
 
-        {/* Seção 4: Convidam */}
-        <div className="text-center mb-16">
-          <p className="text-[14px] text-[#556651] font-serif tracking-widest uppercase">
+        {/* Invite Text */}
+        <section className="mb-16 md:mb-20 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+          <p className="font-[Montserrat] uppercase tracking-[0.25em] text-[0.75rem] md:text-[0.8rem] text-[#8A8A8A] font-light leading-[1.5]">
             convidam para a celebração de seu casamento
           </p>
-        </div>
+        </section>
 
-        {/* Seção 5: Data e Horário */}
-        <div className="flex flex-col items-center justify-center gap-2 mb-16">
-          <div className="flex items-center gap-3">
-            <span className="text-[15px] text-[#222A23] font-serif tracking-wide">Domingo</span>
-            <div className="w-[0.5px] h-[24px] bg-[#8A9D87]"></div>
-            <span className="text-[32px] font-light text-[#1F2820] leading-none">10</span>
-            <div className="w-[0.5px] h-[24px] bg-[#8A9D87]"></div>
-            <span className="text-[15px] text-[#222A23] font-serif tracking-wide">Outubro</span>
+        {/* Date & Time Section */}
+        <section className="mb-16 md:mb-20 animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
+          <div className="flex flex-col items-center gap-3 md:gap-4">
+            {/* Day of week, day number, month */}
+            <div className="flex items-center gap-6 md:gap-8">
+              <span className="font-[Montserrat] uppercase tracking-[0.2em] text-[0.7rem] text-[#8A8A8A] font-normal whitespace-nowrap">
+                Domingo
+              </span>
+              
+              <div className="relative">
+                <span className="font-[Cormorant_Garamond] text-[5rem] md:text-[6rem] lg:text-[7rem] leading-none tracking-[0.05em] text-[#2A2A2A] font-light">
+                  10
+                </span>
+                {/* Subtle vertical lines flanking the day number */}
+                <div className="absolute left-[-3.5rem] top-1/2 -translate-y-1/2 w-[1px] h-8 bg-gradient-to-b from-transparent via-[#C9B896]/50 to-transparent hidden md:block"></div>
+                <div className="absolute right-[-3.5rem] top-1/2 -translate-y-1/2 w-[1px] h-8 bg-gradient-to-b from-transparent via-[#C9B896]/50 to-transparent hidden md:block"></div>
+              </div>
+              
+              <span className="font-[Montserrat] uppercase tracking-[0.2em] text-[0.7rem] text-[#8A8A8A] font-normal whitespace-nowrap">
+                Outubro
+              </span>
+            </div>
+
+            {/* Year */}
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#C9B896]/40 to-transparent"></div>
+              <span className="font-[Montserrat] uppercase tracking-[0.3em] text-[0.75rem] text-[#8A8A8A] font-light">
+                2027
+              </span>
+              <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#C9B896]/40 to-transparent"></div>
+            </div>
+
+            {/* Time */}
+            <div className="mt-2">
+              <span className="font-[Cormorant_Garamond] tracking-[0.15em] text-[1.125rem] md:text-[1.25rem] text-[#4A4A4A] font-normal">
+                14:00
+              </span>
+            </div>
           </div>
-          <span className="text-[18px] text-[#556651] font-serif tracking-widest uppercase mt-2">
-            2027
-          </span>
-          <span className="text-[15px] text-[#333D34] font-serif tracking-wide mt-4">
-            14:00
-          </span>
-        </div>
+        </section>
 
-        {/* Seção 6: Local */}
-        <div className="text-center mb-20">
-          <p className="text-[18px] font-normal text-[#1F2820] mb-2 tracking-wide leading-tight">
+        {/* Venue Section */}
+        <section className="mb-16 md:mb-20 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+          <p className="font-[Cormorant_Garamond] text-[1.5rem] md:text-[1.75rem] leading-[1.3] tracking-[0.02em] text-[#2A2A2A] font-normal mb-3">
             DellaTorres Eventos
           </p>
-          <p className="text-[14px] text-[#4F5F4C] font-serif tracking-wide">
+          <p className="font-[Montserrat] uppercase tracking-[0.15em] text-[0.8rem] text-[#8A8A8A] font-light mb-2">
             Mairiporã — SP
           </p>
-          <p className="text-[13px] text-[#5F705C] font-serif italic mt-3 tracking-wide">
+          <p className="font-[Cormorant_Garamond] italic text-[0.95rem] text-[#6A6A6A] font-light tracking-[0.01em]">
             Recepção a seguir no mesmo local
           </p>
-        </div>
+        </section>
 
-        {/* Seção 7: Confirmação de Presença */}
-        <div className="text-center">
-          <p className="text-[12px] text-[#6A7A67] font-sans tracking-widest uppercase mb-3">
-            CONFIRMAÇÃO DE PRESENÇA
+        {/* RSVP Button */}
+        <section className="animate-fade-in-up" style={{ animationDelay: '0.9s' }}>
+          <p className="font-[Montserrat] uppercase tracking-[0.25em] text-[0.65rem] text-[#8A8A8A] font-normal mb-4">
+            Confirmação de Presença
           </p>
           <a
             href="https://casamento-flavio-victoria.com.br"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[15px] text-[#1F2820] font-serif tracking-wide hover:text-[#4A5947] transition-colors underline underline-offset-4 decoration-[#D4C9B9] decoration-2"
+            className="inline-flex items-center gap-2 px-8 py-3.5 border border-[#C9B896]/60 text-[#2A2A2A] font-[Montserrat] uppercase tracking-[0.15em] text-[0.7rem] bg-transparent hover:bg-[#C9B896]/10 hover:border-[#C9B896] transition-all duration-500 ease-out rounded-[4px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9B896]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#FAF8F5]"
           >
             casamento-flavio-victoria.com.br
           </a>
-        </div>
+        </section>
 
-        {/* Linha inferior decorativa */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[2px] bg-gradient-to-r from-transparent via-gray-300 to-transparent pointer-events-none" />
-      </div>
+      </article>
     </main>
   );
 };
