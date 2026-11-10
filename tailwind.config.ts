@@ -14,9 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Poppins', 'sans-serif'],
-        body: ['Lato', 'sans-serif'],
-        script: ['Evafiya', 'cursive'],
+        heading: ['Playfair Display', 'Cormorant Garamond', 'Georgia', 'serif'],
+        body: ['Cormorant Garamond', 'Georgia', 'serif'],
+        script: ['Great Vibes', 'cursive'],
+        sans: ['Montserrat', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
