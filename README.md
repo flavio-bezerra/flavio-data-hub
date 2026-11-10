@@ -1,4 +1,4 @@
-# Victoria & Flávio — site de casamento
+# Victória & Flávio — site de casamento
 
 Projeto React 18 + TypeScript + Vite 7 + Tailwind 3 + shadcn. O repositório Git conserva o nome histórico flavio-data-hub.
 

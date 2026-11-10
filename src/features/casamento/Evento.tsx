@@ -3,7 +3,7 @@ import { casamento } from "./conteudo";
 
 export default function Evento() {
   return (
-    <section id="casamento" aria-labelledby="evento-titulo" className="px-5 py-16 md:px-8 md:py-24">
+    <section id="casamento" aria-labelledby="evento-titulo" className="evento-editorial px-5 py-16 md:px-8 md:py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
           <p className="mb-4 text-xs uppercase tracking-[0.2em] text-muted-foreground">Um dia para guardar</p>

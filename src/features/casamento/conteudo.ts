@@ -1,5 +1,5 @@
 export const casamento = {
-  nomes: "Victoria & Flávio",
+  nomes: "Victória & Flávio",
   data: "10 de outubro de 2027",
   dataIso: "2027-10-10T14:00:00-03:00",
   diaDaSemana: "Domingo",

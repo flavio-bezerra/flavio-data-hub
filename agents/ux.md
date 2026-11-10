@@ -7,3 +7,6 @@ Use hierarquia H1 única e H2 por seção, campos com rótulos, mensagens de err
 A história deve usar texto e fotos aprovados pelo casal; durante o protótipo, mostre conteúdo pendente em vez de uma história fictícia. Orientações de traje, transporte e crianças dependem de aprovação. Distinga pagamento real de demonstração e mostre feedback de presença sem sugerir gravação no servidor.
 
 Valide: desktop/celular, menu, âncoras sem título oculto, convite inválido, resposta parcial, resposta completa e recuperação após erro. Documente o que foi verificado automaticamente e o que precisa de teste humano.
+
+## Identidade aprovada — 10/11/2026
+Grafia: Victória & Flávio. Paleta sálvia/eucalipto, azul acinzentado/névoa e marfim; verde profundo para contraste. Cormorant Garamond e Montserrat preservadas. Monograma original extraído da imagem em PNG transparente: preservar desenho, não alegar vetorização. Gravura de rosas CC0 do FreeSVG substitui os ramos geométricos rejeitados; usada como PNG transparente recolorido, não SVG. Origem em docs/origem-botanica.md. Abertura compacta, sem moldura dupla nem painel grande repetindo monograma. Refinamento clássico, leve e elegante; publicação direta autorizada após testes.

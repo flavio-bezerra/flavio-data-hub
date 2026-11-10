@@ -3,7 +3,7 @@ import { orientacoes } from "./conteudo";
 
 export default function Orientacoes() {
   return (
-    <section id="orientacoes" aria-labelledby="orientacoes-titulo" className="border-y bg-secondary/40 px-5 py-16 md:px-8 md:py-24">
+    <section id="orientacoes" aria-labelledby="orientacoes-titulo" className="orientacoes-editorial border-y bg-secondary/40 px-5 py-16 md:px-8 md:py-24">
       <div className="mx-auto max-w-3xl">
         <h2 id="orientacoes-titulo" className="mb-8 text-center font-display text-4xl md:text-5xl">Para aproveitar o dia</h2>
         <Accordion type="single" collapsible>

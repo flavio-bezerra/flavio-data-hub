@@ -1,4 +1,4 @@
-# Site de casamento de Victoria & Flávio
+# Site de casamento de Victória & Flávio
 
 ## Escopo aprovado
 Página principal com abertura, história, local/horários, orientações, presentes simbólicos e presença. Identidade clássica do convite preservada. RSVP por família/grupo com confirmação individual. Desenvolvimento e validação local antes da publicação.
@@ -10,7 +10,7 @@ React 18, TypeScript, Vite 7, Tailwind 3, shadcn. A rota / reúne as seções em
 Fundo claro, Cormorant Garamond para títulos, Montserrat para interface e Great Vibes como detalhe. Champagne para divisores e uma versão escura para ações com contraste. Abertura mostra nomes, data, horário, cidade, local e presença antes da citação. História aguarda texto/foto aprovados. Navegação móvel em fluxo, sem overlay, e perguntas frequentes em acordeão.
 
 ## Dados confirmados
-Victoria & Flávio; 10 de outubro de 2027, domingo, 14h, fuso America/Sao_Paulo; DellaTorres Eventos; Mairiporã/SP; recepção no mesmo local.
+Victória & Flávio; 10 de outubro de 2027, domingo, 14h, fuso America/Sao_Paulo; DellaTorres Eventos; Mairiporã/SP; recepção no mesmo local.
 
 ## Requisitos funcionais
 FR-001: Quando acessar /, o site deve mostrar o evento e permitir navegação às seis áreas aprovadas.

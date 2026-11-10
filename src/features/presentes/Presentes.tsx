@@ -7,7 +7,7 @@ export default function Presentes() {
     { id: "viagem", titulo: "Um pedacinho da lua de mel", descricao: "Uma contribuição para a próxima aventura.", valor: 500 },
   ];
   return (
-    <section id="presentes" aria-labelledby="presentes-titulo" className="px-5 py-16 md:px-8 md:py-24">
+    <section id="presentes" aria-labelledby="presentes-titulo" className="presentes-editorial px-5 py-16 md:px-8 md:py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <h2 id="presentes-titulo" className="font-display text-4xl md:text-5xl">Presentes com carinho</h2>

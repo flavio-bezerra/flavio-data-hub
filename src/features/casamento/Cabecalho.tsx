@@ -1,3 +1,4 @@
+import Monograma from "./Monograma";
 import { useState } from "react";
 import { casamento, secoes } from "./conteudo";
 
@@ -6,7 +7,7 @@ export default function Cabecalho() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 md:px-8">
-        <a href="/#inicio" className="font-display text-2xl" aria-label={`${casamento.nomes} — início`}>V <span className="font-script text-primary">&</span> F</a>
+        <a href="/#inicio" className="font-display text-2xl" aria-label={`${casamento.nomes} — início`}><Monograma className="w-16" /></a>
         <nav aria-label="Navegação principal" className="hidden items-center gap-6 lg:flex">
           {secoes.map((secao) => <a key={secao.id} href={`/#${secao.id}`} className="py-3 text-xs hover:text-primary">{secao.titulo}</a>)}
         </nav>
