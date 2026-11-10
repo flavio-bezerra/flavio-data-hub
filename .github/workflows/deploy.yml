@@ -34,9 +34,9 @@ jobs:
         server-dir: /public_html/
         # Pasta local onde o Vite cria o site
         local-dir: ./dist/
-        # Usar FTP explícito (porta 21) com TLS se suportado
+        # FTP padrão porta 21 com TLS opcional (loose = tenta FTPS, cai para FTP se falhar)
         port: 21
-        security: ftp
+        security: loose
         # timeout maior para conexões lentas
         timeout: 120000
         exclude: |

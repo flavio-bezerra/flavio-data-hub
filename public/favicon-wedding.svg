@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <!-- Olive Leaf Favicon - Minimalist, elegant, recognizable at 16x16 -->
+  <!-- Olive Leaf Favicon - Emoji style, clean, recognizable at 16x16 -->
   <defs>
     <style>
       .leaf { fill: #4A5845; }
@@ -8,31 +8,31 @@
     </style>
   </defs>
   
-  <!-- Main olive leaf - centered, optimized for small sizes -->
-  <g transform="translate(50, 50) rotate(-15)">
-    <!-- Leaf body -->
-    <path class="leaf" d="M 0,-32 
-      C -14,-38 -22,-28 -20,-12 
-      C -18,2 -10,14 -2,20 
-      C 6,26 14,24 20,14 
-      C 22,8 20,-2 14,-10 
-      C 10,-16 6,-24 0,-32 Z"/>
+  <!-- Main olive leaf - centered, emoji-like, optimized for small sizes -->
+  <g transform="translate(50, 50) rotate(-12)">
+    <!-- Leaf body - clean silhouette -->
+    <path class="leaf" d="M 0,-35 
+      C -16,-40 -24,-30 -22,-14 
+      C -20,0 -12,14 -4,22 
+      C 4,30 16,28 22,18 
+      C 24,10 22,0 16,-8 
+      C 12,-14 8,-22 0,-35 Z"/>
     
-    <!-- Leaf highlight (lighter side) -->
-    <path class="leaf-light" d="M 0,-32 
-      C -10,-36 -16,-28 -14,-12 
-      C -12,2 -6,12 -2,18 
-      C 2,22 6,20 10,12 
-      C 12,8 10,-2 6,-10 
-      C 4,-16 2,-24 0,-32 Z"/>
+    <!-- Leaf highlight (lighter side) - gives depth -->
+    <path class="leaf-light" d="M 0,-35 
+      C -10,-38 -16,-30 -14,-14 
+      C -12,0 -6,12 -2,18 
+      C 2,24 8,22 12,14 
+      C 14,8 10,0 6,-8 
+      C 4,-14 2,-22 0,-35 Z"/>
     
     <!-- Central vein -->
-    <path class="leaf-vein" d="M 0,-30 Q 0,-10 0,18"/>
+    <path class="leaf-vein" d="M 0,-33 Q 0,-12 0,20"/>
     
     <!-- Side veins -->
-    <path class="leaf-vein" d="M 0,-22 Q -6,-8 -4,4" opacity="0.6"/>
-    <path class="leaf-vein" d="M 0,-22 Q 6,-8 4,4" opacity="0.6"/>
-    <path class="leaf-vein" d="M 0,-10 Q -5,2 -3,10" opacity="0.5"/>
-    <path class="leaf-vein" d="M 0,-10 Q 5,2 3,10" opacity="0.5"/>
+    <path class="leaf-vein" d="M 0,-24 Q -7,-8 -4,4" opacity="0.6"/>
+    <path class="leaf-vein" d="M 0,-24 Q 7,-8 4,4" opacity="0.6"/>
+    <path class="leaf-vein" d="M 0,-12 Q -6,2 -3,10" opacity="0.5"/>
+    <path class="leaf-vein" d="M 0,-12 Q 6,2 3,10" opacity="0.5"/>
   </g>
 </svg>
