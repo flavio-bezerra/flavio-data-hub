@@ -16,7 +16,7 @@ jobs:
     - name: 🟢 Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '24'
 
     - name: 📦 Install Dependencies
       run: npm ci
@@ -34,13 +34,11 @@ jobs:
         server-dir: /public_html/
         # Pasta local onde o Vite cria o site
         local-dir: ./dist/
-        # Protocolo seguro (HostGator suporta FTPS na porta 990)
-        protocol: ftps
-        port: 990
-        # Modo passivo (necessário na maioria dos servidores compartilhados)
-        passive: true
-        # Limpa arquivos antigos no servidor que não existem no novo build
-        # Cuidado: se tiver uploads de usuários no servidor, mude para false
+        # Usar FTP explícito (porta 21) com TLS se suportado
+        port: 21
+        security: ftp
+        # timeout maior para conexões lentas
+        timeout: 120000
         exclude: |
           **/.git*
           **/.git*/**
