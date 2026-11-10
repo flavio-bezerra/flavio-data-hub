@@ -83,12 +83,6 @@ Porque os meus caminhos já não são só meus;`}
         </section>
 
         {/* Invite Text */}
-      {/* SVG Invitation */}
-      <section className="mb-16 md:mb-20 animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
-        <div className="flex justify-center">
-          <img src="/convite_interno_frente.svg" alt="Convite" className="max-w-full h-auto" />
-        </div>
-      </section>
         <section className="mb-16 md:mb-20 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
           <p className="font-[Montserrat] uppercase tracking-[0.25em] text-[0.75rem] md:text-[0.8rem] text-[#8A8A8A] font-light leading-[1.5]">
             convidam para a celebração de seu casamento
