@@ -9,12 +9,31 @@ const SaveTheDate = () => {
     <main className="min-h-screen flex items-center justify-center p-8 md:p-16 bg-[#FAF8F5] text-[#2A2A2A] antialiased select-none">
       <article className="w-full max-w-xl mx-auto text-center px-6">
         
-        {/* Quote Section */}
+        {/* Poem Section */}
         <section className="mb-16 md:mb-20 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-          <blockquote className="font-[Cormorant_Garamond] italic text-[1.75rem] md:text-[2.25rem] lg:text-[2.5rem] leading-[1.4] tracking-[0.02em] text-[#3A3A3A] font-light">
-            &ldquo;O amor é uma companhia.&rdquo;
+          <blockquote className="font-[Cormorant_Garamond] italic text-[1.25rem] md:text-[1.5rem] lg:text-[1.625rem] leading-[1.8] tracking-[0.01em] text-[#3A3A3A] font-light whitespace-pre-line">
+            {`O amor é uma companhia.
+Já não sei andar só pelos caminhos,
+Porque os meus caminhos já não são só meus;
+Há um deitar de olhos doces em mim no fim do prado,
+E os meus passos tornam-se mais lentos e mais suaves
+Porque sinto que há outra pessoa a andar com eles,
+E mesmo quando estou sozinho
+Sinto-me acompanhado com a presença dela
+E da pessoa que ela é para mim.
+
+Não vejo bem a flor que vejo
+Senão quando ela ma mostra com os olhos dela;
+Não sinto a brisa que sopra
+Senão quando me diz que ela sentiu a brisa soprar.
+
+Nunca posso estar totalmente só,
+Nunca posso andar só pelos meus caminhos,
+Porque há sempre um eco dos passos dela nos meus,
+E um silêncio que é ela a calar-se comigo
+E a olhar para o mundo a meu lado.`}
           </blockquote>
-          <cite className="block mt-6 font-[Montserrat] uppercase tracking-[0.3em] text-[0.7rem] text-[#8A8A8A] font-normal">
+          <cite className="block mt-8 font-[Montserrat] uppercase tracking-[0.3em] text-[0.7rem] text-[#8A8A8A] font-normal">
             Alberto Caeiro
           </cite>
         </section>
@@ -109,16 +128,13 @@ const SaveTheDate = () => {
           </p>
         </section>
 
-        {/* RSVP Button */}
+        {/* Website Link - Simple */}
         <section className="animate-fade-in-up" style={{ animationDelay: '0.9s' }}>
-          <p className="font-[Montserrat] uppercase tracking-[0.25em] text-[0.65rem] text-[#8A8A8A] font-normal mb-4">
-            Confirmação de Presença
-          </p>
           <a
             href="https://casamento-flavio-victoria.com.br"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3.5 border border-[#C9B896]/60 text-[#2A2A2A] font-[Montserrat] uppercase tracking-[0.15em] text-[0.7rem] bg-transparent hover:bg-[#C9B896]/10 hover:border-[#C9B896] transition-all duration-500 ease-out rounded-[4px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9B896]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#FAF8F5]"
+            className="font-[Montserrat] uppercase tracking-[0.15em] text-[0.7rem] text-[#8A8A8A] hover:text-[#C9B896] transition-colors duration-500 ease-out underline underline-offset-4 decoration-[1px] decoration-[#C9B896]/40 hover:decoration-[#C9B896]"
           >
             casamento-flavio-victoria.com.br
           </a>
