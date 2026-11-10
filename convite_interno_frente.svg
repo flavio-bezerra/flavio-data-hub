@@ -1,126 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="148mm"
-   height="210mm"
-   viewBox="0 0 148 210"
-   version="1.1"
-   id="convite_victoria_flavio"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-
-  <defs id="defs_convite">
-    <!-- Fontes Editoriais de Alto Contraste (Google Fonts) -->
-    <style type="text/css">
-      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap');
-
-      .font-name {
-        font-family: 'Playfair Display', 'Cormorant Garamond', 'Didot', 'Bodoni MT', 'Georgia', serif;
-        font-weight: 400;
-        letter-spacing: 0.8px;
-      }
-      .font-serif-regular {
-        font-family: 'Cormorant Garamond', 'Playfair Display', 'Georgia', serif;
-        font-weight: 400;
-        font-style: normal;
-      }
-      .font-serif-italic {
-        font-family: 'Cormorant Garamond', 'Playfair Display', 'Georgia', serif;
-        font-weight: 400;
-        font-style: italic;
-      }
-      .font-serif-medium {
-        font-family: 'Cormorant Garamond', 'Playfair Display', 'Georgia', serif;
-        font-weight: 500;
-        font-style: normal;
-      }
-      .font-sans {
-        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-        font-weight: 400;
-      }
-    </style>
-  </defs>
-
-  <sodipodi:namedview
-     id="base_namedview"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="1.0"
-     inkscape:cx="280"
-     inkscape:cy="400"
-     inkscape:document-units="mm"
-     inkscape:current-layer="08_SITE_E_QRCODE"
-     showgrid="false"
-     units="mm" />
+<svg width="148" height="210" viewBox="0 0 148 210" version="1.1" id="convite_victoria_flavio">
+  <!-- ======================================================== -->
+  <!-- Fundo Branco Puro (A5) -->
+  <!-- ======================================================== -->
+  <rect id="rect_fundo" width="148" height="210" x="0" y="0" fill="#FFFFFF" />
 
   <!-- ======================================================== -->
-  <!-- 00_GUIAS_NAO_IMPRIMIR                                    -->
+  <!-- Borda Elegante (Ligera) -->
   <!-- ======================================================== -->
-  <g inkscape:groupmode="layer" id="00_GUIAS_NAO_IMPRIMIR" inkscape:label="00_GUIAS_NAO_IMPRIMIR" style="display:inline;" opacity="0.25">
-    <!-- Margem visual de segurança (15 mm) -->
+  <rect id="rect_borda" width="148" height="210" x="0.5" y="0.5" fill="none" stroke="#D4C9B9" stroke-width="2" stroke-dasharray="10,6" />
+
+  <!-- ======================================================== -->
+  <!-- 00_GUIAS_NAO_IMPRIMIR (Marcas de corte) -->
+  <!-- ======================================================== -->
+  <g inkscape:groupmode="layer" id="00_GUIAS_NAO_IMPRIMIR" inkscape:label="00_GUIAS_NAO_IMPRIMIR" style="display:inline; opacity:0.15;">
     <rect x="15" y="15" width="118" height="180" fill="none" stroke="#7F92A8" stroke-width="0.25" stroke-dasharray="1.5,1.5" />
-    <!-- Centro horizontal (x = 74 mm) -->
-    <line x1="74" y1="0" x2="74" y2="210" stroke="#7F92A8" stroke-width="0.2" stroke-dasharray="2,2" />
-    <!-- Marcas de corte A5 (148 x 210 mm) -->
+    <line x1="74" y1="0" x2="74" y2="210" fill="none" stroke="#7F92A8" stroke-width="0.2" stroke-dasharray="2,2" />
     <path d="M 0,8 L 0,0 L 8,0 M 140,0 L 148,0 L 148,8 M 0,202 L 0,210 L 8,210 M 140,210 L 148,210 L 148,202" fill="none" stroke="#3E4A3F" stroke-width="0.25" />
   </g>
 
   <!-- ======================================================== -->
-  <!-- 01_FUNDO_PREVIA                                          -->
+  <!-- 01_FUNDO_PREVIA (Fundo sutil) -->
   <!-- ======================================================== -->
   <g inkscape:groupmode="layer" id="01_FUNDO_PREVIA" inkscape:label="01_FUNDO_PREVIA">
-    <!-- Fundo Branco Puro (#FFFFFF) conforme solicitado -->
     <rect id="rect_fundo_branco" width="148" height="210" x="0" y="0" fill="#FFFFFF" />
   </g>
 
   <!-- ======================================================== -->
-  <!-- 02_BOTANICO_SUPERIOR                                     -->
+  <!-- 02_BOTANICO_SUPERIOR (Garland de oliveira) -->
   <!-- ======================================================== -->
   <g inkscape:groupmode="layer" id="02_BOTANICO_SUPERIOR" inkscape:label="02_BOTANICO_SUPERIOR" transform="translate(74, 18)">
-    
     <g class="olive-garland" transform="scale(1, 1)">
       <!-- Main stem curving -->
       <path d="M -42,1.5 C -20,-3 20,-3 42,1.5" fill="none" stroke="#4A5845" stroke-width="0.45" stroke-linecap="round" />
       <path d="M -25,-1.5 C -10,-3.5 10,-3.5 25,-1.5" fill="none" stroke="#687A64" stroke-width="0.3" stroke-linecap="round" />
 
       <!-- Left Side Leaves -->
-      <!-- Leaf cluster 1 (Tip left) -->
       <path d="M -42,1.5 C -46,0 -48,0.5 -46,2.5 C -43,2.5 -42,2 -42,1.5 Z" fill="#5F6F5B" />
       <path d="M -39,0.5 C -43,-2 -44,-0.5 -41,1.5 Z" fill="#7E907B" opacity="0.9" />
 
-      <!-- Leaf pair 2 -->
       <path d="M -34,0 C -38,-4 -42,-3 -39,-1 C -36,0.5 -34,0.2 -34,0 Z" fill="#556850" />
       <path d="M -32,-0.5 C -35,-5 -39,-4 -36,-2 C -34,-0.5 -32,-0.5 -32,-0.5 Z" fill="#8A9D86" />
       <path d="M -33,1 C -37,4.5 -40,4 -38,1.8 C -35,0.5 -33,0.8 -33,1 Z" fill="#5F6F5B" />
 
-      <!-- Leaf pair 3 -->
       <path d="M -25,-1 C -29,-6 -33,-5 -30,-2.5 C -27,-0.5 -25,-1 -25,-1 Z" fill="#4D5F48" />
       <path d="M -23,-1.2 C -26,-6.5 -29,-5.5 -27,-3 C -25,-1.5 -23,-1.2 -23,-1.2 Z" fill="#778A73" />
       <path d="M -24,0.5 C -28,5 -31,4 -29,1.5 C -26,0 -24,0.5 -24,0.5 Z" fill="#5F6F5B" />
 
-      <!-- Leaf pair 4 -->
       <path d="M -16,-2 C -19,-7 -23,-6 -20,-3 C -18,-1.5 -16,-2 -16,-2 Z" fill="#556850" />
       <path d="M -14,-2.2 C -17,-7.5 -20,-6.5 -18,-3.5 C -16,-2 -14,-2.2 -14,-2.2 Z" fill="#889B84" />
       <path d="M -15,-0.2 C -19,4.5 -22,3.5 -20,1 C -17,-0.5 -15,-0.2 -15,-0.2 Z" fill="#5F6F5B" />
 
-      <!-- Leaf pair 5 (near center) -->
       <path d="M -8,-2.5 C -10,-7 -14,-6 -11,-3 C -9,-1.8 -8,-2.5 -8,-2.5 Z" fill="#4D5F48" />
       <path d="M -9,-0.8 C -12,3.5 -15,2.5 -13,0.5 C -11,-0.5 -9,-0.8 -9,-0.8 Z" fill="#758872" />
 
       <!-- Center sprig left -->
       <path d="M -3,-2.8 C -4,-6.5 -7,-5.5 -5,-3 C -4,-2.2 -3,-2.8 -3,-2.8 Z" fill="#5F6F5B" />
-      
+
       <!-- Center Leaf Pair -->
       <path d="M 0,-3 C -2,-7 2,-7 0,-3 Z" fill="#687B64" />
       <ellipse cx="0" cy="-2.5" rx="0.9" ry="1.4" fill="#8FA28B" />
 
       <!-- Right Side Leaves (Symmetric) -->
-      <!-- Center sprig right -->
       <path d="M 3,-2.8 C 4,-6.5 7,-5.5 5,-3 C 4,-2.2 3,-2.8 3,-2.8 Z" fill="#5F6F5B" />
+      <path d="M 8,-2.5 C 10,-7 14,-6 11,-3 C 9,-1.8 8,-2.5 8,-2.5 Z" fill="#4D5F48" />
+      <path d="M 16,-2 C 19,-7 23,-6 20,-3 C 18,-1.5 16,-2 16,-2 Z" fill="#556850" />
+      <path d="M 14,-2.2 C 17,-7.5 20,-6.5 18,-3.5 C 16,-2 14,-2.2 14,-2.2 Z" fill="#889B84" />
+      <path d="M 15,-0.2 C 19,4.5 22,3.5 20,1 C 17,-0.5 15,-0.2 15,-0.2 Z" fill="#5F6F5B" />
 
       <!-- Leaf pair 5 right -->
       <path d="M 8,-2.5 C 10,-7 14,-6 11,-3 C 9,-1.8 8,-2.5 8,-2.5 Z" fill="#4D5F48" />
@@ -144,336 +90,103 @@
       <!-- Leaf cluster 1 (Tip right) -->
       <path d="M 42,1.5 C 46,0 48,0.5 46,2.5 C 43,2.5 42,2 42,1.5 Z" fill="#5F6F5B" />
       <path d="M 39,0.5 C 43,-2 44,-0.5 41,1.5 Z" fill="#7E907B" opacity="0.9" />
-
-      <!-- Small lavender touches (#A9A4BC) as requested in palette -->
-      <circle cx="-31" cy="-2.8" r="0.65" fill="#A9A4BC" />
-      <circle cx="-32.5" cy="-3.8" r="0.55" fill="#A9A4BC" />
-      <circle cx="31" cy="-2.8" r="0.65" fill="#A9A4BC" />
-      <circle cx="32.5" cy="-3.8" r="0.55" fill="#A9A4BC" />
     </g>
-    
   </g>
 
   <!-- ======================================================== -->
-  <!-- 03_INTRODUCAO_E_CHAMADA                                  -->
+  <!-- 03_INTRODUCAO_E_CHAMADA -->
   <!-- ======================================================== -->
   <g inkscape:groupmode="layer" id="03_INTRODUCAO_E_CHAMADA" inkscape:label="03_INTRODUCAO_E_CHAMADA">
-    <text
-       id="txt_poema_caeiro"
-       x="74"
-       y="33.5"
-       text-anchor="middle"
-       class="font-serif-italic"
-       font-size="3.5"
-       fill="#4A5648"
-       letter-spacing="0.2">
-      "O amor é uma companhia."
+    <text id="txt_poema_caeiro" x="74" y="33.5" text-anchor="middle" class="font-serif-italic" font-size="3.5" fill="#4A5648">
+      O amor é uma companhia.
     </text>
-    <text
-       id="txt_credito_caeiro"
-       x="74"
-       y="37.2"
-       text-anchor="middle"
-       class="font-serif-regular"
-       font-size="2.2"
-       fill="#6D7E6B"
-       letter-spacing="0.8">
+    <text id="txt_credito_caeiro" x="74" y="37.2" text-anchor="middle" class="font-serif-regular" font-size="2.2" fill="#6D7E6B">
       ALBERTO CAEIRO
     </text>
-
-    <text
-       id="txt_chamada_acolhedora"
-       x="74"
-       y="45.5"
-       text-anchor="middle"
-       class="font-serif-regular"
-       font-size="3.3"
-       fill="#333D34"
-       letter-spacing="0.15">
-      <tspan x="74" y="45.5">Com a alegria de estarmos juntos e o desejo</tspan>
-      <tspan x="74" y="49.8">de celebrar este momento ao lado de quem amamos,</tspan>
+    <text id="txt_chamada_acolhedora" x="74" y="45.5" text-anchor="middle" class="font-serif-regular" font-size="3.3" fill="#333D34">
+      Com a alegria de estarmos juntos e o desejo de celebrar este momento ao lado de quem amamos,
     </text>
   </g>
 
   <!-- ======================================================== -->
-  <!-- 04_NOMES                                                 -->
+  <!-- 04_NOMES -->
   <!-- ======================================================== -->
   <g inkscape:groupmode="layer" id="04_NOMES" inkscape:label="04_NOMES">
-    <!-- Nome da Noiva: Victoria -->
-    <text
-       id="nome_noiva"
-       x="74"
-       y="66.5"
-       text-anchor="middle"
-       class="font-name"
-       font-size="11.5"
-       fill="#222A23">
+    <text id="nome_noiva" x="74" y="66.5" text-anchor="middle" class="font-name" font-size="11.5" fill="#222A23">
       Victoria
     </text>
-
-    <!-- Filete Horizontal com Ampersand Centralizado -->
     <line x1="26" y1="73.5" x2="68" y2="73.5" stroke="#7A8D77" stroke-width="0.32" />
-
-    <text
-       id="simbolo_ampersand"
-       x="74"
-       y="75.5"
-       text-anchor="middle"
-       class="font-serif-italic"
-       font-size="6.5"
-       fill="#4A5947">
+    <text id="simbolo_ampersand" x="74" y="75.5" text-anchor="middle" class="font-serif-italic" font-size="6.5" fill="#4A5947">
       &amp;
     </text>
-
     <line x1="80" y1="73.5" x2="122" y2="73.5" stroke="#7A8D77" stroke-width="0.32" />
-
-    <!-- Nome do Noivo: Flávio -->
-    <text
-       id="nome_noivo"
-       x="74"
-       y="88"
-       text-anchor="middle"
-       class="font-name"
-       font-size="11.5"
-       fill="#222A23">
+    <text id="nome_noivo" x="74" y="88" text-anchor="middle" class="font-name" font-size="11.5" fill="#222A23">
       Flávio
     </text>
   </g>
 
   <!-- ======================================================== -->
-  <!-- 05_TEXTO_CONVITE                                         -->
+  <!-- 05_TEXTO_CONVITE -->
   <!-- ======================================================== -->
   <g inkscape:groupmode="layer" id="05_TEXTO_CONVITE" inkscape:label="05_TEXTO_CONVITE">
-    <text
-       id="txt_convidam"
-       x="74"
-       y="98"
-       text-anchor="middle"
-       class="font-serif-regular"
-       font-size="3.1"
-       fill="#4A5947"
-       letter-spacing="0.3">
+    <text id="txt_convidam" x="74" y="98" text-anchor="middle" class="font-serif-regular" font-size="3.1" fill="#4A5947">
       convidam para a celebração de seu casamento
     </text>
   </g>
 
   <!-- ======================================================== -->
-  <!-- 06_BLOCO_DATA_HORARIO                                    -->
+  <!-- 06_BLOCO_DATA_HORARIO -->
   <!-- ======================================================== -->
   <g inkscape:groupmode="layer" id="06_BLOCO_DATA_HORARIO" inkscape:label="06_BLOCO_DATA_HORARIO">
-    <text
-       id="txt_ano"
-       x="74"
-       y="108.5"
-       text-anchor="middle"
-       class="font-serif-regular"
-       font-size="3.3"
-       fill="#556651"
-       letter-spacing="1.2">
+    <text id="txt_ano" x="74" y="108.5" text-anchor="middle" class="font-serif-regular" font-size="3.3" fill="#556651">
       2027
     </text>
-
-    <text
-       id="txt_dia_semana"
-       x="61"
-       y="119.5"
-       text-anchor="end"
-       class="font-serif-regular"
-       font-size="3.6"
-       fill="#222A23"
-       letter-spacing="0.2">
+    <text id="txt_dia_semana" x="61" y="119.5" text-anchor="end" class="font-serif-regular" font-size="3.6" fill="#222A23">
       Domingo
     </text>
-
     <line x1="65" y1="112" x2="65" y2="124" stroke="#8A9D87" stroke-width="0.35" />
-
-    <text
-       id="txt_dia_numero"
-       x="74"
-       y="122"
-       text-anchor="middle"
-       class="font-name"
-       font-size="10.2"
-       fill="#1F2820">
+    <text id="txt_dia_numero" x="74" y="122" text-anchor="middle" class="font-name" font-size="10.2" fill="#1F2820">
       10
     </text>
-
     <line x1="83" y1="112" x2="83" y2="124" stroke="#8A9D87" stroke-width="0.35" />
-
-    <text
-       id="txt_mes"
-       x="87"
-       y="119.5"
-       text-anchor="start"
-       class="font-serif-regular"
-       font-size="3.6"
-       fill="#222A23"
-       letter-spacing="0.2">
+    <text id="txt_mes" x="87" y="119.5" text-anchor="start" class="font-serif-regular" font-size="3.6" fill="#222A23">
       Outubro
     </text>
-
-    <text
-       id="txt_horario_central"
-       x="74"
-       y="129.5"
-       text-anchor="middle"
-       class="font-serif-medium"
-       font-size="3.6"
-       fill="#333D34"
-       letter-spacing="0.8">
+    <text id="txt_horario_central" x="74" y="129.5" text-anchor="middle" class="font-serif-medium" font-size="3.6" fill="#333D34">
       14:00
     </text>
   </g>
 
   <!-- ======================================================== -->
-  <!-- 07_LOCAL_E_RECEPCAO                                      -->
+  <!-- 07_LOCAL_E_RECEPCAO -->
   <!-- ======================================================== -->
   <g inkscape:groupmode="layer" id="07_LOCAL_E_RECEPCAO" inkscape:label="07_LOCAL_E_RECEPCAO">
-    <text
-       id="txt_espaco"
-       x="74"
-       y="141.5"
-       text-anchor="middle"
-       class="font-serif-medium"
-       font-size="4.0"
-       fill="#1F2820"
-       letter-spacing="0.3">
+    <text id="txt_espaco" x="74" y="141.5" text-anchor="middle" class="font-serif-medium" font-size="4.0" fill="#1F2820">
       DellaTorres Eventos
     </text>
-
-    <text
-       id="txt_cidade"
-       x="74"
-       y="146"
-       text-anchor="middle"
-       class="font-serif-regular"
-       font-size="3.2"
-       fill="#4F5F4C"
-       letter-spacing="0.2">
+    <text id="txt_cidade" x="74" y="146" text-anchor="middle" class="font-serif-regular" font-size="3.2" fill="#4F5F4C">
       Mairiporã — SP
     </text>
-
-    <text
-       id="txt_recepcao_aviso"
-       x="74"
-       y="152.5"
-       text-anchor="middle"
-       class="font-serif-italic"
-       font-size="3.0"
-       fill="#5F705C"
-       letter-spacing="0.1">
+    <text id="txt_recepcao_aviso" x="74" y="152.5" text-anchor="middle" class="font-serif-italic" font-size="3.0" fill="#5F705C">
       Recepção a seguir no mesmo local
     </text>
   </g>
 
   <!-- ======================================================== -->
-  <!-- 08_SITE_E_QRCODE                                         -->
+  <!-- 08_SITE_E_QRCODE -->
   <!-- ======================================================== -->
   <g inkscape:groupmode="layer" id="08_SITE_E_QRCODE" inkscape:label="08_SITE_E_QRCODE">
-    <!-- Legenda Minimalista de Confirmação -->
-    <text
-       id="txt_site_rotulo"
-       x="74"
-       y="160.5"
-       text-anchor="middle"
-       class="font-sans"
-       font-size="2.0"
-       fill="#6A7A67"
-       letter-spacing="0.6">
+    <text id="txt_site_rotulo" x="74" y="160.5" text-anchor="middle" class="font-sans" font-size="2.0" fill="#6A7A67">
       CONFIRMAÇÃO DE PRESENÇA
     </text>
-
-    <!-- QR Code Vetorial Puro (Sem URL impressa, apenas o QR code) -->
-    
-    <!-- QR Code Vetorial Genuíno (21.0 x 21.0 mm) -->
-    <!-- URL: https://casamento-flavio-victoria.com.br/ -->
     <g id="bloco_qrcode_vetorial" transform="translate(63.50, 164.00)">
-      <!-- Caixa de Respiro / Fundo Branco para Leitura Óptica Perfeita -->
       <rect x="0" y="0" width="21.0" height="21.0" fill="#FFFFFF" rx="0.5" stroke="#E5E0D8" stroke-width="0.2" />
-      <path d="M 2.27,2.27 h 0.568 v 0.568 h -0.568 Z M 2.838,2.27 h 0.568 v 0.568 h -0.568 Z M 3.405,2.27 h 0.568 v 0.568 h -0.568 Z M 3.973,2.27 h 0.568 v 0.568 h -0.568 Z M 4.541,2.27 h 0.568 v 0.568 h -0.568 Z M 5.108,2.27 h 0.568 v 0.568 h -0.568 Z M 5.676,2.27 h 0.568 v 0.568 h -0.568 Z M 6.811,2.27 h 0.568 v 0.568 h -0.568 Z M 7.378,2.27 h 0.568 v 0.568 h -0.568 Z M 7.946,2.27 h 0.568 v 0.568 h -0.568 Z M 8.514,2.27 h 0.568 v 0.568 h -0.568 Z M 9.081,2.27 h 0.568 v 0.568 h -0.568 Z M 9.649,2.27 h 0.568 v 0.568 h -0.568 Z M 11.351,2.27 h 0.568 v 0.568 h -0.568 Z M 11.919,2.27 h 0.568 v 0.568 h -0.568 Z M 12.486,2.27 h 0.568 v 0.568 h -0.568 Z M 13.054,2.27 h 0.568 v 0.568 h -0.568 Z M 13.622,2.27 h 0.568 v 0.568 h -0.568 Z M 14.757,2.27 h 0.568 v 0.568 h -0.568 Z M 15.324,2.27 h 0.568 v 0.568 h -0.568 Z M 15.892,2.27 h 0.568 v 0.568 h -0.568 Z M 16.459,2.27 h 0.568 v 0.568 h -0.568 Z M 17.027,2.27 h 0.568 v 0.568 h -0.568 Z M 17.595,2.27 h 0.568 v 0.568 h -0.568 Z M 18.162,2.27 h 0.568 v 0.568 h -0.568 Z M 2.27,2.838 h 0.568 v 0.568 h -0.568 Z M 5.676,2.838 h 0.568 v 0.568 h -0.568 Z M 6.811,2.838 h 0.568 v 0.568 h -0.568 Z M 7.946,2.838 h 0.568 v 0.568 h -0.568 Z M 8.514,2.838 h 0.568 v 0.568 h -0.568 Z M 11.351,2.838 h 0.568 v 0.568 h -0.568 Z M 11.919,2.838 h 0.568 v 0.568 h -0.568 Z M 13.622,2.838 h 0.568 v 0.568 h -0.568 Z M 14.757,2.838 h 0.568 v 0.568 h -0.568 Z M 18.162,2.838 h 0.568 v 0.568 h -0.568 Z M 2.27,3.405 h 0.568 v 0.568 h -0.568 Z M 3.405,3.405 h 0.568 v 0.568 h -0.568 Z M 3.973,3.405 h 0.568 v 0.568 h -0.568 Z M 4.541,3.405 h 0.568 v 0.568 h -0.568 Z M 5.676,3.405 h 0.568 v 0.568 h -0.568 Z M 7.378,3.405 h 0.568 v 0.568 h -0.568 Z M 9.081,3.405 h 0.568 v 0.568 h -0.568 Z M 9.649,3.405 h 0.568 v 0.568 h -0.568 Z M 10.216,3.405 h 0.568 v 0.568 h -0.568 Z M 10.784,3.405 h 0.568 v 0.568 h -0.568 Z M 12.486,3.405 h 0.568 v 0.568 h -0.568 Z M 13.622,3.405 h 0.568 v 0.568 h -0.568 Z M 14.757,3.405 h 0.568 v 0.568 h -0.568 Z M 15.892,3.405 h 0.568 v 0.568 h -0.568 Z M 16.459,3.405 h 0.568 v 0.568 h -0.568 Z M 17.027,3.405 h 0.568 v 0.568 h -0.568 Z M 18.162,3.405 h 0.568 v 0.568 h -0.568 Z M 2.27,3.973 h 0.568 v 0.568 h -0.568 Z M 3.405,3.973 h 0.568 v 0.568 h -0.568 Z M 3.973,3.973 h 0.568 v 0.568 h -0.568 Z M 4.541,3.973 h 0.568 v 0.568 h -0.568 Z M 5.676,3.973 h 0.568 v 0.568 h -0.568 Z M 6.811,3.973 h 0.568 v 0.568 h -0.568 Z M 7.378,3.973 h 0.568 v 0.568 h -0.568 Z M 8.514,3.973 h 0.568 v 0.568 h -0.568 Z M 9.649,3.973 h 0.568 v 0.568 h -0.568 Z M 11.919,3.973 h 0.568 v 0.568 h -0.568 Z M 13.622,3.973 h 0.568 v 0.568 h -0.568 Z M 14.757,3.973 h 0.568 v 0.568 h -0.568 Z M 15.892,3.973 h 0.568 v 0.568 h -0.568 Z M 16.459,3.973 h 0.568 v 0.568 h -0.568 Z M 17.027,3.973 h 0.568 v 0.568 h -0.568 Z M 18.162,3.973 h 0.568 v 0.568 h -0.568 Z M 2.27,4.541 h 0.568 v 0.568 h -0.568 Z M 3.405,4.541 h 0.568 v 0.568 h -0.568 Z M 3.973,4.541 h 0.568 v 0.568 h -0.568 Z M 4.541,4.541 h 0.568 v 0.568 h -0.568 Z M 5.676,4.541 h 0.568 v 0.568 h -0.568 Z M 7.946,4.541 h 0.568 v 0.568 h -0.568 Z M 8.514,4.541 h 0.568 v 0.568 h -0.568 Z M 9.649,4.541 h 0.568 v 0.568 h -0.568 Z M 10.216,4.541 h 0.568 v 0.568 h -0.568 Z M 10.784,4.541 h 0.568 v 0.568 h -0.568 Z M 11.351,4.541 h 0.568 v 0.568 h -0.568 Z M 13.054,4.541 h 0.568 v 0.568 h -0.568 Z M 14.757,4.541 h 0.568 v 0.568 h -0.568 Z M 15.892,4.541 h 0.568 v 0.568 h -0.568 Z M 16.459,4.541 h 0.568 v 0.568 h -0.568 Z M 17.027,4.541 h 0.568 v 0.568 h -0.568 Z M 18.162,4.541 h 0.568 v 0.568 h -0.568 Z M 2.27,5.108 h 0.568 v 0.568 h -0.568 Z M 5.676,5.108 h 0.568 v 0.568 h -0.568 Z M 7.378,5.108 h 0.568 v 0.568 h -0.568 Z M 10.216,5.108 h 0.568 v 0.568 h -0.568 Z M 11.919,5.108 h 0.568 v 0.568 h -0.568 Z M 12.486,5.108 h 0.568 v 0.568 h -0.568 Z M 13.054,5.108 h 0.568 v 0.568 h -0.568 Z M 13.622,5.108 h 0.568 v 0.568 h -0.568 Z M 14.757,5.108 h 0.568 v 0.568 h -0.568 Z M 18.162,5.108 h 0.568 v 0.568 h -0.568 Z M 2.27,5.676 h 0.568 v 0.568 h -0.568 Z M 2.838,5.676 h 0.568 v 0.568 h -0.568 Z M 3.405,5.676 h 0.568 v 0.568 h -0.568 Z M 3.973,5.676 h 0.568 v 0.568 h -0.568 Z M 4.541,5.676 h 0.568 v 0.568 h -0.568 Z M 5.108,5.676 h 0.568 v 0.568 h -0.568 Z M 5.676,5.676 h 0.568 v 0.568 h -0.568 Z M 6.811,5.676 h 0.568 v 0.568 h -0.568 Z M 7.946,5.676 h 0.568 v 0.568 h -0.568 Z M 9.081,5.676 h 0.568 v 0.568 h -0.568 Z M 10.216,5.676 h 0.568 v 0.568 h -0.568 Z M 11.351,5.676 h 0.568 v 0.568 h -0.568 Z M 12.486,5.676 h 0.568 v 0.568 h -0.568 Z M 13.622,5.676 h 0.568 v 0.568 h -0.568 Z M 14.757,5.676 h 0.568 v 0.568 h -0.568 Z M 15.324,5.676 h 0.568 v 0.568 h -0.568 Z M 15.892,5.676 h 0.568 v 0.568 h -0.568 Z M 16.459,5.676 h 0.568 v 0.568 h -0.568 Z M 17.027,5.676 h 0.568 v 0.568 h -0.568 Z M 17.595,5.676 h 0.568 v 0.568 h -0.568 Z M 18.162,5.676 h 0.568 v 0.568 h -0.568 Z M 6.811,6.243 h 0.568 v 0.568 h -0.568 Z M 7.378,6.243 h 0.568 v 0.568 h -0.568 Z M 8.514,6.243 h 0.568 v 0.568 h -0.568 Z M 10.216,6.243 h 0.568 v 0.568 h -0.568 Z M 10.784,6.243 h 0.568 v 0.568 h -0.568 Z M 11.919,6.243 h 0.568 v 0.568 h -0.568 Z M 12.486,6.243 h 0.568 v 0.568 h -0.568 Z M 13.622,6.243 h 0.568 v 0.568 h -0.568 Z M 2.27,6.811 h 0.568 v 0.568 h -0.568 Z M 3.405,6.811 h 0.568 v 0.568 h -0.568 Z M 3.973,6.811 h 0.568 v 0.568 h -0.568 Z M 5.108,6.811 h 0.568 v 0.568 h -0.568 Z M 5.676,6.811 h 0.568 v 0.568 h -0.568 Z M 6.243,6.811 h 0.568 v 0.568 h -0.568 Z M 7.946,6.811 h 0.568 v 0.568 h -0.568 Z M 8.514,6.811 h 0.568 v 0.568 h -0.568 Z M 10.216,6.811 h 0.568 v 0.568 h -0.568 Z M 11.351,6.811 h 0.568 v 0.568 h -0.568 Z M 11.919,6.811 h 0.568 v 0.568 h -0.568 Z M 13.054,6.811 h 0.568 v 0.568 h -0.568 Z M 14.757,6.811 h 0.568 v 0.568 h -0.568 Z M 16.459,6.811 h 0.568 v 0.568 h -0.568 Z M 17.595,6.811 h 0.568 v 0.568 h -0.568 Z M 18.162,6.811 h 0.568 v 0.568 h -0.568 Z M 3.405,7.378 h 0.568 v 0.568 h -0.568 Z M 5.108,7.378 h 0.568 v 0.568 h -0.568 Z M 6.811,7.378 h 0.568 v 0.568 h -0.568 Z M 7.378,7.378 h 0.568 v 0.568 h -0.568 Z M 8.514,7.378 h 0.568 v 0.568 h -0.568 Z M 11.351,7.378 h 0.568 v 0.568 h -0.568 Z M 11.919,7.378 h 0.568 v 0.568 h -0.568 Z M 12.486,7.378 h 0.568 v 0.568 h -0.568 Z M 13.054,7.378 h 0.568 v 0.568 h -0.568 Z M 13.622,7.378 h 0.568 v 0.568 h -0.568 Z M 14.189,7.378 h 0.568 v 0.568 h -0.568 Z M 14.757,7.378 h 0.568 v 0.568 h -0.568 Z M 15.324,7.378 h 0.568 v 0.568 h -0.568 Z M 15.892,7.378 h 0.568 v 0.568 h -0.568 Z M 18.162,7.378 h 0.568 v 0.568 h -0.568 Z M 4.541,7.946 h 0.568 v 0.568 h -0.568 Z M 5.108,7.946 h 0.568 v 0.568 h -0.568 Z M 5.676,7.946 h 0.568 v 0.568 h -0.568 Z M 8.514,7.946 h 0.568 v 0.568 h -0.568 Z M 9.649,7.946 h 0.568 v 0.568 h -0.568 Z M 10.216,7.946 h 0.568 v 0.568 h -0.568 Z M 11.919,7.946 h 0.568 v 0.568 h -0.568 Z M 12.486,7.946 h 0.568 v 0.568 h -0.568 Z M 13.622,7.946 h 0.568 v 0.568 h -0.568 Z M 14.189,7.946 h 0.568 v 0.568 h -0.568 Z M 14.757,7.946 h 0.568 v 0.568 h -0.568 Z M 17.027,7.946 h 0.568 v 0.568 h -0.568 Z M 17.595,7.946 h 0.568 v 0.568 h -0.568 Z M 3.405,8.514 h 0.568 v 0.568 h -0.568 Z M 3.973,8.514 h 0.568 v 0.568 h -0.568 Z M 4.541,8.514 h 0.568 v 0.568 h -0.568 Z M 6.243,8.514 h 0.568 v 0.568 h -0.568 Z M 9.081,8.514 h 0.568 v 0.568 h -0.568 Z M 9.649,8.514 h 0.568 v 0.568 h -0.568 Z M 10.784,8.514 h 0.568 v 0.568 h -0.568 Z M 12.486,8.514 h 0.568 v 0.568 h -0.568 Z M 13.054,8.514 h 0.568 v 0.568 h -0.568 Z M 13.622,8.514 h 0.568 v 0.568 h -0.568 Z M 14.189,8.514 h 0.568 v 0.568 h -0.568 Z M 14.757,8.514 h 0.568 v 0.568 h -0.568 Z M 18.162,8.514 h 0.568 v 0.568 h -0.568 Z M 2.838,9.081 h 0.568 v 0.568 h -0.568 Z M 3.405,9.081 h 0.568 v 0.568 h -0.568 Z M 5.108,9.081 h 0.568 v 0.568 h -0.568 Z M 5.676,9.081 h 0.568 v 0.568 h -0.568 Z M 7.378,9.081 h 0.568 v 0.568 h -0.568 Z M 7.946,9.081 h 0.568 v 0.568 h -0.568 Z M 8.514,9.081 h 0.568 v 0.568 h -0.568 Z M 9.649,9.081 h 0.568 v 0.568 h -0.568 Z M 10.216,9.081 h 0.568 v 0.568 h -0.568 Z M 11.919,9.081 h 0.568 v 0.568 h -0.568 Z M 13.054,9.081 h 0.568 v 0.568 h -0.568 Z M 16.459,9.081 h 0.568 v 0.568 h -0.568 Z M 17.027,9.081 h 0.568 v 0.568 h -0.568 Z M 2.27,9.649 h 0.568 v 0.568 h -0.568 Z M 3.405,9.649 h 0.568 v 0.568 h -0.568 Z M 3.973,9.649 h 0.568 v 0.568 h -0.568 Z M 5.108,9.649 h 0.568 v 0.568 h -0.568 Z M 6.243,9.649 h 0.568 v 0.568 h -0.568 Z M 7.946,9.649 h 0.568 v 0.568 h -0.568 Z M 9.081,9.649 h 0.568 v 0.568 h -0.568 Z M 10.784,9.649 h 0.568 v 0.568 h -0.568 Z M 11.919,9.649 h 0.568 v 0.568 h -0.568 Z M 12.486,9.649 h 0.568 v 0.568 h -0.568 Z M 13.054,9.649 h 0.568 v 0.568 h -0.568 Z M 14.757,9.649 h 0.568 v 0.568 h -0.568 Z M 17.027,9.649 h 0.568 v 0.568 h -0.568 Z M 17.595,9.649 h 0.568 v 0.568 h -0.568 Z M 18.162,9.649 h 0.568 v 0.568 h -0.568 Z M 2.838,10.216 h 0.568 v 0.568 h -0.568 Z M 3.973,10.216 h 0.568 v 0.568 h -0.568 Z M 5.676,10.216 h 0.568 v 0.568 h -0.568 Z M 7.378,10.216 h 0.568 v 0.568 h -0.568 Z M 8.514,10.216 h 0.568 v 0.568 h -0.568 Z M 11.919,10.216 h 0.568 v 0.568 h -0.568 Z M 12.486,10.216 h 0.568 v 0.568 h -0.568 Z M 13.054,10.216 h 0.568 v 0.568 h -0.568 Z M 14.189,10.216 h 0.568 v 0.568 h -0.568 Z M 14.757,10.216 h 0.568 v 0.568 h -0.568 Z M 15.324,10.216 h 0.568 v 0.568 h -0.568 Z M 15.892,10.216 h 0.568 v 0.568 h -0.568 Z M 17.027,10.216 h 0.568 v 0.568 h -0.568 Z M 17.595,10.216 h 0.568 v 0.568 h -0.568 Z M 18.162,10.216 h 0.568 v 0.568 h -0.568 Z M 2.27,10.784 h 0.568 v 0.568 h -0.568 Z M 3.405,10.784 h 0.568 v 0.568 h -0.568 Z M 4.541,10.784 h 0.568 v 0.568 h -0.568 Z M 6.811,10.784 h 0.568 v 0.568 h -0.568 Z M 7.378,10.784 h 0.568 v 0.568 h -0.568 Z M 7.946,10.784 h 0.568 v 0.568 h -0.568 Z M 8.514,10.784 h 0.568 v 0.568 h -0.568 Z M 10.784,10.784 h 0.568 v 0.568 h -0.568 Z M 12.486,10.784 h 0.568 v 0.568 h -0.568 Z M 13.054,10.784 h 0.568 v 0.568 h -0.568 Z M 13.622,10.784 h 0.568 v 0.568 h -0.568 Z M 15.892,10.784 h 0.568 v 0.568 h -0.568 Z M 17.595,10.784 h 0.568 v 0.568 h -0.568 Z M 2.27,11.351 h 0.568 v 0.568 h -0.568 Z M 2.838,11.351 h 0.568 v 0.568 h -0.568 Z M 3.405,11.351 h 0.568 v 0.568 h -0.568 Z M 4.541,11.351 h 0.568 v 0.568 h -0.568 Z M 5.108,11.351 h 0.568 v 0.568 h -0.568 Z M 5.676,11.351 h 0.568 v 0.568 h -0.568 Z M 6.243,11.351 h 0.568 v 0.568 h -0.568 Z M 6.811,11.351 h 0.568 v 0.568 h -0.568 Z M 7.946,11.351 h 0.568 v 0.568 h -0.568 Z M 8.514,11.351 h 0.568 v 0.568 h -0.568 Z M 9.081,11.351 h 0.568 v 0.568 h -0.568 Z M 9.649,11.351 h 0.568 v 0.568 h -0.568 Z M 10.216,11.351 h 0.568 v 0.568 h -0.568 Z M 12.486,11.351 h 0.568 v 0.568 h -0.568 Z M 13.622,11.351 h 0.568 v 0.568 h -0.568 Z M 14.189,11.351 h 0.568 v 0.568 h -0.568 Z M 15.892,11.351 h 0.568 v 0.568 h -0.568 Z M 16.459,11.351 h 0.568 v 0.568 h -0.568 Z M 17.595,11.351 h 0.568 v 0.568 h -0.568 Z M 2.838,11.919 h 0.568 v 0.568 h -0.568 Z M 3.405,11.919 h 0.568 v 0.568 h -0.568 Z M 3.973,11.919 h 0.568 v 0.568 h -0.568 Z M 5.108,11.919 h 0.568 v 0.568 h -0.568 Z M 6.243,11.919 h 0.568 v 0.568 h -0.568 Z M 7.946,11.919 h 0.568 v 0.568 h -0.568 Z M 9.081,11.919 h 0.568 v 0.568 h -0.568 Z M 10.784,11.919 h 0.568 v 0.568 h -0.568 Z M 11.919,11.919 h 0.568 v 0.568 h -0.568 Z M 13.622,11.919 h 0.568 v 0.568 h -0.568 Z M 15.324,11.919 h 0.568 v 0.568 h -0.568 Z M 16.459,11.919 h 0.568 v 0.568 h -0.568 Z M 17.027,11.919 h 0.568 v 0.568 h -0.568 Z M 17.595,11.919 h 0.568 v 0.568 h -0.568 Z M 2.27,12.486 h 0.568 v 0.568 h -0.568 Z M 3.405,12.486 h 0.568 v 0.568 h -0.568 Z M 3.973,12.486 h 0.568 v 0.568 h -0.568 Z M 5.676,12.486 h 0.568 v 0.568 h -0.568 Z M 6.811,12.486 h 0.568 v 0.568 h -0.568 Z M 7.378,12.486 h 0.568 v 0.568 h -0.568 Z M 8.514,12.486 h 0.568 v 0.568 h -0.568 Z M 9.081,12.486 h 0.568 v 0.568 h -0.568 Z M 9.649,12.486 h 0.568 v 0.568 h -0.568 Z M 10.216,12.486 h 0.568 v 0.568 h -0.568 Z M 10.784,12.486 h 0.568 v 0.568 h -0.568 Z M 11.351,12.486 h 0.568 v 0.568 h -0.568 Z M 12.486,12.486 h 0.568 v 0.568 h -0.568 Z M 13.622,12.486 h 0.568 v 0.568 h -0.568 Z M 14.757,12.486 h 0.568 v 0.568 h -0.568 Z M 15.324,12.486 h 0.568 v 0.568 h -0.568 Z M 15.892,12.486 h 0.568 v 0.568 h -0.568 Z M 17.027,12.486 h 0.568 v 0.568 h -0.568 Z M 3.405,13.054 h 0.568 v 0.568 h -0.568 Z M 3.973,13.054 h 0.568 v 0.568 h -0.568 Z M 5.108,13.054 h 0.568 v 0.568 h -0.568 Z M 6.243,13.054 h 0.568 v 0.568 h -0.568 Z M 9.081,13.054 h 0.568 v 0.568 h -0.568 Z M 11.919,13.054 h 0.568 v 0.568 h -0.568 Z M 12.486,13.054 h 0.568 v 0.568 h -0.568 Z M 14.757,13.054 h 0.568 v 0.568 h -0.568 Z M 15.324,13.054 h 0.568 v 0.568 h -0.568 Z M 17.027,13.054 h 0.568 v 0.568 h -0.568 Z M 2.838,13.622 h 0.568 v 0.568 h -0.568 Z M 3.973,13.622 h 0.568 v 0.568 h -0.568 Z M 4.541,13.622 h 0.568 v 0.568 h -0.568 Z M 5.676,13.622 h 0.568 v 0.568 h -0.568 Z M 6.811,13.622 h 0.568 v 0.568 h -0.568 Z M 7.946,13.622 h 0.568 v 0.568 h -0.568 Z M 8.514,13.622 h 0.568 v 0.568 h -0.568 Z M 9.081,13.622 h 0.568 v 0.568 h -0.568 Z M 9.649,13.622 h 0.568 v 0.568 h -0.568 Z M 10.784,13.622 h 0.568 v 0.568 h -0.568 Z M 11.351,13.622 h 0.568 v 0.568 h -0.568 Z M 11.919,13.622 h 0.568 v 0.568 h -0.568 Z M 12.486,13.622 h 0.568 v 0.568 h -0.568 Z M 13.622,13.622 h 0.568 v 0.568 h -0.568 Z M 14.189,13.622 h 0.568 v 0.568 h -0.568 Z M 14.757,13.622 h 0.568 v 0.568 h -0.568 Z M 15.324,13.622 h 0.568 v 0.568 h -0.568 Z M 15.892,13.622 h 0.568 v 0.568 h -0.568 Z M 16.459,13.622 h 0.568 v 0.568 h -0.568 Z M 17.027,13.622 h 0.568 v 0.568 h -0.568 Z M 6.811,14.189 h 0.568 v 0.568 h -0.568 Z M 9.649,14.189 h 0.568 v 0.568 h -0.568 Z M 11.351,14.189 h 0.568 v 0.568 h -0.568 Z M 12.486,14.189 h 0.568 v 0.568 h -0.568 Z M 13.622,14.189 h 0.568 v 0.568 h -0.568 Z M 15.892,14.189 h 0.568 v 0.568 h -0.568 Z M 16.459,14.189 h 0.568 v 0.568 h -0.568 Z M 17.027,14.189 h 0.568 v 0.568 h -0.568 Z M 17.595,14.189 h 0.568 v 0.568 h -0.568 Z M 18.162,14.189 h 0.568 v 0.568 h -0.568 Z M 2.27,14.757 h 0.568 v 0.568 h -0.568 Z M 2.838,14.757 h 0.568 v 0.568 h -0.568 Z M 3.405,14.757 h 0.568 v 0.568 h -0.568 Z M 3.973,14.757 h 0.568 v 0.568 h -0.568 Z M 4.541,14.757 h 0.568 v 0.568 h -0.568 Z M 5.108,14.757 h 0.568 v 0.568 h -0.568 Z M 5.676,14.757 h 0.568 v 0.568 h -0.568 Z M 6.811,14.757 h 0.568 v 0.568 h -0.568 Z M 7.378,14.757 h 0.568 v 0.568 h -0.568 Z M 7.946,14.757 h 0.568 v 0.568 h -0.568 Z M 8.514,14.757 h 0.568 v 0.568 h -0.568 Z M 9.081,14.757 h 0.568 v 0.568 h -0.568 Z M 9.649,14.757 h 0.568 v 0.568 h -0.568 Z M 13.054,14.757 h 0.568 v 0.568 h -0.568 Z M 13.622,14.757 h 0.568 v 0.568 h -0.568 Z M 14.757,14.757 h 0.568 v 0.568 h -0.568 Z M 15.892,14.757 h 0.568 v 0.568 h -0.568 Z M 16.459,14.757 h 0.568 v 0.568 h -0.568 Z M 17.595,14.757 h 0.568 v 0.568 h -0.568 Z M 2.27,15.324 h 0.568 v 0.568 h -0.568 Z M 5.676,15.324 h 0.568 v 0.568 h -0.568 Z M 6.811,15.324 h 0.568 v 0.568 h -0.568 Z M 7.946,15.324 h 0.568 v 0.568 h -0.568 Z M 8.514,15.324 h 0.568 v 0.568 h -0.568 Z M 10.784,15.324 h 0.568 v 0.568 h -0.568 Z M 11.351,15.324 h 0.568 v 0.568 h -0.568 Z M 12.486,15.324 h 0.568 v 0.568 h -0.568 Z M 13.054,15.324 h 0.568 v 0.568 h -0.568 Z M 13.622,15.324 h 0.568 v 0.568 h -0.568 Z M 15.892,15.324 h 0.568 v 0.568 h -0.568 Z M 16.459,15.324 h 0.568 v 0.568 h -0.568 Z M 17.595,15.324 h 0.568 v 0.568 h -0.568 Z M 18.162,15.324 h 0.568 v 0.568 h -0.568 Z M 2.27,15.892 h 0.568 v 0.568 h -0.568 Z M 3.405,15.892 h 0.568 v 0.568 h -0.568 Z M 3.973,15.892 h 0.568 v 0.568 h -0.568 Z M 4.541,15.892 h 0.568 v 0.568 h -0.568 Z M 5.676,15.892 h 0.568 v 0.568 h -0.568 Z M 7.378,15.892 h 0.568 v 0.568 h -0.568 Z M 7.946,15.892 h 0.568 v 0.568 h -0.568 Z M 10.216,15.892 h 0.568 v 0.568 h -0.568 Z M 10.784,15.892 h 0.568 v 0.568 h -0.568 Z M 11.351,15.892 h 0.568 v 0.568 h -0.568 Z M 11.919,15.892 h 0.568 v 0.568 h -0.568 Z M 13.622,15.892 h 0.568 v 0.568 h -0.568 Z M 14.189,15.892 h 0.568 v 0.568 h -0.568 Z M 14.757,15.892 h 0.568 v 0.568 h -0.568 Z M 15.324,15.892 h 0.568 v 0.568 h -0.568 Z M 15.892,15.892 h 0.568 v 0.568 h -0.568 Z M 17.027,15.892 h 0.568 v 0.568 h -0.568 Z M 17.595,15.892 h 0.568 v 0.568 h -0.568 Z M 18.162,15.892 h 0.568 v 0.568 h -0.568 Z M 2.27,16.459 h 0.568 v 0.568 h -0.568 Z M 3.405,16.459 h 0.568 v 0.568 h -0.568 Z M 3.973,16.459 h 0.568 v 0.568 h -0.568 Z M 4.541,16.459 h 0.568 v 0.568 h -0.568 Z M 5.676,16.459 h 0.568 v 0.568 h -0.568 Z M 6.811,16.459 h 0.568 v 0.568 h -0.568 Z M 8.514,16.459 h 0.568 v 0.568 h -0.568 Z M 9.649,16.459 h 0.568 v 0.568 h -0.568 Z M 10.216,16.459 h 0.568 v 0.568 h -0.568 Z M 10.784,16.459 h 0.568 v 0.568 h -0.568 Z M 11.351,16.459 h 0.568 v 0.568 h -0.568 Z M 11.919,16.459 h 0.568 v 0.568 h -0.568 Z M 12.486,16.459 h 0.568 v 0.568 h -0.568 Z M 13.054,16.459 h 0.568 v 0.568 h -0.568 Z M 14.189,16.459 h 0.568 v 0.568 h -0.568 Z M 15.324,16.459 h 0.568 v 0.568 h -0.568 Z M 15.892,16.459 h 0.568 v 0.568 h -0.568 Z M 16.459,16.459 h 0.568 v 0.568 h -0.568 Z M 18.162,16.459 h 0.568 v 0.568 h -0.568 Z M 2.27,17.027 h 0.568 v 0.568 h -0.568 Z M 3.405,17.027 h 0.568 v 0.568 h -0.568 Z M 3.973,17.027 h 0.568 v 0.568 h -0.568 Z M 4.541,17.027 h 0.568 v 0.568 h -0.568 Z M 5.676,17.027 h 0.568 v 0.568 h -0.568 Z M 6.811,17.027 h 0.568 v 0.568 h -0.568 Z M 7.378,17.027 h 0.568 v 0.568 h -0.568 Z M 9.649,17.027 h 0.568 v 0.568 h -0.568 Z M 12.486,17.027 h 0.568 v 0.568 h -0.568 Z M 13.622,17.027 h 0.568 v 0.568 h -0.568 Z M 14.189,17.027 h 0.568 v 0.568 h -0.568 Z M 15.324,17.027 h 0.568 v 0.568 h -0.568 Z M 17.027,17.027 h 0.568 v 0.568 h -0.568 Z M 18.162,17.027 h 0.568 v 0.568 h -0.568 Z M 2.27,17.595 h 0.568 v 0.568 h -0.568 Z M 5.676,17.595 h 0.568 v 0.568 h -0.568 Z M 8.514,17.595 h 0.568 v 0.568 h -0.568 Z M 11.351,17.595 h 0.568 v 0.568 h -0.568 Z M 12.486,17.595 h 0.568 v 0.568 h -0.568 Z M 13.622,17.595 h 0.568 v 0.568 h -0.568 Z M 15.324,17.595 h 0.568 v 0.568 h -0.568 Z M 16.459,17.595 h 0.568 v 0.568 h -0.568 Z M 17.595,17.595 h 0.568 v 0.568 h -0.568 Z M 2.27,18.162 h 0.568 v 0.568 h -0.568 Z M 2.838,18.162 h 0.568 v 0.568 h -0.568 Z M 3.405,18.162 h 0.568 v 0.568 h -0.568 Z M 3.973,18.162 h 0.568 v 0.568 h -0.568 Z M 4.541,18.162 h 0.568 v 0.568 h -0.568 Z M 5.108,18.162 h 0.568 v 0.568 h -0.568 Z M 5.676,18.162 h 0.568 v 0.568 h -0.568 Z M 6.811,18.162 h 0.568 v 0.568 h -0.568 Z M 7.378,18.162 h 0.568 v 0.568 h -0.568 Z M 9.649,18.162 h 0.568 v 0.568 h -0.568 Z M 10.784,18.162 h 0.568 v 0.568 h -0.568 Z M 12.486,18.162 h 0.568 v 0.568 h -0.568 Z M 13.054,18.162 h 0.568 v 0.568 h -0.568 Z M 13.622,18.162 h 0.568 v 0.568 h -0.568 Z M 15.324,18.162 h 0.568 v 0.568 h -0.568 Z M 17.595,18.162 h 0.568 v 0.568 h -0.568 Z" fill="#222A23" />
+      <path d="M 2.27,2.27 h 0.568 v 0.568 h -0.568 Z M 2.838,2.27 h 0.568 v 0.568 h -0.568 Z M 3.405,2.27 h 0.568 v 0.568 h -0.568 Z M 3.973,2.27 h 0.568 v 0.568 h -0.568 Z M 4.541,2.27 h 0.568 v 0.568 h -0.568 Z M 5.108,2.27 h 0.568 v 0.568 h -0.568 Z M 5.676,2.27 h 0.568 v 0.568 h -0.568 Z M 6.811,2.27 h 0.568 v 0.568 h -0.568 Z M 7.378,2.27 h 0.568 v 0.568 h -0.568 Z M 7.946,2.27 h 0.568 v 0.568 h -0.568 Z M 8.514,2.27 h 0.568 v 0.568 h -0.568 Z M 9.081,2.27 h 0.568 v 0.568 h -0.568 Z M 9.649,2.27 h 0.568 v 0.568 h -0.568 Z M 11.351,2.27 h 0.568 v 0.568 h -0.568 Z M 11.919,2.27 h 0.568 v 0.568 h -0.568 Z M 12.486,2.27 h 0.568 v 0.568 h -0.568 Z M 13.054,2.27 h 0.568 v 0.568 h -0.568 Z M 13.622,2.27 h 0.568 v 0.568 h -0.568 Z M 14.757,2.27 h 0.568 v 0.568 h -0.568 Z M 15.324,2.27 h 0.568 v 0.568 h -0.568 Z M 15.892,2.27 h 0.568 v 0.568 h -0.568 Z M 16.459,2.27 h 0.568 v 0.568 h -0.568 Z M 17.027,2.27 h 0.568 v 0.568 h -0.568 Z M 17.595,2.27 h 0.568 v 0.568 h -0.568 Z M 18.162,2.27 h 0.568 v 0.568 h -0.568 Z M 2.27,2.838 h 0.568 v 0.568 h -0.568 Z M 5.676,2.838 h 0.568 v 0.568 h -0.568 Z M 6.811,2.838 h 0.568 v 0.568 h -0.568 Z M 7.946,2.838 h 0.568 v 0.568 h -0.568 Z M 8.514,2.838 h 0.568 v 0.568 h -0.568 Z M 11.351,2.838 h 0.568 v 0.568 h -0.568 Z M 11.919,2.838 h 0.568 v 0.568 h -0.568 Z M 13.622,2.838 h 0.568 v 0.568 h -0.568 Z M 14.757,2.838 h 0.568 v 0.568 h -0.568 Z M 18.162,2.838 h 0.568 v 0.568 h -0.568 Z M 2.27,3.405 h 0.568 v 0.568 h -0.568 Z M 3.405,3.405 h 0.568 v 0.568 h -0.568 Z M 3.973,3.405 h 0.568 v 0.568 h -0.568 Z M 4.541,3.405 h 0.568 v 0.568 h -0.568 Z M 5.108,3.405 h 0.568 v 0.568 h -0.568 Z M 5.676,3.405 h 0.568 v 0.568 h -0.568 Z M 6.811,3.405 h 0.568 v 0.568 h -0.568 Z M 7.378,3.405 h 0.568 v 0.568 h -0.568 Z M 7.946,3.405 h 0.568 v 0.568 h -0.568 Z M 8.514,3.405 h 0.568 v 0.568 h -0.568 Z M 9.081,3.405 h 0.568 v 0.568 h -0.568 Z M 9.649,3.405 h 0.568 v 0.568 h -0.568 Z M 10.216,3.405 h 0.568 v 0.568 h -0.568 Z M 10.784,3.405 h 0.568 v 0.568 h -0.568 Z M 12.486,3.405 h 0.568 v 0.568 h -0.568 Z M 13.622,3.405 h 0.568 v 0.568 h -0.568 Z M 14.757,3.405 h 0.568 v 0.568 h -0.568 Z M 15.892,3.405 h 0.568 ... (line truncated)>
     </g>
-    
   </g>
 
   <!-- ======================================================== -->
-  <!-- 09_BOTANICO_INFERIOR                                     -->
-  <!-- ======================================================== -->
-  <g inkscape:groupmode="layer" id="09_BOTANICO_INFERIOR" inkscape:label="09_BOTANICO_INFERIOR" transform="translate(74, 197)">
-    
-    <g class="olive-garland" transform="scale(1, -1)">
-      <!-- Main stem curving -->
-      <path d="M -42,1.5 C -20,-3 20,-3 42,1.5" fill="none" stroke="#4A5845" stroke-width="0.45" stroke-linecap="round" />
-      <path d="M -25,-1.5 C -10,-3.5 10,-3.5 25,-1.5" fill="none" stroke="#687A64" stroke-width="0.3" stroke-linecap="round" />
-
-      <!-- Left Side Leaves -->
-      <!-- Leaf cluster 1 (Tip left) -->
-      <path d="M -42,1.5 C -46,0 -48,0.5 -46,2.5 C -43,2.5 -42,2 -42,1.5 Z" fill="#5F6F5B" />
-      <path d="M -39,0.5 C -43,-2 -44,-0.5 -41,1.5 Z" fill="#7E907B" opacity="0.9" />
-
-      <!-- Leaf pair 2 -->
-      <path d="M -34,0 C -38,-4 -42,-3 -39,-1 C -36,0.5 -34,0.2 -34,0 Z" fill="#556850" />
-      <path d="M -32,-0.5 C -35,-5 -39,-4 -36,-2 C -34,-0.5 -32,-0.5 -32,-0.5 Z" fill="#8A9D86" />
-      <path d="M -33,1 C -37,4.5 -40,4 -38,1.8 C -35,0.5 -33,0.8 -33,1 Z" fill="#5F6F5B" />
-
-      <!-- Leaf pair 3 -->
-      <path d="M -25,-1 C -29,-6 -33,-5 -30,-2.5 C -27,-0.5 -25,-1 -25,-1 Z" fill="#4D5F48" />
-      <path d="M -23,-1.2 C -26,-6.5 -29,-5.5 -27,-3 C -25,-1.5 -23,-1.2 -23,-1.2 Z" fill="#778A73" />
-      <path d="M -24,0.5 C -28,5 -31,4 -29,1.5 C -26,0 -24,0.5 -24,0.5 Z" fill="#5F6F5B" />
-
-      <!-- Leaf pair 4 -->
-      <path d="M -16,-2 C -19,-7 -23,-6 -20,-3 C -18,-1.5 -16,-2 -16,-2 Z" fill="#556850" />
-      <path d="M -14,-2.2 C -17,-7.5 -20,-6.5 -18,-3.5 C -16,-2 -14,-2.2 -14,-2.2 Z" fill="#889B84" />
-      <path d="M -15,-0.2 C -19,4.5 -22,3.5 -20,1 C -17,-0.5 -15,-0.2 -15,-0.2 Z" fill="#5F6F5B" />
-
-      <!-- Leaf pair 5 (near center) -->
-      <path d="M -8,-2.5 C -10,-7 -14,-6 -11,-3 C -9,-1.8 -8,-2.5 -8,-2.5 Z" fill="#4D5F48" />
-      <path d="M -9,-0.8 C -12,3.5 -15,2.5 -13,0.5 C -11,-0.5 -9,-0.8 -9,-0.8 Z" fill="#758872" />
-
-      <!-- Center sprig left -->
-      <path d="M -3,-2.8 C -4,-6.5 -7,-5.5 -5,-3 C -4,-2.2 -3,-2.8 -3,-2.8 Z" fill="#5F6F5B" />
-      
-      <!-- Center Leaf Pair -->
-      <path d="M 0,-3 C -2,-7 2,-7 0,-3 Z" fill="#687B64" />
-      <ellipse cx="0" cy="-2.5" rx="0.9" ry="1.4" fill="#8FA28B" />
-
-      <!-- Right Side Leaves (Symmetric) -->
-      <!-- Center sprig right -->
-      <path d="M 3,-2.8 C 4,-6.5 7,-5.5 5,-3 C 4,-2.2 3,-2.8 3,-2.8 Z" fill="#5F6F5B" />
-
-      <!-- Leaf pair 5 right -->
-      <path d="M 8,-2.5 C 10,-7 14,-6 11,-3 C 9,-1.8 8,-2.5 8,-2.5 Z" fill="#4D5F48" />
-      <path d="M 9,-0.8 C 12,3.5 15,2.5 13,0.5 C 11,-0.5 9,-0.8 9,-0.8 Z" fill="#758872" />
-
-      <!-- Leaf pair 4 right -->
-      <path d="M 16,-2 C 19,-7 23,-6 20,-3 C 18,-1.5 16,-2 16,-2 Z" fill="#556850" />
-      <path d="M 14,-2.2 C 17,-7.5 20,-6.5 18,-3.5 C 16,-2 14,-2.2 14,-2.2 Z" fill="#889B84" />
-      <path d="M 15,-0.2 C 19,4.5 22,3.5 20,1 C 17,-0.5 15,-0.2 15,-0.2 Z" fill="#5F6F5B" />
-
-      <!-- Leaf pair 3 right -->
-      <path d="M 25,-1 C 29,-6 33,-5 30,-2.5 C 27,-0.5 25,-1 25,-1 Z" fill="#4D5F48" />
-      <path d="M 23,-1.2 C 26,-6.5 29,-5.5 27,-3 C 25,-1.5 23,-1.2 23,-1.2 Z" fill="#778A73" />
-      <path d="M 24,0.5 C 28,5 31,4 29,1.5 C 26,0 24,0.5 24,0.5 Z" fill="#5F6F5B" />
-
-      <!-- Leaf pair 2 right -->
-      <path d="M 34,0 C 38,-4 42,-3 39,-1 C 36,0.5 34,0.2 34,0 Z" fill="#556850" />
-      <path d="M 32,-0.5 C 35,-5 39,-4 36,-2 C 34,-0.5 32,-0.5 32,-0.5 Z" fill="#8A9D86" />
-      <path d="M 33,1 C 37,4.5 40,4 38,1.8 C 35,0.5 33,0.8 33,1 Z" fill="#5F6F5B" />
-
-      <!-- Leaf cluster 1 (Tip right) -->
-      <path d="M 42,1.5 C 46,0 48,0.5 46,2.5 C 43,2.5 42,2 42,1.5 Z" fill="#5F6F5B" />
-      <path d="M 39,0.5 C 43,-2 44,-0.5 41,1.5 Z" fill="#7E907B" opacity="0.9" />
-
-      <!-- Small lavender touches (#A9A4BC) as requested in palette -->
-      <circle cx="-31" cy="-2.8" r="0.65" fill="#A9A4BC" />
-      <circle cx="-32.5" cy="-3.8" r="0.55" fill="#A9A4BC" />
-      <circle cx="31" cy="-2.8" r="0.65" fill="#A9A4BC" />
-      <circle cx="32.5" cy="-3.8" r="0.55" fill="#A9A4BC" />
-    </g>
-    
-  </g>
-
-  <!-- ======================================================== -->
-  <!-- 99_NOTAS_NAO_IMPRIMIR                                    -->
+  <!-- 99_NOTAS_NAO_IMPRIMIR -->
   <!-- ======================================================== -->
   <g inkscape:groupmode="layer" id="99_NOTAS_NAO_IMPRIMIR" inkscape:label="99_NOTAS_NAO_IMPRIMIR" style="display:inline;">
     <g transform="translate(15, 218)" class="font-sans" font-size="2.3" fill="#7F92A8">
@@ -483,5 +196,4 @@
       <text x="0" y="12.5">• DADOS OFICIAIS: Victoria sem acento; Flávio com acento. Data: 10 de outubro de 2027 às 14:00.</text>
     </g>
   </g>
-
 </svg>

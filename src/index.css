@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Font */
+/* Custom Fonts for Wedding Invitation */
 @font-face {
   font-family: 'Evafiya';
   src: url('/fonts/Evafiya.ttf') format('truetype');
@@ -11,31 +11,28 @@
   font-display: swap;
 }
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
+/* Definition of the design system - Wedding Theme */
 @layer base {
   :root {
-    --background: 222 47% 11%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 240 5.9% 10%;
 
-    --card: 220 39% 16%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 5.9% 10%;
 
-    --popover: 220 39% 16%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 5.9% 10%;
 
-    --primary: 225 73% 57%;
+    --primary: 120 15% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 39% 20%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 60 20% 90%;
+    --secondary-foreground: 240 5.9% 10%;
 
-    --muted: 220 39% 20%;
-    --muted-foreground: 220 9% 65%;
+    --muted: 60 15% 95%;
+    --muted-foreground: 240 5% 45%;
 
-    --accent: 225 73% 57%;
+    --accent: 43 74% 53%;
     --accent-foreground: 0 0% 100%;
 
     --gold: 43 74% 53%;
@@ -44,33 +41,16 @@ All colors MUST be HSL.
     --wine-medium: 345 73% 47%;
     --wine-dark: 345 78% 33%;
     --wine-deeper: 345 82% 25%;
-    
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 39% 24%;
-    --input: 220 39% 24%;
-    --ring: 225 73% 57%;
+    --border: 60 20% 90%;
+    --input: 60 20% 90%;
+    --ring: 120 15% 45%;
 
     --radius: 0.75rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
-
 }
 
 @layer base {
@@ -95,35 +75,35 @@ All colors MUST be HSL.
   .text-wine {
     color: hsl(var(--wine));
   }
-  
+
   .text-wine-light {
     color: hsl(var(--wine-light));
   }
-  
+
   .text-wine-medium {
     color: hsl(var(--wine-medium));
   }
-  
+
   .text-wine-dark {
     color: hsl(var(--wine-dark));
   }
-  
+
   .text-wine-deeper {
     color: hsl(var(--wine-deeper));
   }
-  
+
   .bg-wine {
     background-color: hsl(var(--wine));
   }
-  
+
   .border-wine {
     border-color: hsl(var(--wine));
   }
-  
+
   .animate-fade-in-up {
     animation: fadeInUp 0.8s ease-out forwards;
   }
-  
+
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -134,14 +114,14 @@ All colors MUST be HSL.
       transform: translateY(0);
     }
   }
-  
+
   .parallax-section {
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
   }
-  
+
   /* Remove outline from SVG elements */
   svg, svg * {
     outline: none !important;
