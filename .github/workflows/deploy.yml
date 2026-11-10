@@ -30,11 +30,11 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        # HostGator: raiz web é /public_html/
-        server-dir: /public_html/
+        # HostGator: usuário FTP já cai em /public_html/, então usamos diretório relativo
+        server-dir: ./
         # Pasta local onde o Vite cria o site
         local-dir: ./dist/
-        # FTP padrão porta 21 com TLS opcional (loose = tenta FTPS, cai para FTP se falhar)
+        # FTP padrão porta 21 com TLS opcional
         port: 21
         security: loose
         # timeout maior para conexões lentas
