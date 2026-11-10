@@ -7,10 +7,10 @@ Página principal com abertura, história, local/horários, orientações, prese
 React 18, TypeScript, Vite 7, Tailwind 3, shadcn. A rota / reúne as seções em src/pages/SaveTheDate.tsx. Conteúdo factual centralizado em src/features/casamento/conteudo.ts. Componentes por domínio: casamento, presentes e presenca. Rota /convite/:codigo para a confirmação individual. Código de portfólio removido por autorização: projeto exclusivo do casamento.
 
 ## Identidade e layout
-Direção botânica de papelaria fina: marfim, sálvia/eucalipto e azul névoa, com verde profundo para contraste. Cormorant Garamond para títulos, Montserrat para interface e Great Vibes como detalhe. Monograma original e gravura de rosas em PNG transparente; composição compacta, sem moldura dupla nem painel grande repetindo monograma. História aguarda texto/foto aprovados. Navegação móvel em fluxo e perguntas em acordeão. Detalhes, arquivos e evidência visual em identidade-e-layout.md.
+Direção Herbário: pranchas botânicas antigas de domínio público (copo-de-leite, orquídea e violeta) e seções como papelaria. Paleta azul névoa/ardósia, verde eucalipto/tinta, branco papel e marrom claro/linho. Italianno nos nomes e títulos, Cormorant Garamond em datas e valores, Newsreader no corpo. História aguarda texto/foto aprovados. Navegação móvel em fluxo e orientações sempre visíveis. Detalhes, arquivos e evidência visual em identidade-e-layout.md.
 
 ## Dados confirmados
-Victória & Flávio; 10 de outubro de 2027, domingo, 14h, fuso America/Sao_Paulo; DellaTorres Eventos; Mairiporã/SP; recepção no mesmo local.
+Victória & Flávio; 10 de outubro de 2027, domingo, 13h30 (alterado de 14h em 10/11/2026), fuso America/Sao_Paulo; DellaTorres Eventos; Mairiporã/SP; recepção no mesmo local.
 
 ## Requisitos funcionais
 FR-001: Quando acessar /, o site deve mostrar o evento e permitir navegação às seis áreas aprovadas.

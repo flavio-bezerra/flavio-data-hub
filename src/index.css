@@ -14,27 +14,38 @@
 /* Design System - Wedding Editorial Theme */
 @layer base {
   :root {
-    --background: 45 29% 94%;
-    --foreground: 143 15% 24%;
-    --card: 45 33% 98%;
-    --card-foreground: 143 15% 24%;
-    --popover: 45 33% 98%;
-    --popover-foreground: 143 15% 24%;
-    --primary: 143 15% 24%;
-    --primary-foreground: 45 33% 98%;
-    --secondary: 101 12% 85%;
-    --secondary-foreground: 143 15% 24%;
-    --muted: 207 21% 88%;
-    --muted-foreground: 143 8% 37%;
-    --accent: 204 17% 60%;
-    --accent-foreground: 143 15% 20%;
-    --gold: 39 30% 53%;
-    --champagne: 101 12% 64%;
+    /* Paleta: branco papel, azul névoa/ardósia, verde eucalipto/tinta e marrom claro (linho). */
+    --papel: #FAF8F3;
+    --nevoa: #D3DFEA;
+    --nevoa-clara: #E6EDF3;
+    --ardosia: #34506A;
+    --eucalipto: #7E8F78;
+    --tinta: #2F3F35;
+    --tinta-suave: #4D5A49;
+    --linho: #E8DDCB;
+    --marrom: #B59E80;
+    --marrom-texto: #7A644A;
+    --background: 43 41% 97%;
+    --foreground: 143 15% 22%;
+    --card: 40 60% 99%;
+    --card-foreground: 143 15% 22%;
+    --popover: 40 60% 99%;
+    --popover-foreground: 143 15% 22%;
+    --primary: 209 34% 31%;
+    --primary-foreground: 43 41% 97%;
+    --secondary: 209 35% 87%;
+    --secondary-foreground: 143 15% 22%;
+    --muted: 37 39% 85%;
+    --muted-foreground: 143 8% 34%;
+    --accent: 104 9% 52%;
+    --accent-foreground: 143 15% 18%;
+    --gold: 34 26% 61%;
+    --champagne: 34 26% 61%;
     --destructive: 0 63% 38%;
     --destructive-foreground: 0 0% 98%;
-    --border: 101 12% 79%;
-    --input: 101 12% 72%;
-    --ring: 143 15% 24%;
+    --border: 37 30% 80%;
+    --input: 34 22% 68%;
+    --ring: 209 34% 31%;
     --radius: 0.25rem;
   }
 }
@@ -46,7 +57,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Newsreader', Georgia, serif;
     font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
   }
   
@@ -76,7 +87,7 @@
   }
   
   .font-ui {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Newsreader', Georgia, serif;
   }
   
   .text-champagne {
@@ -171,42 +182,127 @@
     animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 }
-/* Identidade do casamento: sálvia, eucalipto, azul névoa e marfim. */
+/* Identidade do casamento: branco papel, azul névoa/ardósia, verde eucalipto/tinta e marrom claro. */
 @layer components {
   .eyebrow { @apply text-[10px] uppercase tracking-[.26em] text-muted-foreground; }
-  .abertura-editorial { position: relative; isolation: isolate; overflow: hidden; padding: 2.8rem 1.5rem 2rem; background: #f8f7f2; }
-
   .monograma { object-fit: contain; }
-  .monograma-abertura { width: clamp(90px, 10vw, 120px); height: auto; margin: 1.2rem 0 1.4rem; }
-  .nomes-casal { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2.8rem, 5.5vw, 4.8rem); font-weight: 300; line-height: 1.1; letter-spacing: -.025em; }
-  .nomes-casal > span { font-size: .58em; padding-inline: .15em; }
-  .data-convite { display: flex; align-items: center; justify-content: center; gap: 1.4rem; margin: 1.8rem 0 1.4rem; padding-block: 1rem; border-block: 1px solid #9daa9677; }
-  .data-convite > span { font-size: 9px; letter-spacing: .16em; }
-  .data-convite time { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.7rem, 3.5vw, 2.6rem); white-space: nowrap; }
-  .separador-data { padding-inline: .2rem; color: #73816e; font-weight: 300; }
-  .ramo-abertura { position: absolute; width: clamp(65px, 10vw, 130px); height: auto; opacity: .32; z-index: -1; pointer-events: none; }
-  .ramo-esquerdo { left: max(1rem, calc((100vw - 1050px) / 2)); bottom: 2rem; transform: rotate(-12deg); }
-  .ramo-direito { right: max(1rem, calc((100vw - 1050px) / 2)); top: 2rem; transform: scaleX(-1) rotate(-12deg); }
-  .historia-editorial { background: #e8ede6; }
-
-  .evento-editorial { background: #f8f7f2; }
-  .orientacoes-editorial { background: #e6edf2; }
-  .presentes-editorial article { border-color: #9daa9659; box-shadow: 0 6px 24px #34463b05; transition: border-color .25s, transform .25s; }
-  .presentes-editorial article:hover { border-color: #73816e; transform: translateY(-3px); }
-  .presenca-editorial { background: #e1e7df; position: relative; }
-  .rodape-editorial { background: #f4f2eb; }
-  .convite-site h2 { font-weight: 300; letter-spacing: -.015em; }
-  .convite-site section:not(.abertura-editorial) { padding-top: clamp(4rem, 8vw, 7rem); padding-bottom: clamp(4rem, 8vw, 7rem); }
-  .convite-site button, .convite-site a[role='button'] { letter-spacing: .035em; }
-  .convite-site header { background: #f4f2ebf2; backdrop-filter: blur(12px); }
+  /* Caligrafia clássica (Italianno) só em nomes e títulos; texto corrido segue em Newsreader. */
+  .titulo-secao { font-family: 'Italianno', 'Cormorant Garamond', Georgia, serif; font-style: normal; font-weight: 400; font-size: clamp(3.6rem, 7vw, 6rem); line-height: .95; letter-spacing: 0; color: var(--ardosia); margin: .2rem 0 1rem; }
+  .selo-pendente { display: inline-block; font-style: italic; font-size: .95rem; color: var(--marrom-texto); }
+  .rodape-editorial { background: var(--papel); border-top: 1px solid var(--marrom); }
+  .rodape-nomes { font-family: 'Italianno', 'Cormorant Garamond', Georgia, serif; font-size: clamp(3.2rem, 7vw, 4.5rem); line-height: 1; color: var(--ardosia); }
+  .convite-site section:not(.herbario-abertura) { padding-top: clamp(4.5rem, 9vw, 8rem); padding-bottom: clamp(4.5rem, 9vw, 8rem); padding-inline: clamp(1.5rem, 6vw, 6rem); }
+  .convite-site header { background: color-mix(in srgb, var(--papel) 94%, transparent); backdrop-filter: blur(12px); border-color: #b59e8066; }
 }
-@media (max-width: 480px) {
-  .abertura-editorial { padding: 2.1rem 1.5rem 1.5rem; }
-  .nomes-casal { display: flex; flex-direction: column; align-items: center; font-size: 3.1rem; }
-  .nomes-casal > span { margin: .35rem 0; }
-  .data-convite { gap: .65rem; }
-  .data-convite > span { font-size: 8px; letter-spacing: .08em; }
-  .ramo-abertura { opacity: .18; width: 65px; }
-  .ramo-esquerdo { left: -.3rem; bottom: 5rem; }
-  .ramo-direito { right: -.3rem; top: 2rem; }
+/* Direção Herbário: prancha botânica como protagonista, etiqueta de espécime e programa impresso. */
+@layer components {
+  .rotulo-herbario { font-variant-caps: all-small-caps; letter-spacing: .14em; font-size: 1rem; color: var(--marrom-texto); }
+  .herbario-abertura { position: relative; isolation: isolate; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; min-height: min(100svh, 920px); padding: 3rem clamp(1.5rem, 6vw, 6rem) 4rem; background: var(--papel); }
+  .herbario-prancha { grid-column: 2; grid-row: 1; justify-self: end; margin: 0 calc(clamp(1.5rem, 6vw, 6rem) * -1) 0 0; width: min(46vw, 640px); }
+  .herbario-prancha img { width: 100%; height: auto; mix-blend-mode: multiply; filter: saturate(.82) contrast(1.02); -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%); mask-image: linear-gradient(to bottom, #000 72%, transparent 100%); }
+  .herbario-texto { grid-column: 1; grid-row: 1; position: relative; z-index: 1; max-width: 34rem; }
+  .herbario-monograma { display: none; }
+  .herbario-convite { font-style: italic; font-size: 1.15rem; color: var(--tinta-suave); margin-bottom: 1.25rem; }
+  .herbario-nomes { display: flex; flex-direction: column; font-family: 'Italianno', 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-style: normal; font-size: clamp(5.5rem, 12vw, 11rem); line-height: .8; letter-spacing: 0; color: var(--ardosia); }
+  .herbario-nomes > span:last-child { padding-left: clamp(2.5rem, 7vw, 6.5rem); }
+  .herbario-e { font-size: .55em; line-height: 1.1; padding-left: clamp(1.2rem, 3.5vw, 3rem); color: var(--eucalipto); }
+  /* Data em destaque: dia grande entre dia da semana e mês/ano, sem fios — só tipografia e espaço. */
+  .data-destaque { margin-top: 2.75rem; max-width: 27rem; }
+  .data-destaque-linha { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+  .data-destaque-lateral { font-variant-caps: all-small-caps; letter-spacing: .18em; font-size: 1.1rem; line-height: 1.3; color: var(--tinta-suave); text-align: center; }
+  .data-destaque-dia { padding-inline: 1.6rem; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; font-size: clamp(4rem, 7vw, 5.5rem); line-height: 1; font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; color: var(--ardosia); }
+  .data-destaque-local { margin-top: 1rem; text-align: center; font-style: italic; font-size: 1.1rem; color: var(--tinta-suave); }
+  .herbario-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 2rem; margin-top: 2.25rem; }
+  .acao-principal { display: inline-flex; align-items: center; min-height: 48px; padding: 0 1.6rem; background: var(--ardosia); color: var(--papel); font-size: 1.05rem; letter-spacing: .02em; border-radius: 999px; transition: background .25s; }
+  .acao-principal:hover { background: #26405a; }
+  .acao-secundaria { display: inline-flex; align-items: center; min-height: 44px; font-style: italic; font-size: 1.1rem; color: var(--tinta); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; text-decoration-color: var(--marrom); }
+  .acao-secundaria:hover { text-decoration-color: currentColor; }
+  .herbario-legenda { position: absolute; right: clamp(1.5rem, 6vw, 6rem); bottom: 1.25rem; font-size: .8rem; font-style: italic; color: var(--marrom-texto); }
+
+  .programa-dia { position: relative; background: var(--nevoa-clara); }
+  /* Flores sempre sobre papel branco: o programa vira uma folha sobre a névoa. */
+  .programa-papel { max-width: 72rem; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); align-items: center; gap: clamp(1.5rem, 4vw, 3rem); background: var(--papel); border: 1px solid #b59e8066; box-shadow: 8px 8px 0 #34506a14; padding: clamp(2rem, 5vw, 4rem); }
+  .programa-folha { max-width: 40rem; }
+  .programa-cabecalho h2 { font-family: 'Italianno', 'Cormorant Garamond', Georgia, serif; font-style: normal; font-weight: 400; font-size: clamp(3.8rem, 7.5vw, 6.2rem); line-height: .95; color: var(--ardosia); margin: .2rem 0 .8rem; }
+  .programa-data { font-size: 1.1rem; color: var(--tinta-suave); }
+  .programa-lista { margin-top: 3rem; border-top: 1px solid var(--marrom); }
+  .programa-lista li { display: grid; grid-template-columns: clamp(6rem, 14vw, 9rem) 1fr; gap: 1.5rem; align-items: baseline; padding: 1.75rem 0; border-bottom: 1px solid #b59e8099; }
+  .programa-hora { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: clamp(2rem, 4vw, 3rem); line-height: 1; color: #5f7259; }
+  .programa-lista h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.9rem; font-weight: 400; color: var(--tinta); }
+  .programa-lista p { margin-top: .3rem; font-size: 1.05rem; color: var(--tinta-suave); }
+  .programa-endereco { margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-style: italic; color: var(--tinta-suave); }
+
+  /* História: coluna de livro com capitular e citação. */
+  .historia-livro { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(2.5rem, 7vw, 7rem); align-items: center; background: var(--papel); }
+  .historia-coluna { max-width: 34rem; justify-self: end; }
+  .historia-abertura { font-size: 1.3rem; line-height: 1.65; color: var(--tinta); }
+  .historia-abertura::first-letter { float: left; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 4.6em; line-height: .78; padding: .06em .1em 0 0; color: var(--ardosia); }
+  .historia-pendente { margin-top: 1.25rem; font-style: italic; color: var(--tinta-suave); }
+  .historia-lado { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: clamp(1.25rem, 3vw, 2.5rem); }
+  .flor-historia { width: clamp(120px, 13vw, 190px); height: auto; }
+  .historia-citacao { max-width: 26rem; padding-left: 2rem; border-left: 1px solid var(--marrom); }
+  .flor-orientacoes { display: block; width: clamp(150px, 15vw, 220px); height: auto; margin-top: 1.75rem; }
+  .flor-cardapio { display: block; width: clamp(90px, 10vw, 130px); height: auto; margin: 0 auto 1.25rem; }
+  .flor-cartao { display: block; width: clamp(130px, 13vw, 180px); height: auto; margin: 0 auto 1rem; }
+  .historia-citacao blockquote { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: clamp(1.5rem, 2.6vw, 2rem); line-height: 1.35; color: var(--ardosia); }
+  .historia-citacao figcaption { margin-top: 1.25rem; font-variant-caps: all-small-caps; letter-spacing: .12em; color: var(--marrom-texto); }
+
+  /* Orientações: notas sempre visíveis. */
+  .orientacoes-notas { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); gap: clamp(2rem, 6vw, 6rem); background: var(--papel); border-top: 1px solid #b59e8066; }
+  .orientacoes-lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(2rem, 4vw, 4rem); }
+  .orientacoes-lista > div { padding: 1.5rem 0; border-top: 1px dotted var(--marrom); }
+  .orientacoes-lista dt { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.55rem; line-height: 1.2; color: var(--tinta); margin-bottom: .5rem; }
+  .orientacoes-lista dd { font-size: 1.05rem; line-height: 1.6; color: var(--tinta-suave); }
+  .orientacoes-lista .selo-pendente { display: block; margin-bottom: .25rem; }
+
+  /* Presentes: cardápio de papelaria sobre linho. */
+  .presentes-cardapio { background: var(--linho); }
+  .cardapio-folha { max-width: 46rem; margin-inline: auto; background: var(--papel); border: 1px solid var(--marrom); outline: 1px solid #b59e8099; outline-offset: -10px; padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 6vw, 4.5rem); text-align: center; }
+  .cardapio-intro { max-width: 32rem; margin: 0 auto .75rem; font-size: 1.15rem; line-height: 1.6; color: var(--tinta); }
+  .cardapio-lista { margin-top: 2.5rem; text-align: left; }
+  .cardapio-lista li { padding: 1.4rem 0; border-top: 1px solid #b59e8066; }
+  .cardapio-linha { display: flex; align-items: baseline; gap: .75rem; }
+  .cardapio-linha h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.65rem; font-weight: 400; color: var(--tinta); }
+  .cardapio-pontilhado { flex: 1; min-width: 1.5rem; border-bottom: 1px dotted var(--marrom); transform: translateY(-.3rem); }
+  .cardapio-valor { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.6rem; color: var(--ardosia); white-space: nowrap; }
+  .cardapio-lista p { margin-top: .2rem; font-style: italic; color: var(--tinta-suave); }
+  .cardapio-acao { min-height: 44px; margin-top: .25rem; font-size: .95rem; color: var(--marrom-texto); background: none; border: 0; padding: 0; text-decoration: underline dotted; text-underline-offset: 5px; }
+
+  /* Presença: cartão-resposta sobre névoa. */
+  .presenca-secao { background: var(--nevoa); }
+  .cartao-resposta { max-width: 36rem; margin-inline: auto; background: var(--papel); border: 1px solid var(--marrom); box-shadow: 8px 8px 0 #34506a1f; padding: clamp(2.25rem, 5vw, 3.75rem); text-align: center; }
+  .cartao-texto { font-size: 1.15rem; line-height: 1.6; color: var(--tinta); margin-bottom: .75rem; }
+  .cartao-linha { margin: 2rem 0 .5rem; display: flex; align-items: baseline; gap: .75rem; font-style: italic; color: var(--marrom-texto); }
+  .cartao-linha > span { flex: 1; border-bottom: 1px solid var(--marrom); }
+  .cartao-formulario { margin-top: 1.5rem; display: flex; flex-direction: column; gap: .6rem; text-align: left; }
+  .cartao-formulario label { font-variant-caps: all-small-caps; letter-spacing: .12em; color: var(--marrom-texto); }
+  .cartao-campo { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; }
+  .cartao-input { flex: 1 1 12rem; min-height: 48px; background: transparent; border: 0; border-bottom: 1px solid var(--tinta-suave); font-size: 1.15rem; color: var(--tinta); padding: 0 .25rem; }
+  .cartao-input:focus-visible { outline-offset: 2px; }
+  .programa-prancha { width: 100%; max-width: 300px; height: auto; justify-self: center; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .herbario-prancha img { animation: pranchaSurge 1.6s cubic-bezier(.2, .7, .2, 1) both; }
+}
+@keyframes pranchaSurge { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: none; } }
+@media (max-width: 860px) {
+  .herbario-abertura { grid-template-columns: 1fr; min-height: auto; padding: 0 1.5rem 3.5rem; }
+  .herbario-prancha { grid-column: 1; grid-row: 1; justify-self: end; width: 72vw; max-width: 400px; margin: -.5rem -1.5rem -2.5rem 0; opacity: .9; }
+  .herbario-texto { grid-column: 1; grid-row: 2; }
+  .herbario-monograma { display: none; }
+  .herbario-nomes { font-size: clamp(4.6rem, 23vw, 7rem); }
+  .herbario-legenda { position: static; grid-row: 3; margin-top: 2rem; }
+  .programa-papel { grid-template-columns: 1fr; }
+  .programa-prancha { grid-row: 1; width: 42vw; max-width: 180px; }
+  .flor-historia { width: 96px; }
+  .flor-orientacoes { width: 130px; margin-top: 1rem; }
+  .programa-lista li { grid-template-columns: 1fr; gap: .5rem; }
+
+  .historia-livro, .orientacoes-notas { grid-template-columns: 1fr; }
+  .historia-coluna { justify-self: start; }
+  .historia-citacao { padding-left: 1.25rem; }
+  .orientacoes-lista { grid-template-columns: 1fr; }
+  .cardapio-linha { flex-wrap: wrap; }
+  .cardapio-pontilhado { display: none; }
+  .cardapio-valor { width: 100%; }
 }

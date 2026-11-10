@@ -1,27 +1,31 @@
-import { Button } from "@/components/ui/button";
 import { casamento } from "./conteudo";
 
 export default function Evento() {
   return (
-    <section id="casamento" aria-labelledby="evento-titulo" className="evento-editorial px-5 py-16 md:px-8 md:py-24">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-10 text-center">
-          <p className="mb-4 text-xs uppercase tracking-[0.2em] text-muted-foreground">Um dia para guardar</p>
-          <h2 id="evento-titulo" className="font-display text-4xl md:text-5xl">O casamento</h2>
+    <section id="casamento" aria-labelledby="evento-titulo" className="programa-dia">
+      <div className="programa-papel">
+      <div className="programa-folha">
+        <div className="programa-cabecalho">
+          <p className="rotulo-herbario">Programa</p>
+          <h2 id="evento-titulo">O nosso dia</h2>
+          <p className="programa-data">{casamento.diaDaSemana}, {casamento.data}</p>
         </div>
-        <div className="grid gap-8 border-y py-10 md:grid-cols-2 md:gap-16">
-          <div className="flex flex-col gap-4">
-            <h3 className="font-display text-3xl">Cerimônia & recepção</h3>
-            <p className="text-sm leading-relaxed">{casamento.data}, às {casamento.horario}.</p>
-            <p className="text-sm leading-relaxed text-muted-foreground">{casamento.recepcao}.</p>
-          </div>
-          <div className="flex flex-col gap-4">
-            <h3 className="font-display text-3xl">{casamento.local}</h3>
-            <p className="text-sm">{casamento.cidade}</p>
-            <p className="text-sm leading-relaxed text-muted-foreground">{casamento.endereco ?? "Endereço completo e orientações de acesso em breve."}</p>
-            {casamento.mapaUrl && <Button variant="outline" size="lg" asChild><a href={casamento.mapaUrl} target="_blank" rel="noopener noreferrer">Abrir mapa</a></Button>}
-          </div>
+        <ol className="programa-lista">
+          <li>
+            <span className="programa-hora">{casamento.horario}</span>
+            <div><h3>Cerimônia</h3><p>{casamento.local}, {casamento.cidade}.</p></div>
+          </li>
+          <li>
+            <span className="programa-hora">a seguir</span>
+            <div><h3>Recepção</h3><p>{casamento.recepcao}.</p></div>
+          </li>
+        </ol>
+        <div className="programa-endereco">
+          <p>{casamento.endereco ?? "Endereço completo, mapa e orientações de acesso em breve."}</p>
+          {casamento.mapaUrl && <a href={casamento.mapaUrl} target="_blank" rel="noopener noreferrer" className="acao-secundaria">Abrir mapa</a>}
         </div>
+      </div>
+      <img src="/orquidea-phalaenopsis.webp" width={724} height={991} alt="" aria-hidden="true" loading="lazy" className="programa-prancha" />
       </div>
     </section>
   );

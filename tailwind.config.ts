@@ -17,8 +17,8 @@ export default {
       fontFamily: {
         display: ['Cormorant Garamond', 'Georgia', 'serif'],
         script: ['Great Vibes', 'cursive'],
-        ui: ['Montserrat', 'sans-serif'],
-        sans: ['Montserrat', 'sans-serif'],
+        ui: ['Newsreader', 'Georgia', 'serif'],
+        sans: ['Newsreader', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
