@@ -13,13 +13,24 @@ A página / contém abertura, história, evento, orientações, presentes e pres
 ## Estrutura
 src/features/casamento/ contém conteúdo e seções. src/features/presentes/ contém a prévia do catálogo. src/features/presenca/ contém acesso e confirmação por convite. O código de portfólio foi removido; este projeto é exclusivamente o site de casamento. Uma cópia local dos componentes antigos fica em .local/legado-portfolio, fora do Git, bundle e publicação.
 
-## Trabalho com agentes
-Leia AGENTS.md, agents/ux.md, agents/regras-de-negocio.md e agents/publicacao.md. O escopo, requisitos e critérios de aceite estão em docs/estrutura-e-regras.md.
+## Documentação e continuidade
+
+O desenvolvimento é híbrido: clones independentes em computadores Kinea/pessoal, com limitações diferentes de rede e ferramentas, convergem no GitHub. Databricks é a rota alternativa de commit/push para o ambiente restrito, não requisito de todo computador. Antes de outra entrega, incorpore contribuições remotas preservando o trabalho local.
+
+| Documento | Uso |
+|---|---|
+| [Desenvolvimento híbrido](docs/desenvolvimento-hibrido.md) | Ambientes, comandos, limitações, troca de máquina e passagem de trabalho |
+| [Identidade e layout](docs/identidade-e-layout.md) | Paleta, tipografia, monograma, botânica e critérios visuais |
+| [Estrutura e regras](docs/estrutura-e-regras.md) | Arquitetura, requisitos, demonstração e decisões pendentes |
+| [Entrega Databricks](docs/entrega-databricks.md) | Transporte, aplicação, publicação e recuperação |
+| [Origem botânica](docs/origem-botanica.md) | Fonte, licença e formato dos assets |
+
+Agentes devem começar por AGENTS.md e pelos guias agents/ux.md, agents/regras-de-negocio.md e agents/publicacao.md.
 
 ## Publicação
-O workflow .github/workflows/deploy.yml instala com npm ci, exige TypeScript, lint e build aprovados e publica dist/ via FTP na HostGator automaticamente após push na main, mantendo acionamento manual no GitHub Actions. A prévia autorizada mantém presentes e RSVP claramente em demonstração; não registra confirmações nem processa pagamentos.
+O workflow .github/workflows/deploy.yml instala com npm ci, exige TypeScript, lint e build aprovados e publica dist/ via FTP na HostGator automaticamente após push na main, mantendo acionamento manual no GitHub Actions. Após FTP, scripts/verificar-publicacao.mjs confere HTML e status/MIME/hashes de JS/CSS; falha nessa etapa não desfaz o upload. A prévia autorizada mantém presentes e RSVP claramente em demonstração; não registra confirmações nem processa pagamentos.
 
 Fluxo: local -> pacote com manifesto -> bundle dev -> notebook de preparação da pasta Git -> commit/push pelo notebook (publicar_git, serverless ambiente 5+) -> publicação automática no GitHub Actions após push na main. Consulte docs/entrega-databricks.md. O bundle não cria jobs nem compute; bundle sync envia os arquivos. O notebook precisa de runtime com arquivos de workspace e Git CLI na pasta Git. Upload não comprova push.
 
 ## Próxima etapa
-Aprovar visual e conteúdo; definir backend de presença e administração; integrar checkout e webhook com provedor escolhido; concluir testes e autorizar publicação do frontend.
+Concluir revisão visual do refinamento e conteúdo pessoal; definir backend de presença/administração; escolher provedor e integrar checkout/webhook; definir prazo, traje, crianças e acompanhantes. A prévia já teve publicações aprovadas; cada nova entrega precisa de autorização própria. Confira deploy e experiência no domínio separadamente do push.

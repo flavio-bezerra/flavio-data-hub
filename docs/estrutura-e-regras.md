@@ -7,7 +7,7 @@ Página principal com abertura, história, local/horários, orientações, prese
 React 18, TypeScript, Vite 7, Tailwind 3, shadcn. A rota / reúne as seções em src/pages/SaveTheDate.tsx. Conteúdo factual centralizado em src/features/casamento/conteudo.ts. Componentes por domínio: casamento, presentes e presenca. Rota /convite/:codigo para a confirmação individual. Código de portfólio removido por autorização: projeto exclusivo do casamento.
 
 ## Identidade e layout
-Fundo claro, Cormorant Garamond para títulos, Montserrat para interface e Great Vibes como detalhe. Champagne para divisores e uma versão escura para ações com contraste. Abertura mostra nomes, data, horário, cidade, local e presença antes da citação. História aguarda texto/foto aprovados. Navegação móvel em fluxo, sem overlay, e perguntas frequentes em acordeão.
+Direção botânica de papelaria fina: marfim, sálvia/eucalipto e azul névoa, com verde profundo para contraste. Cormorant Garamond para títulos, Montserrat para interface e Great Vibes como detalhe. Monograma original e gravura de rosas em PNG transparente; composição compacta, sem moldura dupla nem painel grande repetindo monograma. História aguarda texto/foto aprovados. Navegação móvel em fluxo e perguntas em acordeão. Detalhes, arquivos e evidência visual em identidade-e-layout.md.
 
 ## Dados confirmados
 Victória & Flávio; 10 de outubro de 2027, domingo, 14h, fuso America/Sao_Paulo; DellaTorres Eventos; Mairiporã/SP; recepção no mesmo local.
@@ -39,8 +39,22 @@ Dado o retorno ao site a partir do convite, a navegação deve chegar à seção
 | Pagamento sem provedor | Botão desabilitado e indicação de prévia |
 | Conteúdo pendente | Exibir em definição/em breve |
 
+## Estado e decisões pendentes
+
+A página é uma prévia pública, não um serviço de RSVP/pagamentos em produção. O desenho desejado de RSVP por grupo está aprovado, mas persistência, autenticação no servidor, administração e políticas ainda não foram implementadas. O protótipo aceita demonstracao com pessoas fictícias e guarda respostas somente na memória React.
+
+| Tema | Confirmado/implementado | Pendente |
+|---|---|---|
+| Evento | Data, horário, local, cidade e recepção no mesmo local | Endereço completo e mapa |
+| Identidade | Grafia Victória, monograma, direção botânica e refinamento implementado | Aceite visual final e fotos/texto pessoal |
+| RSVP | Convite de demonstração e resposta individual | Dia/ano do prazo em fevereiro, revisão de respostas, crianças/acompanhantes, backend/administração e retenção |
+| Presentes | Catálogo/valores de exemplo e cobrança desabilitada | Itens/valores finais, provedor, Pix/cartão, taxas, parcelas, cotas e reembolso |
+| Operação | GitHub/Actions/FTP e rota alternativa Databricks validados em entregas anteriores | Conciliação por entrega, conferência do deploy atual e procedimento de rollback exercitado |
+
+Publicação do frontend estático não transforma as demonstrações em funcionalidades reais. Somente o servidor pode autorizar convidados; o provedor e webhook autenticado/idempotente confirmam pagamento. Lista/códigos reais e segredos permanecem fora do bundle público e do Git.
+
 ## Próximas etapas
 Aprovar layout, texto e fotos; definir dia/ano do prazo em fevereiro, traje, endereço, crianças e acompanhantes; escolher backend e administração; escolher provedor, taxas, meios de pagamento, cotas e reembolso; implementar persistência e webhook; validar publicação e rollback.
 
 ## Publicação
-O usuário autorizou commit/push pelo notebook Databricks e publicação automática da prévia após push na main. O workflow mantém workflow_dispatch e exige TypeScript, lint e build aprovados antes do FTP. A aprovação visual e os testes locais antecedem cada push destinado à publicação. Consulte agents/publicacao.md e docs/entrega-databricks.md. Upload, aplicação na pasta Git e push são etapas distintas.
+O usuário autorizou commit/push pelo notebook Databricks e publicação automática da prévia após push na main. O workflow mantém workflow_dispatch e exige TypeScript, lint e build aprovados antes do FTP. A aprovação visual e os testes locais antecedem cada push destinado à publicação. Consulte agents/publicacao.md e docs/entrega-databricks.md. Upload, aplicação na pasta Git, push, resultado do Action e revisão visual são etapas distintas. A checagem pós-FTP confere entrega HTTP/MIME/hashes de HTML/JS/CSS, sem rollback automático. Git direto em outra máquina é permitido quando autorizado e disponível; a rota Databricks atende o ambiente restrito. Consulte desenvolvimento-hibrido.md para troca de máquina, contribuições simultâneas e limitações.
