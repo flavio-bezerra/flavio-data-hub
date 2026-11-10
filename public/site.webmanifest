@@ -1,0 +1,17 @@
+{
+  "name": "Victoria & Flávio · Casamento",
+  "short_name": "Casamento V&F",
+  "description": "Convite de casamento de Victoria e Flávio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF8F5",
+  "theme_color": "#2A2A2A",
+  "icons": [
+    {
+      "src": "/placeholder.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
