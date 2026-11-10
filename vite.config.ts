@@ -4,7 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/', // Garante paths absolutos corretos para raiz do domínio
+  base: './', // Use relative paths for static hosts
   server: {
     host: "::",
     port: 8080,
