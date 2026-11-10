@@ -4,19 +4,24 @@ const SaveTheDate = () => {
   const [showMessage, setShowMessage] = useState(false);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-indigo-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl p-8 shadow-2xl max-w-md w-full text-center border-indigo-200">
+    <main className="min-h-screen bg-white flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl p-8 shadow-2xl max-w-md w-full text-center border border-gray-200">
         <div className="inline-block mb-6">
-          <svg className="w-16 h-16 text-indigo-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-16 h-16 text-gray-800 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path className="stroke-2" strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13.444m0-13.444V6.253m0 7.2a7.2 7.2 0 1 0 0 14.4 7.2 7.2 0 0 0 0-14.4Z"></path>
             <path className="stroke-2" strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path>
           </svg>
         </div>
         
-        <h1 className="text-3xl font-bold text-indigo-800 mb-2">Save the Date</h1>
-        <p className="text-indigo-600 mb-6">João & Maria</p>
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">Save the Date</h1>
         
-        <div className="space-y-4">
+        <div className="space-y-6">
+          <p className="text-sm text-gray-500">
+            <span className="font-medium">Confirmação de Presença:</span> 
+            <a href="https://casamento-flavio-victoria.com.br" className="text-indigo-600 hover:underline" target="_blank" rel="noopener">
+              casamento-flavio-victoria.com.br
+            </a>
+          </p>
           <p className="text-sm text-gray-500">
             <span className="font-medium">Data do Casamento:</span> 15 de fevereiro de 2025
           </p>
@@ -32,7 +37,7 @@ const SaveTheDate = () => {
           onClick={() => setShowMessage(true)}
           className="mt-6 w-full bg-indigo-600 text-white py-3 px-6 rounded-xl font-medium hover:bg-indigo-700 transition-colors"
         >
-            Confirmar Presença
+          Confirmar Presença
         </button>
       </div>
 
