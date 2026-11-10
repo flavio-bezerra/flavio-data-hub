@@ -24,13 +24,22 @@ jobs:
     - name: 🏗️ Build Project
       run: npm run build
 
+    - name: 🔍 Verify build output
+      run: |
+        echo "=== dist/ contents ==="
+        ls -la dist/
+        echo "=== dist/assets/ ==="
+        ls -la dist/assets/ || true
+        echo "=== .htaccess exists? ==="
+        test -f dist/.htaccess && echo "✅ .htaccess found" || echo "❌ .htaccess MISSING"
+
     - name: 📂 Sync files to HostGator
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        # Configuração ORIGINAL que funcionava: usuário FTP já cai na pasta correta
+        # Configuração original que funcionava: usuário FTP já cai na pasta correta
         server-dir: ./
         # Pasta local onde o Vite cria o site
         local-dir: ./dist/
@@ -40,3 +49,8 @@ jobs:
           **/.git*
           **/.git*/**
           **/node_modules/**
+
+    - name: ✅ Verify deployment
+      run: |
+        echo "Deploy completed. Site should be live at https://casamento-flavio-victoria.com.br/"
+        echo "Check: favicon 🌿, title 'Victoria & Flávio', convite editorial"
