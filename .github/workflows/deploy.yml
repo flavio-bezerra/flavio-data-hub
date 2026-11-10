@@ -17,7 +17,13 @@ jobs:
         node-version: '24'
 
     - name: 📦 Install Dependencies
-      run: npm install
+      run: npm ci --no-audit --no-fund
+
+    - name: Check TypeScript
+      run: npx tsc --noEmit -p tsconfig.app.json
+
+    - name: Check lint
+      run: npm run lint
 
     - name: 🏗️ Build Project
       run: npm run build
@@ -29,7 +35,7 @@ jobs:
         echo "=== dist/assets/ ==="
         ls -la dist/assets/ || true
         echo "=== .htaccess exists? ==="
-        test -f dist/.htaccess && echo "✅ .htaccess found" || echo "❌ .htaccess MISSING"
+        test -f dist/.htaccess
 
     - name: 📂 Sync files to HostGator
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5

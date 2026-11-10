@@ -4,7 +4,7 @@
 Página principal com abertura, história, local/horários, orientações, presentes simbólicos e presença. Identidade clássica do convite preservada. RSVP por família/grupo com confirmação individual. Desenvolvimento e validação local antes da publicação.
 
 ## Arquitetura
-React 18, TypeScript, Vite 7, Tailwind 3, shadcn. A rota / reúne as seções em src/pages/SaveTheDate.tsx. Conteúdo factual centralizado em src/features/casamento/conteudo.ts. Componentes por domínio: casamento, presentes e presenca. Rota /convite/:codigo para a confirmação individual. Código legado de portfólio preservado nesta etapa.
+React 18, TypeScript, Vite 7, Tailwind 3, shadcn. A rota / reúne as seções em src/pages/SaveTheDate.tsx. Conteúdo factual centralizado em src/features/casamento/conteudo.ts. Componentes por domínio: casamento, presentes e presenca. Rota /convite/:codigo para a confirmação individual. Código de portfólio removido por autorização: projeto exclusivo do casamento.
 
 ## Identidade e layout
 Fundo claro, Cormorant Garamond para títulos, Montserrat para interface e Great Vibes como detalhe. Champagne para divisores e uma versão escura para ações com contraste. Abertura mostra nomes, data, horário, cidade, local e presença antes da citação. História aguarda texto/foto aprovados. Navegação móvel em fluxo, sem overlay, e perguntas frequentes em acordeão.
