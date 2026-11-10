@@ -21,10 +21,10 @@ Abra o notebook acima no bundle e conecte um compute autorizado que tenha arquiv
 
 Após revisar a lista, selecione acao=aplicar e execute novamente. acao=aplicar grava apenas alterações; acao=publicar_git também faz commit/push. Ela não é uma transação: se houver falha durante a gravação, preserve as alterações e revise antes de prosseguir. Se o runtime não permitir Git CLI ou escrita nos arquivos do workspace, solicite ajuste do ambiente; o upload permanece disponível, mas a preparação não está validada.
 
-Abra a pasta Git original, revise as alterações e faça commit/push na main pela interface. Inclua .github/workflows/deploy.yml no mesmo commit: ele passa a usar apenas workflow_dispatch. Mensagem sugerida: feat: estrutura do site de casamento e entrega Databricks.
+Abra a pasta Git original, revise as alterações e faça commit/push na main pela interface. O workflow .github/workflows/deploy.yml publica após push na main, mantendo workflow_dispatch como alternativa manual. Mensagem sugerida: feat: estrutura do site de casamento e entrega Databricks.
 
 ## Publicação e validação
-Após esse commit, push não publica o site automaticamente. O FTP será acionado separadamente em GitHub Actions -> Deploy to HostGator -> Run workflow, após aprovação visual e testes locais. Build/lint/TypeScript do frontend ainda não foram validados por falha de instalação npm (E403 Block-artifactory/certificados). Confirme o resultado remoto de publicar_git antes de declarar a rota validada.
+O usuário autorizou publicação automática da prévia após push na main. TypeScript, lint (0 erros) e build foram aprovados localmente após a limpeza do portfólio. O workflow repete essas verificações antes do FTP. Confirme o SHA remoto e o resultado do GitHub Actions separadamente; push não comprova deploy concluído.
 
 ## Repetir uma entrega
 Regere o ZIP e sincronize o bundle. Após um push, concilie o Git local com o commit remoto antes da próxima entrega: o notebook exige a mesma base Git e pasta de destino limpa. O manifesto cobre também exclusões de arquivos rastreados. O pacote contém código-fonte e referências Git, não a história .git.

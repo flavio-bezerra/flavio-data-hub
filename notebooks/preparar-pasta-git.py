@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC # Preparar site na pasta Git
 # MAGIC Execute primeiro em modo **previa**. Depois selecione **aplicar** e execute novamente.
-# MAGIC Ambiente: serverless versão 5+. **publicar_git** aplica, faz commit e push sem force; HostGator continua manual.
+# MAGIC Ambiente: serverless versão 5+. **publicar_git** aplica, faz commit e push sem force; Push na main aciona a publicação HostGator após os testes do workflow.
 
 # COMMAND ----------
 from pathlib import Path, PurePosixPath
@@ -68,7 +68,7 @@ with zipfile.ZipFile(package) as archive:
     git('push', '--dry-run', 'origin', 'HEAD:refs/heads/main')
     if dbutils.widgets.get('acao') in {'aplicar', 'publicar_git'}:
         workflow = archive.read('.github/workflows/deploy.yml').decode('utf-8')
-        assert 'workflow_dispatch:' in workflow and '\n  push:' not in workflow, 'Publicação HostGator precisa ser manual'
+        assert 'workflow_dispatch:' in workflow and '\n  push:\n    branches: [main]' in workflow, 'Workflow precisa limitar publicação automática à main e manter acionamento manual'
         assert git('status', '--porcelain') == '', 'Destino mudou durante a conferência'
         assert git('ls-remote', '--exit-code', 'origin', 'refs/heads/main').split()[0] == remote_commit_before, 'Remoto mudou durante a conferência'
         for destination, new in pending:

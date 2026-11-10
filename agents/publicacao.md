@@ -1,13 +1,13 @@
 # Rota de publicação — Databricks validado
 
-Fluxo aprovado: desenvolvimento/testes locais -> bundle dev isolado -> notebook de preparação da pasta Git -> commit/push autorizado pelo notebook -> publicação manual no GitHub Actions -> HostGator. Consulte docs/entrega-databricks.md.
+Fluxo aprovado: desenvolvimento/testes locais -> bundle dev isolado -> notebook de preparação da pasta Git -> commit/push autorizado pelo notebook -> publicação automática após push na main -> GitHub Actions -> HostGator; workflow_dispatch permanece disponível. Consulte docs/entrega-databricks.md.
 
 O repositório local e a pasta Git informada usam https://github.com/flavio-bezerra/flavio-data-hub. Pasta Databricks: /Users/flavio.bezerra@kinea.com.br/flavio-data-hub (ID 1416539554243551). Commit/push em main validado em serverless ambiente 5 com credenciais da plataforma; primeira entrega confirmada no commit f2809f07ff91a902dcaeb4a7a4ed15d46afb71cf. A credencial necessita permissão workflow ao modificar GitHub Actions.
 
 CLI moderna encontrada em C:\Program Files\Databricks\databricks.exe; use caminho explícito para evitar o launcher Python legado no PATH. Perfil escolhido pelo usuário: flaviobezerra. Guarde autenticação fora do projeto.
 
 ## Gate de entrega
-Entregue o projeto completo autorizado, incluindo .github/workflows/deploy.yml com workflow_dispatch. Essa alteração precisa entrar no mesmo commit para que push não publique o protótipo. Revise a prévia antes da aplicação na pasta Git. A aprovação visual e os testes locais precedem o acionamento manual do FTP. Preserve alterações remotas e concilie divergências antes da cópia.
+Entregue o projeto completo autorizado, incluindo .github/workflows/deploy.yml com workflow_dispatch. Push na main aciona a publicação automaticamente, por autorização do usuário; mantenha presentes e RSVP explicitamente em demonstração enquanto não houver backend. Revise a prévia antes da aplicação na pasta Git. A aprovação visual e os testes locais precedem o push que aciona o FTP. Preserve alterações remotas e concilie divergências antes da cópia.
 
 ## Bundle
 databricks.yml sincroniza o código e entrega/site.bin (formato ZIP, extensão neutra) num alvo dev isolado com bundle sync --full. scripts/preparar-entrega-databricks.py gera o ZIP e manifesto com hashes e base Git. notebooks/preparar-pasta-git.py verifica destino, HEAD, conflitos e integridade antes da cópia, com previa por padrão. Execute o notebook em serverless ambiente 5+. previa confere também main remota e push --dry-run. publicar_git aplica, seleciona os arquivos do manifesto, faz commit com identidade do executor, push sem force e confirma o hash remoto. As credenciais permanecem gerenciadas pela plataforma. Se a gravação/commit/push falhar, preserve o estado e revise antes de repetir; a operação não é transacional. O bundle não cria job/compute nem publica na HostGator.

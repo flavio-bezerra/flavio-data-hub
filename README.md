@@ -17,9 +17,9 @@ src/features/casamento/ contém conteúdo e seções. src/features/presentes/ co
 Leia AGENTS.md, agents/ux.md, agents/regras-de-negocio.md e agents/publicacao.md. O escopo, requisitos e critérios de aceite estão em docs/estrutura-e-regras.md.
 
 ## Publicação
-O workflow .github/workflows/deploy.yml instala com npm ci, exige TypeScript, lint e build aprovados e publica dist/ via FTP na HostGator somente por acionamento manual no GitHub Actions. A prévia autorizada mantém presentes e RSVP claramente em demonstração; não registra confirmações nem processa pagamentos.
+O workflow .github/workflows/deploy.yml instala com npm ci, exige TypeScript, lint e build aprovados e publica dist/ via FTP na HostGator automaticamente após push na main, mantendo acionamento manual no GitHub Actions. A prévia autorizada mantém presentes e RSVP claramente em demonstração; não registra confirmações nem processa pagamentos.
 
-Fluxo: local -> pacote com manifesto -> bundle dev -> notebook de preparação da pasta Git -> commit/push pelo notebook (publicar_git, serverless ambiente 5+) -> publicação manual no GitHub Actions. Consulte docs/entrega-databricks.md. O bundle não cria jobs nem compute; bundle sync envia os arquivos. O notebook precisa de runtime com arquivos de workspace e Git CLI na pasta Git. Upload não comprova push.
+Fluxo: local -> pacote com manifesto -> bundle dev -> notebook de preparação da pasta Git -> commit/push pelo notebook (publicar_git, serverless ambiente 5+) -> publicação automática no GitHub Actions após push na main. Consulte docs/entrega-databricks.md. O bundle não cria jobs nem compute; bundle sync envia os arquivos. O notebook precisa de runtime com arquivos de workspace e Git CLI na pasta Git. Upload não comprova push.
 
 ## Próxima etapa
 Aprovar visual e conteúdo; definir backend de presença e administração; integrar checkout e webhook com provedor escolhido; concluir testes e autorizar publicação do frontend.
