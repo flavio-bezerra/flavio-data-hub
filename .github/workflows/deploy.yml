@@ -19,7 +19,7 @@ jobs:
         node-version: '24'
 
     - name: 📦 Install Dependencies
-      run: npm ci
+      run: npm install
 
     - name: 🏗️ Build Project
       run: npm run build
@@ -30,14 +30,11 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        # HostGator: usuário FTP já cai em /public_html/, então usamos diretório relativo
+        # Configuração ORIGINAL que funcionava: usuário FTP já cai na pasta correta
         server-dir: ./
         # Pasta local onde o Vite cria o site
         local-dir: ./dist/
-        # FTP padrão porta 21 com TLS opcional
-        port: 21
-        security: loose
-        # timeout maior para conexões lentas
+        # Timeout maior para conexões lentas
         timeout: 120000
         exclude: |
           **/.git*
