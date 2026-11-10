@@ -18,5 +18,8 @@ Uma VNet fornece conectividade, não executa Git. Utilize uma VM/runner ou compu
 ## Estado da validação local — 10/11/2026
 Instalação local aprovada: 389 pacotes pelo Artifactory com certificados confiáveis do Windows e TLS ativo. visualizar-site.bat abre o servidor em 127.0.0.1:8080. Código de portfólio removido por autorização; validar novamente TypeScript, lint e build após a limpeza. Publicação da prévia autorizada pelo usuário, mantendo RSVP e presentes em demonstração. Workflow usa npm ci e interrompe o FTP se TypeScript, lint, build ou .htaccess falharem. Registrar resultados das execuções, commit/push e publicação separadamente.
 
+## Diagnóstico HostGator — teste controlado
+Domínio principal aponta para /public_html; FTP continua ./ com origem ./dist/. Vite base / e saída dist preservados. Restaurado public/.htaccess do portfólio commit 47053b4 para testar a diferença de rewrite, sem desativar segurança. scripts/verificar-publicacao.mjs confere HTML, status/tipos JS/CSS e SHA256 contra dist após FTP; falha não implica rollback do upload. Aprovação HTTP não substitui teste visual. Erros observados: 499 no navegador do usuário e 406 ModSecurity na consulta externa; causa ainda não confirmada.
+
 ## Evidência necessária
 Registre commit anterior, arquivos selecionados, novo commit, resultado do push e resultado do workflow. Só declare a rota oficial operacional após uma execução bem-sucedida. Publique frontend após build, TypeScript, lint relevante e aprovação visual. Nunca inclua convidados reais, códigos reais ou chaves no frontend/Git.
