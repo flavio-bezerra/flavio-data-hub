@@ -10,6 +10,13 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+.databricks
+.env
+.env.*
+!.env.example
+playwright-report
+.verificacao
+entrega/
 *.local
 
 # Editor directories and files

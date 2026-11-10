@@ -1,50 +1,25 @@
-# Bem-vindo ao Flávio Data Hub
+# Victoria & Flávio — site de casamento
 
-Este repositório contém o código-fonte do projeto "Flávio Data Hub".
+Projeto React 18 + TypeScript + Vite 7 + Tailwind 3 + shadcn. O repositório Git conserva o nome histórico flavio-data-hub.
 
-## Como Editar o Código
+## Desenvolvimento local
+Use Node 22.12+ compatível com Vite 7. Instale as dependências com npm ci e inicie npm run dev -- --host 127.0.0.1. Antes da entrega execute npm run build, npm run lint e npx tsc --noEmit -p tsconfig.app.json.
 
-Este projeto usa React, TypeScript, Shadcn UI e Tailwind CSS.
+Na rede corporativa, caso npm relate UNABLE_TO_GET_ISSUER_CERT_LOCALLY, configure a cadeia de certificados corporativos confiável; em Node compatível, experimente NODE_OPTIONS=--use-system-ca na sessão. Mantenha a validação TLS ativa. O launcher Python antigo de Databricks conflita com o PATH: use "C:\Program Files\Databricks\databricks.exe".
 
-**1. Configuração do Ambiente**
+## Experiência atual
+A página / contém abertura, história, evento, orientações, presentes e presença. /convite/demonstracao permite testar resposta individual de duas pessoas fictícias. A demonstração não envia dados e se perde ao recarregar. Presentes e valores são ilustrativos, sem cobrança. Fotos, história, traje, endereço completo e prazo exato aguardam aprovação.
 
-Você pode clonar este repositório e trabalhar localmente.
-O único requisito é ter o Node.js e o npm instalados - [instale com o nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## Estrutura
+src/features/casamento/ contém conteúdo e seções. src/features/presentes/ contém a prévia do catálogo. src/features/presenca/ contém acesso e confirmação por convite. Componentes de portfólio anteriores permanecem preservados, sem uso na rota principal.
 
-Siga estes passos:
+## Trabalho com agentes
+Leia AGENTS.md, agents/ux.md, agents/regras-de-negocio.md e agents/publicacao.md. O escopo, requisitos e critérios de aceite estão em docs/estrutura-e-regras.md.
 
-```sh
-# Passo 1: Clone o repositório
-git clone <URL_DO_SEU_GIT>
+## Publicação
+O workflow .github/workflows/deploy.yml faz build e publica dist/ via FTP na HostGator somente por acionamento manual no GitHub Actions. Suba essa alteração no mesmo commit do protótipo. A revisão visual e os testes locais continuam pendentes antes de acionar a publicação.
 
-# Passo 2: Navegue até o diretório do projeto.
-cd flavio-data-hub
+Fluxo: local -> pacote com manifesto -> bundle dev -> notebook de preparação da pasta Git -> commit/push pelo notebook (publicar_git, serverless ambiente 5+) -> publicação manual no GitHub Actions. Consulte docs/entrega-databricks.md. O bundle não cria jobs nem compute; bundle sync envia os arquivos. O notebook precisa de runtime com arquivos de workspace e Git CLI na pasta Git. Upload não comprova push.
 
-# Passo 3: Instale as dependências necessárias.
-npm i
-
-# Passo 4: Inicie o servidor de desenvolvimento com auto-reloading.
-npm run dev
-```
-
-## Tecnologias Utilizadas
-
-Este projeto é construído com:
-
-* Vite
-* TypeScript
-* React
-* shadcn-ui
-* Tailwind CSS
-
-## Como fazer o deploy?
-
-O deploy de produção deste projeto é feito na **HostGator**.
-
-Os métodos de deploy configurados são:
-
-* **Via GitHub Actions (CI/CD) - (Método Principal):**
-    Este repositório possui um workflow (`.github/workflows/deploy.yml`) que faz o build (`npm run build`) e o deploy automático via FTP para a HostGator sempre que um push é feito para a branch `main`.
-
-* **Via cPanel:**
-    O arquivo `.cpanel.yml` também está configurado para executar o build e copiar os arquivos da pasta `dist/` para o diretório de deploy.
+## Próxima etapa
+Aprovar visual e conteúdo; definir backend de presença e administração; integrar checkout e webhook com provedor escolhido; concluir testes e autorizar publicação do frontend.
