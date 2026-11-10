@@ -41,10 +41,12 @@ E a olhar para o mundo a meu lado.`;
 
       <article className="w-full max-w-xl mx-auto text-center px-6 relative z-10">
         
-        {/* Quote Section - Original Simple Version */}
+        {/* Quote Section - Extended Version */}
         <section className="mb-16 md:mb-20 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-          <blockquote className="font-[Cormorant_Garamond] italic text-[1.75rem] md:text-[2.25rem] lg:text-[2.5rem] leading-[1.4] tracking-[0.02em] text-[#3A3A3A] font-light">
-            &ldquo;O amor é uma companhia.&rdquo;
+          <blockquote className="font-[Cormorant_Garamond] italic text-[1.5rem] md:text-[1.875rem] lg:text-[2rem] leading-[1.6] tracking-[0.01em] text-[#3A3A3A] font-light whitespace-pre-line">
+            {`O amor é uma companhia.
+Já não sei andar só pelos caminhos,
+Porque os meus caminhos já não são só meus;`}
           </blockquote>
           <cite className="block mt-6 font-[Montserrat] uppercase tracking-[0.3em] text-[0.7rem] text-[#8A8A8A] font-normal">
             Alberto Caeiro
