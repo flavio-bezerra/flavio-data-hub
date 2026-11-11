@@ -388,3 +388,91 @@
  .orientacoes-lista { margin-top: 0; }
  .herbario-convite { padding: .5rem; }
 }
+
+
+/* Mobile composto em papel vertical; desktop acima de 860px permanece intacto. */
+@media (max-width: 860px) {
+  .convite-site .herbario-abertura {
+    min-height: 0; padding: .5rem 1.25rem 12.5rem;
+    background: #fff url('/rebranding/mobile/abertura.webp') center bottom / 100% auto no-repeat;
+  }
+  .convite-site .herbario-texto { width: 100%; max-width: 30rem; margin: 0 auto; padding: 0; }
+  .convite-site .herbario-convite { max-width: 18rem; margin-bottom: 1rem; }
+  .convite-site .herbario-nomes { font-size: clamp(4.5rem, 20vw, 6.5rem); line-height: 1.18; margin-top: 1.25rem; }
+  .convite-site .herbario-e { line-height: 1.15; margin: .2rem 0; }
+  .convite-site .data-destaque { margin-top: 1.5rem; padding: .6rem; }
+  .convite-site .herbario-acoes { margin-top: .75rem; }
+  .convite-site .historia-livro,
+  .convite-site .programa-dia,
+  .convite-site .orientacoes-notas,
+  .convite-site .presentes-cardapio,
+  .convite-site .presenca-secao {
+    display: block; min-height: 0; padding: 3rem 1rem 7rem;
+    background-color: #fff; background-size: 100% auto;
+    background-position: center bottom; background-repeat: no-repeat;
+  }
+  .convite-site .historia-livro { background-image: url('/rebranding/mobile/historia.webp'); }
+  .convite-site .programa-dia { background-image: url('/rebranding/mobile/programa.webp'); }
+  .convite-site .orientacoes-notas { background-image: url('/rebranding/mobile/orientacoes.webp'); }
+  .convite-site .presentes-cardapio { background-image: url('/rebranding/mobile/presentes.webp'); }
+  .convite-site .presenca-secao { background-image: url('/rebranding/mobile/presenca.webp'); }
+  .convite-site .orientacoes-notas::before,
+  .convite-site .presentes-cardapio::before,
+  .convite-site .presenca-secao::before { content: none; display: none; }
+  .convite-site .historia-album { width: 100%; max-width: 24rem; margin: 0 auto 2rem; }
+  .convite-site .foto-celebracao { width: 68%; }
+  .convite-site .foto-juntos { width: 79%; margin-top: -3rem; }
+  .convite-site .historia-coluna,
+  .convite-site .programa-papel,
+  .convite-site .orientacoes-cabecalho,
+  .convite-site .orientacoes-lista,
+  .convite-site .presentes-cardapio .cardapio-folha,
+  .convite-site .presenca-secao .cartao-resposta {
+    width: 100%; max-width: 34rem; margin: 0 auto; padding: 1rem;
+    background: #fff; border: 0; border-radius: 0; box-shadow: none;
+  }
+  .convite-site .titulo-secao,
+  .convite-site .programa-cabecalho h2,
+  .convite-site .orientacoes-cabecalho .titulo-secao,
+  .convite-site .presenca-secao .titulo-secao {
+    font-size: clamp(2.65rem, 10.5vw, 4rem); line-height: 1.4;
+    margin: .75rem 0 1.5rem; text-align: center;
+  }
+  .convite-site .programa-lista { display: block; margin-top: 1.5rem; }
+  .convite-site .programa-lista li { display: grid; grid-template-columns: 1fr; gap: .25rem; padding: .75rem 0; text-align: center; }
+  .convite-site .programa-hora { white-space: nowrap; font-size: 1.6rem; }
+  .convite-site .programa-lista h3 { font-size: 1.6rem; }
+  .convite-site .orientacoes-lista { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+  .convite-site .orientacoes-lista > div { padding: .25rem 0; }
+  .convite-site .cardapio-lista { margin-top: 1.5rem; }
+  .convite-site .cardapio-lista li { padding: 1rem 0; }
+  .convite-site .cardapio-linha { gap: .25rem; }
+  .convite-site .cartao-formulario { margin-top: 1.5rem; }
+  .convite-site .cartao-campo { display: grid; grid-template-columns: minmax(0, 1fr); gap: .75rem; }
+  .convite-site .cartao-input { font-size: 1.1rem; }
+  .convite-site .cartao-campo button { width: 100%; }
+  .convite-site .rodape-editorial { padding: 2.5rem 1.25rem; }
+  .convite-site .rodape-nomes { font-size: clamp(2.8rem, 11vw, 4rem); }
+}
+
+/* Superfícies de leitura brancas opacas; conteúdo mobile elevado sem deslocar a pintura. */
+.convite-site .herbario-convite,
+.convite-site .data-destaque,
+.convite-site .herbario-acoes,
+.convite-site .historia-coluna,
+.convite-site .programa-papel,
+.convite-site .orientacoes-cabecalho,
+.convite-site .orientacoes-lista,
+.convite-site .presentes-cardapio .cardapio-folha,
+.convite-site .presenca-secao .cartao-resposta {
+  background-color: #fff;
+}
+
+/* Abertura mobile sem fundos nos boxes: pintura contínua e conteúdo opaco. */
+@media (max-width: 860px) {
+  .convite-site .herbario-abertura .herbario-convite,
+  .convite-site .herbario-abertura .data-destaque,
+  .convite-site .herbario-abertura .herbario-acoes {
+    background-color: transparent;
+  }
+}

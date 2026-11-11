@@ -20,7 +20,7 @@ Use **Victória & Flávio**, com os acentos, em nomes visíveis, metadados e nom
 
 | Cor/token | Valor | Papel no design |
 |---|---|---|
-| Branco de leitura | #FFFFFF | Superfícies opacas atrás do conteúdo e rodapé |
+| Branco de leitura | #FFFFFF | Boxes brancos opacos; abertura mobile sem fundos nos boxes |
 | Papel / --papel | #FAF8F3 | Token de branco quente e fundos de apoio |
 | Ardósia / --ardosia | #34506A | Nomes, títulos, controles e destaques |
 | Névoa / --nevoa | #D3DFEA | Apoio e aviso de demonstração |
@@ -34,7 +34,7 @@ Use **Victória & Flávio**, com os acentos, em nomes visíveis, metadados e nom
 
 As artes têm variação tonal própria, coerente com essa paleta. Não aplicar recoloração que tinja as flores brancas. Valores são referências digitais, não especificações de impressão.
 
-**Regra de legibilidade:** informação prática, texto da história, perguntas, valores e formulário ficam sobre branco opaco. Evitar transparência por trás de texto: a pintura variável reduz previsibilidade do contraste. As superfícies não têm bordas, cantos arredondados ou sombras de card de aplicativo. Respiro interno de 1,25 a 2rem; a pintura continua visível nas margens.
+**Regra vigente aprovada após finalizar o convite:** boxes retornam ao branco 100% opaco no desktop e nas demais seções mobile. Convite, data/local e ações da abertura mobile ficam sem fundos nos boxes (background-color: transparent). Conteúdo da abertura mobile elevado 1,5rem, compensando no padding inferior para manter a pintura na mesma posição. Preservar textos, botões, campos, imagens e descendentes opacos; a exceção altera somente o fundo dos boxes. A pintura variável exige conferência visual de contraste; esta escolha não comprova conformidade WCAG. As superfícies não têm bordas, cantos arredondados ou sombras de card de aplicativo. Respiro interno de 1,25 a 2rem; a pintura continua visível nas margens.
 
 Ardósia e tinta sobre branco têm contraste amplo para leitura; a meta é WCAG AA. Não afirmar auditoria completa apenas porque os tokens passam contraste: sobreposições, estados e dispositivos ainda precisam ser avaliados.
 
@@ -74,7 +74,7 @@ public/rebranding/casal-celebracao.webp e casal-juntos.webp são fotos reais con
 
 Breakpoint principal: 860px. Desktop mantém a pintura de seção e conteúdo deslocado para as áreas claras. As pinturas de fundo atuais usam tamanho 100%/100% no desktop; verificar proporções ao mudar alturas e preferir reorganizar conteúdo a distorcer mais a arte.
 
-No celular, história e programa fluem em uma coluna com leitura protegida por branco. Orientações, presentes e presença apresentam a arte inteira numa área decorativa 3:2 acima do conteúdo, em vez de recortar flores para caber atrás de um formulário estreito. Abertura mantém arte ao redor do foco; textos menores são protegidos por branco. Sem rolagem horizontal em 320px; palavras essenciais, nomes e valores não podem ser cortados.
+No celular, as seis pinturas ganham variantes verticais em public/rebranding/mobile/: a pintura original completa é reduzida proporcionalmente para o rodapé da folha, com uma aguada suave superior da mesma arte. Os fundos são dimensionados pela largura, sem ampliação pela altura do texto, recortes laterais ou banners separados. Conteúdo em coluna única sobre branco opaco (exceção na abertura mobile, sem fundos nos boxes); nomes empilhados, horários acima das descrições, formulário com botão de largura total. Fotos reais preservadas e sobrepostas. Desktop acima de 860px permanece intacto. Conferir composição em 320/390/430px além de overflow e funcionalidades; Safari e aparelho real exigem validação própria.
 
 ## Interação e acessibilidade
 
@@ -101,3 +101,8 @@ Após acabamento (11/11/2026): TypeScript/lint/build aprovados (exit 0, 0 erros/
 ## Histórico resumido
 
 Herbário com pranchas antigas e Italianno foi a direção anterior. Primeira tentativa de Jardim com faixas repetidas e flores soltas foi rejeitada por distância da referência. Correção adotou seis pinturas próprias sem texto embutido, molduras sem inclinação e fontes locais. Aphrodite foi experimentada e substituída por Sloop a pedido do casal. Recorte cortado do copo-de-leite saiu do cartão, substituído por composição completa. Em seguida, casal aprovou design geral e pediu acabamento de legibilidade. Não reintroduzir decisões históricas como regras atuais.
+
+
+### Correção mobile — 11/11/2026
+
+Versão mobile anterior rejeitada pelo casal após publicação: flores cortadas, pinturas isoladas como banners e programa apertado. Correção local autorizada, seis recomposições das artes aprovadas (sem geração de pessoas), CSS restrito ao breakpoint de 860px. TypeScript, lint e build aprovados (0 erros/7 avisos existentes). Após suavizar bordas das pinturas, CDP 320/390/430/1280 passou: fontes, menu, erro de código e demonstração; sem overflow, imagens quebradas ou exceções JS. Captura final 390px inspecionada: flores completas na abertura, fundos integrados sem banners, horários empilhados e botão de formulário inteiro. O build aprovado antecede apenas o refinamento dos WebP, sem mudanças posteriores de CSS ou TypeScript. Aceite do casal e teste em aparelho real/Safari pendentes; sem commit/push/publicação nesta etapa.
