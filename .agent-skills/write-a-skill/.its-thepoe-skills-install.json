@@ -1,0 +1,8 @@
+{
+  "managedBy": "@its-thepoe/skills",
+  "skillName": "write-a-skill",
+  "package": "@its-thepoe/write-a-skill",
+  "version": "1.0.3",
+  "strategy": "copy",
+  "installedAt": "2026-11-11T01:26:45.806Z"
+}

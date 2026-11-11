@@ -1,0 +1,8 @@
+{
+  "managedBy": "@its-thepoe/skills",
+  "skillName": "frontend-design",
+  "package": "@its-thepoe/frontend-design",
+  "version": "1.0.0",
+  "strategy": "copy",
+  "installedAt": "2026-11-11T01:26:45.337Z"
+}

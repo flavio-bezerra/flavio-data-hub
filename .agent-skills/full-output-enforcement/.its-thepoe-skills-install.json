@@ -1,0 +1,8 @@
+{
+  "managedBy": "@its-thepoe/skills",
+  "skillName": "full-output-enforcement",
+  "package": "@its-thepoe/full-output-enforcement",
+  "version": "1.0.0",
+  "strategy": "copy",
+  "installedAt": "2026-11-11T01:26:45.342Z"
+}

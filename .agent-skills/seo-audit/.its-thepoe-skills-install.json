@@ -1,0 +1,8 @@
+{
+  "managedBy": "@its-thepoe/skills",
+  "skillName": "seo-audit",
+  "package": "@its-thepoe/seo-audit",
+  "version": "1.0.0",
+  "strategy": "copy",
+  "installedAt": "2026-11-11T01:26:45.642Z"
+}

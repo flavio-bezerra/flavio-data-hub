@@ -8,7 +8,10 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "skills:install": "cd skills && npm install",
+    "skills:sync": "cd skills && npx @its-thepoe/skills install --all --only=opencode --strategy copy",
+    "skills:copy-to-agent": "node scripts/copy-skills-to-agent.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -72,6 +75,15 @@
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react-swc": "^3.11.0",
+    "@its-thepoe/skills": "^1.0.28",
+    "@its-thepoe/frontend-design": "^1.0.0",
+    "@its-thepoe/better-typography": "^1.0.0",
+    "@its-thepoe/playwright": "^1.0.0",
+    "@its-thepoe/design-motion-principles": "^1.0.1",
+    "@its-thepoe/design-taste-frontend": "^1.0.0",
+    "@its-thepoe/copywriting": "^1.1.0",
+    "@its-thepoe/gpt-taste": "^1.0.0",
+    "@its-thepoe/agentic-design-engineering": "^1.0.0",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.32.0",
     "eslint-plugin-react-hooks": "^5.2.0",
@@ -82,5 +94,21 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0",
     "vite": "^7.2.4"
-  }
+  },
+  "description": "Projeto React 18 + TypeScript + Vite 7 + Tailwind 3 + shadcn. O repositório Git conserva o nome histórico flavio-data-hub.",
+  "main": "eslint.config.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flavio-bezerra/flavio-data-hub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flavio-bezerra/flavio-data-hub/issues"
+  },
+  "homepage": "https://github.com/flavio-bezerra/flavio-data-hub#readme"
 }

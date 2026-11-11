@@ -1,0 +1,8 @@
+{
+  "managedBy": "@its-thepoe/skills",
+  "skillName": "playwright",
+  "package": "@its-thepoe/playwright",
+  "version": "1.0.0",
+  "strategy": "copy",
+  "installedAt": "2026-11-11T01:26:45.574Z"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@its-thepoe/better-ui",
+  "version": "1.0.0",
+  "description": "Agent Skill: better-ui.",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "better-ui",
+    "design",
+    "ui"
+  ],
+  "files": [
+    "README.md",
+    "SKILL.md",
+    "*.md",
+    "package.json"
+  ],
+  "exports": {
+    ".": "./SKILL.md",
+    "./SKILL.md": "./SKILL.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/its-thepoe/skills.git",
+    "directory": "design/better-ui"
+  }
+}

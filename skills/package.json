@@ -1,0 +1,24 @@
+{
+  "name": "skills",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@its-thepoe/agentic-design-engineering": "^1.0.0",
+    "@its-thepoe/better-typography": "^1.0.0",
+    "@its-thepoe/copywriting": "^1.1.0",
+    "@its-thepoe/design-motion-principles": "^1.0.1",
+    "@its-thepoe/design-taste-frontend": "^1.0.0",
+    "@its-thepoe/frontend-design": "^1.0.0",
+    "@its-thepoe/gpt-taste": "^1.0.0",
+    "@its-thepoe/playwright": "^1.0.0",
+    "@its-thepoe/skills": "^1.0.28"
+  }
+}
