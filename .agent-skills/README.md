@@ -1,6 +1,6 @@
 # Agent Skills — Casamento Victória & Flávio
 
-> **36 skills portáteis** copiadas do `@its-thepoe/skills` para uso com **qualquer agente**: OpenCode, Claude Code, Cursor, Windsurf, Codex, etc.
+> **37 skills portáteis** copiadas do `@its-thepoe/skills` para uso com **qualquer agente**: OpenCode, Claude Code, Cursor, Windsurf, Codex, etc.
 
 ---
 
@@ -144,4 +144,4 @@ npx @its-thepoe/skills install --all --only=opencode --strategy copy
 
 ---
 
-*Copiado de `@its-thepoe/skills` em 10/11/2026 — 36 skills portáteis para OpenCode, Claude Code, Cursor, Windsurf, Codex*
+*Copiado de `@its-thepoe/skills` em 10/11/2026 — 37 skills portáteis para OpenCode, Claude Code, Cursor, Windsurf, Codex*

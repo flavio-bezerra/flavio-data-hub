@@ -7,9 +7,8 @@ export default function Presentes() {
   return (
     <section id="presentes" aria-labelledby="presentes-titulo" className="presentes-cardapio">
       <div className="cardapio-folha">
-        <img src="/orquidea-phalaenopsis.webp" width={724} height={991} alt="" aria-hidden="true" loading="lazy" className="flor-cardapio" />
         <p className="rotulo-herbario">Lista de presentes</p>
-        <h2 id="presentes-titulo" className="titulo-secao">Presentes com carinho</h2>
+        <h2 id="presentes-titulo" className="titulo-secao">Com carinho</h2>
         <p className="cardapio-intro">Sua presença é o nosso presente mais especial. Para quem desejar nos presentear, estamos preparando uma lista de presentes simbólicos.</p>
         <p className="selo-pendente">Prévia · itens e valores ilustrativos · pagamento indisponível</p>
         <ul className="cardapio-lista">

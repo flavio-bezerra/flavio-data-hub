@@ -15,10 +15,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Cormorant Garamond', 'Georgia', 'serif'],
-        script: ['Great Vibes', 'cursive'],
-        ui: ['Newsreader', 'Georgia', 'serif'],
-        sans: ['Newsreader', 'Georgia', 'serif'],
+        display: ['EB Garamond Local', 'Georgia', 'serif'],
+        script: ['Bickham', 'cursive'],
+        ui: ['EB Garamond Local', 'Georgia', 'serif'],
+        sans: ['EB Garamond Local', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",

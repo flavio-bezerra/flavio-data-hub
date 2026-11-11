@@ -10,9 +10,8 @@ export default function ConviteDePresenca() {
   return (
     <section id="presenca" aria-labelledby="presenca-titulo" className="presenca-secao">
       <div className="cartao-resposta">
-        <img src="/copo-de-leite-cartao.webp" width={819} height={524} alt="" aria-hidden="true" loading="lazy" className="flor-cartao" />
         <p className="rotulo-herbario">Cartão-resposta</p>
-        <h2 id="presenca-titulo" className="titulo-secao">Esperamos por você</h2>
+        <h2 id="presenca-titulo" className="titulo-secao">Esperamos você</h2>
         <p className="cartao-texto">Será uma alegria celebrar esse dia ao seu lado. Cada família receberá um link ou código de convite para confirmar a presença de cada pessoa.</p>
         <p className="selo-pendente">{casamento.prazoPresenca ?? "Confirmações reais ainda não abertas · demonstração"}</p>
         <p className="cartao-linha" aria-hidden="true"><span /> aceita com alegria</p>

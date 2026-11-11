@@ -9,12 +9,26 @@ workspace:
 sync:
   include:
     - entrega/site.bin
+    - notebooks/preparar-pasta-git.py
   exclude:
-
+    # O projeto completo vai dentro do pacote, não como acervo avulso.
+    - public/**
+    - src/**
+    - docs/**
+    - agents/**
+    - scripts/**
+    - .agent-skills/**
+    - .github/**
     - .git/**
     - .databricks/**
-    # node_modules, dist, segredos e arquivos locais são excluídos pelo .gitignore.
-    # Lockfiles e entrega/site.bin (ZIP com extensão neutra) fazem parte da entrega.
+    - '*.json'
+    - '*.md'
+    - '*.ts'
+    - '*.html'
+    - '*.bat'
+    - '*.js'
+    - '*.cjs'
+    - '*.mjs'
 
 targets:
   dev:

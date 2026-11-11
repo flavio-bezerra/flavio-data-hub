@@ -1,76 +1,103 @@
 # Identidade visual e layout — Victória & Flávio
 
-Atualizado em 10/11/2026. Direção solicitada pelo casal: elegante, fina, clássica e botânica. Documento do refinamento implementado; aprovação da direção e autorização de publicação não substituem aceite visual final do casal.
+## Estado e aprovação
 
-## Grafia e personalidade
+Atualizado em 11/11/2026. **Jardim em aquarela é o design geral aprovado pelo casal**, com Sloop Script Three. O acabamento de legibilidade com superfícies brancas foi autorizado em seguida. A versão permanece local: aprovação de design não equivale a autorização de commit, push ou deploy. O aceite visual do acabamento e a inspeção em aparelho real permanecem necessários.
 
-Use Victória & Flávio, com acento em Victória, no conteúdo, título da aba, metadados, manifesto e nomes acessíveis. Caminhos técnicos históricos, domínio e repositório podem conservar grafia sem acento. O site é uma extensão da papelaria do casamento, não uma interface corporativa ou portfólio.
+Este documento é a referência vigente. Herbário, Italianno, Aphrodite e as faixas repetidas de textura pertencem ao histórico, não ao padrão atual. O site é uma extensão da papelaria do casamento, não uma interface corporativa.
 
-Direção atual: **Herbário**. O site é um álbum botânico do casamento: pranchas botânicas antigas de domínio público (copo-de-leite, orquídea e violeta) são protagonistas, com legenda de crédito na abertura. As rosas de Redouté usadas nas primeiras versões foram substituídas a pedido do casal. Cada seção imita uma peça de papelaria (etiqueta, programa impresso, coluna de livro, notas, cardápio, cartão-resposta) em vez de componentes genéricos de interface. A direção foi aprovada pelo casal; as manchas soltas do papel foram removidas das pranchas (ver origem-botanica.md).
+## Conceito e assinatura
 
-## Paleta
+Composição botânica romântica, clássica e artística: copos-de-leite como assinatura pessoal ligada ao buquê, orquídeas brancas e violetas azuis como apoio, folhagem sálvia/eucalipto, manchas de aquarela azul e verde com pigmento e bordas irregulares. Cada seção tem pintura própria, não uma textura repetida ou uma flor colada ao lado do conteúdo.
 
-Pedido do casal: **azul, verde, branco e marrom claro**, as quatro famílias compostas na página. Os hex são aproximações aprovadas, não especificações de impressão. Estão definidos como variáveis CSS (--papel, --nevoa, --ardosia etc.) e tokens HSL em src/index.css.
+A pintura enquadra; o branco organiza; a caligrafia dá personalidade. Textos e controles são HTML real. As artes não contêm letras, datas, preços, botões ou fotografias do casal. O monograma original e as fotos reais são preservados.
 
-| Nome | Hex | Uso | Proporção aproximada |
-|---|---|---|---|
-| Papel (branco quente) | #FAF8F3 | Fundo principal, história, orientações, folhas de cardápio e cartão | ~55% |
-| Azul névoa | #D3DFEA / #E6EDF3 | Fundo do programa e da presença (não usar atrás das pranchas) | ~15% |
-| Azul ardósia | #34506A | Botão principal, títulos de seção, nomes, valores, capitular | ~5% |
-| Eucalipto | #7E8F78 (texto grande #5F7259) | Ampersand, horários do programa | ~7% |
-| Verde tinta | #2F3F35 / #4D5A49 | Texto corrido e secundário | ~8% |
-| Linho | #E8DDCB | Fundo dos presentes (rodapé agora em branco papel) | ~6% |
-| Marrom claro | #B59E80 (texto #7A644A) | Fios, bordas, pontilhados, rótulos e legendas | ~3% |
+## Grafia e dados
 
-Contraste: texto corrido usa verde tinta ou ardósia sobre papel/névoa/linho. Eucalipto e marrom claro puros aparecem só em texto grande ou em elementos decorativos; texto pequeno marrom usa #7A644A. O token técnico champagne agora aponta para o marrom claro.
+Use **Victória & Flávio**, com os acentos, em nomes visíveis, metadados e nomes acessíveis. Caminhos históricos e domínio podem conservar grafia técnica sem acento. Dados centralizados em src/features/casamento/conteudo.ts: domingo, 10 de outubro de 2027, às 13h30, DellaTorres Eventos, Mairiporã/SP; recepção no mesmo local. Não inventar endereço, traje, regras de crianças, prazo exato ou história pessoal.
+
+## Paleta e contraste
+
+| Cor/token | Valor | Papel no design |
+|---|---|---|
+| Branco de leitura | #FFFFFF | Superfícies opacas atrás do conteúdo e rodapé |
+| Papel / --papel | #FAF8F3 | Token de branco quente e fundos de apoio |
+| Ardósia / --ardosia | #34506A | Nomes, títulos, controles e destaques |
+| Névoa / --nevoa | #D3DFEA | Apoio e aviso de demonstração |
+| Névoa clara | #E6EDF3 | Apoio suave |
+| Eucalipto | #7E8F78 | Folhagens e decoração; não texto pequeno |
+| Tinta / --tinta | #2F3F35 | Texto de leitura |
+| Tinta suave | #4D5A49 | Apoio e elementos secundários |
+| Linho | #E8DDCB | Referência de papelaria, não faixas obrigatórias |
+| Marrom claro | #B59E80 | Bordas discretas das fotos e detalhes |
+| Marrom de texto | #7A644A | Rótulos e avisos; não substituir por dourado |
+
+As artes têm variação tonal própria, coerente com essa paleta. Não aplicar recoloração que tinja as flores brancas. Valores são referências digitais, não especificações de impressão.
+
+**Regra de legibilidade:** informação prática, texto da história, perguntas, valores e formulário ficam sobre branco opaco. Evitar transparência por trás de texto: a pintura variável reduz previsibilidade do contraste. As superfícies não têm bordas, cantos arredondados ou sombras de card de aplicativo. Respiro interno de 1,25 a 2rem; a pintura continua visível nas margens.
+
+Ardósia e tinta sobre branco têm contraste amplo para leitura; a meta é WCAG AA. Não afirmar auditoria completa apenas porque os tokens passam contraste: sobreposições, estados e dispositivos ainda precisam ser avaliados.
 
 ## Tipografia
 
-Italianno (caligrafia clássica, letras desenhadas) nos nomes do casal (abertura e rodapé) e nos títulos de seção; Cormorant Garamond em data, horários, perguntas e valores; Newsreader (serifada literária) em corpo e interface; versaletes (all-small-caps) para rótulos de herbário. Great Vibes e Pinyon Script foram avaliadas e preteridas. O casal pediu Sweet Fancy Script (MVB Fonts) para os nomes; é fonte paga, disponível via Adobe Fonts (Web Project) ou licença web da MVB. Sem licença, a Italianno permanece; nunca baixar cópias não licenciadas. O monograma usa o desenho fornecido pelo casal e não uma recomposição tipográfica. Famílias e fallbacks estão no CSS; conferir o carregamento de fontes no build real.
+| Uso | Família/arquivo | Comportamento |
+|---|---|---|
+| Nomes, títulos e rodapé | Sloop Script Three — public/rebranding/sloop-three.ttf | Caligrafia clássica, peso real 400; floreios com respiro |
+| Reserva caligráfica | Bickham — bickham-regular.ttf | Reserva local seguida de cursive |
+| Corpo, datas e interface | EB Garamond Local — garamond-regular.ttf | Serifada de leitura seguida de Georgia/serif |
+| Itálico real | garamond-italic.ttf | Citação e avisos sem itálico artificial |
 
-Nomes em caligrafia, escala grande e alinhamento escalonado à esquerda, com o ampersand menor em eucalipto. Texto de corpo deve permanecer legível no celular; labels pequenos e espaçados são apenas auxiliares, nunca a única forma de transmitir informação essencial.
+Fontes locais, sem Google Fonts. Nomes grandes empilhados, ampersand menor; títulos fluidos com clamp. O CSS atual usa nomes entre aproximadamente 4,5 e 8rem e títulos entre 2,6 e 5,5rem conforme seção/viewport. Corpo permanece em fonte de leitura, nunca caligrafia. Rótulos em versaletes com espaçamento moderado são auxiliares, não a única fonte de informação essencial. Fonte menor não é solução para acomodar conteúdo: ajustar largura e fluxo.
 
-## Assets e origem
+Usuário informou não haver problema com licenças do acervo. Não houve auditoria documental independente. Manter essa distinção e evitar redistribuir a biblioteca inteira sem necessidade.
 
-public/monograma-vf.png: desenho original extraído da imagem enviada, com transparência. É raster PNG, não vetorização. Preserve proporção, evite distorção e repetição desnecessária. Se for solicitado um SVG genuíno, obtenha o original ou faça uma etapa de vetorização com revisão própria; mudar a extensão não cria um vetor.
+## Monograma e fotografias
 
-Pranchas botânicas antigas em public/, todas com fundo transparente e fonte/licença em origem-botanica.md. Flores escolhidas pelo casal: copo-de-leite, orquídea e violeta (as rosas e demais Redouté saíram). Copo-de-leite (abertura; recorte da flor na presença), violeta (ramo na história; parte superior nas orientações), orquídea Phalaenopsis branca (programa e presentes). A violeta lilás é o único toque de cor fora da paleta, pontual. Regras: uma flor por seção; cores da própria aquarela dentro da paleta (azuis, brancos, verdes), sem recolorir; **flor sempre sobre papel branco** — em seções com fundo névoa ou linho ela fica dentro da folha/cartão branco; raízes, bulbos, legendas e esboços removidos. Pranchas antigas fora de uso ficam em .local/ (ignorada pelo Git), não em public/.
+public/monograma-vf.png é o V & F original, raster PNG com transparência. Preservar desenho e proporção, sem recriar por tipografia e sem alegar vetorização. Usado na navegação e rodapé; a repetição adicional na abertura está oculta no layout atual.
 
-public/rosas-botanicas.png (sem uso na página; mantida no repositório): gravura Vintage roses, FreeSVG/OpenClipart ID74999, recolorida em sálvia e com transparência. A página declara CC0/domínio público. O download vetorial não forneceu conteúdo durante a obtenção; foi utilizada a prévia PNG. Origem em origem-botanica.md. Assets estão no próprio projeto; a renderização não depende de hotlink ao catálogo externo.
-
-Referências de layout são inspiração, não licença para copiar templates ou suas imagens. Registre fonte, licença e adaptações para qualquer novo asset. Elementos puramente decorativos têm alt vazio e não interceptam clique.
+public/rebranding/casal-celebracao.webp e casal-juntos.webp são fotos reais convertidas dos JPG pessoais, reduzidas e sem EXIF. Mantidas por pedido do casal; não gerar substitutos representando as pessoas. Na história, molduras claras finas, sem inclinação de Polaroid; foto vertical 3:4 e foto horizontal sobreposta. Conferir o enquadramento dos rostos em alterações de tamanho.
 
 ## Composição por seção
 
-| Área | Direção e comportamento |
-|---|---|
-| Cabeçalho | Monograma pequeno, navegação compacta e menu móvel em fluxo; aviso de demonstração enquanto necessário |
-| Abertura | Copo-de-leite grande à direita sobre papel liso (a névoa azul atrás da planta foi rejeitada); nomes em caligrafia Italianno escalonados; data em destaque (dia da semana · 10 grande em ardósia · mês e ano, só tipografia e espaço; fios marrons rejeitados por parecerem dourados) e linha em itálico com horário e local; a etiqueta em tabela foi rejeitada; botão ardósia “Responder ao convite” e link “Programa do dia”; legenda da prancha. No celular a prancha fica acima dos nomes |
-| História | Coluna de livro com capitular ardósia e citação de Alberto Caeiro com fio marrom; texto/fotos pessoais somente após aprovação |
-| Evento | Folha branca de programa sobre névoa clara: horários em itálico à esquerda, cerimônia e recepção, orquídea dentro da folha (no celular acima do texto); endereço pendente |
-| Orientações | Notas sempre visíveis em duas colunas (lista de definições), “Em definição” onde faltar política |
-| Presentes | Cardápio de papel sobre linho, valores alinhados por pontilhado; itens ilustrativos e pagamento desabilitado |
-| Presença | Cartão-resposta de papel sobre névoa, com linha “aceita com alegria” decorativa, campo de código sublinhado e botão ardósia; formulário por pessoa em rota própria |
-| Rodapé | Branco papel com fio marrom, nomes em Italianno, monograma, nomes em ardósia, data/cidade e retorno ao início |
+| Seção/componente | Arte e layout | Proteção da leitura |
+|---|---|---|
+| Cabeçalho / Cabecalho.tsx | Monograma pequeno, navegação compacta, menu móvel em fluxo | Branco; aviso de demonstração distinto |
+| Abertura / Abertura.tsx | abertura-pintura.webp: copos-de-leite à esquerda, folhagem suspensa à direita, branco central; nomes empilhados | Convite, data/local e ação com pequenas superfícies brancas; manter nomes como foco |
+| Nossa história / NossaHistoria.tsx | historia-pintura.webp; fotos à esquerda, texto à direita | Coluna branca opaca para texto e citação; fotos permanecem sobre pintura |
+| O nosso dia / Evento.tsx | programa-pintura.webp: orquídeas e violetas à esquerda; horários centro-direita | Folha branca para título, data, programa e informação de endereço |
+| Para nossos convidados / Orientacoes.tsx | orientacoes-pintura.webp: violetas e folhagens nas margens | Cabeçalho e lista de definições sobre branco; perguntas sempre visíveis |
+| Com carinho / Presentes.tsx | presentes-pintura.webp: orquídeas nas laterais | Folha branca para introdução, itens e valores; pagamento desabilitado |
+| Esperamos você / ConviteDePresenca.tsx | presenca-pintura.webp: copos-de-leite completos e folhagens | Superfície branca para título, texto, avisos e formulário |
+| Rodapé / Rodape.tsx | Branco, monograma original, nomes Sloop, data/cidade e retorno ao início | Branco limpo |
 
-A primeira tentativa com ramos SVG geométricos grandes, moldura dupla e painel de monograma foi rejeitada e não publicada. O refinamento substituiu esses elementos por gravura orgânica pequena, removeu a moldura e simplificou a história. Não reintroduza esse conjunto por reutilização de uma versão antiga.
+## Responsividade
 
-## Arquivos responsáveis
+Breakpoint principal: 860px. Desktop mantém a pintura de seção e conteúdo deslocado para as áreas claras. As pinturas de fundo atuais usam tamanho 100%/100% no desktop; verificar proporções ao mudar alturas e preferir reorganizar conteúdo a distorcer mais a arte.
 
-src/pages/SaveTheDate.tsx compõe a página. src/features/casamento/conteudo.ts concentra fatos. Abertura.tsx, Cabecalho.tsx, NossaHistoria.tsx, Evento.tsx, Orientacoes.tsx e Rodape.tsx implementam as seções. Monograma.tsx apresenta o monograma; RamoBotanico.tsx ficou sem uso. As flores são <img> decorativas (alt vazio, aria-hidden, loading lazy fora da abertura) em cada componente de seção, com estilos .flor-* e .programa-prancha em src/index.css. src/features/presentes/ e src/features/presenca/ cuidam dos domínios correspondentes. src/index.css contém tokens e estilo editorial. index.html e public/site.webmanifest contêm identidade fora do corpo da página.
+No celular, história e programa fluem em uma coluna com leitura protegida por branco. Orientações, presentes e presença apresentam a arte inteira numa área decorativa 3:2 acima do conteúdo, em vez de recortar flores para caber atrás de um formulário estreito. Abertura mantém arte ao redor do foco; textos menores são protegidos por branco. Sem rolagem horizontal em 320px; palavras essenciais, nomes e valores não podem ser cortados.
 
-## Responsividade, acessibilidade e movimento
+## Interação e acessibilidade
 
-Aceite esperado: 320px sem rolagem horizontal; imagens carregadas e proporcionais; menu acessível; H1 único e H2 por seção; foco visível; teclado; alvos de toque de pelo menos 44px; contraste AA; campos rotulados e erros recuperáveis; âncoras sem títulos cobertos pelo cabeçalho. Overlay futuro deve usar Radix/createPortal quando necessário; o menu atual em fluxo não exige overlay.
+H1 único, H2 por seção, controles com nome acessível, campos rotulados, erros associados ao código, foco visível e alvos mínimos de 44px. Imagens puramente decorativas têm alt vazio/aria-hidden ou são fundos CSS; não interceptam clique. Navegação e âncoras devem preservar os títulos abaixo do cabeçalho. Menu atual em fluxo; overlays futuros usam Radix/createPortal quando necessários.
 
-Movimento é discreto e respeita prefers-reduced-motion. Conteúdo deve continuar visível sem execução de animações. Efeitos não podem ser condição para exibir nomes, data ou controles.
+Respeitar prefers-reduced-motion. Texto permanece visível sem execução de animações; efeitos não condicionam nomes, datas ou controles. Evitar animações decorativas concorrentes com a pintura.
 
-## Evidência e limites da revisão
+## Conteúdo funcional e privacidade
 
-Versão com copo-de-leite, orquídea, violeta, Italianno e rodapé branco (10/11/2026): TypeScript, lint (0 erros, 7 warnings existentes) e build aprovados; validação CDP 320/390/1280 sem overflow, nome, monograma, prancha da abertura e fontes (Italianno, Cormorant, Newsreader) carregadas, menu móvel aberto; captura desktop inspecionada. A captura headless de celular sai cortada pela largura mínima da janela do Chrome; conferir em aparelho real.
+RSVP continua demonstrativo: código demonstracao abre /convite/demonstracao; dados fictícios e nenhum envio real de confirmação. Presentes são ilustrativos, sem pagamento. Não remover esses avisos para melhorar estética. Convites reais, famílias e credenciais não entram em Git nem no bundle público. Pendências factuais continuam explícitas até aprovação.
 
-Esses testes não constituem auditoria WCAG completa, teste em Safari/iOS real, aceite visual final ou validação de produção. Após cada alteração relevante, repetir as verificações, inspecionar telas reais e registrar o que foi efetivamente exercitado. Aprovação do CSS/JS por HTTP e hash comprova entrega de bytes, não estética.
+## Arquivos e manutenção
 
-## Mudanças futuras
+src/pages/SaveTheDate.tsx compõe as seções. src/index.css é a fonte dos tokens e estilos; nomes técnicos herbario-* permanecem por compatibilidade e não significam que Herbário continue vigente. Conteúdo factual em conteudo.ts; domínios presentes e presença em src/features/. Assets aprovados em public/rebranding/; documentação de origem em origem-botanica.md; acervo em acervo-e-evolucao-do-design.md; operação em desenvolvimento-hibrido.md e entrega-databricks.md.
 
-Texto da história, fotos do casal, traje, endereço completo, mapa e demais políticas aguardam conteúdo aprovado. Preserve os dados conhecidos e a indicação de pendência até decisão. Mudanças de identidade devem ser apresentadas com arquivos exatos e plano para aprovação; referências novas precisam harmonizar com a paleta e o monograma, não substituí-los silenciosamente.
+O acervo inteiro ainda está em public/: Vite copia esses arquivos para dist mesmo sem uso. Antes de publicar, revisar separação de referências/originais, fotos, HEIC, ZIP e fontes, com autorização própria para mover arquivos. Esta etapa não moveu acervo nem alterou workflow.
+
+## Validação, aceite e publicação
+
+Antes do acabamento: TypeScript, lint e build aprovados, 0 erros e 7 avisos Fast Refresh preexistentes; Browserslist antigo. CDP 320/390/1280 aprovou ausência de overflow/imagens quebradas, carregamento de fontes, abertura do menu e código inválido/convite demonstrativo. Não constitui teste Safari/iOS, auditoria WCAG ou validação de produção.
+
+Após acabamento (11/11/2026): TypeScript/lint/build aprovados (exit 0, 0 erros/7 avisos existentes). CDP 320/390/1280 aprovado: sem overflow ou imagens quebradas, Sloop/EB Garamond carregadas, menu expandido, erro de código e abertura da demonstração funcionais, sem exceções JavaScript. Captura desktop inspecionada: superfícies brancas opacas presentes e pinturas mantidas nas margens. Teste de aparelho real/Safari e aceite visual do acabamento ainda pendentes. Design geral aprovado; acabamento autorizado e sujeito a conferência visual. Commit/push/publicação ainda não autorizados nesta etapa. Push na main dispara FTP automaticamente: exigir autorização de entrega e conferir resultado antes de afirmar publicação.
+
+## Histórico resumido
+
+Herbário com pranchas antigas e Italianno foi a direção anterior. Primeira tentativa de Jardim com faixas repetidas e flores soltas foi rejeitada por distância da referência. Correção adotou seis pinturas próprias sem texto embutido, molduras sem inclinação e fontes locais. Aphrodite foi experimentada e substituída por Sloop a pedido do casal. Recorte cortado do copo-de-leite saiu do cartão, substituído por composição completa. Em seguida, casal aprovou design geral e pediu acabamento de legibilidade. Não reintroduzir decisões históricas como regras atuais.

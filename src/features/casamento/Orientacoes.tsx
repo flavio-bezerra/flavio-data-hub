@@ -5,8 +5,7 @@ export default function Orientacoes() {
     <section id="orientacoes" aria-labelledby="orientacoes-titulo" className="orientacoes-notas">
       <div className="orientacoes-cabecalho">
         <p className="rotulo-herbario">Notas aos convidados</p>
-        <h2 id="orientacoes-titulo" className="titulo-secao">Para aproveitar o dia</h2>
-        <img src="/violeta-flor.webp" width={642} height={357} alt="" aria-hidden="true" loading="lazy" className="flor-orientacoes" />
+        <h2 id="orientacoes-titulo" className="titulo-secao">Para nossos convidados</h2>
       </div>
       <dl className="orientacoes-lista">
         {orientacoes.map((item) => <div key={item.id}>

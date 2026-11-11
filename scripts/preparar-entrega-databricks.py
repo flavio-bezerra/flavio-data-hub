@@ -13,6 +13,9 @@ def git(*args: str) -> bytes:
 base_commit = git('rev-parse', 'HEAD').decode().strip()
 tracked = set(git('ls-files', '-z').decode().split('\0')) - {''}
 paths = set(git('ls-files', '--cached', '--others', '--exclude-standard', '-z').decode().split('\0')) - {''}
+# Git considera os filtros de checkout (por exemplo CRLF); arquivos sem
+# alteração lógica devem viajar com os bytes do commit, não do checkout.
+changed_paths = set(git('diff', 'HEAD', '--name-only', '-z').decode().split('\0')) - {''}
 records = []
 # Extensão .bin evita importação automática do ZIP como diretório/notebook.
 package = root / 'entrega' / 'site.bin'
@@ -28,7 +31,8 @@ with zipfile.ZipFile(package, 'w', zipfile.ZIP_DEFLATED) as archive:
         if file.is_symlink():
             raise RuntimeError(f'Link simbólico exige revisão: {name}')
         base = git('show', f'{base_commit}:{name}') if name in tracked else None
-        content = file.read_bytes() if file.is_file() else None
+        content = (base if name in tracked and name not in changed_paths
+                   else file.read_bytes() if file.is_file() else None)
         records.append({'path': name, 'sha256': hashlib.sha256(content).hexdigest() if content is not None else None,
                         'base_sha256': hashlib.sha256(base).hexdigest() if base is not None else None})
         if content is not None:

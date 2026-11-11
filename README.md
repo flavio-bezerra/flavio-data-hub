@@ -24,6 +24,7 @@ O desenvolvimento é híbrido: clones independentes em computadores Kinea/pessoa
 | [Estrutura e regras](docs/estrutura-e-regras.md) | Arquitetura, requisitos, demonstração e decisões pendentes |
 | [Entrega Databricks](docs/entrega-databricks.md) | Transporte, aplicação, publicação e recuperação |
 | [Origem botânica](docs/origem-botanica.md) | Fonte, licença e formato dos assets |
+| [Acervo e evolução do design](docs/acervo-e-evolucao-do-design.md) | Inventário de fotos, fontes, flores, texturas e skills; oportunidades e cuidados para o rebranding |
 
 Agentes devem começar por AGENTS.md e pelos guias agents/ux.md, agents/regras-de-negocio.md e agents/publicacao.md.
 
