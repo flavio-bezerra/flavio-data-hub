@@ -1,0 +1,106 @@
+{
+  "qr_destino": "https://casamento-flavio-victoria.com.br/",
+  "qr_decodificado": true,
+  "a5_mm": [
+    148,
+    210
+  ],
+  "sangria_mm": 3,
+  "textos_em_curvas": true,
+  "original_pixels": [
+    1536,
+    1024
+  ],
+  "layout": [
+    {
+      "text": "Com alegria, convidamos você para",
+      "bounds": [
+        51.304,
+        19.164,
+        102.696,
+        23.16
+      ]
+    },
+    {
+      "text": "o nosso casamento",
+      "bounds": [
+        64.072,
+        25.96,
+        89.928,
+        28.068
+      ]
+    },
+    {
+      "text": "Victória",
+      "bounds": [
+        46.078647058823535,
+        50.96245714285715,
+        107.92135294117648,
+        70.24615384615385
+      ]
+    },
+    {
+      "text": "&",
+      "bounds": [
+        73.1439379120879,
+        81.345,
+        80.85606208791208,
+        88.47593333333333
+      ]
+    },
+    {
+      "text": "Flávio",
+      "bounds": [
+        49.83755851979346,
+        94.67,
+        104.16244148020654,
+        118.106
+      ]
+    },
+    {
+      "text": "10 de outubro de 2027",
+      "bounds": [
+        54.2312,
+        136.2635,
+        99.7688,
+        140.1696
+      ]
+    },
+    {
+      "text": "Domingo, às 13h30",
+      "bounds": [
+        61.7521,
+        146.1095,
+        92.2479,
+        150.189
+      ]
+    },
+    {
+      "text": "DellaTorres Eventos",
+      "bounds": [
+        61.666,
+        154.1095,
+        92.334,
+        157.0861
+      ]
+    },
+    {
+      "text": "Mairiporã — SP",
+      "bounds": [
+        65.26939999999999,
+        161.4768,
+        88.7306,
+        165.083
+      ]
+    },
+    {
+      "text": "Informações e confirmação de presença",
+      "bounds": [
+        56.2408,
+        202.0232,
+        97.75919999999999,
+        204.798
+      ]
+    }
+  ]
+}
