@@ -26,6 +26,12 @@ Use Node compatível com Vite 7 (o projeto recomenda Node 24 LTS). Na raiz do cl
 
 Os BATs instalam dependências quando Vite está ausente. Após mudança de package-lock.json, reinstale com npm ci no registry apropriado: a simples existência de node_modules não comprova atualização das dependências.
 
+### Site e skills: instalações separadas
+
+A raiz contém somente as dependências do site, com package.json e package-lock.json sincronizados. Os pacotes @its-thepoe ficam em skills/package.json e skills/package-lock.json; a biblioteca .agent-skills permanece disponível para os agentes. Os comandos skills:install, skills:sync e skills:copy-to-agent continuam na raiz, mas não fazem parte do build ou deploy. Para instalação reproduzível das ferramentas, use npm ci dentro de skills/, com o registry e TLS adequados ao ambiente.
+
+Antes de entregar mudanças de dependências, valide npm ci em uma pasta limpa e depois TypeScript, lint e build. O CI mantém npm ci: não substituir por npm install para encobrir divergência do lockfile. Em 11/11/2026, a duplicação de nove pacotes de skills na raiz sem atualização do lockfile reproduziu EUSAGE e impediu o deploy antes do FTP; a correção mantém esses pacotes apenas em skills/.
+
 Na Kinea, a primeira instalação usa scripts/preparar-certificados-npm.py e precisa de Python. O script exporta certificados TLS confiáveis do Windows, sem chaves privadas, para .local/certificados-npm.pem. O npm usa cafile absoluto, strict-ssl=true e o mirror https://artifactory.prod.aws.cloud.ihf/artifactory/api/npm/npm-remotes/. Não muda configuração global nem o lockfile.
 
 Na máquina pessoal, use registry.npmjs.org com TLS ativo. Não copie node_modules, .local, certificados corporativos, .databricks ou credenciais entre computadores. Instale a partir de package-lock.json. Erros de acesso devem ser tratados no ambiente correspondente, sem desativar TLS ou políticas de segurança.

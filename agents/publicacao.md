@@ -9,6 +9,8 @@ O repositório local e a pasta Git informada usam https://github.com/flavio-beze
 CLI moderna encontrada em C:\Program Files\Databricks\databricks.exe; use caminho explícito para evitar o launcher Python legado no PATH. Perfil escolhido pelo usuário: flaviobezerra. Guarde autenticação fora do projeto.
 
 ## Gate de entrega
+
+Valide instalação limpa com npm ci antes da entrega, além de TypeScript/lint/build. A raiz instala somente o site; ferramentas @its-thepoe permanecem em skills/ e não são dependências do deploy. Preserve o lockfile reproduzível e o gate npm ci do workflow. A falha de 11/11/2026 foi reproduzida como EUSAGE por dependências de skills duplicadas na raiz e ausentes no lockfile; FTP não executado naquela tentativa.
 Entregue o projeto completo autorizado, incluindo .github/workflows/deploy.yml com workflow_dispatch. Push na main aciona a publicação automaticamente, por autorização do usuário; mantenha presentes e RSVP explicitamente em demonstração enquanto não houver backend. Revise a prévia antes da aplicação na pasta Git. A aprovação visual e os testes locais precedem o push que aciona o FTP. Preserve alterações remotas e concilie divergências antes da cópia.
 
 ## Bundle
