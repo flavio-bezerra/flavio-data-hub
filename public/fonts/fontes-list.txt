@@ -1,0 +1,239 @@
+AcariSans-Bold
+AcariSans-BoldItalic
+AcariSans-Italic
+AcariSans-Light
+AcariSans-LightItalic
+AcariSans-Medium
+AcariSans-MediumItalic
+AcariSans-Regular
+AcariSans-SemiBold
+AcariSans-SemiBoldItalic
+AGaramondPro-Bold
+AGaramondPro-BoldItalic
+AGaramondPro-Italic
+AGaramondPro-Regular
+AphroditeSlimPro
+Aston Script Pro Bold
+Avenis
+Avenis-Light
+Avenis-Semibold
+Avenis-Semilight
+BASKRV_L
+BASKE1
+BASKE10
+BASKE9
+BaskervaldADFStd
+BaskervaldADFStd-Bold
+BaskervaldADFStd-BoldItalic
+BaskervaldADFStd-Heavy
+BaskervaldADFStd-HeavyItalic
+BaskervaldADFStd-Italic
+Baskerville Bold font
+BaskervilleBT
+BaskervilleBoldBT
+BaskervilleBoldItalicBT
+BaskervilleItalicBT
+baskervi
+baskvl
+baskerville bold bt
+Baskervville-Italic
+Baskervville-Regular
+Bickham Script Pro Bold
+Bickham Script Pro Regular
+Bickham Script Pro Semibold
+bodoni_[allfont.net]
+CanelaBarkBoldPersonal
+CanelaBarkPersonal
+canela_bold
+canela_light
+canela_roman
+Carson D
+CaslonOS-Regular
+Didot
+Didot Bold
+Didot Italic
+Didot Title
+EBGaramond
+EBGaramond-Bold
+EBGaramond-BoldItalic
+EBGaramond-ExtraBold
+EBGaramond-ExtraBoldItalic
+EBGaramond-Italic
+EBGaramond-Medium
+EBGaramond-MediumItalic
+EBGaramond-Regular
+EBGaramond-SemiBold
+EBGaramond-SemiBoldItalic
+EBGaramond08-Italic
+EBGaramond08-Regular
+EBGaramond12-AllSC
+EBGaramond12-Italic
+EBGaramond12-Regular
+EBGaramondSC
+EBGaramondSC08-Regular
+EBGaramondSC12-Regular
+Evafiya
+Fitamint Script
+fonnts.com-baskerville_old_face_pro
+fonnts.com-baskerville_old_face_pro_caps
+fonnts.com-CaslonFolio
+fonnts.com-Mrs-Eaves-Lining-OT-
+fonnts.com-Mrs-Eaves-OT-
+fonnts.com-Mrs-Eaves-Petite-Caps-OT-
+fonnts.com-Mrs-Eaves-Small-Caps-OT-
+fonnts.com-Mrs-Eaves-XLSerif-Nar-OT-
+fonnts.com-Mrs-Eaves-XLSerif-Nar-OT-Heavy
+fonnts.com-Mrs-Eaves-XLSerif-OT-
+fonnts.com-Mrs-Eaves-XLSerif-OT-Heavy
+Frances-BF64f9865f21ac6
+fraunces-italicsoftwonkopszwght
+frauncessoftwonkopszwght
+GildaDisplay-Regular
+HenriDidot
+HinaMincho-Regular
+Inconsolata-Bold
+Inconsolata-Regular
+JosefinSans-Bold
+JosefinSans-BoldItalic
+JosefinSans-Italic
+JosefinSans-Light
+JosefinSans-LightItalic
+JosefinSans-Regular
+JosefinSans-SemiBold
+JosefinSans-SemiBoldItalic
+JosefinSans-Thin
+JosefinSans-ThinItalic
+JosefinSansStd-Light
+JosefinSansStd-Light.ttf
+LibreBaskerville-Bold
+LibreBaskerville-Italic
+LibreBaskerville-Regular
+LibreBodoni-Bold
+LibreBodoni-BoldItalic
+LibreBodoni-Italic
+LibreBodoni-Regular
+LindysDiner
+Lucian
+Montserrat
+Montserrat-Ace-Bold
+Montserrat-Ace-Bold-Italic
+Montserrat-Ace-Italic
+Montserrat-Ace-Light
+Montserrat-Ace-Light-Italic
+Montserrat-Ace-Medium
+Montserrat-Ace-Medium-Italic
+Montserrat-Ace-Regular
+Montserrat-Ace-SemiBold
+Montserrat-Ace-SemiBold-Italic
+Montserrat-Black
+Montserrat-BlackItalic
+Montserrat-Bold
+Montserrat-BoldItalic
+Montserrat-ExtraBold
+Montserrat-ExtraBoldItalic
+Montserrat-ExtraLight
+Montserrat-ExtraLightItalic
+Montserrat-Hairline
+Montserrat-Italic
+Montserrat-Light
+Montserrat-LightItalic
+Montserrat-Medium
+Montserrat-MediumItalic
+Montserrat-Regular
+Montserrat-SemiBold
+Montserrat-SemiBoldItalic
+Montserrat-Thin
+Montserrat-ThinItalic
+OFLGoudyStMTT
+OFLGoudyStMTT-Italic
+OPTIMA
+OPTIMA_B
+Optima Italic
+Optima Medium
+Optima_Italic
+OpenBaskerville-0.0.53
+PinyonScript-Regular
+RiseofBeauty-Thin
+RiseofBeauty-ThinItalic
+Sloop-ScriptThree
+SortsMillGoudy-Italic
+SortsMillGoudy-Regular
+Spectral-Bold
+Spectral-BoldItalic
+Spectral-ExtraBold
+Spectral-ExtraBoldItalic
+Spectral-ExtraLight
+Spectral-ExtraLightItalic
+Spectral-Italic
+Spectral-Light
+Spectral-LightItalic
+Spectral-Medium
+Spectral-MediumItalic
+Spectral-Regular
+Spectral-SemiBold
+Spectral-SemiBoldItalic
+TheanoDidot-Regular
+TheHistoricalMarliana-rgeB8
+TT Ramillas Initials Trial Black
+TT Ramillas Initials Trial Bold
+TT Ramillas Initials Trial ExtraBold
+TT Ramillas Initials Trial ExtraLight
+TT Ramillas Initials Trial Light
+TT Ramillas Initials Trial Medium
+TT Ramillas Initials Trial Regular
+TT Ramillas Initials Trial Variable
+TT Ramillas Trial Black
+TT Ramillas Trial Black Decor
+TT Ramillas Trial Black Decor Italic
+TT Ramillas Trial Black Italic
+TT Ramillas Trial Black Outline
+TT Ramillas Trial Black Outline Italic
+TT Ramillas Trial Bold
+TT Ramillas Trial Bold Italic
+TT Ramillas Trial ExtraBold
+TT Ramillas Trial ExtraBold Italic
+TT Ramillas Trial ExtraLight
+TT Ramillas Trial ExtraLight Italic
+TT Ramillas Trial Italic
+TT Ramillas Trial Light
+TT Ramillas Trial Light Italic
+TT Ramillas Trial Medium
+TT Ramillas Trial Medium Italic
+TT Ramillas Trial Regular
+TT Ramillas Trial Variable Italic
+TT Ramillas Trial Variable Roman
+TT Ricordi Trial Nobili
+TruenoBd
+TruenoBdIt
+TruenoBdOl
+TruenoBdOlIt
+TruenoBlk
+TruenoBlkIt
+TruenoBlkOl
+TruenoBlkOlIt
+TruenoExBd
+TruenoExBdIt
+TruenoExBdOl
+TruenoExBdOlIt
+TruenoLt
+TruenoLtIt
+TruenoRg
+TruenoRgIt
+TruenoSBd
+TruenoSBdIt
+TruenoUltBlk
+TruenoUltBlkIt
+TruenoUltLt
+TruenoUltLtIt
+Vanity-Bold
+Vanity-BoldItalic
+Vanity-BoldNarrow
+Vanity-BoldNarrowItalic
+Vanity-BoldWide
+Vanity-BoldWideItalic
+Vanity-Light
+Vanity-LightItalic
+Vanity-LightNarrow
+Vanity-LightNarrowItalic
+Vanity-LightWide
+Vanity-LightWideItalic
