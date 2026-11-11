@@ -74,7 +74,7 @@ public/rebranding/casal-celebracao.webp e casal-juntos.webp são fotos reais con
 
 Breakpoint principal: 860px. Desktop mantém a pintura de seção e conteúdo deslocado para as áreas claras. As pinturas de fundo atuais usam tamanho 100%/100% no desktop; verificar proporções ao mudar alturas e preferir reorganizar conteúdo a distorcer mais a arte.
 
-No celular, história e programa fluem em uma coluna com leitura protegida por branco. Orientações, presentes e presença apresentam a arte inteira numa área decorativa 3:2 acima do conteúdo, em vez de recortar flores para caber atrás de um formulário estreito. Abertura mantém arte ao redor do foco; textos menores são protegidos por branco. Sem rolagem horizontal em 320px; palavras essenciais, nomes e valores não podem ser cortados.
+No celular, as seis pinturas ganham variantes verticais em public/rebranding/mobile/: a pintura original completa é reduzida proporcionalmente para o rodapé da folha, com uma aguada suave superior da mesma arte. Os fundos são dimensionados pela largura, sem ampliação pela altura do texto, recortes laterais ou banners separados. Conteúdo em coluna única sobre branco opaco; nomes empilhados, horários acima das descrições, formulário com botão de largura total. Fotos reais preservadas e sobrepostas. Desktop acima de 860px permanece intacto. Conferir composição em 320/390/430px além de overflow e funcionalidades; Safari e aparelho real exigem validação própria.
 
 ## Interação e acessibilidade
 
@@ -101,3 +101,8 @@ Após acabamento (11/11/2026): TypeScript/lint/build aprovados (exit 0, 0 erros/
 ## Histórico resumido
 
 Herbário com pranchas antigas e Italianno foi a direção anterior. Primeira tentativa de Jardim com faixas repetidas e flores soltas foi rejeitada por distância da referência. Correção adotou seis pinturas próprias sem texto embutido, molduras sem inclinação e fontes locais. Aphrodite foi experimentada e substituída por Sloop a pedido do casal. Recorte cortado do copo-de-leite saiu do cartão, substituído por composição completa. Em seguida, casal aprovou design geral e pediu acabamento de legibilidade. Não reintroduzir decisões históricas como regras atuais.
+
+
+### Correção mobile — 11/11/2026
+
+Versão mobile anterior rejeitada pelo casal após publicação: flores cortadas, pinturas isoladas como banners e programa apertado. Correção local autorizada, seis recomposições das artes aprovadas (sem geração de pessoas), CSS restrito ao breakpoint de 860px. TypeScript, lint e build aprovados (0 erros/7 avisos existentes). Após suavizar bordas das pinturas, CDP 320/390/430/1280 passou: fontes, menu, erro de código e demonstração; sem overflow, imagens quebradas ou exceções JS. Captura final 390px inspecionada: flores completas na abertura, fundos integrados sem banners, horários empilhados e botão de formulário inteiro. O build aprovado antecede apenas o refinamento dos WebP, sem mudanças posteriores de CSS ou TypeScript. Aceite do casal e teste em aparelho real/Safari pendentes; sem commit/push/publicação nesta etapa.
