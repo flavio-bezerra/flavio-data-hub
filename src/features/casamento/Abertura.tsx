@@ -13,12 +13,9 @@ export default function Abertura() {
         <div className="data-destaque">
           <time dateTime={casamento.dataIso} className="data-por-extenso">{casamento.data}</time>
           <p className="data-destaque-local">{casamento.diaDaSemana}, às {casamento.horario}</p>
-          <p className="data-destaque-local">{casamento.local} · {casamento.cidade}</p>
+          <p className="data-destaque-local abertura-local"><span>{casamento.local}</span><span className="abertura-local-separador"> · </span><span>{casamento.cidade}</span></p>
         </div>
-        <nav className="herbario-acoes" aria-label="Ações do convite">
-          <a href="#presenca" className="acao-secundaria">Responder ao convite</a>
-          <a href="#casamento" className="acao-secundaria">Programa do dia</a>
-        </nav>
+
       </div>
     </section>
   );

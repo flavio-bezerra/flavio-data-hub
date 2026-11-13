@@ -8,7 +8,7 @@ export default function NossaHistoria() {
           <img src="/rebranding/casal-celebracao.webp" width={1280} height={853} alt="Victória e Flávio abraçados durante uma celebração" loading="lazy" />
         </figure>
         <figure className="foto-album foto-juntos">
-          <img src="/rebranding/casal-juntos.webp" width={1400} height={788} alt="Victória e Flávio sorrindo juntos" loading="lazy" />
+          <img src="/rebranding/casal-juntos.webp" width={1400} height={788} alt="Flávio segurando Victória no colo, os dois sorrindo ao ar livre" loading="lazy" />
         </figure>
         <img src="/copo-de-leite-cartao.webp" width={819} height={524} alt="" aria-hidden="true" loading="lazy" className="album-flor" />
       </div>

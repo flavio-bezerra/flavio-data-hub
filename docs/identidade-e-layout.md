@@ -55,7 +55,7 @@ Usuário informou não haver problema com licenças do acervo. Não houve audito
 
 public/monograma-vf.png é o V & F original, raster PNG com transparência. Preservar desenho e proporção, sem recriar por tipografia e sem alegar vetorização. Usado na navegação e rodapé; a repetição adicional na abertura está oculta no layout atual.
 
-public/rebranding/casal-celebracao.webp e casal-juntos.webp são fotos reais convertidas dos JPG pessoais, reduzidas e sem EXIF. Mantidas por pedido do casal; não gerar substitutos representando as pessoas. Na história, molduras claras finas, sem inclinação de Polaroid; foto vertical 3:4 e foto horizontal sobreposta. Conferir o enquadramento dos rostos em alterações de tamanho.
+public/rebranding/casal-celebracao.webp e casal-juntos.webp são fotos reais pessoais, reduzidas e sem EXIF. Em 13/11/2026, casal-juntos.webp foi substituída por IMG_1630.HEIC, com orientação corrigida e recorte horizontal 1400 × 788 px preservando rostos e a pose de Flávio segurando Victória; original HEIC e foto anterior preservados. Mantidas por pedido do casal; não gerar substitutos representando as pessoas. Na história, molduras claras finas, sem inclinação de Polaroid; foto vertical 3:4 e foto horizontal sobreposta. Conferir o enquadramento dos rostos em alterações de tamanho.
 
 ## Composição por seção
 
@@ -74,7 +74,7 @@ public/rebranding/casal-celebracao.webp e casal-juntos.webp são fotos reais con
 
 Breakpoint principal: 860px. Desktop mantém a pintura de seção e conteúdo deslocado para as áreas claras. As pinturas de fundo atuais usam tamanho 100%/100% no desktop; verificar proporções ao mudar alturas e preferir reorganizar conteúdo a distorcer mais a arte.
 
-No celular, as seis pinturas ganham variantes verticais em public/rebranding/mobile/: a pintura original completa é reduzida proporcionalmente para o rodapé da folha, com uma aguada suave superior da mesma arte. Os fundos são dimensionados pela largura, sem ampliação pela altura do texto, recortes laterais ou banners separados. Conteúdo em coluna única sobre branco opaco (exceção na abertura mobile, sem fundos nos boxes); nomes empilhados, horários acima das descrições, formulário com botão de largura total. Fotos reais preservadas e sobrepostas. Desktop acima de 860px permanece intacto. Conferir composição em 320/390/430px além de overflow e funcionalidades; Safari e aparelho real exigem validação própria.
+No celular, as seis pinturas ganham variantes verticais em public/rebranding/mobile/: as seis artes foram recompostas em 780 × 1400 px com contorno orgânico em V aberto para cima: pintura nas laterais e branco descendo ao centro. Abertura aprovada pelo casal e aplicada também às outras cinco seções. Textura de aquarela preservada, sem desvanecimento artificial ou borda horizontal; arquivos WebP lossless. As novas composições reorganizam a botânica e não são simples recortes das artes desktop. Os fundos são dimensionados pela largura, sem ampliação pela altura do texto, recortes laterais ou banners separados. Conteúdo em coluna única sobre branco opaco (exceção na abertura mobile, sem fundos nos boxes); nomes empilhados, horários acima das descrições, formulário com botão de largura total. Fotos reais preservadas e sobrepostas. Desktop acima de 860px permanece intacto. Conferir composição em 320/390/430px além de overflow e funcionalidades; Safari e aparelho real exigem validação própria.
 
 ## Interação e acessibilidade
 
@@ -106,3 +106,13 @@ Herbário com pranchas antigas e Italianno foi a direção anterior. Primeira te
 ### Correção mobile — 11/11/2026
 
 Versão mobile anterior rejeitada pelo casal após publicação: flores cortadas, pinturas isoladas como banners e programa apertado. Correção local autorizada, seis recomposições das artes aprovadas (sem geração de pessoas), CSS restrito ao breakpoint de 860px. TypeScript, lint e build aprovados (0 erros/7 avisos existentes). Após suavizar bordas das pinturas, CDP 320/390/430/1280 passou: fontes, menu, erro de código e demonstração; sem overflow, imagens quebradas ou exceções JS. Captura final 390px inspecionada: flores completas na abertura, fundos integrados sem banners, horários empilhados e botão de formulário inteiro. O build aprovado antecede apenas o refinamento dos WebP, sem mudanças posteriores de CSS ou TypeScript. Aceite do casal e teste em aparelho real/Safari pendentes; sem commit/push/publicação nesta etapa.
+
+
+### Textura mobile — 13/11/2026
+
+Refeitas localmente as seis pinturas mobile a partir das artes desktop aprovadas, removendo o desvanecimento de 120 px e a aguada superior artificial. Dimensões e posição da arte preservadas; CSS, textos, desktop e demais assets intactos. Backup em .local. Comparação das seis imagens gerada; aceite visual antes de commit/push.
+
+
+### V aberto mobile — 13/11/2026
+
+Aplicadas seis novas artes locais, aprovadas visualmente pelo casal. Pinturas aprovadas; alteração posterior autorizada somente para micro-recorte da abertura mobile: 38 px à esquerda e 42 px da base no total (aproximadamente 5% e 3% da arte original), resultando em 742 × 1358 px; segundo incremento de 15 px à esquerda e 14 px na base sem redimensionamento do arquivo. Altura mínima CSS ajustada à nova proporção. Demais cinco artes intactas; comparação local antes/depois disponível em .local. Na abertura mobile, nomes/data compactados e local/cidade em linhas separadas para ocupar o branco central do V. Altura mínima acompanha a proporção da pintura, preservando espaço inferior. Link Responder ao convite retirado da abertura em todas as telas; acesso à presença permanece no menu e na seção própria. Desktop conserva a disposição das informações. TypeScript/lint/build e CDP 320/390/430/1280 aprovados (7 warnings existentes). Backup em .local. Teste em aparelho real pendente; aplicação local não implica publicação.

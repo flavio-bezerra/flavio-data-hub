@@ -393,14 +393,18 @@
 /* Mobile composto em papel vertical; desktop acima de 860px permanece intacto. */
 @media (max-width: 860px) {
   .convite-site .herbario-abertura {
-    min-height: 0; padding: .5rem 1.25rem 12.5rem;
+    min-height: calc(100vw * 1358 / 742); padding: .5rem 1.25rem 12.5rem;
+    align-items: start;
     background: #fff url('/rebranding/mobile/abertura.webp') center bottom / 100% auto no-repeat;
   }
   .convite-site .herbario-texto { width: 100%; max-width: 30rem; margin: 0 auto; padding: 0; }
   .convite-site .herbario-convite { max-width: 18rem; margin-bottom: 1rem; }
-  .convite-site .herbario-nomes { font-size: clamp(4.5rem, 20vw, 6.5rem); line-height: 1.18; margin-top: 1.25rem; }
+  .convite-site .herbario-nomes { font-size: clamp(4.5rem, 20vw, 6.5rem); line-height: 1.1; margin-top: .5rem; }
   .convite-site .herbario-e { line-height: 1.15; margin: .2rem 0; }
-  .convite-site .data-destaque { margin-top: 1.5rem; padding: .6rem; }
+  .convite-site .data-destaque { margin-top: .75rem; padding: .6rem; }
+  .convite-site .abertura-local > span { display: block; }
+  .convite-site .abertura-local .abertura-local-separador { display: none; }
+  .convite-site .abertura-local > span:last-child { margin-top: .25rem; }
   .convite-site .herbario-acoes { margin-top: .75rem; }
   .convite-site .historia-livro,
   .convite-site .programa-dia,
