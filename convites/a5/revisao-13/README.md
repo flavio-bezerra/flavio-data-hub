@@ -1,0 +1,2 @@
+# A5 revisão13 — base baixa sem caules
+Preserva textos em curvas e QR do SVGfinal revisão11 atualizado pelo usuário. Apenas pintura inferior foi refinada: caules soltos da borda removidos, ramo novo reduzido e recolhido na faixa azul inferior; flores e composição superior mantidas na arte editada, sem emendas retangulares. QR será verificado no PDF renderizado separadamente. SVGautossuficiente (botânica raster), PDFA5 RGB via Chrome. Revisão11 intacta. PDF nominal148×210mm, conferir prova física e requisitos gráfica; não PDF/X/CMYK. Sem commit/push.
