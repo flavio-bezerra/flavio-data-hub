@@ -10,9 +10,19 @@ function respond(int $status, array $payload): void {
     exit;
 }
 
-$token = getenv('HOSTGATOR_BRIDGE_TOKEN');
+$privateDir = '/home2/hg8dcc78/casamento-private';
 
-if ($token === false || trim($token) === '') {
+try {
+    $bridgeConfig = require $privateDir . '/bridge.php';
+
+    $token = is_array($bridgeConfig)
+        ? ($bridgeConfig['token'] ?? '')
+        : '';
+
+    if (!is_string($token) || trim($token) === '') {
+        throw new RuntimeException('Configuração inválida');
+    }
+} catch (Throwable $exception) {
     respond(503, [
         'ok' => false,
         'message' => 'Configuração da ponte indisponível'
@@ -32,7 +42,7 @@ if (
     ]);
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     header('Allow: POST');
 
     respond(405, [
@@ -60,32 +70,33 @@ if (!is_string($sql) || trim($sql) === '') {
     ]);
 }
 
-$normalized = strtolower(preg_replace('/\s+/', ' ', trim($sql)));
+$normalized = strtolower(
+    (string) preg_replace('/\s+/', ' ', trim($sql))
+);
 
-if (
-    !str_starts_with($normalized, 'select ') ||
-    str_contains($normalized, ';') ||
-    str_contains($normalized, 'into outfile') ||
-    str_contains($normalized, 'into dumpfile') ||
-    str_contains($normalized, 'load_file')
-) {
+if ($normalized !== 'select 1 as teste') {
     respond(400, [
         'ok' => false,
-        'message' => 'Apenas SELECT simples é permitido'
+        'message' => 'Somente a consulta de diagnóstico está habilitada'
     ]);
 }
 
-$host = getenv('DB_HOST');
-$db = getenv('DB_NAME');
-$user = getenv('DB_USER');
-$pass = getenv('DB_PASS');
+try {
+    $dbConfig = require $privateDir . '/database.php';
 
-if (
-    $host === false ||
-    $db === false ||
-    $user === false ||
-    $pass === false
-) {
+    if (!is_array($dbConfig)) {
+        throw new RuntimeException('Configuração inválida');
+    }
+
+    foreach (
+        ['host', 'port', 'database', 'username', 'password', 'charset']
+        as $key
+    ) {
+        if (!array_key_exists($key, $dbConfig)) {
+            throw new RuntimeException('Configuração incompleta');
+        }
+    }
+} catch (Throwable $exception) {
     respond(503, [
         'ok' => false,
         'message' => 'Configuração do banco indisponível'
@@ -93,10 +104,18 @@ if (
 }
 
 try {
+    $dsn = sprintf(
+        'mysql:host=%s;port=%d;dbname=%s;charset=%s',
+        $dbConfig['host'],
+        (int) $dbConfig['port'],
+        $dbConfig['database'],
+        $dbConfig['charset']
+    );
+
     $pdo = new PDO(
-        'mysql:host=' . $host . ';dbname=' . $db . ';charset=utf8mb4',
-        $user,
-        $pass,
+        $dsn,
+        $dbConfig['username'],
+        $dbConfig['password'],
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -104,9 +123,7 @@ try {
         ]
     );
 
-    $statement = $pdo->prepare($sql);
-    $statement->execute();
-
+    $statement = $pdo->query('SELECT 1 AS teste');
     $rows = $statement->fetchAll();
 
     respond(200, [
