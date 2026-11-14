@@ -33,3 +33,19 @@ export const orientacoes = [
   { id: "familia", pergunta: "Como funciona a confirmação da família?", resposta: "Cada convite terá seu próprio link ou código. A confirmação será individual para as pessoas incluídas no convite.", pendente: false },
   { id: "prazo", pergunta: "Até quando posso confirmar?", resposta: "O prazo exato será informado aqui e no convite. Nossa meta de organização é fevereiro, com dia e ano ainda a definir.", pendente: true },
 ] as const;
+
+export interface PresenteItem {
+  id: string;
+  titulo: string;
+  descricao: string;
+  valor: number;
+  livre?: boolean;
+}
+
+export const presentesCatalogo: readonly PresenteItem[] = [
+  { id: "jantar", titulo: "Um jantar a dois", descricao: "Um brinde ao começo da nossa vida juntos.", valor: 150 },
+  { id: "passeio", titulo: "Um passeio inesquecível", descricao: "Mais uma memória para a nossa coleção.", valor: 300 },
+  { id: "viagem", titulo: "Um pedacinho da lua de mel", descricao: "Uma contribuição para a próxima aventura.", valor: 500 },
+  { id: "cota-livre", titulo: "Cota de carinho livre", descricao: "Contribua com o valor que desejar para nossa nova história.", valor: 0, livre: true },
+] as const;
+

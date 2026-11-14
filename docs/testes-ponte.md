@@ -18,7 +18,7 @@ A matriz completa de testes da ponte foi executada com sucesso em **13/11/2026**
    - O PHP na HostGator aceita estritamente a consulta fixa normalizada `select 1 as teste`. Qualquer outra instrução (como `SELECT 2 AS teste` ou tentativa de ponto e vírgula `;`) é rejeitada com **HTTP 400** (`"Somente a consulta de diagnóstico está habilitada"`).
    - O proxy na Vercel converte respostas de erro upstream não-2xx em **HTTP 502**, preservando integralmente a mensagem de erro da HostGator.
    - Ponto e vírgula é bloqueado na Vercel antes mesmo de contatar a HostGator com **HTTP 400** (`"Apenas SELECT simples é permitido"`).
-5. **Privacidade de Segredos**: O arquivo temporário `token.txt` utilizado exclusivamente durante a sessão foi imediatamente removido ao término da execução, sem ser rastreado nem incluído em commits ou logs.
+5. **Privacidade e Gestão de Segredos**: As variáveis foram consolidadas no arquivo `.env.local` (ignorado pelo Git via `.gitignore` e `*.local`). Um arquivo `.env.example` foi disponibilizado como modelo para novas variáveis. Nenhum segredo foi incluído em commits ou logs.
 
 ---
 

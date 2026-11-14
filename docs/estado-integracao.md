@@ -52,11 +52,33 @@ O deploy da Vercel é separado do workflow da HostGator. Ready na Vercel não co
 O SELECT 1 confirma conectividade e execução de uma consulta constante. Não comprova leitura de tabelas, privilégios mínimos, autorização por usuário, funcionamento do frontend, escrita, desempenho ou prontidão de produção.
 O endpoint ainda tem nome execute-sql, mas no PHP funciona somente como diagnóstico fixo. Não ampliar para SQL arbitrário.
 
-## Pendências resolvidas em 13/11/2026
+## Integração de Pagamentos (Asaas)
+- **Variável de Ambiente na Vercel**: `ASSAS_PAYMENT_TOKEN` (ou `ASAAS_PAYMENT_TOKEN`). Configurada no painel de Environment Variables do projeto na Vercel para uso durante o deploy em produção.
+- **Ambiente de Homologação / Sandbox**: Para testes locais antes de subir novos endpoints de cobrança, utiliza-se o token mantido no arquivo `.env.local` (ignorado pelo Git via `.gitignore`).
+- **Meios de Pagamento Homologados no Sandbox (14/11/2026)**:
+  1. **Pix**: Geração imediata de código Copia e Cola + renderização de QR Code vetorial em SVG nativo (`qrcode.react`), com polling de confirmação a cada 3s.
+  2. **Boleto Bancário**: Emissão com linha digitável para pagamento em aplicativos bancários + link direto para visualização e impressão do PDF oficial.
+  3. **Cartão de Crédito**: Processamento seguro com validação e suporte a parcelamento em até 6x sem juros, com aprovação em tempo real.
+- **Segurança**: Valores reais de token nunca entram no frontend, repositório ou logs. As requisições de pagamento são processadas no backend serverless (`backend/api/pagamento/*`).
+
+## Serviço de E-mail (SMTP Titan / HostGator)
+- **Servidor**: `smtp.titan.email` (porta 465 com SSL/TLS).
+- **Remetente / Usuário**: `contato@casamento-flavio-victoria.com.br`.
+- **Status da Validação**: Em **14/11/2026**, conexão, autenticação SSL e envio foram testados e validados com sucesso via [scripts/testar-email.py](file:///c:/Users/flavi/OneDrive/Documentos/07.%20Projetos/02.%20Python%20Scripts/flavio-data-hub/scripts/testar-email.py) para o destinatário `flaviomenegueco@gmail.com`.
+- **Configurações locais**: Mantidas com segurança em `.env.local`, com template em `.env.example`.
+
+## Provedor de IA (OpenRouter API)
+- **Variável de Ambiente Local**: Configurada no `.env.local` (chave no formato `sk-or-v1-...`, nomeada como `OPENROUTE_SERVICE_TOKEN` / `OPENROUTER_API_KEY`).
+- **Objetivo**: Suporte a chamadas e automações com modelos de linguagem e integrações de IA locais.
+- **Segurança**: Mantida exclusivamente em `.env.local`, fora do controle de versão.
+
+## Pendências resolvidas em 13/11/2026 e 14/11/2026
 - Testes negativos de autenticação (sem token e token inválido).
 - Testes de método (GET), corpos inválidos (JSON quebrado, campos vazios e tipos errados).
 - Teste de bloqueio contra consultas SQL diferentes da fixa (`SELECT 2` e ponto e vírgula).
 - Registro detalhado em [docs/testes-ponte.md](file:///c:/Users/flavi/OneDrive/Documentos/07.%20Projetos/02.%20Python%20Scripts/flavio-data-hub/docs/testes-ponte.md).
+- Consolidação dos segredos locais no arquivo `.env.local` e criação do `.env.example`.
+- Validação do serviço de e-mail SMTP Titan com envio real bem-sucedido.
 
 ## Pendências restantes
 - Verificar versão de PHP e lint em ambiente compatível.
