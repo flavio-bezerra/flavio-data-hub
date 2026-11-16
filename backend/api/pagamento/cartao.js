@@ -3,10 +3,82 @@
  */
 
 const CATALOGO_PADRAO = [
-  { id: 'jantar', titulo: 'Um jantar a dois', valor: 150 },
-  { id: 'passeio', titulo: 'Um passeio inesquecível', valor: 300 },
-  { id: 'viagem', titulo: 'Um pedacinho da lua de mel', valor: 500 },
-  { id: 'cota-livre', titulo: 'Cota de carinho livre', valor: 0, livre: true }
+  {
+    "id": "filtro",
+    "titulo": "Filtro de óleo para o Escort",
+    "valor": 50
+  },
+  {
+    "id": "jantar",
+    "titulo": "Um jantar a dois",
+    "valor": 150
+  },
+  {
+    "id": "viagem",
+    "titulo": "Um pedacinho da lua de mel",
+    "valor": 500
+  },
+  {
+    "id": "gasolina",
+    "titulo": "Gasolina para o Escort chegar ao altar",
+    "valor": 80
+  },
+  {
+    "id": "cafe",
+    "titulo": "Café para o noivo funcionar",
+    "valor": 100
+  },
+  {
+    "id": "pizza",
+    "titulo": "Pizza para a primeira discussão terminar bem",
+    "valor": 120
+  },
+  {
+    "id": "kit",
+    "titulo": "Kit de sobrevivência do marido",
+    "valor": 180
+  },
+  {
+    "id": "passeio",
+    "titulo": "Um passeio inesquecível",
+    "valor": 300
+  },
+  {
+    "id": "mounjaro",
+    "titulo": "Mounjaro para a noiva",
+    "valor": 350
+  },
+  {
+    "id": "terapia",
+    "titulo": "Terapia para quem escolher a decoração",
+    "valor": 200
+  },
+  {
+    "id": "paz",
+    "titulo": "Uma diária de paz: ninguém pergunta dos filhos",
+    "valor": 250
+  },
+  {
+    "id": "voo",
+    "titulo": "Upgrade do voo",
+    "valor": 700
+  },
+  {
+    "id": "brinde",
+    "titulo": "Um jantar de lua de mel sem converter o câmbio",
+    "valor": 400
+  },
+  {
+    "id": "aventura",
+    "titulo": "Patrocínio oficial da próxima aventura",
+    "valor": 1000
+  },
+  {
+    "id": "cota-livre",
+    "titulo": "Cota de carinho livre",
+    "valor": 0,
+    "livre": true
+  }
 ];
 
 function obterAmbiente() {
@@ -90,7 +162,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, message: 'Código de segurança (CVV) inválido.' });
   }
 
-  const item = CATALOGO_PADRAO.find((p) => p.id === presenteId) || CATALOGO_PADRAO[0];
+  const item = CATALOGO_PADRAO.find((p) => p.id === presenteId);
+  if (!item) return res.status(400).json({ ok: false, message: "Presente inválido. Escolha um item da lista." });
   let valorFinal = item.valor;
 
   if (item.livre) {

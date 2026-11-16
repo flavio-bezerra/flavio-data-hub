@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import { createPortal } from "react-dom";
+import ResumoPresente from "./ResumoPresente";
 import type { PresenteItem } from "../casamento/conteudo";
 
 interface ModalPagamentoProps {
@@ -59,7 +61,7 @@ function formatarValidade(v: string): string {
 
 export default function ModalPagamento({ presente, onClose }: ModalPagamentoProps) {
   const [metodo, setMetodo] = useState<MetodoPagamento>("pix");
-  const [etapa, setEtapa] = useState<"formulario" | "processando" | "pix_resultado" | "boleto_resultado" | "sucesso" | "erro">("formulario");
+  const [etapa, setEtapa] = useState<"formulario" | "processando" | "pix_resultado" | "boleto_resultado" | "sucesso" | "pendente" | "erro">("formulario");
 
   // Dados do convidado
   const [nome, setNome] = useState("");
@@ -84,8 +86,27 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
   const [mensagemErro, setMensagemErro] = useState("");
   const [copiado, setCopiado] = useState(false);
   const pollingRef = useRef<number | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const valorEfetivo = presente?.livre ? Number(valorLivre) || 0 : presente?.valor || 0;
+
+  useEffect(() => {
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    dialogRef.current?.focus();
+    function manterFoco(event: KeyboardEvent) {
+      if (event.key !== "Tab") return;
+      const elements = dialogRef.current?.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), a[href]');
+      if (!elements?.length) { event.preventDefault(); dialogRef.current?.focus(); return; }
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === dialogRef.current)) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && (document.activeElement === last || document.activeElement === dialogRef.current)) { event.preventDefault(); first.focus(); }
+    }
+    document.addEventListener("keydown", manterFoco);
+    return () => { document.body.style.overflow = previousOverflow; document.removeEventListener("keydown", manterFoco); previousFocus?.focus(); };
+  }, []);
 
   // Fechar no Escape
   useEffect(() => {
@@ -192,7 +213,9 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
         if (!resp.ok || !data.ok) throw new Error(data.message || "Transação de cartão recusada.");
 
         setDadosCartao(data);
-        setEtapa("sucesso");
+        setEtapa(data.pago === true ? "sucesso" : "pendente");
+        setNumeroCartao("");
+        setCcv("");
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Ocorreu um erro inesperado.";
@@ -222,21 +245,25 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
 
   if (!presente) return null;
 
-  return (
+  return createPortal(
     <div
+      ref={dialogRef}
+      tabIndex={-1}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-titulo"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+      className="pagamento-overlay"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="relative w-full max-w-lg p-6 sm:p-8 bg-white border border-[#34506a]/20 shadow-2xl rounded text-[#2c3e50] max-h-[92vh] overflow-y-auto">
+      <div className="pagamento-folha">
+        <ResumoPresente presente={presente} valor={valorEfetivo} />
+        <div className="pagamento-conteudo">
         <button
           type="button"
           onClick={onClose}
-          aria-label="Fechar modal"
+          aria-label="Fechar pagamento"
           className="absolute top-4 right-4 text-2xl leading-none text-[#34506a] hover:text-[#1e293b] p-2"
         >
           &times;
@@ -246,7 +273,7 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
           Presente de Casamento
         </p>
         <h2 id="modal-titulo" className="text-2xl sm:text-3xl font-serif text-[#1e3a5f] mb-2">
-          {presente.titulo}
+          Seu presente
         </h2>
 
         {etapa === "formulario" && (
@@ -296,7 +323,7 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
                       : "border-slate-300 bg-white text-slate-700 hover:border-slate-400"
                   }`}
                 >
-                  ⚡ Pix (Instantâneo)
+                  Pix
                 </button>
                 <button
                   type="button"
@@ -307,7 +334,7 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
                       : "border-slate-300 bg-white text-slate-700 hover:border-slate-400"
                   }`}
                 >
-                  💳 Cartão de Crédito
+                  Cartão
                 </button>
                 <button
                   type="button"
@@ -318,7 +345,7 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
                       : "border-slate-300 bg-white text-slate-700 hover:border-slate-400"
                   }`}
                 >
-                  📄 Boleto Bancário
+                  Boleto
                 </button>
               </div>
             </div>
@@ -548,7 +575,7 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
                   value={dadosPix.pixCopiaECola}
                   size={192}
                   level="M"
-                  includeMargin={false}
+                  includeMargin={true}
                 />
               </div>
               <span className="text-xs text-slate-500 mt-2">
@@ -573,7 +600,7 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
                   onClick={() => copiarTexto(dadosPix.pixCopiaECola)}
                   className="min-h-[44px] px-4 py-2 bg-[#1e3a5f] hover:bg-[#152a45] text-white text-xs font-semibold rounded uppercase tracking-wider transition-colors whitespace-nowrap"
                 >
-                  {copiado ? "Copiado!" : "Copiar"}
+                  {copiado ? "Copiado!" : "Copiar código Pix"}
                 </button>
               </div>
             </div>
@@ -641,6 +668,13 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
           </div>
         )}
 
+        {etapa === "pendente" && (
+          <div className="py-8 text-center space-y-4" role="status">
+            <h3 className="text-2xl font-serif">Pagamento em análise</h3>
+            <p>A solicitação foi recebida, mas o pagamento ainda não foi confirmado. Evite enviar outra cobrança.</p>
+            <button type="button" className="presente-aquarela-acao" onClick={onClose}>Voltar aos presentes</button>
+          </div>
+        )}
         {/* Tela Sucesso (Cartão confirmado ou Pix pago) */}
         {etapa === "sucesso" && (
           <div className="py-8 text-center space-y-4">
@@ -694,7 +728,8 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
             </div>
           </div>
         )}
+        </div>
       </div>
-    </div>
+    </div>, document.body
   );
 }

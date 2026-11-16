@@ -1,0 +1,1 @@
+export default function MensagemDoChat({role,content}:{role:'user'|'assistant';content:string}){return <div className={'chat-mensagem chat-'+role}><span className="sr-only">{role==='user'?'Você':'Assistente'}</span><p style={{whiteSpace:'pre-wrap'}}>{content}</p></div>;}

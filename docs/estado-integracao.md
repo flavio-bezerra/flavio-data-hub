@@ -88,3 +88,9 @@ O endpoint ainda tem nome execute-sql, mas no PHP funciona somente como diagnós
 - Identificar o item de arquivo chamado casamento-private dentro de public_html/api sem divulgar seu conteúdo; não confundir com a pasta privada real.
 - Verificar publicação para garantir que respostas PHP não incluam warnings, caminhos ou credenciais.
 - Não assumir que o FTP removeu arquivos só porque foram removidos do Git.
+
+
+## Presentes ilustrados — protótipo local 16/11/2026
+15 presentes simbólicos com valores provisórios, três destaques (filtro, jantar, viagem) e expansão/recolhimento na home. Ilustrações em public/rebranding/presentes geradas para este projeto, aquarela azul/sálvia sobre branco; pinturas de seção preservadas. Modal portallado, foco contido/restaurado e scroll do fundo bloqueado, resumo lateral no desktop/compacto no mobile. Catálogos dos três handlers alinhados; IDs desconhecidos retornam400, sem fallback para outro presente. Cartão só mostra confirmação com pago===true; caso contrário, mostra análise. Valores/títulos sujeitos ao aceite do casal. Não foram realizadas cobranças nem envio de emails. Backend/provedor não auditados integralmente; aprovação visual e validação em produção são etapas separadas. Nenhum commit/push autorizado nesta etapa.
+
+Validação 16/11: TypeScript/lint/build e sintaxe JS aprovados. Testes dos handlers com credencial fictícia/fetch simulado aprovaram os15 IDs em Pix/cartão/boleto (45 casos), valores fixos independentes do valor enviado, ID desconhecido400 e mínimo da cota livre. Browser320/390/430/1280 aprovou catálogo, formulário e foco; transições Pix pendente→confirmado, boleto gerado, cartão em análise e erro simuladas sem chamadas externas. Não houve pagamento ou email real. Prévia visual usa Vite preview estático, que não executa o middleware configureServer das APIs. Segurança completa, taxas, parcelamento e homologação do provedor permanecem fora desta validação.

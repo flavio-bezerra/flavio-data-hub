@@ -23,6 +23,11 @@ playwright-report
 entrega/
 *.local
 
+# Configuração privada do backend e bibliotecas Composer
+/server/config.private.php
+/server/vendor/
+/server/storage/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

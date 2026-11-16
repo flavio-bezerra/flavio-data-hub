@@ -480,3 +480,55 @@
     background-color: transparent;
   }
 }
+
+/* Presentes ilustrados — Jardim em aquarela, 16/11/2026 */
+.convite-site .presentes-cardapio.presentes-ilustrados { padding:4rem 8% 5rem; background-size:cover; }
+.convite-site .presentes-ilustrados .cardapio-folha { width: min(100%, 1080px); max-width: 1080px; padding-inline: clamp(16px, 4vw, 48px); }
+.presentes-galeria { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; padding:0; margin:36px 0 24px; list-style:none; }
+.presente-aquarela { display:flex; flex-direction:column; min-width:0; background:#fff; border:1px solid #d3dfea; padding:16px 18px 22px; border-radius:8px; text-align:center; }
+.presente-aquarela > img { width:100%; height:170px; object-fit:contain; mix-blend-mode:multiply; }
+.presente-aquarela-texto { display:flex; flex-direction:column; flex:1; align-items:center; }
+.presente-aquarela h3 { font-family:"EB Garamond Local",serif; font-size:1.45rem; line-height:1.2; color:#34506a; margin:14px 0 8px; font-weight:500; }
+.presente-aquarela p { font-size:1.05rem; line-height:1.4; color:#4d5a49; margin:0 0 18px; }
+.presente-aquarela-valor { margin-top:auto; font-size:1.45rem; color:#34506a; }
+.presente-aquarela-acao { background:#34506a; color:white; border:1px solid #34506a; border-radius:999px; padding:10px 22px; min-height:44px; cursor:pointer; margin-top:12px; font-family:inherit; }
+.presente-aquarela-acao:hover { background:#2a4056; }
+.presentes-expandir { text-align:center; }
+.presentes-expandir > button { border:1px solid #34506a; color:#34506a; background:white; padding:12px 24px; border-radius:999px; min-height:44px; cursor:pointer; }
+.presentes-expandir p { margin:18px auto 0; max-width:520px; font-size:.95rem; color:#4d5a49; }
+.pagamento-overlay { position:fixed; inset:0; z-index:1000; display:flex; justify-content:center; align-items:center; padding:24px; background:rgba(13,32,65,.5); backdrop-filter:blur(5px); }
+.pagamento-folha { position:relative; display:grid; grid-template-columns:300px minmax(0,1fr); width:min(100%,900px); max-height:92dvh; overflow-y:auto; background:white; color:#2f3f35; border-radius:12px; box-shadow:0 24px 80px #0d204140; font-family:"EB Garamond Local",serif; }
+.pagamento-resumo { padding:40px 28px; background:#f6f9fa; border-right:1px solid #d3dfea; text-align:center; }
+.pagamento-noivos { font-family:"Sloop Three",cursive; font-size:2.7rem; color:#34506a; line-height:1.5; margin:8px 0; }
+.pagamento-resumo img { width:100%; height:170px; object-fit:contain; mix-blend-mode:multiply; }
+.pagamento-resumo h3 { font-size:1.6rem; color:#34506a; line-height:1.2; margin:20px 0 12px; }
+.pagamento-resumo > p:not(.pagamento-noivos):not(.rotulo-herbario) { font-size:1.05rem; line-height:1.4; }
+.pagamento-resumo strong { display:block; font-weight:500; font-size:2rem; margin-top:22px; color:#34506a; }
+.pagamento-resumo > span { display:block; font-size:.9rem; margin-top:6px; }
+.pagamento-conteudo { padding:40px 32px 28px; min-width:0; }
+.pagamento-conteudo > button[aria-label="Fechar pagamento"] { position:absolute; top:10px; right:12px; cursor:pointer; min-width:44px; min-height:44px; }
+.pagamento-conteudo button { cursor:pointer; }
+.pagamento-conteudo input,.pagamento-conteudo select,.pagamento-conteudo textarea { min-width:0; min-height:44px; font-family:inherit; font-size:1rem; }
+.pagamento-conteudo h2 { font-family:"Sloop Three",cursive; font-size:2.8rem; line-height:1.35; }
+.pagamento-conteudo button:focus-visible,.presentes-ilustrados button:focus-visible { outline:3px solid #7e8f78; outline-offset:4px; }
+@media(max-width:860px) {
+  .convite-site .presentes-cardapio.presentes-ilustrados { padding:2.5rem 1rem 10rem; background-size:100% auto; background-position:center bottom; }
+  .presentes-galeria { grid-template-columns:1fr; gap:18px; }
+  .presente-aquarela > img { height:160px; }
+  .pagamento-overlay { padding:10px; }
+  .pagamento-folha { grid-template-columns:1fr; max-height:96dvh; }
+  .pagamento-resumo { display:grid; grid-template-columns:80px minmax(0,1fr); padding:24px 20px 18px; text-align:left; border-right:0; border-bottom:1px solid #d3dfea; gap:2px 14px; }
+  .pagamento-resumo .rotulo-herbario,.pagamento-noivos,.pagamento-resumo > p:not(.rotulo-herbario):not(.pagamento-noivos),.pagamento-resumo > span { display:none; }
+  .pagamento-resumo img { grid-row:1 / 3; height:80px; width:80px; }
+  .pagamento-resumo h3 { margin:0; padding-right:20px; font-size:1.2rem; }
+  .pagamento-resumo strong { margin:2px 0 0; font-size:1.35rem; }
+  .pagamento-conteudo { padding:20px; }
+}
+@media(prefers-reduced-motion:reduce) { .pagamento-conteudo .animate-spin,.pagamento-conteudo .animate-pulse { animation:none; } }
+
+/* Assistente da festa — superfícies de leitura brancas */
+.chat-abrir{position:fixed;right:20px;bottom:20px;z-index:90;border-radius:999px;background:#34506a;color:#fff;padding:12px 20px;cursor:pointer;box-shadow:0 4px 18px #0d204130}
+.chat-overlay{position:fixed;inset:0;z-index:1100;background:#0d204160;backdrop-filter:blur(4px);display:flex;justify-content:flex-end;align-items:flex-end;padding:20px}
+.chat-painel{width:min(440px,100%);height:min(720px,92dvh);display:flex;flex-direction:column;background:#fff;border-radius:12px;padding:20px;box-shadow:0 20px 70px #0d204160}
+.chat-painel header{display:flex;justify-content:space-between;align-items:center;gap:16px}.chat-painel h2{font-size:1.7rem;color:#34506a}.chat-painel button{min-height:44px;cursor:pointer}.chat-painel header button{min-width:44px;font-size:1.8rem}.chat-aviso{font-size:.9rem;color:#4d5a49;margin:12px 0}.chat-conversa{flex:1;overflow:auto;padding:8px 0}.chat-mensagem{padding:10px 14px;border-radius:10px;margin-bottom:10px;overflow-wrap:anywhere}.chat-user{background:#e6edf3}.chat-assistant{background:#f5f8f5}.chat-painel form{display:flex;gap:10px;margin-top:12px}.chat-painel textarea{resize:vertical;min-height:65px;max-height:150px;flex:1;min-width:0;border:1px solid #d3dfea;padding:10px}.chat-painel form button,.admin-assistente button{background:#34506a;color:white;padding:10px 16px;border-radius:6px;cursor:pointer}.chat-painel details{max-height:120px;overflow:auto;font-size:.9rem}.chat-painel a{color:#34506a;text-decoration:underline}.admin-assistente{max-width:850px;margin:auto;padding:40px 20px}.admin-assistente h1{font-size:2.5rem;color:#34506a}.admin-assistente h2{font-size:1.8rem;margin-top:32px}.admin-assistente label{display:block;margin:16px 0}.admin-assistente input,.admin-assistente textarea,.admin-assistente select{display:block;width:100%;padding:12px;border:1px solid #d3dfea;margin-top:6px}.admin-assistente textarea{min-height:130px}.admin-assistente button{margin:6px 8px 6px 0;min-height:44px}.admin-assistente article{border:1px solid #d3dfea;padding:16px;margin:16px 0}.chat-painel button:disabled,.admin-assistente button:disabled{opacity:.5;cursor:default}
+@media(max-width:600px){.chat-overlay{padding:8px}.chat-painel{height:94dvh}.chat-abrir{right:12px;bottom:12px}}
