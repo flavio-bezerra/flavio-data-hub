@@ -10,7 +10,7 @@ CLI moderna encontrada em C:\Program Files\Databricks\databricks.exe; use caminh
 
 ## Gate de entrega
 
-Valide instalação limpa com npm ci antes da entrega, além de TypeScript/lint/build. A raiz instala somente o site; ferramentas @its-thepoe permanecem em skills/ e não são dependências do deploy. Preserve o lockfile reproduzível e o gate npm ci do workflow. A falha de 11/11/2026 foi reproduzida como EUSAGE por dependências de skills duplicadas na raiz e ausentes no lockfile; FTP não executado naquela tentativa.
+Valide instalação limpa com npm ci antes da entrega, além de TypeScript/lint/build. Execute TypeScript exatamente como o workflow: npx tsc --noEmit -p tsconfig.app.json; o comando sem -p pode não verificar src no projeto raiz com referências. A falha de 16/11/2026 revelou essa diferença; preserve a validação Zod dos campos obrigatórios e o contrato explícito das fontes do chat, sem enfraquecer props ou usar casts para ocultar erros. A raiz instala somente o site; ferramentas @its-thepoe permanecem em skills/ e não são dependências do deploy. Preserve o lockfile reproduzível e o gate npm ci do workflow. A falha de 11/11/2026 foi reproduzida como EUSAGE por dependências de skills duplicadas na raiz e ausentes no lockfile; FTP não executado naquela tentativa.
 Entregue o projeto completo autorizado, incluindo .github/workflows/deploy.yml com workflow_dispatch. Push na main aciona a publicação automaticamente, por autorização do usuário; mantenha presentes e RSVP explicitamente em demonstração enquanto não houver backend. Revise a prévia antes da aplicação na pasta Git. A aprovação visual e os testes locais precedem o push que aciona o FTP. Preserve alterações remotas e concilie divergências antes da cópia.
 
 ## Bundle
