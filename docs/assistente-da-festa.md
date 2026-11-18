@@ -1,3 +1,5 @@
+> Arquitetura atual: backend Node na Vercel + gateway/ponte PHP na HostGator. Veja docs/ativacao-vercel.md. Descrições de login/Google/SMTP/OpenRouter diretamente em PHP abaixo são históricas e substituídas; regras de produto permanecem. Backend e integrações ainda exigem homologação.
+
 # Assistente da festa e memória administrativa
 
 Implementação LOCAL, sem chave, chamadas OpenRouter, migrações ou deploy. Cadastro/auth anterior parcial permanece não homologado; painel desta entrega é específico ao assistente, não substitui painel completo de convidados.

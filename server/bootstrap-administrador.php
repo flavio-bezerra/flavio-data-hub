@@ -3,9 +3,10 @@ declare(strict_types=1);
 if(PHP_SAPI!=='cli')exit(1);
 if(($argv[1]??'')!=='--confirmar') { fwrite(STDERR,"Use --confirmar após configurar email privado de uma conta já verificada.
 ");exit(1); }
-$config=require __DIR__.'/config.private.php';
-require __DIR__.'/banco.php';
-$db=conectarBanco($config);
+$private='/home2/hg8dcc78/casamento-private';
+$config=require $private.'/application.php';
+$database=require $private.'/database.php';
+$db=new PDO(sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s',$database['host'],(int)$database['port'],$database['database'],$database['charset']),$database['username'],$database['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
 $email=strtolower(trim($config['bootstrap_admin_email']));
 if(!filter_var($email,FILTER_VALIDATE_EMAIL))throw new RuntimeException('Configuração privada inválida.');
 $db->beginTransaction();

@@ -1,14 +1,7 @@
-# Backend — Victória & Flávio
+# Backend Vercel — Victória & Flávio
 
-Backend destinado à Vercel.
+Raiz do projeto Vercel: backend/. Node22+, npm ci neste diretório, separado do package-lock raiz do frontend. As APIs de pagamento existentes foram preservadas.
 
-Status: em preparação. Nenhuma integração ativa.
+Acesso, sessão, Google, SMTP e OpenRouter executam na Vercel. MySQL executa na HostGator através de operações específicas em public/api/operacoes.php. O navegador usa URLs /api/*.php do próprio domínio, um gateway com cookie HttpOnly/Secure/SameSite=Lax. Não expõe o token da ponte ao navegador. Endpoint diagnóstico execute-sql permanece somente diagnóstico, não é usado para cadastro.
 
-Integrações planejadas:
-- Banco de dados da HostGator
-- Asaas
-- OpenRouter
-- WhatsApp
-- E-mail
-
-Não armazenar senhas, tokens ou chaves de API neste diretório.
+Instalação e homologação: docs/ativacao-vercel.md. Código antigo server/entrada-api.php está desativado; funções de banco PHP são reutilizadas na ponte, não como segundo sistema de login. Nada desta mudança ativa produção automaticamente. Migrações, arquivos privados e flags precisam instalação explícita.

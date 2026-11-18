@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-// Copie para config.private.php SOMENTE na pasta privada do servidor,
-// fora de public_html e do Git. Exemplos não contêm dados pessoais reais.
+// LEGADO: acesso direto em PHP substituído pelo gateway e backend Vercel.
+// Para ativação atual use server/ponte/config.example.php e docs/ativacao-vercel.md.
+// Mantido somente como referência histórica; exemplos sem dados pessoais reais.
 return [
     'app_origin' => 'https://casamento-flavio-victoria.com.br',
     'registration_enabled' => false,

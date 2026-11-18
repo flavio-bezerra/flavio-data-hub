@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/assistente.js": {
+      "maxDuration": 60,
+      "includeFiles": "assistente/instrucoes.md"
+    }
+  }
+}

@@ -1,3 +1,5 @@
+> Arquitetura atual: backend Node na Vercel + gateway/ponte PHP na HostGator. Veja docs/ativacao-vercel.md. Descrições de login/Google/SMTP/OpenRouter diretamente em PHP abaixo são históricas e substituídas; regras de produto permanecem. Backend e integrações ainda exigem homologação.
+
 # Autenticação e cadastro por convite
 
 ## Estado — 16/11/2026

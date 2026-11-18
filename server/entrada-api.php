@@ -3,6 +3,7 @@ declare(strict_types=1);
 function executarApi(string $domain): never {
     header('Content-Type: application/json; charset=utf-8');header('Cache-Control: no-store');header('X-Content-Type-Options: nosniff');
     try {
+        throw new FalhaDeAcesso(503,'Endpoint PHP de acesso substituído pelo gateway Vercel.');
         $config=require __DIR__.'/config.private.php';
         if(($config['registration_enabled']??false)!==true)throw new FalhaDeAcesso(503,'Cadastro ainda não habilitado.');
         if(strlen((string)($config['rate_limit_key']??''))<32)throw new FalhaDeAcesso(503,'Configuração privada incompleta.');
