@@ -10,6 +10,12 @@ Projeto existente flavio-data-hub-backend, Root Directory backend, instalar com 
 
 OpenRouter: OPENROUTER_API_KEY, compatível com alias OPENROUTE_SERVICE_TOKEN existente. ASSISTANT_ENABLED=false inicialmente, OPENROUTER_MODEL=nvidia/nemotron-3.5-lightning:free somente fictícios, ASSISTANT_FICTIONAL_DATA_ONLY=true. Com convidados reais, escolher modelo pago revisado, fictional=false e ASSISTANT_PRIVACY_REVIEWED=true; solicita provider deny/ZDR sem relaxamento. Nenhum valor de chave deve entrar em VITE_*, Git, docs, prompt ou log.
 
+### Limite de funções no plano Hobby
+
+O backend tem 12 arquivos de função em `backend/api/`. As URLs `/api/memoria` e `/api/contexto` são reescritas internamente pela Vercel para uma única função, `backend/api/administracao/[operacao].js`. Sessão, CSRF, limites de uso e permissões administrativas continuam em vigor. Frontend, gateway PHP e pagamentos não precisam de mudanças.
+
+Antes de adicionar outra função, conte os arquivos em `backend/api/` e avalie se a nova rota pode compartilhar uma função existente. A validação local não substitui conferir as duas reescritas após o deploy na Vercel.
+
 ## HostGator
 Configuração existente /home2/hg8dcc78/casamento-private/{bridge.php,database.php} preservada. Novo application.php usando server/ponte/config.example.php: gateway_enabled=false, access_enabled=false, bootstrap_admin_email vazio. Instalar server/ sob casamento-private/server (não public_html), excluindo config.private, vendor, storage. Usa PHP8.2+, PDO MySQL, cURL TLS e mbstring para nome Google. Composer PHP não necessário para a nova rota. server/config.example.php/composer.json são legado desativado.
 

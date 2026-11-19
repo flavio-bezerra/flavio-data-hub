@@ -4,5 +4,9 @@
       "maxDuration": 60,
       "includeFiles": "assistente/instrucoes.md"
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/api/memoria", "destination": "/api/administracao/memoria" },
+    { "source": "/api/contexto", "destination": "/api/administracao/contexto" }
+  ]
 }
