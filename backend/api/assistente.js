@@ -5,7 +5,9 @@ import {validarMensagens,responderOpenRouter} from '../assistente/openrouter.js'
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');
  try{
-  exigirGateway(req);if(req.method!=='POST')throw new FalhaDaApi(405,'Método não permitido.');const session=await lerSessao(req);await limitarUso(req,'chat',session.token);
+  exigirGateway(req);
+  if(process.env.ACCESS_GOOGLE_PILOT_EMAIL?.trim())throw new FalhaDaApi(503,'Assistente indisponível durante o teste de login.');
+  if(req.method!=='POST')throw new FalhaDaApi(405,'Método não permitido.');const session=await lerSessao(req);await limitarUso(req,'chat',session.token);
   const messages=validarMensagens(req.body.messages);const preview=req.body.preview_version;
   if(preview!==undefined&&(!Number.isSafeInteger(preview)||preview<1))throw new FalhaDaApi(422,'Versão inválida.');
   const {context}=await chamarOperacao('chat.context',session.token,preview===undefined?{}:{preview_version:preview});

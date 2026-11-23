@@ -10,10 +10,11 @@ function executarOperacoesDaPonte(string $private): never {
   if(strtolower(explode(';',$_SERVER['CONTENT_TYPE']??'')[0])!=='application/json')throw new FalhaDeAcesso(415,'Envie JSON.');
   $raw=file_get_contents('php://input',false,null,0,65537);if(strlen($raw)>65536)throw new FalhaDeAcesso(413,'Solicitação muito grande.');
   $body=json_decode($raw,true,32,JSON_THROW_ON_ERROR);if(!is_array($body)||array_is_list($body)||array_diff(array_keys($body),['operation','session_token','payload','client_bucket']))throw new FalhaDeAcesso(422,'Corpo inválido.');
-  $allowed=['session.read','session.create','session.rotate','session.revoke','rate.limit','account.lookup','account.register','account.google','account.token','account.consume_token','chat.context','memory.dispatch','logistics.dispatch','invitation.dispatch','rsvp.save'];
+  $allowed=['session.read','session.create','session.rotate','session.revoke','rate.limit','account.google','chat.context','memory.dispatch','logistics.dispatch','invitation.dispatch','rsvp.save'];
   $operation=$body['operation']??null;$p=$body['payload']??null;$token=$body['session_token']??null;
   if(!in_array($operation,$allowed,true)||!is_array($p)||(!empty($p)&&array_is_list($p))||!is_string($token))throw new FalhaDeAcesso(422,'Operação inválida.');
-  $config=require $private.'/database.php';$dsn=sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s',$config['host'],(int)$config['port'],$config['database'],$config['charset']);
+  // Isolado do banco usado pela integração existente; nunca fazer fallback.
+  $config=require $private.'/database.pilot.php';$dsn=sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s',$config['host'],(int)$config['port'],$config['database'],$config['charset']);
   $db=new PDO($dsn,$config['username'],$config['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);$db->exec("SET time_zone='+00:00'");
   $result=despacharOperacao($db,$operation,$token,$p,$body['client_bucket']??'');
   echo json_encode($result,JSON_THROW_ON_ERROR|JSON_UNESCAPED_UNICODE);

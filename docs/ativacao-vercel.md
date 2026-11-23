@@ -1,5 +1,13 @@
 # Ativação do backend Vercel e ponte HostGator
 
+## Primeiro teste: somente login Google
+
+Use apenas um banco MySQL vazio e separado. O pacote da ponte deve ser extraído dentro de `casamento-private`, nunca em `public_html`. Use `server/ponte/config.example.php` como referência para criar `application.php`, inicialmente com as duas flags desligadas. Nunca sobrescreva `bridge.php` nem `database.php`. Crie `database.pilot.php` ao lado deles com a mesma estrutura de configuração (`host`, `port`, `database`, `charset`, `username`, `password`), apontando para o banco e usuário exclusivos do teste. A ponte piloto não faz fallback para `database.php`. Importe as três migrações na ordem numérica somente no banco de teste.
+
+Depois de publicar o código do piloto na Vercel, configure `GOOGLE_CLIENT_ID` e `ACCESS_GOOGLE_PILOT_EMAIL` para uma única conta Gmail ou Google Workspace. O e-mail é variável privada, nunca `VITE_*`, e não é devolvido pela API. Preserve `ASSISTANT_ENABLED=false`. A API recusa cadastro, login por senha, verificação e recuperação por e-mail; o chat também fica bloqueado enquanto o piloto estiver configurado. O formulário de senha ainda pode aparecer na página, mas não executa essas operações. Só ligue `ACCESS_ENABLED` e as flags privadas após confirmar banco e versão publicada. Teste login, recusa de uma segunda conta e logout. Ao trocar a conta do piloto, encerre o teste e revogue as sessões existentes no banco de teste antes de religar.
+
+Não execute o bootstrap administrativo nesta etapa: ele ainda usa a configuração `database.php` e não faz parte do piloto. Não divulgue `/acesso` no menu antes da homologação.
+
 ## Arquitetura vigente
 Frontend HostGator -> gateway PHP no mesmo domínio -> APIs Node Vercel -> ponte PHP de operações fixas -> MySQL. Nenhum SQL é enviado pela Vercel; a ponte aceita enumeração fechada e consultas preparadas. A identidade do usuário é resolvida pela sessão persistida, não por account_id enviado pelo navegador. Operações internas de login recebem identidade já verificada pela Vercel, autenticada pelo segredo da ponte.
 
@@ -24,7 +32,7 @@ Instalar os gateways public/api/{auth,assistente,memoria,contexto,convites,confi
 ## Banco e ativação por etapas
 Banco de teste: aplicar001,002,003 em ordem; não reaplicar001/002 em banco onde já existam.003 adiciona sessões revogáveis de2h, token hash SHA256, CSRF e nonce. Backup banco antes. Configuração times UTC. Autorizar arquivos privados, migração e flags separadamente.
 
-Habilitar gateway/access na configuração privada e ACCESS_ENABLED na Vercel apenas na homologação coordenada; validar login Google/senha/verificação/recuperação/logout, duas instâncias Node compartilhando sessão, CSRF/origin, reset revoga todas sessões, convite disputado e isolamento. Sem tokens/flags, responde503. Configurar SMTP465 com TLS e remetente validado, não enviar testes automaticamente.
+Após o piloto Google, login/senha, verificação, recuperação e SMTP exigem revisão e homologação separadas. Valide também sessões entre instâncias, CSRF/origem, disputa pelo convite e isolamento antes de liberar convidados reais.
 
 Administrador inicial: criar/verificar conta de teste, definir e-mail só em application.php privado, executar bootstrap-administrador.php --confirmar em CLI; exige zeroadmins, permanece privado. Seu email pessoal não deve constar em Git/SQL/frontend. Não expor bootstrap por HTTP.
 

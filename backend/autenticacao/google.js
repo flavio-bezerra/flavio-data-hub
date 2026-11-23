@@ -7,6 +7,6 @@ export async function verificarGoogle(credential,nonce){
  try{
   const ticket=await new OAuth2Client(audience).verifyIdToken({idToken:credential,audience});const claims=ticket.getPayload();
   if(!claims||!claims.sub||claims.nonce!==nonce||claims.email_verified!==true||!['accounts.google.com','https://accounts.google.com'].includes(claims.iss))throw Error('claims');
-  return {subject:claims.sub,email:claims.email,name:claims.name||'Convidado'};
+  return {subject:claims.sub,email:claims.email,name:claims.name||'Convidado',hostedDomain:typeof claims.hd==='string'?claims.hd:''};
  }catch{throw new FalhaDaApi(401,'Não foi possível verificar o acesso Google.');}
 }
