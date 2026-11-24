@@ -154,3 +154,25 @@ O teste de login via Google foi realizado com sucesso no domínio `https://casam
 - Testar logout (deve funcionar e invalidar a sessão)
 - Testar recarga de página para verificar persistência da sessão
 - Concluir o piloto e, após homologação, considerar ativação de `ACCESS_GOOGLE_PILOT_EMAIL` para liberar o assistente de chat (atualmente bloqueado durante o piloto)
+
+## 9. Confirmação — Acesso administrativo funcionando (24/11/2026)
+
+**Resultado: SUCESSO**
+
+O usuário `flaviomenegueco@gmail.com` foi cadastrado como administrador no banco piloto e conseguiu acessar a área administrativa.
+
+### Evidências do teste
+
+- Conta `flaviomenegueco@gmail.com` inserida na tabela `administrators` do banco `hg8dcc78_piloto_casamento` via cPanel → phpMyAdmin
+- Página `/administracao/assistente` acessível com a conta logada
+- Painel "Memória do assistente" exibido corretamente
+
+### Como foi feito
+
+1. No cPanel → phpMyAdmin, banco `hg8dcc78_piloto_casamento`:
+   - Executado `SELECT id FROM accounts WHERE email = 'flaviomenegueco@gmail.com'` para descobrir o `account_id`
+   - Executado `INSERT INTO administrators (account_id, created_at) VALUES (<account_id>, UTC_TIMESTAMP())`
+
+### Observação
+
+A tabela `administrators` já existia no banco piloto (criada pela migração 001). Não foi necessário executar `bootstrap-administrador.php`, conforme orientação do piloto.
