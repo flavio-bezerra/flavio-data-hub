@@ -20,7 +20,7 @@ function backendDevApiPlugin(): Plugin {
               const trimmed = line.trim();
               if (trimmed && !trimmed.startsWith("#") && trimmed.includes("=")) {
                 const [k, ...rest] = trimmed.split("=");
-                const v = rest.join("=").trim().replace(/^['\"]|['\"]$/g, "");
+                const v = rest.join("=").trim().replace(/^['"]|['"]$/g, "");
                 if (k.trim()) process.env[k.trim()] = v;
               }
             }
