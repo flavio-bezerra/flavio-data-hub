@@ -104,6 +104,18 @@ if (is_file($pilotConfig)) {
 }
 
 if (is_array($cfg) && isset($cfg['host'], $cfg['database'], $cfg['username'])) {
+    $usuario = (string) $cfg['username'];
+    $senha = (string) ($cfg['password'] ?? '');
+    $out['database_pilot_credenciais'] = [
+        'usuario_tamanho' => strlen($usuario),
+        'senha_tamanho' => strlen($senha),
+        'usuario_espaco_inicio' => $usuario !== ltrim($usuario),
+        'usuario_espaco_fim' => $usuario !== rtrim($usuario),
+        'senha_espaco_inicio' => $senha !== ltrim($senha),
+        'senha_espaco_fim' => $senha !== rtrim($senha),
+        'senha_aspas' => str_contains($senha, '"') || str_contains($senha, "'"),
+    ];
+
     $probe = [];
     try {
         $dsn = sprintf(
