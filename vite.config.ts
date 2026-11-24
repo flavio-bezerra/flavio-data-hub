@@ -10,7 +10,9 @@ function backendDevApiPlugin(): Plugin {
       server.middlewares.use(async (req, res, next) => {
         const url = new URL(req.url || "", "http://localhost");
 
-        if (url.pathname.startsWith("/api/pagamento/")) {
+        // Only intercept our custom API routes
+        if (url.pathname.startsWith("/api/pagamento/") || url.pathname === "/api/openrouter/chat") {
+          // Load env variables from .env.local (already done for payment routes)
           const envFile = path.resolve(process.cwd(), ".env.local");
           if (fs.existsSync(envFile)) {
             const lines = fs.readFileSync(envFile, "utf-8").split("\n");
@@ -18,12 +20,13 @@ function backendDevApiPlugin(): Plugin {
               const trimmed = line.trim();
               if (trimmed && !trimmed.startsWith("#") && trimmed.includes("=")) {
                 const [k, ...rest] = trimmed.split("=");
-                const v = rest.join("=").trim().replace(/^['"]|['"]$/g, "");
+                const v = rest.join("=").trim().replace(/^['\"]|['\"]$/g, "");
                 if (k.trim()) process.env[k.trim()] = v;
               }
             }
           }
 
+          // Parse JSON body for POST requests
           let body: Record<string, unknown> = {};
           if (req.method === "POST") {
             const chunks: Buffer[] = [];
@@ -39,15 +42,7 @@ function backendDevApiPlugin(): Plugin {
           }
 
           const query = Object.fromEntries(url.searchParams.entries());
-
-          const mockReq = {
-            method: req.method,
-            headers: req.headers,
-            body,
-            query,
-            url: req.url,
-          };
-
+          const mockReq = { method: req.method, headers: req.headers, body, query, url: req.url };
           const mockRes = {
             statusCode: 200,
             setHeader(name: string, val: string) {
@@ -66,20 +61,19 @@ function backendDevApiPlugin(): Plugin {
 
           try {
             if (url.pathname === "/api/pagamento/pix") {
-              // @ts-expect-error import dinâmico de função backend em tempo de dev
               const { default: handler } = await import("./backend/api/pagamento/pix.js");
               await handler(mockReq, mockRes);
             } else if (url.pathname === "/api/pagamento/status") {
-              // @ts-expect-error import dinâmico de função backend em tempo de dev
               const { default: handler } = await import("./backend/api/pagamento/status.js");
               await handler(mockReq, mockRes);
             } else if (url.pathname === "/api/pagamento/boleto") {
-              // @ts-expect-error import dinâmico de função backend em tempo de dev
               const { default: handler } = await import("./backend/api/pagamento/boleto.js");
               await handler(mockReq, mockRes);
             } else if (url.pathname === "/api/pagamento/cartao") {
-              // @ts-expect-error import dinâmico de função backend em tempo de dev
               const { default: handler } = await import("./backend/api/pagamento/cartao.js");
+              await handler(mockReq, mockRes);
+            } else if (url.pathname === "/api/openrouter/chat") {
+              const { default: handler } = await import("./backend/api/openrouter/chat.js");
               await handler(mockReq, mockRes);
             } else {
               next();
@@ -93,6 +87,7 @@ function backendDevApiPlugin(): Plugin {
           return;
         }
 
+        // Not our API – continue to next middleware / Vite dev server
         next();
       });
     },

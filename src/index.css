@@ -532,3 +532,43 @@
 .chat-painel{width:min(440px,100%);height:min(720px,92dvh);display:flex;flex-direction:column;background:#fff;border-radius:12px;padding:20px;box-shadow:0 20px 70px #0d204160}
 .chat-painel header{display:flex;justify-content:space-between;align-items:center;gap:16px}.chat-painel h2{font-size:1.7rem;color:#34506a}.chat-painel button{min-height:44px;cursor:pointer}.chat-painel header button{min-width:44px;font-size:1.8rem}.chat-aviso{font-size:.9rem;color:#4d5a49;margin:12px 0}.chat-conversa{flex:1;overflow:auto;padding:8px 0}.chat-mensagem{padding:10px 14px;border-radius:10px;margin-bottom:10px;overflow-wrap:anywhere}.chat-user{background:#e6edf3}.chat-assistant{background:#f5f8f5}.chat-painel form{display:flex;gap:10px;margin-top:12px}.chat-painel textarea{resize:vertical;min-height:65px;max-height:150px;flex:1;min-width:0;border:1px solid #d3dfea;padding:10px}.chat-painel form button,.admin-assistente button{background:#34506a;color:white;padding:10px 16px;border-radius:6px;cursor:pointer}.chat-painel details{max-height:120px;overflow:auto;font-size:.9rem}.chat-painel a{color:#34506a;text-decoration:underline}.admin-assistente{max-width:850px;margin:auto;padding:40px 20px}.admin-assistente h1{font-size:2.5rem;color:#34506a}.admin-assistente h2{font-size:1.8rem;margin-top:32px}.admin-assistente label{display:block;margin:16px 0}.admin-assistente input,.admin-assistente textarea,.admin-assistente select{display:block;width:100%;padding:12px;border:1px solid #d3dfea;margin-top:6px}.admin-assistente textarea{min-height:130px}.admin-assistente button{margin:6px 8px 6px 0;min-height:44px}.admin-assistente article{border:1px solid #d3dfea;padding:16px;margin:16px 0}.chat-painel button:disabled,.admin-assistente button:disabled{opacity:.5;cursor:default}
 @media(max-width:600px){.chat-overlay{padding:8px}.chat-painel{height:94dvh}.chat-abrir{right:12px;bottom:12px}}
+
+/* Chat Sidebar Animations */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bounceSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-slide-in-right {
+    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out both;
+  }
+
+  .animate-bounce-subtle {
+    animation: bounceSubtle 2s ease-in-out infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
