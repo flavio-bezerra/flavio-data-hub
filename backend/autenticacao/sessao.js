@@ -9,8 +9,9 @@ export function exigirGateway(req){
  if(process.env.ACCESS_ENABLED!=='true')throw new FalhaDaApi(503,'Acesso ainda não habilitado.');
  if(!compararSegredo(process.env.HOSTGATOR_BRIDGE_TOKEN,req.headers['x-gateway-token']))throw new FalhaDaApi(401,'Não autorizado.');
  if(!['GET','POST'].includes(req.method))throw new FalhaDaApi(405,'Método não permitido.');
- const origin=process.env.APP_ORIGIN||'https://casamento-flavio-victoria.com.br';
- if(req.method==='POST'&&req.headers['x-site-origin']!==origin)throw new FalhaDaApi(403,'Origem inválida.');
+ const origin = req.headers['x-site-origin'] || '';
+ const allowed = ['https://casamento-flavio-victoria.com.br', 'https://www.casamento-flavio-victoria.com.br'];
+ if (req.method === 'POST' && !allowed.includes(origin)) throw new FalhaDaApi(403, 'Origem inválida.');
  const bucket=req.headers['x-client-bucket'];if(typeof bucket!=='string'||!/^[a-f0-9]{64}$/.test(bucket))throw new FalhaDaApi(403,'Origem do gateway inválida.');
  if(req.method==='POST'&&(!req.body||typeof req.body!=='object'||Array.isArray(req.body)||Buffer.byteLength(JSON.stringify(req.body))>49152))throw new FalhaDaApi(422,'Corpo inválido.');
 }

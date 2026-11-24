@@ -8,7 +8,8 @@ function executarGatewayVercel(string $domain): never {
   if(($settings['gateway_enabled']??false)!==true||!is_string($bridge['token']??null)||strlen($bridge['token'])<32)throw new RuntimeException('configuration');
   $method=$_SERVER['REQUEST_METHOD']??'';if(!in_array($method,['GET','POST'],true)||($method==='GET'&&$domain!=='auth')){http_response_code(405);echo json_encode(['ok'=>false,'message'=>'Método não permitido.']);exit;}
   $origin=$_SERVER['HTTP_ORIGIN']??'';
-  if($method==='POST'&&$origin!=='https://casamento-flavio-victoria.com.br'){http_response_code(403);echo json_encode(['ok'=>false,'message'=>'Origem inválida.']);exit;}
+  $allowed=['https://casamento-flavio-victoria.com.br','https://www.casamento-flavio-victoria.com.br'];
+  if($method==='POST'&&!in_array($origin,$allowed,true)){http_response_code(403);echo json_encode(['ok'=>false,'message'=>'Origem inválida.']);exit;}
   $body=$method==='POST'?file_get_contents('php://input',false,null,0,49153):'';
   if(strlen($body)>49152){http_response_code(413);echo json_encode(['ok'=>false,'message'=>'Solicitação muito grande.']);exit;}
   if($method==='POST'&&strtolower(explode(';',$_SERVER['CONTENT_TYPE']??'')[0])!=='application/json'){http_response_code(415);echo json_encode(['ok'=>false,'message'=>'Envie JSON.']);exit;}
