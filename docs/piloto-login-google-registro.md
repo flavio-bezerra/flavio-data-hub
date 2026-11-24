@@ -110,6 +110,47 @@ Contém `HOSTGATOR_BRIDGE_TOKEN`, `ASAAS_PAYMENT_TOKEN`, `OPENROUTER_API_KEY`, c
    - Vercel: `ACCESS_ENABLED=true`
 5. Fazer commit dos 22 arquivos staged no git
 
-## 8. Arquivos staged aguardando commit
+## 8. Confirmação — Login Google funcionando (24/11/2026)
 
-22 arquivos estão staged no `main` (incluindo os 13 de `casamento-private/` e mudanças em convites A5, `src/App.tsx`, `src/index.css`, `package*.json`, `vite.config.ts`).
+**Resultado: SUCESSO**
+
+O teste de login via Google foi realizado com sucesso no domínio `https://casamento-flavio-victoria.com.br`.
+
+### Evidências do teste
+
+- Endpoint `/api/auth.php` retornando `HTTP 200 OK` com payload válido:
+  - `ok: true`
+  - `google_client_id` válido (formato `*.apps.googleusercontent.com`)
+  - `google_nonce` gerado corretamente
+  - Cookie `casamento_access` definido
+- Página `/acesso` exibe: *"Olá, Flavio Menegueço Bezerra."*
+- Botão de "Entrar com Google" renderizado após autenticação
+- Mensagem exibida: *"Vinculação e cadastro do grupo estão em implementação."*
+
+### O que foi ajustado para chegar aqui
+
+1. **cPanel (`casamento-private/application.php`):**
+   - `gateway_enabled => true`
+   - `access_enabled => true`
+   - `bootstrap_admin_email => ''`
+
+2. **Vercel (`flavio-data-hub-backend`):**
+   - `ACCESS_ENABLED=true` (depois de Redeploy)
+   - `GOOGLE_CLIENT_ID` corrigido (foi confundido com Client Secret inicialmente)
+   - `APP_ORIGIN = https://casamento-flavio-victoria.com.br`
+
+3. **Correções de código (commits no `main`):**
+   - `src/features/chat/ChatSidebar.tsx` criado (estava faltando, quebrava o build)
+   - Import corrigido em `src/App.tsx` para default import
+   - `vite.config.ts` aspas escapadas corrigidas (lint)
+   - `gateway.php` ajustado para aceitar origem com e sem `www`
+   - `backend/autenticacao/sessao.js` ajustado para aceitar origem com e sem `www`
+
+4. **Diagnóstico temporário removido após confirmação:** `public/api/diagnostico.php` (apenas para depuração, não deve permanecer em produção)
+
+### Próximos passos do piloto
+
+- Testar login com conta **não autorizada** (deve ser recusada)
+- Testar logout (deve funcionar e invalidar a sessão)
+- Testar recarga de página para verificar persistência da sessão
+- Concluir o piloto e, após homologação, considerar ativação de `ACCESS_GOOGLE_PILOT_EMAIL` para liberar o assistente de chat (atualmente bloqueado durante o piloto)
