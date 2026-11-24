@@ -4,7 +4,7 @@ import NotFound from "./pages/NotFound";
 import ConfirmacaoPresenca from "@/features/presenca/ConfirmacaoPresenca";
 import PosicaoDaPagina from "@/features/casamento/PosicaoDaPagina";
 import FormularioDeAcesso from "@/features/autenticacao/FormularioDeAcesso";
-import { ChatSidebar } from "@/features/chat/ChatSidebar";
+import ChatSidebar from "@/features/chat/ChatSidebar";
 
 import AssistenteDaFesta from "@/features/assistente/AssistenteDaFesta";
 import MemoriaDoAssistente from "@/features/administracao/MemoriaDoAssistente";
