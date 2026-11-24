@@ -76,6 +76,95 @@ $out['ext_curl'] = function_exists('curl_init');
 $out['ext_pdo_mysql'] = extension_loaded('pdo_mysql');
 $out['ext_mbstring'] = extension_loaded('mbstring');
 
+/* ---- banco piloto: conexão e schema (nunca expõe host, usuário ou senha) ---- */
+function classificarFalhaDeBanco(?int $driver): string
+{
+    return match ($driver) {
+        1045 => 'usuario ou senha incorretos',
+        1044 => 'usuario sem permissao neste banco',
+        1049 => 'banco de dados inexistente',
+        1146 => 'tabela inexistente',
+        1046 => 'nenhum banco selecionado',
+        2002, 2003 => 'nao foi possivel conectar ao servidor MySQL',
+        default => 'outro',
+    };
+}
+
+$out['banco'] = null;
+$cfg = null;
+$pilotConfig = $private . '/database.pilot.php';
+
+if (is_file($pilotConfig)) {
+    try {
+        $cfg = require $pilotConfig;
+        $out['database_pilot_chaves'] = is_array($cfg) ? array_keys($cfg) : gettype($cfg);
+    } catch (Throwable $e) {
+        $out['database_pilot_erro'] = get_class($e);
+    }
+}
+
+if (is_array($cfg) && isset($cfg['host'], $cfg['database'], $cfg['username'])) {
+    $probe = [];
+    try {
+        $dsn = sprintf(
+            'mysql:host=%s;port=%d;dbname=%s;charset=%s',
+            $cfg['host'],
+            (int) ($cfg['port'] ?? 3306),
+            $cfg['database'],
+            $cfg['charset'] ?? 'utf8mb4'
+        );
+        $pdo = new PDO($dsn, $cfg['username'], (string) ($cfg['password'] ?? ''), [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_TIMEOUT => 8,
+        ]);
+        $probe['conexao'] = true;
+        $probe['versao_mysql'] = $pdo->query('SELECT VERSION()')->fetchColumn();
+
+        try {
+            $pdo->exec("SET time_zone='+00:00'");
+            $probe['timezone_utc'] = true;
+        } catch (Throwable $e) {
+            $probe['timezone_utc'] = false;
+        }
+
+        $esperadas = [
+            'accounts', 'account_action_tokens', 'administrators', 'access_rate_limits',
+            'web_access_sessions', 'guests', 'guest_food_information', 'invitation_groups',
+            'food_authorizations', 'event_settings', 'event_logistics_versions',
+            'assistant_memory_versions', 'assistant_publication', 'assistant_account_usage',
+            'audit_events',
+        ];
+        $existentes = $pdo->query('SHOW TABLES')->fetchAll(PDO::FETCH_COLUMN);
+        $probe['tabelas_total'] = count($existentes);
+        $probe['tabelas_faltando'] = array_values(array_diff($esperadas, $existentes));
+
+        foreach (['web_access_sessions', 'accounts', 'access_rate_limits'] as $tabela) {
+            try {
+                $pdo->query('SELECT 1 FROM `' . $tabela . '` LIMIT 1');
+                $probe['leitura_' . $tabela] = true;
+            } catch (Throwable $e) {
+                $probe['leitura_' . $tabela] = false;
+            }
+        }
+
+        foreach (['web_access_sessions' => ['token_hash', 'expires_at', 'revoked_at'], 'accounts' => ['id', 'session_version']] as $tabela => $colunas) {
+            try {
+                $pdo->query('SELECT `' . implode('`,`', $colunas) . '` FROM `' . $tabela . '` LIMIT 1');
+                $probe['colunas_' . $tabela] = true;
+            } catch (Throwable $e) {
+                $probe['colunas_' . $tabela] = false;
+            }
+        }
+    } catch (Throwable $e) {
+        $probe['conexao'] = false;
+        $probe['sqlstate'] = (string) $e->getCode();
+        $driver = ($e instanceof PDOException && is_array($e->errorInfo)) ? (int) ($e->errorInfo[1] ?? 0) : null;
+        $probe['driver_codigo'] = $driver;
+        $probe['classificacao'] = classificarFalhaDeBanco($driver);
+    }
+    $out['banco'] = $probe;
+}
+
 /* ---- veredito da linha 8 do gateway.php ---- */
 $out['gateway_passaria'] = ($out['gateway_enabled_estrito'] === true)
     && ($out['bridge_token_ok'] === true)
