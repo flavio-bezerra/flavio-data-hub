@@ -176,3 +176,21 @@ O usuário `flaviomenegueco@gmail.com` foi cadastrado como administrador no banc
 ### Observação
 
 A tabela `administrators` já existia no banco piloto (criada pela migração 001). Não foi necessário executar `bootstrap-administrador.php`, conforme orientação do piloto.
+
+## 10. Regra — Banco de Produção (não criar tabelas agora)
+
+**NÃO criar tabelas do piloto no banco de produção.**
+
+### Motivo
+
+- O piloto usa banco dedicado: `hg8dcc78_piloto_casamento`
+- O banco de produção é separado e contém dados reais do casamento
+- Criar tabelas no banco de produção pode afetar o convite, confirmação de presença e pagamentos existentes
+- Login por senha, cadastro, verificação e recuperação por e-mail estão desabilitados enquanto o piloto estiver ativo
+- A liberação para convidados reais exige revisão e homologação separada (conforme `docs/ativacao-vercel.md`, item 6)
+
+### Caminho correto
+
+1. ✅ Piloto — banco piloto dedicado (feito e funcionando)
+2. Homologação — testar conta não autorizada, logout, persistência de sessão
+3. Após homologação separada — avaliar criação de tabelas no banco de produção, somente com autorização explícita
