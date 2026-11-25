@@ -9,11 +9,12 @@ function operacaoDeConta(PDO $db,string $operation,array $p): array {
   }
   $stmt=$db->prepare('SELECT id,password_hash,email_verified_at,disabled_at,session_version FROM accounts WHERE email=?');$stmt->execute([$email]);return ['ok'=>true,'account'=>$stmt->fetch()?:null];
  }
- if($operation==='account.google'){
+ if(in_array($operation,['account.google','account.google_invite'],true)){
   $subject=$p['subject']??null;$email=$p['email']??null;$name=$p['name']??null;
   if(!is_string($subject)||strlen($subject)<1||strlen($subject)>255||!is_string($email)||!filter_var($email,FILTER_VALIDATE_EMAIL)||strlen($email)>254||!is_string($name)||strlen($name)>640)throw new FalhaDeAcesso(422,'Conta inválida.');
   $stmt=$db->prepare('SELECT id,session_version,disabled_at FROM accounts WHERE google_subject=?');$stmt->execute([$subject]);$account=$stmt->fetch();
-  if(!$account){
+   if(!$account){
+     // A identidade Google pode entrar sem convite. O vínculo é autorizado em vincularConvite.
    $stmt=$db->prepare('SELECT id FROM accounts WHERE email=?');$stmt->execute([$email]);if($stmt->fetch())throw new FalhaDeAcesso(409,'Use a senha da conta. Vinculação Google exige verificação separada.');
    try{$stmt=$db->prepare('INSERT INTO accounts (email,display_name,google_subject,email_verified_at) VALUES (?,?,?,UTC_TIMESTAMP())');$stmt->execute([$email,mb_substr($name,0,160),$subject]);}
    catch(PDOException $e){if($e->getCode()==='23000')throw new FalhaDeAcesso(409,'Conta já cadastrada. Entre novamente.');throw $e;}

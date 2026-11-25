@@ -30,8 +30,8 @@ export const orientacoes = [
   { id: "traje", pergunta: "Qual será o traje?", resposta: "Vamos compartilhar aqui o traje escolhido para a celebração.", pendente: true },
   { id: "chegada", pergunta: "Onde será a cerimônia e a recepção?", resposta: "Celebraremos no DellaTorres Eventos, em Mairiporã — SP. A recepção será no mesmo local, após a cerimônia das 13h30.", pendente: false },
   { id: "transporte", pergunta: "Como chegar e onde se hospedar?", resposta: "Endereço completo, opções de acesso e sugestões de hospedagem serão incluídos após confirmação.", pendente: true },
-  { id: "familia", pergunta: "Como funciona a confirmação da família?", resposta: "Cada convite terá seu próprio link ou código. A confirmação será individual para as pessoas incluídas no convite.", pendente: false },
-  { id: "prazo", pergunta: "Até quando posso confirmar?", resposta: "O prazo exato será informado aqui e no convite. Nossa meta de organização é fevereiro, com dia e ano ainda a definir.", pendente: true },
+  { id: "familia", pergunta: "Como funciona a confirmação da família?", resposta: "Abra o link privado que recebeu. Uma pessoa assume o convite e confirma a presença de cada integrante da família.", pendente: false },
+  { id: "prazo", pergunta: "Até quando posso confirmar?", resposta: "O prazo será informado no seu convite assim que estiver definido.", pendente: true },
 ] as const;
 
 export interface PresenteItem {

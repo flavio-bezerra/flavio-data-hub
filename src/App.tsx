@@ -2,25 +2,34 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SaveTheDate from "./pages/SaveTheDate";
 import NotFound from "./pages/NotFound";
 import ConfirmacaoPresenca from "@/features/presenca/ConfirmacaoPresenca";
+import MeuConvite from "@/features/presenca/MeuConvite";
+import PainelDaOrganizacao from "@/features/administracao/PainelDaOrganizacao";
+import PainelDeConvidados from "@/features/administracao/PainelDeConvidados";
 import PosicaoDaPagina from "@/features/casamento/PosicaoDaPagina";
 import FormularioDeAcesso from "@/features/autenticacao/FormularioDeAcesso";
-import ChatSidebar from "@/features/chat/ChatSidebar";
 
 import AssistenteDaFesta from "@/features/assistente/AssistenteDaFesta";
+import Cabecalho from "@/features/casamento/Cabecalho";
+import { Outlet } from "react-router-dom";
 import MemoriaDoAssistente from "@/features/administracao/MemoriaDoAssistente";
 
 const App = () => (
   <BrowserRouter>
     <PosicaoDaPagina />
-    <AssistenteDaFesta />
+    {import.meta.env.VITE_ASSISTENTE_VISIVEL === 'true' && <AssistenteDaFesta />}
     <Routes>
       <Route path="/" element={<SaveTheDate />} />
+      <Route element={<><Cabecalho /><Outlet /></>}>
+      <Route path="/administracao" element={<PainelDaOrganizacao />} />
       <Route path="/administracao/assistente" element={<MemoriaDoAssistente />} />
       <Route path="/acesso" element={<FormularioDeAcesso />} />
+      <Route path="/meu-convite" element={<MeuConvite />} />
+      <Route path="/administracao/convidados" element={<PainelDeConvidados />} />
       <Route path="/convite/:codigo" element={<ConfirmacaoPresenca />} />
       <Route path="*" element={<NotFound />} />
+      </Route>
     </Routes>
-    <ChatSidebar />
+
   </BrowserRouter>
 );
 

@@ -1,65 +1,60 @@
-import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { z } from "zod";
-import EntrarComGoogle from "./EntrarComGoogle";
+import { useCallback, useState } from 'react';
+import useSessaoDeAcesso from './SessaoDeAcesso';
+import { Link, Navigate } from 'react-router-dom';
+import { z } from 'zod';
+import { Button } from '@/components/ui/button';
+import EntrarComGoogle from './EntrarComGoogle';
 
-const sessionSchema = z.object({ ok: z.literal(true), account: z.object({ id: z.number(), name: z.string(), administrator: z.boolean().optional() }).nullable(), csrf: z.string(), google_client_id: z.string(), google_nonce: z.string() });
-type Session = z.infer<typeof sessionSchema>;
-type Action = "login" | "register" | "reset_request" | "verify_email" | "reset_password";
 
-export default function FormularioDeAcesso() {
-  const [session, setSession] = useState<Session | null>(null);
-  const [action, setAction] = useState<Action>("login");
-  const [token, setToken] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+
+
+export default function FormularioDeAcesso({ codigo }: { codigo?: string | null }) {
+  const {session, loading, refresh} = useSessaoDeAcesso();
+  const [entrouAgora, setEntrouAgora] = useState(false);
+  const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const loadSession = useCallback(async () => {
-    try {
-      const response = await fetch('/api/auth.php', { credentials: 'same-origin', headers: { Accept: 'application/json' }, cache: 'no-store' });
-      if (!response.ok) throw new Error('Cadastro ainda não habilitado. A confirmação demonstrativa continua disponível.');
-      setSession(sessionSchema.parse(await response.json()));
-    } catch (failure) { setError(failure instanceof Error ? failure.message : 'Serviço indisponível.'); }
-    finally { setLoading(false); }
-  }, []);
-  useEffect(() => {
-    const fragment = new URLSearchParams(location.hash.slice(1));
-    const requested = fragment.get('action');
-    if (requested === 'verify_email' || requested === 'reset_password') { setAction(requested); setToken(fragment.get('token') ?? ''); history.replaceState(null, '', location.pathname); }
-    void loadSession();
-  }, [loadSession]);
+
   const submit = useCallback(async (payload: Record<string, string>) => {
     if (!session || busy) return;
-    setBusy(true); setError(''); setMessage('');
+    setBusy(true); setError('');
     try {
       const response = await fetch('/api/auth.php', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': session.csrf }, body: JSON.stringify(payload) });
-      const result = z.object({ ok: z.boolean(), message: z.string().optional() }).parse(await response.json());
-      if (!response.ok || !result.ok) throw new Error(result.message ?? 'Não foi possível concluir.');
-      setToken(''); setMessage(result.message ?? (payload.action === 'logout' ? 'Você saiu da conta.' : 'Operação concluída.'));
-      window.dispatchEvent(new Event("casamento-session"));
-      await loadSession();
-      if (payload.action === 'verify_email' || payload.action === 'reset_password') setAction('login');
-    } catch (failure) { setError(failure instanceof Error ? failure.message : 'Serviço indisponível.'); }
+      const result = z.object({ ok: z.boolean(), message: z.string().optional() }).safeParse(await response.json().catch(() => null));
+      if (!response.ok || !result.success || !result.data.ok) throw Error(result.success ? result.data.message ?? 'Não foi possível concluir.' : 'Serviço indisponível.');
+      window.dispatchEvent(new Event('casamento-session'));
+      setEntrouAgora(payload.action !== 'logout');
+      await refresh();
+    } catch (e) { setError(e instanceof Error ? e.message : 'Serviço indisponível.'); }
     finally { setBusy(false); }
-  }, [session, busy, loadSession]);
+  }, [session, busy, refresh]);
   const googleCredential = useCallback(async (credential: string) => { await submit({ action: 'google', credential }); }, [submit]);
-  return <main className="mx-auto max-w-lg px-5 py-16">
-    <h1 className="font-display text-5xl text-primary">Seu acesso</h1>
+  if (entrouAgora && !codigo && session?.account && !session.account.administrator) return <Navigate to="/meu-convite" replace />;
+  return <div className="papelaria-do-convite"><main className="folha-do-convite folha-do-convite--acesso space-y-6">
+    <Link className="inline-flex min-h-11 items-center gap-2 text-sm text-primary underline underline-offset-4" to="/#presenca"><span aria-hidden="true">←</span> Voltar ao casamento</Link>
+    <header className="cabecalho-da-folha">
+      <img src="/monograma-vf.png" width="76" height="52" alt="" />
+      <p className="rubrica-do-convite">Victória &amp; Flávio · 10 de outubro de 2027</p>
+      <h1 className="font-display text-primary">{codigo ? 'Acesse seu convite' : 'Área do convidado'}</h1>
+    </header>
     {loading && <p role="status">Carregando…</p>}
-    {error && <p role="alert" className="mt-6 text-destructive">{error}</p>}
-    {message && <p role="status" className="mt-6">{message}</p>}
-    {session?.account ? <div className="mt-8 space-y-4"><p>Olá, {session.account.name}.</p><p>Vinculação e cadastro do grupo estão em implementação.</p>{session.account.administrator && <Link to="/administracao/assistente" className="underline">Memória do assistente</Link>}<button className="acao-principal cursor-pointer" disabled={busy} onClick={() => void submit({ action: 'logout' })}>Sair</button></div> : session && <>
-      <div className="my-8"><EntrarComGoogle clientId={session.google_client_id} nonce={session.google_nonce} onCredential={googleCredential} /></div>
-      <form className="grid gap-4" onSubmit={event => { event.preventDefault(); const form = event.currentTarget; const values = new FormData(form); const payload: Record<string, string> = { action, token }; for (const [key, value] of values) if (typeof value === 'string') payload[key] = value; form.reset(); void submit(payload); }}>
-        <h2 className="text-2xl">{action === 'login' ? 'E-mail e senha' : action === 'register' ? 'Criar conta' : action === 'verify_email' ? 'Verificar e-mail' : 'Recuperar acesso'}</h2>
-        {action === 'register' && <label>Nome<input className="mt-1 block w-full rounded border p-3" name="name" autoComplete="name" required minLength={2} maxLength={160} /></label>}
-        {action !== 'verify_email' && action !== 'reset_password' && <label>E-mail<input className="mt-1 block w-full rounded border p-3" name="email" type="email" autoComplete="email" required maxLength={254} /></label>}
-        {action !== 'verify_email' && action !== 'reset_request' && <label>Senha<input className="mt-1 block w-full rounded border p-3" name="password" type="password" autoComplete={action === 'login' ? 'current-password' : 'new-password'} required minLength={action === 'login' ? 1 : 12} maxLength={128} /></label>}
-        <button className="acao-principal cursor-pointer" disabled={busy}>{busy ? 'Aguarde…' : action === 'login' ? 'Entrar' : action === 'register' ? 'Criar conta' : action === 'verify_email' ? 'Verificar e-mail' : action === 'reset_password' ? 'Salvar nova senha' : 'Enviar link'}</button>
-      </form>
-      <div className="mt-6 flex flex-wrap gap-5">{([['login','Entrar'],['register','Criar conta'],['reset_request','Esqueci minha senha']] as const).map(([value,label]) => <button className="cursor-pointer underline" key={value} disabled={busy} onClick={() => { setAction(value); setError(''); setMessage(''); }}>{label}</button>)}</div>
+    {(error || (!loading && !session)) && <p role="alert" className="text-destructive">{error || 'O acesso está indisponível no momento. Tente novamente mais tarde.'}</p>}
+    {session?.account ? <>
+      <p>Olá, {session.account.name}.</p>
+      <section className="space-y-3 border-t py-4"><h2 className="font-display text-3xl">Meu convite</h2><p>Consulte os convidados da sua família, confirme a presença e recupere seu comprovante.</p><Button asChild><Link to="/meu-convite">Abrir meu convite</Link></Button></section>
+      {session.account.administrator && <section className="space-y-3 border-t py-4"><h2 className="font-display text-3xl">Organização</h2><div className="flex flex-wrap gap-2"><Button variant="outline" asChild><Link to="/administracao">Abrir painel da organização</Link></Button><Button variant="outline" asChild><Link to="/administracao/assistente">Memória e logística</Link></Button></div></section>}
+      <footer className="border-t pt-5">
+        <Button type="button" variant="outline" disabled={busy} onClick={() => void submit({ action: 'logout' })}>Sair da conta</Button>
+      </footer>
+    </> : session && <>
+      <p>{codigo ? 'Entre na sua conta para continuar com o convite que você recebeu.' : 'Entre na sua conta para acessar seu convite e confirmar presença.'}</p>
+      {session.google_client_id && <EntrarComGoogle clientId={session.google_client_id} nonce={session.google_nonce} onCredential={googleCredential} />}
+      {import.meta.env.DEV && session.fixture_login && <form className="grid max-w-sm gap-3 rounded border p-4" onSubmit={e => { e.preventDefault(); const dados = new FormData(e.currentTarget); void submit({ action:'fixture_login', email:String(dados.get('email')).trim().toLowerCase(), password:String(dados.get('password')) }); }}>
+        <p className="text-sm text-muted-foreground">Ambiente local · contas fictícias</p>
+        <label>E-mail<input className="block min-h-11 w-full rounded border p-2" type="email" name="email" autoComplete="username" required /></label>
+        <label>Senha<input className="block min-h-11 w-full rounded border p-2" type="password" name="password" autoComplete="current-password" required /></label>
+        <Button disabled={busy}>Entrar</Button>
+      </form>}
     </>}
-    <Link className="mt-8 inline-flex min-h-11 items-center underline" to="/#presenca">Voltar ao site</Link>
-  </main>;
+
+  </main></div>;
 }

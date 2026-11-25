@@ -5,16 +5,20 @@ require_once dirname(__DIR__).'/administracao.php';require_once dirname(__DIR__)
 require_once dirname(__DIR__).'/assistente/contexto-da-festa.php';
 require_once dirname(__DIR__).'/assistente/administracao-memoria.php';require_once dirname(__DIR__).'/assistente/administracao-contexto.php';
 require_once __DIR__.'/sessoes.php';require_once __DIR__.'/contas.php';
-function executarOperacoesDaPonte(string $private): never {
+require_once dirname(__DIR__).'/importacao-convites.php';
+require_once dirname(__DIR__).'/prazo-de-presenca.php';
+function executarOperacoesDaPonte(string $private, string $environment='pilot'): never {
  try{
   if(strtolower(explode(';',$_SERVER['CONTENT_TYPE']??'')[0])!=='application/json')throw new FalhaDeAcesso(415,'Envie JSON.');
   $raw=file_get_contents('php://input',false,null,0,65537);if(strlen($raw)>65536)throw new FalhaDeAcesso(413,'Solicitação muito grande.');
   $body=json_decode($raw,true,32,JSON_THROW_ON_ERROR);if(!is_array($body)||array_is_list($body)||array_diff(array_keys($body),['operation','session_token','payload','client_bucket']))throw new FalhaDeAcesso(422,'Corpo inválido.');
-  $allowed=['session.read','session.create','session.rotate','session.revoke','rate.limit','account.google','chat.context','memory.dispatch','logistics.dispatch','invitation.dispatch','rsvp.save'];
+  $allowed=['session.read','session.create','session.rotate','session.revoke','rate.limit','account.google','account.google_invite','chat.context','memory.dispatch','logistics.dispatch','invitation.dispatch','rsvp.save'];
   $operation=$body['operation']??null;$p=$body['payload']??null;$token=$body['session_token']??null;
   if(!in_array($operation,$allowed,true)||!is_array($p)||(!empty($p)&&array_is_list($p))||!is_string($token))throw new FalhaDeAcesso(422,'Operação inválida.');
   // Isolado do banco usado pela integração existente; nunca fazer fallback.
-  $config=require $private.'/database.pilot.php';$dsn=sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s',$config['host'],(int)$config['port'],$config['database'],$config['charset']);
+  $databaseFile=match($environment){'pilot'=>'database.pilot.php','event'=>'database.event.php',default=>throw new RuntimeException('Ambiente inválido.')};
+   if(($operation==='account.google_invite'&&$environment!=='event')||($operation==='account.google'&&$environment!=='pilot'))throw new FalhaDeAcesso(503,'O acesso não está disponível no momento.');
+   $config=require $private.'/'.$databaseFile;$dsn=sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s',$config['host'],(int)$config['port'],$config['database'],$config['charset']);
   $db=new PDO($dsn,$config['username'],$config['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);$db->exec("SET time_zone='+00:00'");
   $result=despacharOperacao($db,$operation,$token,$p,$body['client_bucket']??'');
   echo json_encode($result,JSON_THROW_ON_ERROR|JSON_UNESCAPED_UNICODE);
@@ -51,7 +55,10 @@ function despacharOperacao(PDO $db,string $operation,string $token,array $p,stri
  if($operation==='logistics.dispatch')return administrarContexto($db,$id,$p);
  if($operation==='invitation.dispatch'){
   if(($p['action']??'')==='claim')return vincularConvite($db,$id,(string)($p['token']??''));
-  if(($p['action']??'')==='read')return ['ok'=>true]+lerGrupo($db,$id,(int)($p['group_id']??0));
+   if(($p['action']??'')==='read')return ['ok'=>true]+lerGrupo($db,$id,(int)($p['group_id']??0));
+   if(($p['action']??'')==='mine')return listarMeusConvites($db,$id);
+    if(in_array($p['action']??null,['import_preview','import_apply'],true))return importarConvites($db,$id,$p);
+    if(in_array($p['action']??null,['admin_overview','admin_deadline_read','admin_deadline_update','admin_list','admin_create','admin_rotate','admin_transfer','admin_detail','admin_guest_add','admin_guest_remove','admin_guest_rename'],true))return administrarConvites($db,$id,$p);
   throw new FalhaDeAcesso(400,'Ação indisponível.');
  }
  if($operation==='rsvp.save')return salvarConfirmacao($db,$id,$p);

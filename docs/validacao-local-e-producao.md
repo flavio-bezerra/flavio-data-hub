@@ -1,0 +1,31 @@
+# Área do convidado: execução local e publicação
+
+## Validação local, sem conexão com serviços reais
+
+Na raiz, execute `npm run dev:convites`. Se a porta 8080 estiver ocupada, use `npm run dev:convites -- --port 8081`. O modo escuta em `127.0.0.1`, bloqueia requisições de API que não sejam do loopback e não encaminha chamadas a serviços externos. Os dados ficam em memória e são perdidos ao reiniciar. Use somente dados fictícios. Execute `node dev/validar-convites-locais.mjs` para testar o contrato do simulador em processo separado.
+
+| Conta | Perfil |
+| --- | --- |
+| `organizacao@example.test` | Administração |
+| `convidado@example.test` | Responsável da Família Jardim |
+| `outra-familia@example.test` | Segunda conta para isolamento/transferência |
+
+A senha comum é `Convite-local-2027`, exclusiva do simulador Vite. A Família Jardim usa 64 caracteres `a`, e a Família Oliveira usa 64 caracteres `b`. Acesse `/meu-convite#codigo=<código>` ou gere um link no painel. No painel, gere o acesso de um grupo e confirme que **Copiar link** e **Copiar código** representam o mesmo convite. Valide o primeiro acesso pelos dois caminhos: abra o link diretamente ou faça login em **Área do convidado** e, só em **Meu convite**, cole o código e continue. O código deve permanecer disponível após o login, sem vincular nada automaticamente; só **Assumir este convite** deve concluir o vínculo. Uma conta que já entrou pode informar outro código em **Meu convite**. Antes de vincular, gerar outro acesso deve invalidar tanto o link quanto o código anteriores. Confirme as duas pessoas, revise e emita o comprovante. Em outro perfil do navegador, confirme que a segunda conta não pode assumir ou consultar a mesma família. Pelo painel, faça a prévia da Família Aurora, importe e repita para verificar que não duplica. Admin pode corrigir nomes e gerir links. O assistente, a logística/memória e o pagamento não são simulados neste modo.
+
+## Operação diária pelo painel
+
+Entre com a conta da organização e abra `/administracao`. Os totais são do evento inteiro; **Sem responsável** pode coincidir com **Sem comprovante**. Para importar, abra **Gerenciar convidados → Importar convidados**, baixe o modelo CSV, preencha uma linha por pessoa e revise antes de aplicar. Use UTF-8 com delimitador `;` ou `,`, até 250 pessoas e 16 KiB por lote, sem dividir famílias entre arquivos. Preserve os IDs como texto na planilha. O upload não grava a lista em staging; o servidor recalcula a prévia na aplicação e bloqueia mudanças concorrentes. Grupos já existentes nunca são sobrescritos pela importação. A opção de revisão da tabela MySQL continua disponível.
+
+Em **Prazo de confirmação**, revise e confirme a data no horário de São Paulo. Prazo no passado fecha as edições; campo limpo remove o prazo e reabre as edições. Comprovantes existentes continuam consultáveis. No simulador, importe apenas dados fictícios e teste fechar/reabrir o prazo enquanto uma família já tem comprovante.
+
+## Ativação de produção (não executada)
+
+Para publicar estas melhorias, além do build do frontend, atualize `server/administracao.php`, `server/importacao-convites.php`, `server/prazo-de-presenca.php` e `server/ponte/operacoes.php` juntos em `casamento-private`. Não há nova migração além das já documentadas. Homologue primeiro em banco separado; não use dados reais no simulador.
+
+1. Antes de publicar, valide o RSVP da revisão atual com Google e dados fictícios no banco piloto: login, importação, vínculo, conferência de prazo, comprovante, atualização, concorrência de vínculo e isolamento. Use o roteiro em `handoff-piloto-google.md`.
+2. Configure um banco **dedicado ao evento** com as migrações 001–004 e conta de serviço restrita. Em `casamento-private`, crie `database.event.php` com a mesma estrutura de `database.pilot.php`, mas com o banco e o usuário dedicados. Nunca aponte para o banco das integrações legadas. Instale os módulos PHP privados da mesma revisão e publique o frontend e Vercel de forma coordenada.
+3. Com o acesso desligado e antes de distribuir links, altere `access_environment` no `application.php` privado para `event`. Na Vercel, remova `ACCESS_GOOGLE_PILOT_EMAIL` e configure `ACCESS_GOOGLE_INVITES_ENABLED=true`. Se houver desalinhamento, o novo login é recusado. O modo do evento permite entrar com uma conta Google verificada sem código. A conta não tem acesso ao cadastro de convidados nem ao contexto do chat até vincular explicitamente um convite privado. A posse do código autoriza a vinculação; não verifica a identidade nominal da pessoa convidada. Publique a Vercel, `server/ponte/contas.php`, `server/assistente/contexto-da-festa.php` e o frontend de forma coordenada: o frontend novo não envia código ao login.
+4. Para inicializar o primeiro administrador, configure `bootstrap_admin_email` em `application.php` privado e, no terminal autorizado da hospedagem, execute `php bootstrap-administrador.php --gerar-link-de-configuracao`. Abra o link retornado no domínio oficial e entre com a conta Google da organização, **sem vincular o convite interno**. Na pasta do script, execute `php bootstrap-administrador.php --confirmar` para conceder o papel à conta verificada e invalidar o link interno. Confira o painel em `/acesso` e remova `bootstrap_admin_email` da configuração quando o bootstrap terminar. Valide o processo antes de liberar o cadastro real. Confirme prazo efetivo, finalidade/aviso de privacidade e descarte dos contatos; então importe a lista real e compartilhe links de forma privada.
+5. Habilite `VITE_PAGAMENTOS_VISIVEIS` ou `VITE_ASSISTENTE_VISIVEL` somente após validar cada serviço. Essas flags só controlam o frontend, não autorizam chamadas às APIs. O assistente na Vercel depende adicionalmente de `ASSISTANT_ENABLED`; mantenha-o desligado com dados reais até revisar provedor e retenção. Confirme a rota de pagamento e validação real com o provedor antes de exibir opções de pagamento.
+
+Desligar acesso na Vercel e na ponte interrompe novas chamadas; não altera o banco. Para voltar ao piloto, desligue seu acesso antes de mudar o arquivo de banco e o modo Google, e reative somente após validar a configuração. Não use o piloto como fallback de produção.

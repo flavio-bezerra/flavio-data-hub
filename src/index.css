@@ -572,3 +572,39 @@
     animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 }
+
+/* Área privada: a aquarela da presença emoldura a folha; o painel é um caderno de trabalho. */
+.papelaria-do-convite {
+  min-height: calc(100svh - 4.25rem);
+  padding: clamp(1.5rem, 5vw, 4rem) clamp(.75rem, 4vw, 2.5rem);
+  background: #fff url('/rebranding/presenca-pintura.webp') center top / 100% auto no-repeat;
+}
+.folha-do-convite { width: min(100%, 44rem); margin: auto; padding: clamp(1rem, 5vw, 3rem); background: #fff; border-block: 1px solid #d3dfea; overflow-wrap: anywhere; }
+.folha-do-convite--acesso { width: min(100%, 36rem); }
+.cabecalho-da-folha { display: grid; justify-items: center; gap: .55rem; text-align: center; border-bottom: 1px solid #d3dfea; padding-bottom: 1.25rem; }
+.cabecalho-da-folha img { object-fit: contain; }
+.cabecalho-da-folha h1 { font-size: clamp(2.2rem, 7vw, 3.7rem); line-height: 1.05; }
+.rubrica-do-convite { font-size: .78rem; letter-spacing: .09em; text-transform: uppercase; color: #4d5a49; }
+.etapa-do-convite { background: #f6f8f5; border-inline-start: 3px solid #789080; }
+.linha-da-familia { min-width: 0; border-top: 1px solid #d3dfea; padding-block: .6rem 1rem; }
+.folha-do-convite input:not([type=radio]), .caderno-da-organizacao input:not([type=file]), .caderno-da-organizacao select, .painel-do-grupo input { font-size: 1rem; }
+.folha-do-convite button, .caderno-da-organizacao button, .painel-do-grupo button { min-height: 44px; }
+.folha-do-convite button:enabled, .caderno-da-organizacao button:enabled, .painel-do-grupo button:enabled { cursor: pointer; }
+.cabecalho-da-organizacao { border-top: 3px solid #34506a; padding-top: 1rem; }
+.faixa-de-indicadores { border-top: 1px solid #d3dfea; border-left: 1px solid #d3dfea; background: #fff; }
+.lista-de-convidados { background: #fff; }
+.lista-de-convidados th, .lista-de-convidados td { padding: .5rem .65rem; vertical-align: middle; }
+.lista-de-convidados thead { background: #e9eff3; color: #34506a; }
+.lista-de-convidados tbody tr { border-bottom: 1px solid #d3dfea; }
+.lista-de-convidados tbody tr:nth-child(even) { background: #f7f9fa; }
+.lista-de-convidados tbody tr:focus-within { background: #edf3f5; }
+.situacao-convite { display: inline-block; background: #f3efe6; color: #4d4536; padding: .18rem .4rem; font-size: .85rem; line-height: 1.15; overflow-wrap: anywhere; }
+.situacao-convite--confirmado { background: #e5efe7; color: #294a34; }
+.painel-do-grupo { z-index: 100; }
+.painel-do-grupo > button:last-child { min-width: 44px; display: grid; place-items: center; top: .8rem; right: .8rem; }
+@media (max-width: 767px) {
+  .papelaria-do-convite { padding-top: 3.5rem; background-image: url('/rebranding/mobile/presenca.webp'); }
+  .lista-de-convidados th, .lista-de-convidados td { padding: .45rem .4rem; }
+}
+@media (prefers-reduced-motion: reduce) { .painel-do-grupo { animation: none !important; transition: none !important; } }
+@media print { .papelaria-do-convite, .folha-do-convite { background: #fff; border: 0; padding: 0; } }

@@ -2,6 +2,7 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import fs from "fs";
+import { convitesLocais } from "./dev/convites-locais.mjs";
 
 function backendDevApiPlugin(): Plugin {
   return {
@@ -11,7 +12,7 @@ function backendDevApiPlugin(): Plugin {
         const url = new URL(req.url || "", "http://localhost");
 
         // Only intercept our custom API routes
-        if (url.pathname.startsWith("/api/pagamento/") || url.pathname === "/api/openrouter/chat") {
+        if (url.pathname.startsWith("/api/pagamento/")) {
           // Load env variables from .env.local (already done for payment routes)
           const envFile = path.resolve(process.cwd(), ".env.local");
           if (fs.existsSync(envFile)) {
@@ -72,9 +73,6 @@ function backendDevApiPlugin(): Plugin {
             } else if (url.pathname === "/api/pagamento/cartao") {
               const { default: handler } = await import("./backend/api/pagamento/cartao.js");
               await handler(mockReq, mockRes);
-            } else if (url.pathname === "/api/openrouter/chat") {
-              const { default: handler } = await import("./backend/api/openrouter/chat.js");
-              await handler(mockReq, mockRes);
             } else {
               next();
             }
@@ -95,13 +93,16 @@ function backendDevApiPlugin(): Plugin {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig(() => ({
+export default defineConfig(({ command, mode }) => {
+  const local = command === 'serve' && mode === 'convites-local';
+  return {
   base: '/',
   server: {
-    host: "::",
+    host: local ? '127.0.0.1' : '::',
+    strictPort: local,
     port: 8080,
   },
-  plugins: [react(), backendDevApiPlugin()],
+  plugins: [react(), local ? { name: 'convites-ficticios', configureServer(server) { server.middlewares.use(convitesLocais({ listaGrande: true })); } } : backendDevApiPlugin()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -111,4 +112,5 @@ export default defineConfig(() => ({
     // Garante que arquivos públicos (incluindo .htaccess) sejam copiados
     copyPublicDir: true,
   },
-}));
+  };
+});

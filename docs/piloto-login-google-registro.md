@@ -123,7 +123,7 @@ O teste de login via Google foi realizado com sucesso no domínio `https://casam
   - `google_client_id` válido (formato `*.apps.googleusercontent.com`)
   - `google_nonce` gerado corretamente
   - Cookie `casamento_access` definido
-- Página `/acesso` exibe: *"Olá, Flavio Menegueço Bezerra."*
+- Página `/acesso` exibe a saudação da conta autenticada.
 - Botão de "Entrar com Google" renderizado após autenticação
 - Mensagem exibida: *"Vinculação e cadastro do grupo estão em implementação."*
 
@@ -159,18 +159,18 @@ O teste de login via Google foi realizado com sucesso no domínio `https://casam
 
 **Resultado: SUCESSO**
 
-O usuário `flaviomenegueco@gmail.com` foi cadastrado como administrador no banco piloto e conseguiu acessar a área administrativa.
+A conta autorizada do piloto foi cadastrada como administradora no banco piloto e conseguiu acessar a área administrativa.
 
 ### Evidências do teste
 
-- Conta `flaviomenegueco@gmail.com` inserida na tabela `administrators` do banco `hg8dcc78_piloto_casamento` via cPanel → phpMyAdmin
+- Conta do piloto inserida na tabela `administrators` do banco piloto via cPanel → phpMyAdmin
 - Página `/administracao/assistente` acessível com a conta logada
 - Painel "Memória do assistente" exibido corretamente
 
 ### Como foi feito
 
 1. No cPanel → phpMyAdmin, banco `hg8dcc78_piloto_casamento`:
-   - Executado `SELECT id FROM accounts WHERE email = 'flaviomenegueco@gmail.com'` para descobrir o `account_id`
+   - Consultado o `account_id` da conta já verificada, usando o e-mail somente no ambiente privado.
    - Executado `INSERT INTO administrators (account_id, created_at) VALUES (<account_id>, UTC_TIMESTAMP())`
 
 ### Observação
@@ -194,3 +194,10 @@ A tabela `administrators` já existia no banco piloto (criada pela migração 00
 1. ✅ Piloto — banco piloto dedicado (feito e funcionando)
 2. Homologação — testar conta não autorizada, logout, persistência de sessão
 3. Após homologação separada — avaliar criação de tabelas no banco de produção, somente com autorização explícita
+
+## 11. Próxima rodada — convites e presença
+
+- As rotas `/administracao/convidados` e `/meu-convite` usam as APIs existentes; nenhuma função Vercel nem migração nova é necessária. A rota de demonstração permanece separada.
+- Após uma publicação autorizada do frontend, atualizar **juntos** apenas `server/administracao.php`, `server/convites.php` e `server/ponte/operacoes.php` em `casamento-private/server/` (respeitando a subpasta `ponte/`). Use o commit de código homologado como fonte; os ZIPs anteriores não contêm essas operações. Preserve a configuração em uso.
+- No banco piloto: criar uma família fictícia via painel, copiar o link, vincular explicitamente, salvar presença, recarregar e conferir os totais. Conferir bloqueio sem sessão e de conta não administradora, reemissão de link após extravio e recusa do link anterior. A transferência exige uma segunda conta verificada no banco piloto; teste de duas contas é uma etapa separada da configuração Google de conta única. Após transferir, confira que o responsável anterior não pode ler ou salvar.
+- Manter login por senha, chat e dados alimentares fora desta rodada; nenhuma alteração no banco de produção.

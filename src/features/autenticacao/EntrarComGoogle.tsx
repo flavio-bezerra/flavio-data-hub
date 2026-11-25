@@ -35,5 +35,5 @@ export default function EntrarComGoogle({ clientId, nonce, onCredential }: {
     return () => { disposed = true; script?.removeEventListener('load', render); script?.removeEventListener('error', fail); googleWindow.google?.accounts.id.cancel(); };
   }, [clientId, nonce, onCredential]);
   if (!clientId) return <p>Google ainda não configurado.</p>;
-  return <div><div ref={container} />{error && <p role="alert">Google indisponível. Use e-mail e senha.</p>}</div>;
+  return <div><div ref={container} />{error && <p role="alert">Não foi possível carregar o acesso por Google. Verifique sua conexão e recarregue a página.</p>}</div>;
 }
