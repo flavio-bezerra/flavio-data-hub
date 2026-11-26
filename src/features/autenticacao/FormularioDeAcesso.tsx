@@ -76,8 +76,10 @@ export default function FormularioDeAcesso({ codigo }: { codigo?: string | null 
           ) : (
             <>
               <p>{codigo ? 'Entre na sua conta para continuar com o convite que você recebeu.' : 'Entre na sua conta para acessar seu convite e confirmar presença.'}</p>
-              {session?.google_client_id && <EntrarComGoogle clientId={session.google_client_id} nonce={session.google_nonce} onCredential={googleCredential} />}
-              <form className="grid max-w-sm gap-3 rounded border p-4 mt-4" onSubmit={e => {
+              <div className="flex justify-center">
+                {session?.google_client_id && <EntrarComGoogle clientId={session.google_client_id} nonce={session.google_nonce} onCredential={googleCredential} />}
+              </div>
+              <form className="grid max-w-sm gap-3 rounded border p-4 mt-4 mx-auto" onSubmit={e => {
                 e.preventDefault();
                 const dados = new FormData(e.currentTarget);
                 void submit({ action: 'email_login', email: String(dados.get('email')).trim().toLowerCase(), senha: String(dados.get('senha')) });
@@ -112,7 +114,7 @@ export default function FormularioDeAcesso({ codigo }: { codigo?: string | null 
             <h1 className="font-display text-primary">Criar conta</h1>
           </header>
           {error && <p role="alert" className="text-destructive">{error}</p>}
-          <form className="grid max-w-sm gap-3 rounded border p-4" onSubmit={e => {
+          <form className="grid max-w-sm gap-3 rounded border p-4 mx-auto" onSubmit={e => {
             e.preventDefault();
             const dados = new FormData(e.currentTarget);
             void submit({
@@ -151,7 +153,7 @@ export default function FormularioDeAcesso({ codigo }: { codigo?: string | null 
             <h1 className="font-display text-primary">Esqueci minha senha</h1>
           </header>
           {error && <p role="alert" className="text-destructive">{error}</p>}
-          <form className="grid max-w-sm gap-3 rounded border p-4" onSubmit={e => {
+          <form className="grid max-w-sm gap-3 rounded border p-4 mx-auto" onSubmit={e => {
             e.preventDefault();
             const dados = new FormData(e.currentTarget);
             void submit({ action: 'esqueci_senha', email: String(dados.get('email')).trim().toLowerCase() });
@@ -213,7 +215,7 @@ export default function FormularioDeAcesso({ codigo }: { codigo?: string | null 
           </header>
           {error && <p role="alert" className="text-destructive">{error}</p>}
           {!loading && token && (
-            <form className="grid max-w-sm gap-3 rounded border p-4" onSubmit={e => {
+            <form className="grid max-w-sm gap-3 rounded border p-4 mx-auto" onSubmit={e => {
               e.preventDefault();
               const dados = new FormData(e.currentTarget);
               void submit({ action: 'resetar_senha', token, senha: String(dados.get('senha')) });
