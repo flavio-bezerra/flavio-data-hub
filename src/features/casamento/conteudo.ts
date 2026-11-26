@@ -27,11 +27,53 @@ export const secoes = [
 ] as const;
 
 export const orientacoes = [
-  { id: "traje", pergunta: "Qual será o traje?", resposta: "Vamos compartilhar aqui o traje escolhido para a celebração.", pendente: true },
-  { id: "chegada", pergunta: "Onde será a cerimônia e a recepção?", resposta: "Celebraremos no DellaTorres Eventos, em Mairiporã — SP. A recepção será no mesmo local, após a cerimônia das 13h30.", pendente: false },
-  { id: "transporte", pergunta: "Como chegar e onde se hospedar?", resposta: "Endereço completo, opções de acesso e sugestões de hospedagem serão incluídos após confirmação.", pendente: true },
-  { id: "familia", pergunta: "Como funciona a confirmação da família?", resposta: "Abra o link privado que recebeu. Uma pessoa assume o convite e confirma a presença de cada integrante da família.", pendente: false },
-  { id: "prazo", pergunta: "Até quando posso confirmar?", resposta: "O prazo será informado no seu convite assim que estiver definido.", pendente: true },
+  {
+    id: "traje",
+    pergunta: "Qual será o traje?",
+    resposta: `O traje escolhido é <strong>esporte fino</strong>. Mas, queremos que vocês se sintam elegantes e, acima de tudo, muito confortáveis para aproveitar cada momento conosco.<br/><br/>
+Para os <strong>homens</strong>, sugerimos calça social ou de sarja, camisa social ou casual e sapatênis ou sapato casual. Gravata e blazer são totalmente opcionais.<br/><br/>
+Para as <strong>mulheres</strong>, sugerimos vestidos (curtos, midi ou longos), macacões ou conjuntos elegantes em tecidos leves. Como nossa celebração acontecerá em um espaço com gramado, indicamos priorizar saltos mais grossos (como salto bloco) ou plataformas para maior conforto ao caminhar.<br/><br/>
+Sobre cores e tecidos, o evento começa no início da tarde, por isso tecidos fluidos e cores alegres combinam super bem com o clima do dia. Nossas madrinhas estarão vestindo tons de azul e verde, mas sintam-se totalmente à vontade caso queiram usar essas cores também. Apenas pedimos para evitarem o branco e tons muito próximos a ele, por exemplo off-white e bege claro, ou tons que se assemelhem ao branco ao tirar foto.`,
+    pendente: false,
+  },
+  {
+    id: "chegada",
+    pergunta: "Onde e que horas será a cerimônia e a recepção?",
+    resposta: `Celebraremos no <strong>Sítio Della Torre</strong>, em Mairiporã — SP.<br/><br/>
+Nossa cerimônia começará pontualmente às <strong>13h30</strong>, por isso recomendamos que se programem com antecedência para evitar imprevistos no trajeto.<br/><br/>
+A recepção acontecerá no mesmo local, logo após a cerimônia.`,
+    pendente: false,
+  },
+  {
+    id: "transporte",
+    pergunta: "Como chegar, estacionamento e onde se hospedar?",
+    resposta: `O Sítio Della Torre está localizado na <strong>Estrada Municipal Santo Antônio, 270 – Jardim Sandra II, Mairiporã – SP</strong>.<br/><br/>
+Para quem for de carro, a melhor e mais rápida rota de acesso é pela <strong>Rodovia Fernão Dias</strong>.<br/><br/>
+O local conta com <strong>estacionamento pago no espaço</strong>.<br/><br/>
+No entanto, como teremos bebidas alcoólicas na festa, sugerimos priorizar o uso de transporte por aplicativo (como Uber).<br/><br/>
+Também contaremos com um <strong>serviço de van oficial</strong>, com ida e volta, saindo de um hotel parceiro selecionado na região. Em breve divulgaremos aqui o nome do hotel oficial, horários e instruções para reserva. Aguardem mais atualizações.`,
+    pendente: false,
+  },
+  {
+    id: "familia",
+    pergunta: "Como funciona a confirmação da família?",
+    resposta: `Cada família terá um representante responsável pela confirmação de presença.<br/><br/>
+Enviaremos o código de acesso à página de confirmação diretamente para o representante via WhatsApp. Ao acessar, ele deverá preencher os dados completos (nome, documento, telefone e e-mail) de todos os integrantes incluídos no convite.<br/><br/>
+Os demais membros da família também receberão o convite para que fiquem por dentro de todas as informações e detalhes do nosso grande dia, mas toda a confirmação será centralizada no representante.`,
+    pendente: false,
+  },
+  {
+    id: "prazo",
+    pergunta: "Até quando posso confirmar?",
+    resposta: `Pedimos que a confirmação de presença seja feita até o dia <strong>10/08/2027</strong> (2 meses antes do casamento). A confirmação é super rápida e deve ser realizada diretamente aqui no site pelo representante da família, utilizando o código exclusivo enviado via WhatsApp.`,
+    pendente: false,
+  },
+  {
+    id: "nao-pode-ir",
+    pergunta: "O que fazer caso não possamos ir?",
+    resposta: `Entendemos que imprevistos acontecem. Por isso, caso a presença já tenha sido confirmada, mas surja algum contratempo que impeça a ida de alguém do convite, pedimos a gentileza de nos avisar o mais breve possível para ajustarmos nossa lista.`,
+    pendente: false,
+  },
 ] as const;
 
 export interface PresenteItem {

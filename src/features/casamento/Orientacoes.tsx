@@ -10,7 +10,12 @@ export default function Orientacoes() {
       <dl className="orientacoes-lista">
         {orientacoes.map((item) => <div key={item.id}>
           <dt>{item.pergunta}</dt>
-          <dd>{item.pendente && <span className="selo-pendente">Em definição</span>}{item.resposta}</dd>
+          <dd
+            className="resposta-orientacao"
+            dangerouslySetInnerHTML={{
+              __html: `${item.pendente ? '<span class="selo-pendente">Em definição</span>' : ''}${item.resposta}`,
+            }}
+          />
         </div>)}
       </dl>
     </section>
