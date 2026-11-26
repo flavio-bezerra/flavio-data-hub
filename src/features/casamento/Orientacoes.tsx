@@ -7,17 +7,17 @@ export default function Orientacoes() {
         <p className="rotulo-herbario">Notas aos convidados</p>
         <h2 id="orientacoes-titulo" className="titulo-secao">Para nossos convidados</h2>
       </div>
-      <dl className="orientacoes-lista">
-        {orientacoes.map((item) => <div key={item.id}>
-          <dt>{item.pergunta}</dt>
-          <dd
-            className="resposta-orientacao"
-            dangerouslySetInnerHTML={{
+      <div className="orientacoes-grid">
+        {orientacoes.map((item, index) => (
+          <div key={item.id} className="orientacao-card">
+            <div className="orientacao-numero">{`0${index + 1}`}</div>
+            <h3 className="orientacao-pergunta">{item.pergunta}</h3>
+            <div className="orientacao-resposta" dangerouslySetInnerHTML={{
               __html: `${item.pendente ? '<span class="selo-pendente">Em definição</span>' : ''}${item.resposta}`,
-            }}
-          />
-        </div>)}
-      </dl>
+            }} />
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
