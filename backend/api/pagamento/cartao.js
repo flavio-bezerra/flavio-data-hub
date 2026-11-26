@@ -44,8 +44,8 @@ const CATALOGO_PADRAO = [
     "valor": 300
   },
   {
-    "id": "mounjaro",
-    "titulo": "Mounjaro para a noiva",
+    "id": "pilates-pos-ressaca",
+    "titulo": "Pilates pós-ressaca",
     "valor": 350
   },
   {
@@ -93,6 +93,28 @@ function limparDigitos(str) {
   return str.replace(/\D/g, '');
 }
 
+function calcularOpcoes(item, valor, taxas, agora = Date.now()) {
+  const fixo = taxas?.operationValue;
+  const vencimento = taxas?.discountExpiration;
+  const data = typeof vencimento === 'string' ? vencimento.replace(' ', 'T') : '';
+  const expira = Date.parse(/T.*(?:Z|[+-]\d\d:?\d\d)$/i.test(data) ? data : `${data.length === 10 ? `${data}T00:00:00` : data}-03:00`);
+  if (typeof fixo !== 'number' || !Number.isFinite(fixo) || fixo < 0 || (vencimento && !Number.isFinite(expira))) throw new Error('Taxas inválidas');
+  const centavos = Math.round((item.livre ? valor : item.valor) * 100);
+  const fixaCentavos = Math.round(fixo * 100);
+  const minimo = Object.entries({ 1: 10, 2: 60, 3: 90, 6: 150 });
+  return minimo.filter(([, base]) => centavos >= base * 100).map(([chave]) => {
+    const parcelas = Number(chave);
+    const normal = parcelas === 1 ? taxas.oneInstallmentPercentage : taxas.upToSixInstallmentsPercentage;
+    const desconto = parcelas === 1 ? taxas.discountOneInstallmentPercentage : taxas.discountUpToSixInstallmentsPercentage;
+    const percentual = expira > agora && desconto != null ? desconto : normal;
+    if (typeof percentual !== 'number' || !Number.isFinite(percentual) || percentual < 0 || percentual >= 100) throw new Error('Percentual inválido');
+    // R$ líquidos = total - tarifa fixa - percentual aplicado ao total.
+    const totalCentavos = Math.ceil((centavos + fixaCentavos) / (1 - percentual / 100) - 1e-8);
+    if (!Number.isSafeInteger(totalCentavos) || totalCentavos < centavos) throw new Error('Total inválido');
+    return { parcelas, valorBaseCentavos: centavos, acrescimoCentavos: totalCentavos - centavos, totalCentavos };
+  });
+}
+
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
 
@@ -120,8 +142,39 @@ export default async function handler(req, res) {
     numeroEndereco,
     valor,
     parcelas = 1,
-    cartao
+    cartao,
+    acao,
+    totalAceitoCentavos
   } = req.body || {};
+
+  const cotacao = acao === 'cotacao';
+  const item = CATALOGO_PADRAO.find((p) => p.id === presenteId);
+  if (!item) return res.status(400).json({ ok: false, message: 'Presente inválido. Escolha um item da lista.' });
+  const valorNum = Number(valor);
+  if (item.livre && (!Number.isFinite(valorNum) || valorNum < 10 || !Number.isSafeInteger(Math.round(valorNum * 100)))) {
+    return res.status(400).json({ ok: false, message: 'Informe um valor válido a partir de R$ 10,00.' });
+  }
+  const numParcelas = Number(parcelas);
+  if (!cotacao && (![1, 2, 3, 6].includes(numParcelas) || !Number.isSafeInteger(totalAceitoCentavos))) {
+    return res.status(400).json({ ok: false, message: 'Confira o total e o parcelamento antes de pagar.' });
+  }
+
+  const headers = { access_token: token, 'Content-Type': 'application/json', 'User-Agent': 'Casamento-Victoria-Flavio/1.0' };
+  let opcoes;
+  try {
+    const taxasResp = await fetch(`${baseUrl}/myAccount/fees/`, { headers, signal: AbortSignal.timeout(8000) });
+    if (!taxasResp.ok) throw new Error('Taxas indisponíveis');
+    const taxas = await taxasResp.json();
+    opcoes = calcularOpcoes(item, valorNum, taxas?.payment?.creditCard);
+  } catch {
+    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa do cartão. Tente novamente ou escolha outra forma de pagamento.' });
+  }
+  if (cotacao) return res.status(200).json({ ok: true, opcoes });
+  const opcao = opcoes.find((p) => p.parcelas === numParcelas);
+  if (!opcao || opcao.totalCentavos !== totalAceitoCentavos) {
+    return res.status(409).json({ ok: false, message: 'O total ou o parcelamento mudou. Revise o novo valor antes de pagar.' });
+  }
+  const valorFinal = opcao.totalCentavos / 100;
 
   if (!nome || typeof nome !== 'string' || nome.trim().length < 2) {
     return res.status(400).json({ ok: false, message: 'Por favor, informe seu nome completo.' });
@@ -162,25 +215,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, message: 'Código de segurança (CVV) inválido.' });
   }
 
-  const item = CATALOGO_PADRAO.find((p) => p.id === presenteId);
-  if (!item) return res.status(400).json({ ok: false, message: "Presente inválido. Escolha um item da lista." });
-  let valorFinal = item.valor;
-
-  if (item.livre) {
-    const valorNum = Number(valor);
-    if (!valorNum || valorNum < 10) {
-      return res.status(400).json({ ok: false, message: 'O valor mínimo para contribuição é de R$ 10,00.' });
-    }
-    valorFinal = Math.round(valorNum * 100) / 100;
-  }
-
   try {
-    const headers = {
-      access_token: token,
-      'Content-Type': 'application/json',
-      'User-Agent': 'Casamento-Victoria-Flavio/1.0'
-    };
-
     // 1. Localizar ou criar cliente no Asaas
     let customerId = null;
     const searchResp = await fetch(
@@ -221,7 +256,6 @@ export default async function handler(req, res) {
     // 2. Data de vencimento hoje
     const dueDate = new Date().toISOString().split('T')[0];
 
-    const numParcelas = Math.min(Math.max(Number(parcelas) || 1, 1), 12);
 
     const paymentPayload = {
       customer: customerId,

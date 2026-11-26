@@ -31,6 +31,16 @@ interface RespostaBoleto {
   ambiente: "sandbox" | "producao";
 }
 
+interface OpcaoCartao {
+  parcelas: number;
+  valorBaseCentavos: number;
+  acrescimoCentavos: number;
+  totalCentavos: number;
+}
+
+const reais = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+const formatarCentavos = (valor: number) => reais.format(valor / 100);
+
 interface RespostaCartao {
   cobrancaId: string;
   status: string;
@@ -76,6 +86,8 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
   const [validade, setValidade] = useState("");
   const [ccv, setCcv] = useState("");
   const [parcelas, setParcelas] = useState(1);
+  const [cotacao, setCotacao] = useState<{ chave: string; opcoes: OpcaoCartao[]; erro?: string } | null>(null);
+  const [tentativaCotacao, setTentativaCotacao] = useState(0);
   const [cep, setCep] = useState("");
   const [numeroEndereco, setNumeroEndereco] = useState("");
 
@@ -89,6 +101,31 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const valorEfetivo = presente?.livre ? Number(valorLivre) || 0 : presente?.valor || 0;
+  const presenteId = presente?.id;
+  const chaveCotacao = `${metodo}:${presenteId}:${valorEfetivo}:${tentativaCotacao}`;
+  const cotacaoAtual = cotacao?.chave === chaveCotacao ? cotacao : null;
+  const opcaoCartao = cotacaoAtual?.opcoes.find((opcao) => opcao.parcelas === parcelas) ?? cotacaoAtual?.opcoes[0];
+
+  useEffect(() => {
+    if (etapa !== 'formulario' || !presenteId || !Number.isFinite(valorEfetivo) || valorEfetivo < 10) return;
+    const controle = new AbortController();
+    const timer = window.setTimeout(async () => {
+      try {
+        const resp = await fetch(`/api/pagamento/${metodo}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ acao: 'cotacao', presenteId, valor: valorEfetivo }),
+          signal: controle.signal,
+        });
+        const data = await resp.json();
+        if (!resp.ok || !data.ok || !Array.isArray(data.opcoes) || !data.opcoes.length) throw new Error();
+        if (!controle.signal.aborted) setCotacao({ chave: chaveCotacao, opcoes: data.opcoes });
+      } catch {
+        if (!controle.signal.aborted) setCotacao({ chave: chaveCotacao, opcoes: [], erro: 'Não foi possível consultar a tarifa desta forma de pagamento.' });
+      }
+    }, 350);
+    return () => { window.clearTimeout(timer); controle.abort(); };
+  }, [metodo, etapa, presenteId, valorEfetivo, chaveCotacao]);
 
   useEffect(() => {
     const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -142,6 +179,7 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!opcaoCartao) return;
     setMensagemErro("");
     setEtapa("processando");
 
@@ -156,12 +194,16 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
             email,
             cpf,
             mensagem,
-            valor: valorEfetivo
+            valor: valorEfetivo,
+            totalAceitoCentavos: opcaoCartao.totalCentavos
           })
         });
 
         const data = await resp.json();
-        if (!resp.ok || !data.ok) throw new Error(data.message || "Erro ao gerar cobrança Pix.");
+        if (!resp.ok || !data.ok) {
+          if (resp.status === 409 || resp.status === 503) setTentativaCotacao((atual) => atual + 1);
+          throw new Error(data.message || "Erro ao gerar cobrança Pix.");
+        }
 
         setDadosPix(data);
         setEtapa("pix_resultado");
@@ -175,16 +217,20 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
             email,
             cpf,
             mensagem,
-            valor: valorEfetivo
+            valor: valorEfetivo,
+            totalAceitoCentavos: opcaoCartao.totalCentavos
           })
         });
 
         const data = await resp.json();
-        if (!resp.ok || !data.ok) throw new Error(data.message || "Erro ao emitir boleto bancário.");
+        if (!resp.ok || !data.ok) {
+          if (resp.status === 409 || resp.status === 503) setTentativaCotacao((atual) => atual + 1);
+          throw new Error(data.message || "Erro ao emitir boleto bancário.");
+        }
 
         setDadosBoleto(data);
         setEtapa("boleto_resultado");
-      } else if (metodo === "cartao") {
+      } else if (metodo === "cartao" && opcaoCartao) {
         const [mes, ano] = validade.split("/");
         const resp = await fetch("/api/pagamento/cartao", {
           method: "POST",
@@ -196,7 +242,8 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
             cpf,
             mensagem,
             valor: valorEfetivo,
-            parcelas,
+            parcelas: opcaoCartao.parcelas,
+            totalAceitoCentavos: opcaoCartao.totalCentavos,
             cep,
             numeroEndereco,
             cartao: {
@@ -210,7 +257,10 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
         });
 
         const data = await resp.json();
-        if (!resp.ok || !data.ok) throw new Error(data.message || "Transação de cartão recusada.");
+        if (!resp.ok || !data.ok) {
+          if (resp.status === 409 || resp.status === 503) setTentativaCotacao((atual) => atual + 1);
+          throw new Error(data.message || "Transação de cartão recusada.");
+        }
 
         setDadosCartao(data);
         setEtapa(data.pago === true ? "sucesso" : "pendente");
@@ -478,20 +528,17 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
                     </label>
                     <select
                       id="parcelasCartao"
-                      value={parcelas}
+                      value={opcaoCartao?.parcelas ?? ''}
+                      disabled={!opcaoCartao}
                       onChange={(e) => setParcelas(Number(e.target.value))}
                       className="w-full px-3 py-2 bg-white border border-slate-300 rounded focus:border-[#1e3a5f] focus:outline-none text-sm"
                     >
-                      <option value={1}>1x de {valorEfetivo.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} à vista</option>
-                      {valorEfetivo >= 60 && (
-                        <option value={2}>2x de {(valorEfetivo / 2).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} sem juros</option>
-                      )}
-                      {valorEfetivo >= 90 && (
-                        <option value={3}>3x de {(valorEfetivo / 3).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} sem juros</option>
-                      )}
-                      {valorEfetivo >= 150 && (
-                        <option value={6}>6x de {(valorEfetivo / 6).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} sem juros</option>
-                      )}
+                      {!opcaoCartao && <option value="">Sem cotação</option>}
+                      {cotacaoAtual?.opcoes.map((opcao) => (
+                        <option key={opcao.parcelas} value={opcao.parcelas}>
+                          {opcao.parcelas === 1 ? 'À vista' : `${opcao.parcelas} parcelas`} · {formatarCentavos(opcao.totalCentavos)} no total
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -526,13 +573,28 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
               />
             </div>
 
+            {
+              <div className="rounded border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700" aria-live="polite">
+                {opcaoCartao ? (
+                  <dl className="space-y-1">
+                    <div className="flex justify-between gap-2"><dt>Valor do presente</dt><dd>{formatarCentavos(opcaoCartao.valorBaseCentavos)}</dd></div>
+                    <div className="flex justify-between gap-2"><dt>Tarifa {metodo === 'pix' ? 'do Pix' : metodo === 'boleto' ? 'do boleto' : 'do cartão'}</dt><dd>{formatarCentavos(opcaoCartao.acrescimoCentavos)}</dd></div>
+                    <div className="flex justify-between gap-2 font-semibold"><dt>Total a pagar</dt><dd>{formatarCentavos(opcaoCartao.totalCentavos)}</dd></div>
+                    {opcaoCartao.parcelas > 1 && <div className="flex justify-between gap-2"><dt>{opcaoCartao.parcelas} parcelas{opcaoCartao.totalCentavos % opcaoCartao.parcelas ? ' (aprox.)' : ''}</dt><dd>{formatarCentavos(Math.round(opcaoCartao.totalCentavos / opcaoCartao.parcelas))} cada</dd></div>}
+                  </dl>
+                ) : cotacaoAtual?.erro ? (
+                  <><p>{cotacaoAtual.erro}</p><button type="button" className="underline" onClick={() => setTentativaCotacao((atual) => atual + 1)}>Tentar novamente</button></>
+                ) : <p>{valorEfetivo >= 10 ? 'Calculando o total…' : 'Informe um valor a partir de R$ 10,00.'}</p>}
+              </div>
+            }
             <div className="pt-2 flex flex-col sm:flex-row gap-3">
               <button
                 type="submit"
-                className="flex-1 min-h-[48px] px-6 py-2.5 bg-[#1e3a5f] hover:bg-[#152a45] text-white text-base font-serif rounded transition-colors"
+                disabled={!opcaoCartao}
+                className="flex-1 min-h-[48px] px-6 py-2.5 bg-[#1e3a5f] hover:bg-[#152a45] text-white text-base font-serif rounded transition-colors disabled:opacity-50"
               >
                 {metodo === "pix" && "Gerar Pix para presentear"}
-                {metodo === "cartao" && `Pagar ${valorEfetivo.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} no Cartão`}
+                {metodo === "cartao" && (opcaoCartao ? `Pagar ${formatarCentavos(opcaoCartao.totalCentavos)} no cartão` : 'Pagar no cartão')}
                 {metodo === "boleto" && "Emitir Boleto Bancário"}
               </button>
               <button
@@ -687,7 +749,7 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
             </p>
             {dadosCartao && (
               <p className="text-xs text-slate-500 font-mono">
-                Transação: {dadosCartao.cobrancaId} · {dadosCartao.parcelas}x de {(dadosCartao.valor / dadosCartao.parcelas).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                Transação: {dadosCartao.cobrancaId} · {reais.format(dadosCartao.valor)} no total · {dadosCartao.parcelas === 1 ? 'À vista' : `${dadosCartao.parcelas} parcelas`}
               </p>
             )}
             <div className="pt-4">

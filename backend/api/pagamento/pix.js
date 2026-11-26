@@ -45,8 +45,8 @@ const CATALOGO_PADRAO = [
     "valor": 300
   },
   {
-    "id": "mounjaro",
-    "titulo": "Mounjaro para a noiva",
+    "id": "pilates-pos-ressaca",
+    "titulo": "Pilates pós-ressaca",
     "valor": 350
   },
   {
@@ -94,6 +94,8 @@ function limparCpf(cpf) {
   return cpf.replace(/\D/g, '');
 }
 
+import { cotarCobranca } from '../../lib/tarifas-asaas.js';
+
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
 
@@ -111,7 +113,21 @@ export default async function handler(req, res) {
     });
   }
 
-  const { presenteId, nome, email, cpf, mensagem, valor } = req.body || {};
+  const { presenteId, nome, email, cpf, mensagem, valor, acao, totalAceitoCentavos } = req.body || {};
+  const item = CATALOGO_PADRAO.find((p) => p.id === presenteId);
+  if (!item) return res.status(400).json({ ok: false, message: 'Presente inválido.' });
+  const base = Math.round((item.livre ? Number(valor) : item.valor) * 100);
+  if (!Number.isSafeInteger(base) || base < 1000) return res.status(400).json({ ok: false, message: 'Informe um valor válido a partir de R$ 10,00.' });
+  const headers = { access_token: token, 'Content-Type': 'application/json', 'User-Agent': 'Casamento-Victoria-Flavio/1.0' };
+  let opcao;
+  try {
+    opcao = await cotarCobranca('pix', base, baseUrl, headers);
+  } catch {
+    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa Pix.' });
+  }
+  if (acao === 'cotacao') return res.status(200).json({ ok: true, opcoes: [opcao] });
+  if (totalAceitoCentavos !== opcao.totalCentavos) return res.status(409).json({ ok: false, message: 'Confira o total atualizado antes de gerar o Pix.' });
+  const valorFinal = opcao.totalCentavos / 100;
 
   if (!nome || typeof nome !== 'string' || nome.trim().length < 2) {
     return res.status(400).json({ ok: false, message: 'Por favor, informe seu nome completo.' });
@@ -126,24 +142,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, message: 'Por favor, informe um CPF válido (11 dígitos).' });
   }
 
-  const item = CATALOGO_PADRAO.find((p) => p.id === presenteId);
-  if (!item) return res.status(400).json({ ok: false, message: "Presente inválido. Escolha um item da lista." });
-  let valorFinal = item.valor;
-
-  if (item.livre) {
-    const valorNum = Number(valor);
-    if (!valorNum || valorNum < 10) {
-      return res.status(400).json({ ok: false, message: 'O valor mínimo para contribuição é de R$ 10,00.' });
-    }
-    valorFinal = Math.round(valorNum * 100) / 100;
-  }
-
   try {
-    const headers = {
-      access_token: token,
-      'Content-Type': 'application/json',
-      'User-Agent': 'Casamento-Victoria-Flavio/1.0'
-    };
 
     // 1. Localizar ou criar cliente no Asaas
     let customerId = null;
