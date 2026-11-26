@@ -28,7 +28,7 @@ export default function Presentes() {
             {mostrarTodos ? "Mostrar menos" : "Ver todos os presentes"}<span aria-hidden="true"> {mostrarTodos ? "−" : "+"}</span>
           </button>
           <p>Presentes simbólicos: contribuições para o casal, sem compra ou entrega dos itens.</p>
-          {!pagamentosAtivos && <p>A lista está disponível para consulta. Os pagamentos ainda não estão abertos.</p>}
+
         </div>
       </div>
       {presenteSelecionado && <ModalPagamento presente={presenteSelecionado} onClose={fecharPagamento} />}

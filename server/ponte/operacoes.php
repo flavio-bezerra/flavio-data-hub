@@ -7,6 +7,8 @@ require_once dirname(__DIR__).'/assistente/administracao-memoria.php';require_on
 require_once __DIR__.'/sessoes.php';require_once __DIR__.'/contas.php';
 require_once dirname(__DIR__).'/importacao-convites.php';
 require_once dirname(__DIR__).'/prazo-de-presenca.php';
+require_once dirname(__DIR__).'/logistica-de-convites.php';
+require_once dirname(__DIR__).'/comunicados.php';
 function executarOperacoesDaPonte(string $private, string $environment='pilot'): never {
  try{
   if(strtolower(explode(';',$_SERVER['CONTENT_TYPE']??'')[0])!=='application/json')throw new FalhaDeAcesso(415,'Envie JSON.');
@@ -53,12 +55,17 @@ function despacharOperacao(PDO $db,string $operation,string $token,array $p,stri
  }
  if($operation==='memory.dispatch')return administrarMemoria($db,$id,$p);
  if($operation==='logistics.dispatch')return administrarContexto($db,$id,$p);
- if($operation==='invitation.dispatch'){
+  if($operation==='invitation.dispatch'){
+   if(($p['action']??null)==='logistics_save')return salvarLogisticaDoConvite($db,$id,$p);
+   if(($p['action']??null)==='admin_table')return administrarMesaDoConvite($db,$id,$p);
+   if(($p['action']??null)==='admin_logistics_summary')return resumirLogisticaDosConvites($db,$id);
+   if(($p['action']??null)==='admin_email_prepare')return prepararComunicado($db,$id,$p);
+   if(($p['action']??null)==='admin_email_record')return registrarEnvioDeComunicado($db,$id,$p);
   if(($p['action']??'')==='claim')return vincularConvite($db,$id,(string)($p['token']??''));
    if(($p['action']??'')==='read')return ['ok'=>true]+lerGrupo($db,$id,(int)($p['group_id']??0));
    if(($p['action']??'')==='mine')return listarMeusConvites($db,$id);
     if(in_array($p['action']??null,['import_preview','import_apply'],true))return importarConvites($db,$id,$p);
-    if(in_array($p['action']??null,['admin_overview','admin_deadline_read','admin_deadline_update','admin_list','admin_create','admin_rotate','admin_transfer','admin_detail','admin_guest_add','admin_guest_remove','admin_guest_rename'],true))return administrarConvites($db,$id,$p);
+    if(in_array($p['action']??null,['admin_overview','admin_deadline_read','admin_deadline_update','admin_list','admin_create','admin_rotate','admin_transfer','admin_detail','admin_guest_add','admin_guest_remove','admin_guest_rename','admin_whatsapp_contact'],true))return administrarConvites($db,$id,$p);
   throw new FalhaDeAcesso(400,'Ação indisponível.');
  }
  if($operation==='rsvp.save')return salvarConfirmacao($db,$id,$p);

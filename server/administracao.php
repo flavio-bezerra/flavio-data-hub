@@ -9,6 +9,7 @@ function exigirAdministrador(PDO $db,int $accountId,bool $manage=false,bool $foo
 function administrarConvites(PDO $db,int $accountId,array $body): array {
     $action=$body['action'];
     if($action==='admin_overview') {
+        exigirAdministrador($db,$accountId);
         $groups=$db->query('SELECT COUNT(*) AS total, COUNT(CASE WHEN responsible_account_id IS NULL THEN 1 END) AS unclaimed, COUNT(CASE WHEN registration_receipt IS NOT NULL THEN 1 END) AS complete FROM invitation_groups WHERE revoked_at IS NULL')->fetch();
         $confirmed=$db->query("SELECT COUNT(*) FROM guests g JOIN invitation_groups i ON i.id=g.invitation_group_id WHERE i.revoked_at IS NULL AND i.registration_receipt IS NOT NULL AND g.attendance='yes'")->fetchColumn();
         return ['ok'=>true,'total'=>(int)$groups['total'],'unclaimed'=>(int)$groups['unclaimed'],'awaiting'=>(int)$groups['total']-(int)$groups['complete'],'complete'=>(int)$groups['complete'],'confirmed'=>(int)$confirmed];
@@ -19,28 +20,41 @@ function administrarConvites(PDO $db,int $accountId,array $body): array {
         if(!is_int($id)||$id<1)throw new FalhaDeAcesso(422,'Grupo inválido.');
         return ['ok'=>true]+lerGrupo($db,$accountId,$id,true);
     }
+    if($action==='admin_whatsapp_contact') {
+        exigirAdministrador($db,$accountId);
+        $id=$body['group_id']??null;$feito=$body['contacted']??null;
+        if(!is_int($id)||$id<1||!is_bool($feito))throw new FalhaDeAcesso(422,'Contato inválido.');
+        $stmt=$db->prepare('UPDATE invitation_groups SET whatsapp_contacted_at=IF(?,UTC_TIMESTAMP(),NULL) WHERE id=? AND revoked_at IS NULL');
+        $stmt->execute([(int)$feito,$id]);return ['ok'=>true];
+    }
     if($action==='admin_list') {
         exigirAdministrador($db,$accountId);
         $after=$body['after']??0;
         if(!is_int($after)||$after<0)throw new FalhaDeAcesso(422,'Página inválida.');
         $search=$body['search']??'';$status=$body['status']??'all';
-        if(!is_string($search)||mb_strlen($search)>160||!in_array($status,['all','pending','partial','complete','unclaimed','awaiting'],true))throw new FalhaDeAcesso(422,'Filtro inválido.');
+        if(!is_string($search)||mb_strlen($search)>160||!in_array($status,['all','pending','partial','complete','unclaimed','awaiting','no_email','whatsapp_pending'],true))throw new FalhaDeAcesso(422,'Filtro inválido.');
         $q='%'.strtr(trim($search),['!'=>'!!','%'=>'!%','_'=>'!_']).'%';
         $filter=match($status){
              'complete'=>' AND i.registration_receipt IS NOT NULL',
              'unclaimed'=>' AND i.responsible_account_id IS NULL',
+             'no_email'=>' AND (a.email IS NULL OR a.email_verified_at IS NULL OR a.disabled_at IS NOT NULL)',
+             'whatsapp_pending'=>' AND i.whatsapp_contacted_at IS NULL AND i.registration_receipt IS NULL',
              'awaiting'=>' AND i.registration_receipt IS NULL',
             'pending'=>" AND i.registration_receipt IS NULL AND NOT EXISTS(SELECT 1 FROM guests x WHERE x.invitation_group_id=i.id AND x.attendance<>'pending')",
             'partial'=>" AND i.registration_receipt IS NULL AND EXISTS(SELECT 1 FROM guests x WHERE x.invitation_group_id=i.id AND x.attendance<>'pending')",
             default=>'',
         };
-        $stmt=$db->prepare("SELECT i.id,i.label,i.external_invitation_id AS external_id,i.registration_receipt IS NOT NULL AS has_receipt,i.responsible_account_id,a.display_name AS responsible_name,
+        $mesa=$body['table']??'all';$params=[$after,$q,$q,$q,$q];
+        if($mesa==='none')$filter.=' AND i.table_number IS NULL';
+        elseif(is_int($mesa)&&$mesa>=1&&$mesa<=999){$filter.=' AND i.table_number=?';$params[]=$mesa;}
+        elseif($mesa!=='all')throw new FalhaDeAcesso(422,'Mesa inválida.');
+        $stmt=$db->prepare("SELECT i.id,i.label,i.table_number,i.whatsapp_contacted_at,i.external_invitation_id AS external_id,i.registration_receipt IS NOT NULL AS has_receipt,i.responsible_account_id,a.display_name AS responsible_name,
             (SELECT COUNT(*) FROM guests g WHERE g.invitation_group_id=i.id) AS total,
             (SELECT COUNT(*) FROM guests g WHERE g.invitation_group_id=i.id AND g.attendance='yes') AS confirmed,
             (SELECT COUNT(*) FROM guests g WHERE g.invitation_group_id=i.id AND g.attendance='no') AS declined
             FROM invitation_groups i LEFT JOIN accounts a ON a.id=i.responsible_account_id
             WHERE i.revoked_at IS NULL AND i.id>? AND (i.label LIKE ? ESCAPE '!' OR i.external_invitation_id LIKE ? ESCAPE '!' OR CAST(i.id AS CHAR) LIKE ? ESCAPE '!' OR EXISTS(SELECT 1 FROM guests m WHERE m.invitation_group_id=i.id AND m.display_name LIKE ? ESCAPE '!'))".$filter.' ORDER BY i.id LIMIT 26');
-        $stmt->execute([$after,$q,$q,$q,$q]);$groups=$stmt->fetchAll();
+        $stmt->execute($params);$groups=$stmt->fetchAll();
         foreach($groups as &$record)$record['has_receipt']=(bool)$record['has_receipt'];unset($record);
         $hasMore=count($groups)>25;if($hasMore)array_pop($groups);
         return ['ok'=>true,'groups'=>$groups,'next'=>$hasMore?(int)$groups[24]['id']:null];
@@ -99,7 +113,8 @@ function administrarConvites(PDO $db,int $accountId,array $body): array {
                 $stmt=$db->prepare('SELECT id FROM accounts WHERE email=? AND email_verified_at IS NOT NULL AND disabled_at IS NULL FOR UPDATE');$stmt->execute([strtolower(trim($email))]);$target=$stmt->fetchColumn();
                 if(!$target)throw new FalhaDeAcesso(422,'Conta verificada não encontrada.');
                 if((int)$target===(int)$group['responsible_account_id'])throw new FalhaDeAcesso(409,'Esta conta já é a responsável.');
-                $stmt=$db->prepare('UPDATE invitation_groups SET responsible_account_id=?,invitation_token_hash=?,claimed_at=UTC_TIMESTAMP(),contact_phone=NULL,registration_receipt=NULL,registration_confirmed_at=NULL WHERE id=?');$stmt->execute([$target,$hash,$groupId]);
+                $stmt=$db->prepare('UPDATE invitation_groups SET responsible_account_id=?,invitation_token_hash=?,claimed_at=UTC_TIMESTAMP(),contact_phone=NULL,whatsapp_contacted_at=NULL,registration_receipt=NULL,registration_confirmed_at=NULL,lodging_intent=DEFAULT,hotel_name=NULL,arrival_mode=DEFAULT,table_visible=FALSE WHERE id=?');$stmt->execute([$target,$hash,$groupId]);
+                 $db->prepare('UPDATE guests SET arrival_override=NULL WHERE invitation_group_id=?')->execute([$groupId]);
                 $token=null;
             }
         }

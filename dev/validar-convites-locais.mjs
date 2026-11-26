@@ -22,7 +22,9 @@ function navegador() {
 }
 async function entrar(navegar,email){ await navegar(auth); await navegar(auth,{action:'fixture_login',email,password:'Convite-local-2027'}); return (await navegar(auth)).account; }
 try {
-  const admin=navegador(), convidado=navegador(), outra=navegador();
+   const admin=navegador(), convidado=navegador(), outra=navegador(), anonimo=navegador();
+   const chat='/api/assistente.php', pergunta={messages:[{role:'user', content:'Qual é o horário?'}]};
+   await anonimo(auth); await anonimo(chat,pergunta,401);
   assert.equal((await entrar(admin,'organizacao@example.test')).administrator,true);
   assert.equal((await entrar(convidado,'convidado@example.test')).administrator,false);
   await entrar(outra,'outra-familia@example.test');
@@ -40,8 +42,19 @@ try {
    assert.equal((await admin(conv,{action:'import_preview',csv})).groups[0].status,'unchanged');
    assert.equal((await admin(conv,{action:'import_preview',csv:csv.replace('Rui','Ruy')})).groups[0].status,'conflict');
    assert.equal((await admin(conv,{action:'admin_list',status:'unclaimed'})).groups.length,4);
+   const {groups:semContato}=await admin(conv,{action:'admin_list',status:'whatsapp_pending'});
+   assert.equal(semContato.length,4);
+   assert.equal((await admin(conv,{action:'admin_list',status:'no_email'})).groups.length,4);
+   const contato={action:'admin_whatsapp_contact',group_id:semContato[0].id,contacted:true};
+   await convidado(conv,contato,403);
+   await admin(conv,contato);
+   assert.equal((await admin(conv,{action:'admin_list',status:'whatsapp_pending'})).groups.length,3);
+   await admin(conv,{...contato,contacted:false});
+   assert.equal((await admin(conv,{action:'admin_list',status:'whatsapp_pending'})).groups.length,4);
    await convidado(conv,{action:'admin_deadline_read'},403);
-  const {group_id}=await convidado(conv,{action:'claim',token:'a'.repeat(64)});
+   await convidado(chat,pergunta,403);
+   const {group_id}=await convidado(conv,{action:'claim',token:'a'.repeat(64)});
+   assert.match((await convidado(chat,pergunta)).answer,/Resposta fictícia/);
   await outra(conv,{action:'claim',token:'a'.repeat(64)},409);
   await outra(conv,{action:'read',group_id},404);
   const {guests}=await convidado(conv,{action:'read',group_id});
@@ -59,10 +72,43 @@ try {
    await admin(conv,{action:'admin_deadline_update',revision:prazo.revision,deadline:null},409);
    await convidado(rsvp,{group_id,responses,contact_phone:'(11) 98765-4321'},403);
    assert.deepEqual((await convidado(conv,{action:'read',group_id})).group.receipt,receipt);
+   const logistics={action:'logistics_save',group_id,lodging_intent:'yes',hotel_name:'Hotel Teste',arrival_mode:'car',overrides:[{guest_id:guests[0].id,mode:'van'}]};
+   await outra(conv,logistics,404);
+   await convidado(conv,{...logistics,overrides:[{guest_id:99999,mode:'van'}]},422);
+   await convidado(conv,logistics);
+   const preferencias=await convidado(conv,{action:'read',group_id});
+   assert.equal(preferencias.group.hotel_name,'Hotel Teste');
+   assert.deepEqual(preferencias.group.receipt,receipt);
+   await admin(conv,{action:'admin_table',group_id,table_number:12,table_visible:false});
+   assert.equal((await convidado(conv,{action:'read',group_id})).group.table_number,null);
+   assert.equal((await admin(conv,{action:'admin_detail',group_id})).group.table_number,12);
+   const preview={action:'admin_email_preview',template:'table',audience:'selected',subject:'',message:'<script>alert(1)</script>',group_ids:[group_id]};
+   await convidado(conv,preview,403);
+   assert.equal((await admin(conv,preview)).recipients.length,0);
+   for(const template of ['hotel','van','guide','thanks']){
+     const envio=await admin(conv,{...preview,template,audience:'eligible',message:'Detalhes revisados para o evento.'});
+     assert.equal(envio.recipients.length,1);
+     assert.equal(envio.recipients[0].group_id,group_id);
+     assert.equal(envio.recipients[0].table_number,null);
+   }
+   await admin(conv,{action:'admin_table',group_id,table_number:12,table_visible:true});
+   assert.equal((await convidado(conv,{action:'read',group_id})).group.table_number,12);
+   const carta=await admin(conv,preview);
+   assert.equal(carta.enabled,false);
+   assert.equal(carta.recipients[0].table_number,12);
+   assert.ok(!('email' in carta.recipients[0]));
+   assert.match(carta.preview.html,/&lt;script&gt;/);
+   assert.doesNotMatch(carta.preview.html,/<script>/);
+   assert.equal((await admin(conv,{action:'admin_list',table:12})).groups[0].id,group_id);
+   const resumo=await admin(conv,{action:'admin_logistics_summary'});
+   assert.deepEqual(resumo.tables,[{number:12,count:1}]);
+   assert.equal(resumo.transport.van,1);
+   await admin(conv,{...preview,action:'admin_email_send'},503);
    await admin(conv,{action:'admin_deadline_update',revision:fechado.revision,deadline:null});
    assert.equal((await convidado(conv,{action:'read',group_id})).group.deadline,null);
    await admin(conv,{action:'admin_transfer',group_id,email:'outra-familia@example.test'});
-  await convidado(conv,{action:'read',group_id},404);
+   await convidado(conv,{action:'read',group_id},404);
+   await convidado(chat,pergunta,403);
   assert.equal((await outra(conv,{action:'read',group_id})).group.receipt,null);
   await outra(auth,{action:'logout'}); await outra(auth); await outra(conv,{action:'mine'},401);
   console.log('Simulação validada: perfis, CSV, divergências, painel, prazo, vínculo, isolamento, comprovante, transferência e logout.');

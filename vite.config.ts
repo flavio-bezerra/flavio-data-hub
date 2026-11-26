@@ -102,6 +102,7 @@ export default defineConfig(({ command, mode }) => {
     strictPort: local,
     port: 8080,
   },
+  ...(local ? { define: { 'import.meta.env.VITE_ASSISTENTE_VISIVEL': JSON.stringify('true') } } : {}),
   plugins: [react(), local ? { name: 'convites-ficticios', configureServer(server) { server.middlewares.use(convitesLocais({ listaGrande: true })); } } : backendDevApiPlugin()],
   resolve: {
     alias: {

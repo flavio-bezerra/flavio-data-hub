@@ -76,6 +76,7 @@ function ConteudoDoConvite({ codigo, csrf, grupoInicial, depoisDeVincular }: { c
       {grupos.length > 1 && <label className="block">Escolha o convite <select className="block max-w-full rounded border p-2" value={selecionado} disabled={ocupado} onChange={e => { setGrupo(undefined); setErro(''); selecionar(Number(e.target.value)); }}>{grupos.map(item => <option value={item.id} key={item.id}>{item.label}</option>)}</select></label>}
       {selecionado && !grupo && !erro && <p role="status">Buscando integrantes…</p>}
       {selecionado && !grupo && erro && <Button variant="outline" onClick={() => { setErro(''); setAtualizacao(atualizacao + 1); }}>Tentar novamente</Button>}
+      {grupo && grupo.group.id === selecionado && <aside className="space-y-1 rounded border bg-white p-4"><h2 className="font-display text-2xl text-primary">Informações da festa</h2><p>A van liga os dois hotéis indicados ao DellaTorres Eventos. Os pontos e horários serão divulgados nas orientações.</p><Link className="inline-flex min-h-11 items-center underline" to="/#hospedagem">Consultar hospedagem e transporte</Link></aside>}
       {grupo && grupo.group.id === selecionado && <CadastroDaFamilia key={`${grupo.group.id}:${atualizacao}`} dados={grupo} csrf={csrf} recarregar={() => { setGrupo(undefined); setErro(''); setAtualizacao(atualizacao + 1); }} />}
     </>}
   </main></div>;

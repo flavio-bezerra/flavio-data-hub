@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { comprovanteDoConvite, detalhesDoConvite, pedirAoConvite } from './apiDeConvites';
 import ComprovanteDePresenca from './ComprovanteDePresenca';
+import HospedagemETransporte from './HospedagemETransporte';
 
 const resposta = z.object({ ok: z.literal(true), receipt: comprovanteDoConvite });
 const dataDoPrazo = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long', timeStyle: 'short', timeZone: 'America/Sao_Paulo' });
@@ -39,6 +40,8 @@ export default function CadastroDaFamilia({ dados, csrf, recarregar }: { dados: 
     {erro && <p role="alert" className="text-destructive">{erro}</p>}
     {etapa === 'comprovante' && recibo && <>
       <ComprovanteDePresenca protocolo={recibo.protocol} data={recibo.confirmed_at} grupo={group.label} pessoas={pessoas.map(p => ({ id: p.id, nome: p.full_name, presente: p.attendance === 'yes' }))} />
+      {group.table_number && presentes > 0 && <p className="rounded border p-3">Mesa da família: <strong>{group.table_number}</strong></p>}
+      {presentes > 0 && <HospedagemETransporte dados={dados} presentes={pessoas.filter(p => p.attendance === 'yes')} csrf={csrf} />}
       {!fechado && <Button variant="outline" onClick={() => precisaRecarregar ? recarregar() : mudarEtapa('preencher')}>{precisaRecarregar ? 'Recarregar cadastro' : 'Editar confirmação'}</Button>}
     </>}
     {etapa === 'preencher' && !fechado && <form className="space-y-4" onSubmit={evento => {

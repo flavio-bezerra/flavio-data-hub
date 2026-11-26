@@ -1,6 +1,9 @@
+
+import { Instagram } from "lucide-react";
 import { casamento } from "./conteudo";
 
 export default function Evento() {
+
   return (
     <section id="casamento" aria-labelledby="evento-titulo" className="programa-dia">
       <div className="programa-papel">
@@ -21,8 +24,15 @@ export default function Evento() {
           </li>
         </ol>
         <div className="programa-endereco">
-          <p>{casamento.endereco ?? "Endereço completo, mapa e orientações de acesso em breve."}</p>
-          {casamento.mapaUrl && <a href={casamento.mapaUrl} target="_blank" rel="noopener noreferrer" className="acao-secundaria">Abrir mapa</a>}
+          <p>{casamento.endereco}</p>
+          <p>{casamento.cidade}</p>
+
+        </div>
+        <div className="programa-local">
+          <iframe title={`Mapa de ${casamento.local}`} src={casamento.mapaEmbedUrl} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
+          <a href={casamento.instagramUrl} target="_blank" rel="noopener noreferrer" className="programa-instagram" aria-label="Instagram do DellaTorres Eventos (abre em nova aba)">
+            <Instagram size={23} strokeWidth={1.6} aria-hidden="true" />
+          </a>
         </div>
       </div>
       <img src="/orquidea-phalaenopsis.webp" width={724} height={991} alt="" aria-hidden="true" loading="lazy" className="programa-prancha" />

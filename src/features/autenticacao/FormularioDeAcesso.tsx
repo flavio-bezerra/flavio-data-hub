@@ -37,6 +37,8 @@ export default function FormularioDeAcesso({ codigo }: { codigo?: string | null 
 
   const googleCredential = useCallback(async (credential: string) => { await submit({ action: 'google', credential }); }, [submit]);
 
+  const voltarAoAssistente = !codigo && location.pathname === '/acesso' && new URLSearchParams(location.search).get('origem') === 'assistente';
+  if (voltarAoAssistente && session?.account) return <Navigate to="/?assistente=1" replace />;
   if (entrouAgora && !codigo && session?.account && !session.account.administrator) return <Navigate to="/meu-convite" replace />;
 
   // ---- MODO LOGIN ----
@@ -75,28 +77,33 @@ export default function FormularioDeAcesso({ codigo }: { codigo?: string | null 
             </>
           ) : (
             <>
-              <p>{codigo ? 'Entre na sua conta para continuar com o convite que você recebeu.' : 'Entre na sua conta para acessar seu convite e confirmar presença.'}</p>
-              <div className="flex justify-center">
-                {session?.google_client_id && <EntrarComGoogle clientId={session.google_client_id} nonce={session.google_nonce} onCredential={googleCredential} />}
-              </div>
-              <form className="grid max-w-sm gap-3 rounded border p-4 mt-4 mx-auto" onSubmit={e => {
+              <div className="acesso-entrada">
+              <p>{codigo ? 'Entre para abrir o convite que você recebeu.' : 'Entre para consultar seu convite e confirmar presença.'}</p>
+              {session?.google_client_id && <EntrarComGoogle clientId={session.google_client_id} nonce={session.google_nonce} onCredential={googleCredential} />}
+              <details open={session && !session.google_client_id ? true : undefined}>
+              <summary className="acesso-alternativa">{session?.fixture_login ? 'Entrar com conta de teste' : 'Entrar com e-mail'}</summary>
+              <form className="grid max-w-sm gap-3 mx-auto text-left" onSubmit={e => {
                 e.preventDefault();
                 const dados = new FormData(e.currentTarget);
-                void submit({ action: 'email_login', email: String(dados.get('email')).trim().toLowerCase(), senha: String(dados.get('senha')) });
+                const email = String(dados.get('email')).trim().toLowerCase();
+                const senha = String(dados.get('senha'));
+                void submit(session?.fixture_login ? { action: 'fixture_login', email, password: senha } : { action: 'email_login', email, senha });
               }}>
-                <label className="text-sm font-medium">E-mail</label>
-                <input className="block min-h-11 w-full rounded border p-2" type="email" name="email" autoComplete="username" required />
-                <label className="text-sm font-medium">Senha</label>
-                <input className="block min-h-11 w-full rounded border p-2" type="password" name="senha" autoComplete="current-password" required />
-                <Button type="submit" disabled={busy}>Entrar</Button>
-                <p className="text-sm text-center">
+                <label className="text-sm font-medium" htmlFor="login-email">E-mail</label>
+                <input id="login-email" className="block min-h-11 w-full rounded border p-2" type="email" name="email" autoComplete="username" required />
+                <label className="text-sm font-medium" htmlFor="login-senha">Senha</label>
+                <input id="login-senha" className="block min-h-11 w-full rounded border p-2" type="password" name="senha" autoComplete="current-password" required />
+                <Button type="submit" disabled={busy || !session}>{busy ? 'Entrando…' : 'Entrar'}</Button>
+                {!session?.fixture_login && <><p className="text-sm text-center">
                   Não tem conta?{' '}
                   <button type="button" onClick={() => setModo('cadastro')} className="text-primary underline underline-offset-4 hover:underline">Criar conta</button>
                 </p>
                 <p className="text-sm text-center">
                   <button type="button" onClick={() => setModo('esqueci')} className="text-primary underline underline-offset-4 hover:underline">Esqueci minha senha</button>
-                </p>
+                </p></>}
               </form>
+              </details>
+              </div>
             </>
           )}
         </main>

@@ -23,12 +23,14 @@ function listarMeusConvites(PDO $db,int $accountId): array {
 }
 function lerGrupo(PDO $db,int $accountId,int $groupId,bool $admin=false): array {
     if($admin)exigirAdministrador($db,$accountId);
-    $stmt=$db->prepare('SELECT i.id AS group_id,i.label,i.external_invitation_id,i.contact_phone AS group_phone,i.registration_receipt,i.registration_confirmed_at,a.email AS responsible_email,s.response_deadline,g.id,g.display_name,g.contact_phone,g.is_minor,g.attendance,g.revision FROM invitation_groups i LEFT JOIN guests g ON g.invitation_group_id=i.id LEFT JOIN accounts a ON a.id=i.responsible_account_id LEFT JOIN event_settings s ON s.id=1 WHERE i.id=? AND i.revoked_at IS NULL'.($admin?'':' AND i.responsible_account_id=?').' ORDER BY g.id');
+    $stmt=$db->prepare('SELECT i.id AS group_id,i.label,i.external_invitation_id,i.contact_phone AS group_phone,i.registration_receipt,i.registration_confirmed_at,i.lodging_intent,i.hotel_name,i.arrival_mode,i.table_number,i.table_visible,a.email AS responsible_email,s.response_deadline,g.id,g.display_name,g.contact_phone,g.is_minor,g.attendance,g.revision,g.arrival_override FROM invitation_groups i LEFT JOIN guests g ON g.invitation_group_id=i.id LEFT JOIN accounts a ON a.id=i.responsible_account_id LEFT JOIN event_settings s ON s.id=1 WHERE i.id=? AND i.revoked_at IS NULL'.($admin?'':' AND i.responsible_account_id=?').' ORDER BY g.id');
     $stmt->execute($admin?[$groupId]:[$groupId,$accountId]);$rows=$stmt->fetchAll();
     if(!$rows)throw new FalhaDeAcesso(404,'Convite indisponível.');
     $first=$rows[0];$utc=static fn(?string $v): ?string=>$v===null?null:str_replace(' ','T',$v).'Z';
     $group=['id'=>(int)$first['group_id'],'label'=>$first['label'],'external_id'=>$first['external_invitation_id'],'contact_phone'=>$first['group_phone'],'responsible_email'=>$first['responsible_email'],'deadline'=>$utc($first['response_deadline']),'receipt'=>$first['registration_receipt']===null?null:['protocol'=>$first['registration_receipt'],'confirmed_at'=>$utc($first['registration_confirmed_at'])]];
-    $guests=[];foreach($rows as $row)if($row['id']!==null)$guests[]=array_intersect_key($row,array_flip(['id','display_name','contact_phone','is_minor','attendance','revision']));
+    $group+=['lodging_intent'=>$first['lodging_intent'],'hotel_name'=>$first['hotel_name'],'arrival_mode'=>$first['arrival_mode'],'table_number'=>($admin||(bool)$first['table_visible'])&&$first['table_number']!==null?(int)$first['table_number']:null];
+    if($admin)$group['table_visible']=(bool)$first['table_visible'];
+    $guests=[];foreach($rows as $row)if($row['id']!==null)$guests[]=array_intersect_key($row,array_flip(['id','display_name','contact_phone','is_minor','attendance','revision','arrival_override']));
     return ['group'=>$group,'guests'=>$guests];
 }
 
@@ -66,8 +68,8 @@ function salvarConfirmacao(PDO $db,int $accountId,array $body): array {
             $seen[$response['id']]=true;
             $name=nomeDoConvidado($response['full_name']??null,true);$phone=telefoneDoConvite($response['phone']??'');
             $hasAttendance=$hasAttendance||$response['attendance']==='yes';
-            $stmt=$db->prepare('UPDATE guests SET display_name=?,contact_phone=?,attendance=?,revision=revision+1,updated_by=?,updated_at=UTC_TIMESTAMP() WHERE id=? AND invitation_group_id=? AND revision=?');
-            $stmt->execute([$name,$phone,$response['attendance'],$accountId,$response['id'],$groupId,$response['revision']]);
+            $stmt=$db->prepare('UPDATE guests SET display_name=?,contact_phone=?,attendance=?,arrival_override=IF(?=\'yes\',arrival_override,NULL),revision=revision+1,updated_by=?,updated_at=UTC_TIMESTAMP() WHERE id=? AND invitation_group_id=? AND revision=?');
+            $stmt->execute([$name,$phone,$response['attendance'],$response['attendance'],$accountId,$response['id'],$groupId,$response['revision']]);
             if($stmt->rowCount()!==1)throw new FalhaDeAcesso(409,'O cadastro mudou. Recarregue antes de salvar.');
         }
         if($hasAttendance&&$contact===null)throw new FalhaDeAcesso(422,'Informe o telefone do responsável se alguém estiver presente.');

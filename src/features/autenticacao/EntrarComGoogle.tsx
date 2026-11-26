@@ -12,6 +12,8 @@ export default function EntrarComGoogle({ clientId, nonce, onCredential }: {
   clientId: string; nonce: string; onCredential: (credential: string) => Promise<void>;
 }) {
   const container = useRef<HTMLDivElement>(null);
+  const callbackAtual = useRef(onCredential);
+  useEffect(() => { callbackAtual.current = onCredential; }, [onCredential]);
   const [error, setError] = useState(false);
   useEffect(() => {
     if (!clientId) return;
@@ -20,7 +22,7 @@ export default function EntrarComGoogle({ clientId, nonce, onCredential }: {
     const render = () => {
       if (disposed || !googleWindow.google || !container.current) return;
       googleWindow.google.accounts.id.initialize({ client_id: clientId, nonce, auto_select: false,
-        callback: ({ credential }) => { void onCredential(credential); } });
+        callback: ({ credential }) => { if (!disposed) void callbackAtual.current(credential); } });
       container.current.replaceChildren();
       googleWindow.google.accounts.id.renderButton(container.current, { theme: "outline", size: "large", text: "continue_with", width: Math.min(320, container.current.clientWidth) });
     };
@@ -33,7 +35,7 @@ export default function EntrarComGoogle({ clientId, nonce, onCredential }: {
     }
     function fail() { if (!disposed) setError(true); }
     return () => { disposed = true; script?.removeEventListener('load', render); script?.removeEventListener('error', fail); googleWindow.google?.accounts.id.cancel(); };
-  }, [clientId, nonce, onCredential]);
+  }, [clientId, nonce]);
   if (!clientId) return <p>Google ainda não configurado.</p>;
-  return <div><div ref={container} />{error && <p role="alert">Não foi possível carregar o acesso por Google. Verifique sua conexão e recarregue a página.</p>}</div>;
+  return <div className="login-google"><div ref={container} />{error && <p role="alert">Não foi possível carregar o acesso por Google. Verifique sua conexão e recarregue a página.</p>}</div>;
 }

@@ -12,15 +12,17 @@ import AssistenteDaFesta from "@/features/assistente/AssistenteDaFesta";
 import Cabecalho from "@/features/casamento/Cabecalho";
 import { Outlet } from "react-router-dom";
 import MemoriaDoAssistente from "@/features/administracao/MemoriaDoAssistente";
+import PainelDeEmails from "@/features/administracao/PainelDeEmails";
 
 const App = () => (
   <BrowserRouter>
     <PosicaoDaPagina />
-    {import.meta.env.VITE_ASSISTENTE_VISIVEL === 'true' && <AssistenteDaFesta />}
+    {(import.meta.env.VITE_ASSISTENTE_VISIVEL === 'true' || (import.meta.env.DEV && import.meta.env.MODE === 'convites-local')) && <AssistenteDaFesta />}
     <Routes>
       <Route path="/" element={<SaveTheDate />} />
       <Route element={<><Cabecalho /><Outlet /></>}>
       <Route path="/administracao" element={<PainelDaOrganizacao />} />
+      <Route path="/administracao/emails" element={<PainelDeEmails />} />
       <Route path="/administracao/assistente" element={<MemoriaDoAssistente />} />
       <Route path="/acesso" element={<FormularioDeAcesso />} />
       <Route path="/meu-convite" element={<MeuConvite />} />

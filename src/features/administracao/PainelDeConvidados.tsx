@@ -8,7 +8,7 @@ import { grupoDoConvite, idDoConvite, numeroDeConvites, pedirAoConvite } from '@
 import ImportacaoDeConvites from './ImportacaoDeConvites';
 import DetalheDoGrupo from './DetalheDoGrupo';
 
-const gruposDaAdministracao = z.object({ ok: z.literal(true), groups: z.array(grupoDoConvite.extend({ responsible_account_id: idDoConvite.nullable(), responsible_name: z.string().nullable(), external_id: z.string().nullable(), has_receipt: z.boolean(), total: numeroDeConvites, confirmed: numeroDeConvites, declined: numeroDeConvites })), next: idDoConvite.nullable() });
+const gruposDaAdministracao = z.object({ ok: z.literal(true), groups: z.array(grupoDoConvite.extend({ responsible_account_id: idDoConvite.nullable(), responsible_name: z.string().nullable(), whatsapp_contacted_at:z.string().nullish(), external_id: z.string().nullable(), has_receipt: z.boolean(), total: numeroDeConvites, confirmed: numeroDeConvites, declined: numeroDeConvites })), next: idDoConvite.nullable() });
 const operacaoConcluida = z.object({ ok: z.literal(true), group_id: idDoConvite, token: z.string().regex(/^[a-f0-9]{64}$/).nullable() });
 
 export default function PainelDeConvidados() {
@@ -32,14 +32,15 @@ function CadastroDeGrupos({ csrf }: { csrf: string }) {
   const [params] = useSearchParams();
   const [filtro, setFiltro] = useState(() => {
     const situacao = params.get('situacao') ?? 'all';
-    return { search: '', status: ['unclaimed', 'awaiting', 'complete'].includes(situacao) ? situacao : 'all' };
+    const mesa = params.get('mesa') ?? '';
+    return { search: '', status: ['unclaimed', 'awaiting', 'complete', 'no_email', 'whatsapp_pending'].includes(situacao) ? situacao : 'all', mesa: /^(none|[1-9]\d{0,2})$/.test(mesa) ? mesa : '' }; 
   });
   const [detalhe, setDetalhe] = useState<number>();
   const botaoDoGrupo = useRef<HTMLButtonElement>(null);
   const grupo = pagina?.groups.find(item => item.id === detalhe);
   const [versao, setVersao] = useState(0);
   const cursor = cursores[cursores.length - 1];
-  const buscar = useCallback((after: number) => pedirAoConvite('convites', csrf, { action: 'admin_list', after, ...filtro }, gruposDaAdministracao), [csrf, filtro]);
+  const buscar = useCallback((after: number) => pedirAoConvite('convites', csrf, { action: 'admin_list', after, search:filtro.search, status:filtro.status, table: filtro.mesa === 'none' ? 'none' : filtro.mesa ? Number(filtro.mesa) : 'all' }, gruposDaAdministracao), [csrf, filtro]);
   useEffect(() => {
     let ativo = true;
     void buscar(cursor).then(resultado => { if (ativo) setPagina(resultado); }).catch((e: Error) => { if (ativo) setErro(e.message); });
@@ -85,11 +86,12 @@ function CadastroDeGrupos({ csrf }: { csrf: string }) {
       <h2 className="font-display text-3xl">Grupos cadastrados</h2>
       <form className="grid items-end gap-3 sm:grid-cols-[minmax(0,1fr)_auto_auto]" onSubmit={e => {
         e.preventDefault(); const dados = new FormData(e.currentTarget);
-        setFiltro({ search: String(dados.get('busca') ?? '').trim(), status: String(dados.get('situacao') ?? 'all') });
+        setFiltro({ search: String(dados.get('busca') ?? '').trim(), status: String(dados.get('situacao') ?? 'all'), mesa: dados.has('sem-mesa') ? 'none' : String(dados.get('mesa') ?? '') });
         setCursores([0]); setPagina(undefined); setAcao(undefined); setDetalhe(undefined); setErro('');
       }}>
         <label className="min-w-0 flex-1">Família, convidado ou ID<input name="busca" type="search" maxLength={160} className="mt-1 block min-h-11 w-full rounded border p-2" /></label>
-        <label>Situação<select name="situacao" defaultValue={filtro.status} className="mt-1 block min-h-11 rounded border p-2"><option value="all">Todas</option><option value="unclaimed">Sem responsável</option><option value="awaiting">Sem comprovante</option><option value="pending">Pendentes</option><option value="partial">Em andamento</option><option value="complete">Com comprovante</option></select></label>
+        <label>Mesa<input name="mesa" className="mt-1 block min-h-11 w-24 rounded border p-2" type="number" min={1} max={999} step={1} defaultValue={filtro.mesa==='none'?'':filtro.mesa}/></label><label className="flex min-h-11 items-center gap-2"><input name="sem-mesa" type="checkbox" defaultChecked={filtro.mesa==='none'}/> Sem mesa</label>
+      <label>Situação<select name="situacao" defaultValue={filtro.status} className="mt-1 block min-h-11 rounded border p-2"><option value="all">Todas</option><option value="unclaimed">Sem responsável</option><option value="no_email">Sem e-mail disponível</option><option value="whatsapp_pending">Sem resposta e sem contato por WhatsApp</option><option value="awaiting">Sem comprovante</option><option value="pending">Pendentes</option><option value="partial">Em andamento</option><option value="complete">Com comprovante</option></select></label>
         <Button variant="outline" disabled={ocupado}>Buscar</Button>
       </form>
       {!pagina && !erro && <p role="status">Carregando grupos…</p>}
@@ -120,7 +122,13 @@ function CadastroDeGrupos({ csrf }: { csrf: string }) {
           <div className="flex flex-wrap gap-2"><Button disabled={ocupado}>Confirmar</Button><Button disabled={ocupado} type="button" variant="outline" onClick={() => setAcao(undefined)}>Cancelar</Button></div>
         </form> : <Button disabled={ocupado} variant="outline" onClick={() => setAcao({ id: grupo.id, tipo: grupo.responsible_account_id === null ? 'admin_rotate' : 'admin_transfer' })}>{grupo.responsible_account_id === null ? 'Gerar acesso' : 'Transferir responsabilidade'}</Button>}
         </div>
-        <DetalheDoGrupo key={grupo.id} id={grupo.id} csrf={csrf} aoAlterar={() => setVersao(v => v + 1)} />
+        <section className="space-y-2 rounded border p-3" aria-label="Acompanhamento por WhatsApp">
+           <h3 className="font-semibold">Contato por WhatsApp</h3>
+           <p className="text-sm">{grupo.whatsapp_contacted_at ? 'Contato registrado manualmente.' : 'Nenhum contato registrado.'}</p>
+           <div className="flex flex-wrap gap-2"><Button type="button" variant="outline" onClick={async()=>{try{await navigator.clipboard.writeText(`Olá, ${grupo.label}! Passando para lembrar do nosso casamento. Se ainda não responderam, abram o convite que enviamos ou acessem ${window.location.origin}/meu-convite. Qualquer dúvida, falem com a gente! Victória e Flávio`);setMensagem('Recado copiado. Nenhuma mensagem foi enviada.');}catch{setErro('Não foi possível copiar o recado.');}}}>Copiar lembrete</Button>
+           <Button type="button" variant="outline" disabled={ocupado} onClick={async()=>{setOcupado(true);setErro('');try{await pedirAoConvite('convites',csrf,{action:'admin_whatsapp_contact',group_id:grupo.id,contacted:!grupo.whatsapp_contacted_at},z.object({ok:z.literal(true)}));setMensagem(grupo.whatsapp_contacted_at?'Registro desfeito.':'Contato registrado.');setVersao(v=>v+1);}catch(e){setErro(e instanceof Error?e.message:'Não foi possível atualizar o contato.');}finally{setOcupado(false);}}}>{grupo.whatsapp_contacted_at?'Desfazer registro':'Registrar contato feito'}</Button></div>
+         </section>
+         <DetalheDoGrupo key={grupo.id} id={grupo.id} csrf={csrf} aoAlterar={() => setVersao(v => v + 1)} />
       </SheetContent>}
       </Sheet>
       <div className="flex flex-wrap items-center gap-2">

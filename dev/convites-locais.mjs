@@ -49,8 +49,8 @@ export function convitesLocais({ listaGrande = false } = {}) {
   }
   const falha = (status, message) => Object.assign(new Error(message), { status });
   function resumo(g) { return { id:g.id, label:g.label }; }
-  function detalhe(g) {
-    return { group:{ ...resumo(g), external_id:g.external_id, contact_phone:g.contact_phone, responsible_email:g.owner, deadline:prazo ? `${prazo}:00-03:00` : null, receipt:g.receipt }, guests:g.guests };
+  function detalhe(g, admin = false) {
+    return { group:{ ...resumo(g), external_id:g.external_id, contact_phone:g.contact_phone, responsible_email:g.owner, deadline:prazo ? `${prazo}:00-03:00` : null, receipt:g.receipt, lodging_intent:g.lodging_intent, hotel_name:g.hotel_name, arrival_mode:g.arrival_mode, table_number:admin||g.table_visible?g.table_number:null, ...(admin?{table_visible:!!g.table_visible}:{}) }, guests:g.guests };
   }
   return async (req, res, next) => {
     const rota = new URL(req.url ?? '/', 'http://localhost').pathname;
@@ -81,6 +81,13 @@ export function convitesLocais({ listaGrande = false } = {}) {
       }
       const conta = contas.get(sessao.email);
       if (!conta) throw falha(401,'Entre na sua conta.');
+      if (rota === '/api/assistente.php') {
+        if (body.preview_version !== undefined) throw falha(503,'A prévia de versões não faz parte desta simulação local.');
+        if (![...grupos.values()].some(grupo => grupo.owner === sessao.email)) throw falha(403,'Vincule um convite para usar o assistente.');
+        const mensagem = Array.isArray(body.messages) ? body.messages.at(-1) : null;
+        if (mensagem?.role !== 'user' || typeof mensagem.content !== 'string' || !mensagem.content.trim() || mensagem.content.length > 1800) throw falha(422,'Envie uma pergunta válida.');
+        return ok({ answer:'Resposta fictícia para testar o chat. Nenhum serviço de IA foi consultado e esta mensagem não contém informações do evento.', version:null, context_key:'simulacao-local', sources:[] });
+      }
       if (rota === '/api/memoria.php' || rota === '/api/contexto.php') throw falha(503,'A memória e a logística não fazem parte desta simulação local.');
       const g = grupos.get(body.group_id);
       if (rota === '/api/confirmacoes.php') {
@@ -91,14 +98,50 @@ export function convitesLocais({ listaGrande = false } = {}) {
         const contato=telefone(body.contact_phone);
         const novas=g.guests.map(p => {const r=body.responses.find(v=>v.id===p.id); if(!r||r.revision!==p.revision)throw falha(409,'O cadastro mudou. Recarregue.'); if(typeof r.full_name!=='string'||!r.full_name.trim().includes(' ')||!['yes','no'].includes(r.attendance))throw falha(422,'Revise os nomes completos e as presenças.'); return {...p, display_name:r.full_name.trim(), contact_phone:telefone(r.phone), attendance:r.attendance, revision:p.revision+1};});
         if(novas.some(p=>p.attendance==='yes')&&!contato)throw falha(422,'Informe o telefone do responsável.');
-        g.guests=novas; g.contact_phone=contato; g.receipt={ protocol:token().slice(0,32),confirmed_at:new Date().toISOString() }; return ok({ receipt:g.receipt });
+        g.guests=novas.map(p=>({...p,arrival_override:p.attendance==='yes'?(g.guests.find(anterior=>anterior.id===p.id)?.arrival_override??null):null})); g.contact_phone=contato; g.receipt={ protocol:token().slice(0,32),confirmed_at:new Date().toISOString() }; return ok({ receipt:g.receipt });
       }
       if(rota !== '/api/convites.php') throw falha(503,'Este serviço não está disponível no ambiente local.');
-      if(action==='mine')return ok({groups:[...grupos.values()].filter(x=>x.owner===sessao.email).map(resumo)});
+      if(action==='logistics_save'){
+         if(!g||g.owner!==sessao.email)throw falha(404,'Convite indisponível.');
+         const presentes=g.guests.filter(p=>p.attendance==='yes');
+         if(!g.receipt||!presentes.length)throw falha(409,'Confirme a presença antes de informar a logística.');
+         const modes=['undecided','car','app','van'];
+         if(!modes.includes(body.arrival_mode)||!['undecided','yes','no'].includes(body.lodging_intent)||typeof body.hotel_name!=='string'||body.hotel_name.length>160||!Array.isArray(body.overrides)||new Set(body.overrides.map(x=>x?.guest_id)).size!==body.overrides.length||body.overrides.some(x=>!presentes.some(p=>p.id===x?.guest_id)||!modes.includes(x.mode)))throw falha(422,'Revise hospedagem e transporte.');
+         g.arrival_mode=body.arrival_mode;g.lodging_intent=body.lodging_intent;g.hotel_name=body.lodging_intent==='yes'?body.hotel_name.trim()||null:null;
+         for(const p of g.guests)p.arrival_override=body.overrides.find(x=>x.guest_id===p.id)?.mode??null;
+         return ok({});
+       }
+       if(action==='mine')return ok({groups:[...grupos.values()].filter(x=>x.owner===sessao.email).map(resumo)});
       if(action==='claim'){const item=[...grupos.values()].find(x=>x.code===body.token); if(!item)throw falha(404,'Convite indisponível.'); if(item.owner&&item.owner!==sessao.email)throw falha(409,'Este convite já tem um responsável.'); item.owner=sessao.email; return ok({group_id:item.id});}
       if(action==='read'){if(!g||g.owner!==sessao.email)throw falha(404,'Convite indisponível.');return ok(detalhe(g));}
       if(!conta.administrator)throw falha(403,'Acesso administrativo não autorizado.');
-       if(action==='admin_overview'){
+        if(action==='admin_logistics_summary'){
+          const transport={car:0,app:0,van:0,undecided:0},hotels=new Map(),tables=new Map();let lodging=0,unassigned=0;
+          for(const row of grupos.values())if(row.receipt)for(const p of row.guests)if(p.attendance==='yes'){
+            transport[p.arrival_override??row.arrival_mode??'undecided']++;if(row.lodging_intent==='yes'){lodging++;const name=row.hotel_name??'Hotel não informado';hotels.set(name,(hotels.get(name)??0)+1);}
+            if(row.table_number)tables.set(row.table_number,(tables.get(row.table_number)??0)+1);else unassigned++;
+          }
+          return ok({transport,lodging,unassigned,hotels:[...hotels].map(([name,count])=>({name,count})),tables:[...tables].map(([number,count])=>({number,count}))});
+        }
+        if(action==='admin_email_send')throw falha(503,'Não há envio real no simulador.');
+        if(action==='admin_email_preview'){
+          const {montarComunicado}=await import('../backend/autenticacao/modelo-de-comunicado.js');
+          if(!['table','reminder','hotel','van','guide','thanks','message'].includes(body.template)||!['test','selected','eligible'].includes(body.audience)||!Array.isArray(body.group_ids)||typeof body.message!=='string'||typeof body.subject!=='string'||body.message.length>3000||body.subject.length>140||(body.template==='message'&&(!body.subject.trim()||body.audience==='eligible'))||(!['table','reminder'].includes(body.template)&&!body.message.trim()))throw falha(422,'Revise o modelo e a mensagem.');
+          const ficticia={group_id:0,label:'Família Exemplo',table_number:12};
+          const candidatas=[...grupos.values()].filter(x=>body.audience!=='selected'||body.group_ids.includes(x.id)).filter(x=>{
+            const presentes=x.guests.filter(p=>p.attendance==='yes');
+            if(body.template==='reminder')return !x.receipt;
+            if(body.template==='message')return true;
+            if(!x.receipt||!presentes.length)return false;
+            if(body.template==='table')return x.table_visible&&x.table_number;
+            if(body.template==='hotel')return x.lodging_intent==='yes';
+            if(body.template==='van')return presentes.some(p=>(p.arrival_override??x.arrival_mode)==='van');
+            return true;
+          });
+          const recipients=body.audience==='test'?[ficticia]:candidatas.filter(x=>x.owner).map(x=>({group_id:x.id,label:x.label,table_number:x.table_visible?x.table_number:null}));
+          return ok({enabled:false,recipients,skipped:body.audience==='test'?0:(body.audience==='selected'?new Set(body.group_ids).size:candidatas.length)-recipients.length,fingerprint:createHash('sha256').update(JSON.stringify([body.template,body.audience,body.subject,body.message,recipients])).digest('hex'),preview:montarComunicado(body,recipients.find(x=>x.group_id===body.preview_group_id)??recipients[0]??ficticia,`http://${req.headers.host}`)});
+        }
+        if(action==='admin_overview'){
          const gruposAtivos=[...grupos.values()];const completos=gruposAtivos.filter(g=>g.receipt);
          return ok({total:gruposAtivos.length,unclaimed:gruposAtivos.filter(g=>!g.owner).length,awaiting:gruposAtivos.length-completos.length,complete:completos.length,confirmed:completos.reduce((n,g)=>n+g.guests.filter(p=>p.attendance==='yes').length,0)});
        }
@@ -110,7 +153,7 @@ export function convitesLocais({ listaGrande = false } = {}) {
        }
        if(action==='admin_list'){
         const busca=String(body.search??'').toLowerCase();
-        const itens=[...grupos.values()].filter(x=>x.id>(body.after??0)).map(x=>({...resumo(x),external_id:x.external_id,has_receipt:!!x.receipt,responsible_account_id:contas.get(x.owner)?.id??null,responsible_name:contas.get(x.owner)?.name??null,total:x.guests.length,confirmed:x.guests.filter(p=>p.attendance==='yes').length,declined:x.guests.filter(p=>p.attendance==='no').length, termos:[x.label,x.external_id,x.id,...x.guests.map(p=>p.display_name)].join(' ').toLowerCase()})).filter(x=>x.termos.includes(busca)).filter(x=>!body.status||body.status==='all'||(body.status==='unclaimed'&&!x.responsible_account_id)||(body.status==='awaiting'&&!x.has_receipt)||body.status===(x.has_receipt?'complete':x.confirmed+x.declined?'partial':'pending'));
+        const itens=[...grupos.values()].filter(x=>x.id>(body.after??0)).filter(x=>body.table==='none'?!x.table_number:typeof body.table==='number'?x.table_number===body.table:true).map(x=>({...resumo(x),external_id:x.external_id,whatsapp_contacted_at:x.whatsapp_contacted_at??null,has_receipt:!!x.receipt,responsible_account_id:contas.get(x.owner)?.id??null,responsible_name:contas.get(x.owner)?.name??null,total:x.guests.length,confirmed:x.guests.filter(p=>p.attendance==='yes').length,declined:x.guests.filter(p=>p.attendance==='no').length, termos:[x.label,x.external_id,x.id,...x.guests.map(p=>p.display_name)].join(' ').toLowerCase()})).filter(x=>x.termos.includes(busca)).filter(x=>!body.status||body.status==='all'||(body.status==='unclaimed'&&!x.responsible_account_id)||(body.status==='awaiting'&&!x.has_receipt)||(body.status==='no_email'&&!x.responsible_account_id)||(body.status==='whatsapp_pending'&&!x.whatsapp_contacted_at&&!x.has_receipt)||body.status===(x.has_receipt?'complete':x.confirmed+x.declined?'partial':'pending'));
         return ok({groups:itens.slice(0,25).map(({termos,...x})=>x),next:itens.length>25?itens[24].id:null});
       }
        if(action==='import_preview'||action==='import_apply'){
@@ -124,9 +167,17 @@ export function convitesLocais({ listaGrande = false } = {}) {
        }
       if(action==='admin_create'){if(!String(body.label??'').trim()||!Array.isArray(body.guests)||body.guests.length<1||body.guests.length>100)throw falha(422,'Informe o grupo e os convidados.');const item=criar(body.label,body.guests);return ok({group_id:item.id,token:item.code});}
       if(!g)throw falha(404,'Convite indisponível.');
-      if(action==='admin_detail')return ok(detalhe(g));
+       if(action==='admin_whatsapp_contact'){
+         if(typeof body.contacted!=='boolean')throw falha(422,'Contato inválido.');
+         g.whatsapp_contacted_at=body.contacted?new Date().toISOString():null;return ok({});
+       }
+       if(action==='admin_detail')return ok(detalhe(g,true));
+       if(action==='admin_table'){
+         const n=body.table_number,v=body.table_visible;if(typeof v!=='boolean'||(n!==null&&(!Number.isInteger(n)||n<1||n>999))||(v&&n===null))throw falha(422,'Informe uma mesa válida para divulgar.');
+         g.table_number=n;g.table_visible=v;return ok({});
+       }
       if(action==='admin_rotate'){if(g.owner)throw falha(409,'Este convite já tem responsável.');g.code=token();return ok({group_id:g.id,token:g.code});}
-      if(action==='admin_transfer'){if(!g.owner||!contas.has(body.email)||g.owner===body.email)throw falha(422,'Escolha outra conta verificada.');g.owner=body.email;g.code=token();g.contact_phone=null;g.receipt=null;return ok({group_id:g.id,token:null});}
+      if(action==='admin_transfer'){if(!g.owner||!contas.has(body.email)||g.owner===body.email)throw falha(422,'Escolha outra conta verificada.');g.owner=body.email;g.code=token();g.contact_phone=null;g.whatsapp_contacted_at=null;g.receipt=null;g.lodging_intent='undecided';g.hotel_name=null;g.arrival_mode='undecided';g.table_visible=false;for(const p of g.guests)p.arrival_override=null;return ok({group_id:g.id,token:null});}
       if(['admin_guest_add','admin_guest_remove','admin_guest_rename'].includes(action)){
         if(body.acknowledge!==true)throw falha(422,'Confirme a alteração.');
         const alvo=g.guests.find(p=>p.id===body.guest_id&&p.revision===body.revision);

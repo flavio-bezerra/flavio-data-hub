@@ -13,8 +13,11 @@ export const casamento = {
   poema: "O amor é uma companhia.\nJá não sei andar só pelos caminhos,\nPorque os meus caminhos já não são só meus;",
   autor: "Alberto Caeiro",
   historia: null as string | null,
-  endereco: null as string | null,
-  mapaUrl: null as string | null,
+  endereco: "Estrada Municipal Santo Antônio, 270 · Jardim Sandra II",
+  mapaUrl: "https://share.google/L0x8K9IaHNxRe33Fl",
+  mapaEmbedUrl: "https://www.google.com/maps?" + new URLSearchParams({ q: "Sítio Della Torre, Estrada Municipal Santo Antônio, 270, Mairiporã - SP", output: "embed" }),
+  instagramUrl: "https://www.instagram.com/sitiodellatorre/",
+
   prazoPresenca: null as string | null,
 } as const;
 
@@ -26,53 +29,43 @@ export const secoes = [
   { id: "presenca", titulo: "Confirmar presença" },
 ] as const;
 
+export const hoteisIndicados: readonly { nome: string; reserva: string; contato?: string; trajeto?: string }[] = [];
+
 export const orientacoes = [
   {
-    id: "traje",
-    pergunta: "Qual será o traje?",
-    resposta: `O traje escolhido é <strong>esporte fino</strong>. Mas, queremos que vocês se sintam elegantes e, acima de tudo, muito confortáveis para aproveitar cada momento conosco.<br/><br/>
-Para os <strong>homens</strong>, sugerimos calça social ou de sarja, camisa social ou casual e sapatênis ou sapato casual. Gravata e blazer são totalmente opcionais.<br/><br/>
-Para as <strong>mulheres</strong>, sugerimos vestidos (curtos, midi ou longos), macacões ou conjuntos elegantes em tecidos leves. Como nossa celebração acontecerá em um espaço com gramado, indicamos priorizar saltos mais grossos (como salto bloco) ou plataformas para maior conforto ao caminhar.<br/><br/>
-Sobre cores e tecidos, o evento começa no início da tarde, por isso tecidos fluidos e cores alegres combinam super bem com o clima do dia. Nossas madrinhas estarão vestindo tons de azul e verde, mas sintam-se totalmente à vontade caso queiram usar essas cores também. Apenas pedimos para evitarem o branco e tons muito próximos a ele, por exemplo off-white e bege claro, ou tons que se assemelhem ao branco ao tirar foto.`,
-    pendente: false,
-  },
-  {
     id: "chegada",
-    pergunta: "Onde e que horas será a cerimônia e a recepção?",
-    resposta: `Celebraremos no <strong>Sítio Della Torre</strong>, em Mairiporã — SP.<br/><br/>
-Nossa cerimônia começará pontualmente às <strong>13h30</strong>, por isso recomendamos que se programem com antecedência para evitar imprevistos no trajeto.<br/><br/>
-A recepção acontecerá no mesmo local, logo após a cerimônia.`,
-    pendente: false,
+    titulo: "Cerimônia e recepção",
+    destaque: `${casamento.horario} · ${casamento.local}`,
+    paragrafos: [
+      "A cerimônia começa pontualmente, em Mairiporã (SP). Se puderem, cheguem um pouco antes para se acomodar com calma. Depois da cerimônia, a festa continua no mesmo local.",
+    ],
   },
   {
     id: "transporte",
-    pergunta: "Como chegar, estacionamento e onde se hospedar?",
-    resposta: `O Sítio Della Torre está localizado na <strong>Estrada Municipal Santo Antônio, 270 – Jardim Sandra II, Mairiporã – SP</strong>.<br/><br/>
-Para quem for de carro, a melhor e mais rápida rota de acesso é pela <strong>Rodovia Fernão Dias</strong>.<br/><br/>
-O local conta com <strong>estacionamento pago no espaço</strong>.<br/><br/>
-No entanto, como teremos bebidas alcoólicas na festa, sugerimos priorizar o uso de transporte por aplicativo (como Uber).<br/><br/>
-Também contaremos com um <strong>serviço de van oficial</strong>, com ida e volta, saindo de um hotel parceiro selecionado na região. Em breve divulgaremos aqui o nome do hotel oficial, horários e instruções para reserva. Aguardem mais atualizações.`,
-    pendente: false,
+    titulo: "Como chegar",
+    destaque: casamento.endereco,
+    paragrafos: [
+      "Para quem vem de carro, o acesso é pela Rodovia Fernão Dias. Há estacionamento pago no local. Se forem beber, que tal combinar uma carona ou usar um carro de aplicativo?",
+      "A van fará o trajeto de ida e volta entre os dois hotéis indicados e o DellaTorres Eventos. Vamos publicar aqui os pontos de embarque, os horários e como solicitar lugar.",
+    ],
+  },
+  {
+    id: "traje",
+    titulo: "O que vestir",
+    destaque: "Esporte fino",
+    paragrafos: [
+      "Para uma festa à tarde, tecidos leves vão bem. Calça de sarja com camisa, vestido, macacão ou um conjunto são boas opções. Gravata e blazer são opcionais. Como há gramado, prefiram calçados confortáveis ou saltos mais largos.",
+      "Azul e verde estão liberados. Só pedimos que evitem branco e tons bem próximos, como off-white e bege muito claro.",
+    ],
   },
   {
     id: "familia",
-    pergunta: "Como funciona a confirmação da família?",
-    resposta: `Cada família terá um representante responsável pela confirmação de presença.<br/><br/>
-Enviaremos o código de acesso à página de confirmação diretamente para o representante via WhatsApp. Ao acessar, ele deverá preencher os dados completos (nome, documento, telefone e e-mail) de todos os integrantes incluídos no convite.<br/><br/>
-Os demais membros da família também receberão o convite para que fiquem por dentro de todas as informações e detalhes do nosso grande dia, mas toda a confirmação será centralizada no representante.`,
-    pendente: false,
-  },
-  {
-    id: "prazo",
-    pergunta: "Até quando posso confirmar?",
-    resposta: `Pedimos que a confirmação de presença seja feita até o dia <strong>10/08/2027</strong> (2 meses antes do casamento). A confirmação é super rápida e deve ser realizada diretamente aqui no site pelo representante da família, utilizando o código exclusivo enviado via WhatsApp.`,
-    pendente: false,
-  },
-  {
-    id: "nao-pode-ir",
-    pergunta: "O que fazer caso não possamos ir?",
-    resposta: `Entendemos que imprevistos acontecem. Por isso, caso a presença já tenha sido confirmada, mas surja algum contratempo que impeça a ida de alguém do convite, pedimos a gentileza de nos avisar o mais breve possível para ajustarmos nossa lista.`,
-    pendente: false,
+    titulo: "Confirme sua presença",
+    destaque: "Até 10 de agosto de 2027",
+    paragrafos: [
+      "Basta uma pessoa responder por todos que estão no mesmo convite. Abram o link enviado pelo WhatsApp ou, se receberam só o código, entrem na Área do convidado e informem o código depois do login.",
+      "Se os planos mudarem, avisem a gente assim que puderem.",
+    ],
   },
 ] as const;
 
@@ -86,6 +79,14 @@ export interface PresenteItem {
 }
 
 export const presentesCatalogo: readonly PresenteItem[] = [
+  {
+    "id": "cota-livre",
+    "titulo": "Cota de carinho livre",
+    "descricao": "Escolha o valor e deixe sua mensagem para nossa nova história.",
+    "valor": 0,
+    "imagem": "/rebranding/presentes/cota-livre.webp",
+    "livre": true
+  },
   {
     "id": "filtro",
     "titulo": "Filtro de óleo para o Escort",
@@ -143,11 +144,11 @@ export const presentesCatalogo: readonly PresenteItem[] = [
     "imagem": "/rebranding/presentes/passeio.webp"
   },
   {
-    "id": "mounjaro",
-    "titulo": "Mounjaro para a noiva",
-    "descricao": "Uma cota bem-humorada para os planos da noiva. Só simbólica!",
+    "id": "pilates-pos-ressaca",
+    "titulo": "Pilates pós-ressaca",
+    "descricao": "Depois de tanto brinde e pista de dança, até alongar vira evento.",
     "valor": 350,
-    "imagem": "/rebranding/presentes/mounjaro.webp"
+    "imagem": "/rebranding/presentes/pilates-pos-ressaca.webp"
   },
   {
     "id": "terapia",
@@ -183,13 +184,5 @@ export const presentesCatalogo: readonly PresenteItem[] = [
     "descricao": "Seu carinho embarca com a gente na próxima descoberta.",
     "valor": 1000,
     "imagem": "/rebranding/presentes/aventura.webp"
-  },
-  {
-    "id": "cota-livre",
-    "titulo": "Cota de carinho livre",
-    "descricao": "Escolha o valor e deixe sua mensagem para nossa nova história.",
-    "valor": 0,
-    "imagem": "/rebranding/presentes/cota-livre.webp",
-    "livre": true
   }
 ];

@@ -364,6 +364,11 @@
  .programa-lista { display: inline-block; text-align: left; margin-top: 1rem; }
  .programa-lista li { padding: .5rem 0; }
  .programa-endereco { max-width: 32rem; margin: 1rem auto 0; }
+ .programa-local { width: min(100%, 24rem); margin: .75rem auto 0; }
+ .programa-local iframe { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; min-height: 200px; border: 1px solid #bac9c3; }
+ .programa-instagram { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-top: .9rem; border: 1px solid #bac9c3; border-radius: 50%; color: var(--ardosia); background: #fff; }
+ .programa-instagram:hover { background: #e9eff3; }
+ .programa-instagram:focus-visible { outline: 2px solid var(--ardosia); outline-offset: 2px; }
 }
 @media(max-width:860px) {
  .herbario-abertura { min-height: 720px; background-size: auto 100%; background-position: 43% center; }
@@ -395,6 +400,16 @@
 @layer components {
  .convite-site .orientacoes-notas { max-width: none; margin: 0; display: grid; grid-template-columns: minmax(0,1fr); gap: 1.5rem; padding: 4rem 8% 5rem 35%; background: #fff url('/rebranding/orientacoes-pintura.webp') center / 100% 100% no-repeat; }
  .orientacoes-cabecalho { text-align: center; }
+ .orientacoes-cabecalho > p { max-width: 36ch; margin-inline: auto; line-height: 1.45; font-size: 1.1rem; }
+ .convite-site .orientacoes-guia { gap: 1.5rem clamp(1.25rem, 3vw, 3rem); }
+ .orientacoes-guia article { min-width: 0; border-top: 1px solid #bac9c3; padding: .9rem 0 .4rem; }
+ .orientacoes-guia h3 { color: var(--ardosia); font-size: clamp(1.45rem, 2.2vw, 1.8rem); line-height: 1.15; }
+ .orientacoes-guia p { font-size: 1.075rem; line-height: 1.5; margin-top: .55rem; }
+ .orientacoes-guia .orientacoes-destaque { color: var(--ardosia); font-weight: 600; line-height: 1.3; }
+ .orientacoes-guia .acao-secundaria { margin-top: .25rem; }
+ @media (max-width: 860px) {
+   .convite-site .orientacoes-guia { grid-template-columns: minmax(0, 1fr); gap: .75rem; margin-top: 1rem; }
+ }
  .orientacoes-cabecalho .titulo-secao { font-size: clamp(2.8rem,4.5vw,4.7rem); margin-top: 1rem; margin-bottom: 1rem; }
  .orientacoes-lista { gap: 1.5rem 2rem; }
  .convite-site .presentes-cardapio { padding: 4rem 20% 5rem 32%; background: #fff url('/rebranding/presentes-pintura.webp') center / 100% 100% no-repeat; }
@@ -578,11 +593,20 @@
 @media(prefers-reduced-motion:reduce) { .pagamento-conteudo .animate-spin,.pagamento-conteudo .animate-pulse { animation:none; } }
 
 /* Assistente da festa — superfícies de leitura brancas */
-.chat-abrir{position:fixed;right:20px;bottom:20px;z-index:90;border-radius:999px;background:#34506a;color:#fff;padding:12px 20px;cursor:pointer;box-shadow:0 4px 18px #0d204130}
+.chat-abrir{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:90;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:#34506a;color:#fff;cursor:pointer;box-shadow:0 4px 18px #0d204130}
+.chat-abrir:hover{background:#253e56}.chat-abrir:focus-visible{outline:2px solid #34506a;outline-offset:4px}
 .chat-overlay{position:fixed;inset:0;z-index:1100;background:#0d204160;backdrop-filter:blur(4px);display:flex;justify-content:flex-end;align-items:flex-end;padding:20px}
 .chat-painel{width:min(440px,100%);height:min(720px,92dvh);display:flex;flex-direction:column;background:#fff;border-radius:12px;padding:20px;box-shadow:0 20px 70px #0d204160}
 .chat-painel header{display:flex;justify-content:space-between;align-items:center;gap:16px}.chat-painel h2{font-size:1.7rem;color:#34506a}.chat-painel button{min-height:44px;cursor:pointer}.chat-painel header button{min-width:44px;font-size:1.8rem}.chat-aviso{font-size:.9rem;color:#4d5a49;margin:12px 0}.chat-conversa{flex:1;overflow:auto;padding:8px 0}.chat-mensagem{padding:10px 14px;border-radius:10px;margin-bottom:10px;overflow-wrap:anywhere}.chat-user{background:#e6edf3}.chat-assistant{background:#f5f8f5}.chat-painel form{display:flex;gap:10px;margin-top:12px}.chat-painel textarea{resize:vertical;min-height:65px;max-height:150px;flex:1;min-width:0;border:1px solid #d3dfea;padding:10px}.chat-painel form button,.admin-assistente button{background:#34506a;color:white;padding:10px 16px;border-radius:6px;cursor:pointer}.chat-painel details{max-height:120px;overflow:auto;font-size:.9rem}.chat-painel a{color:#34506a;text-decoration:underline}.admin-assistente{max-width:850px;margin:auto;padding:40px 20px}.admin-assistente h1{font-size:2.5rem;color:#34506a}.admin-assistente h2{font-size:1.8rem;margin-top:32px}.admin-assistente label{display:block;margin:16px 0}.admin-assistente input,.admin-assistente textarea,.admin-assistente select{display:block;width:100%;padding:12px;border:1px solid #d3dfea;margin-top:6px}.admin-assistente textarea{min-height:130px}.admin-assistente button{margin:6px 8px 6px 0;min-height:44px}.admin-assistente article{border:1px solid #d3dfea;padding:16px;margin:16px 0}.chat-painel button:disabled,.admin-assistente button:disabled{opacity:.5;cursor:default}
-@media(max-width:600px){.chat-overlay{padding:8px}.chat-painel{height:94dvh}.chat-abrir{right:12px;bottom:12px}}
+.chat-acesso{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:16px;padding:18px 4px}.chat-painel .chat-acesso-link{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:6px;background:#34506a;color:#fff;text-decoration:none}.chat-acesso-link:focus-visible{outline:2px solid #34506a;outline-offset:3px}
+.login-google{width:min(100%,320px);margin-inline:auto;min-width:0}
+.acesso-entrada{display:grid;gap:1.1rem;text-align:center;margin-inline:auto;width:min(100%,24rem);border-top:1px solid var(--nevoa);padding-top:1.2rem}
+.acesso-alternativa{cursor:pointer;color:var(--ardosia);padding-block:.7rem;min-height:44px}
+.chat-acesso{display:block;min-height:0}.chat-entrada{width:100%;max-width:22rem;margin:0 auto;text-align:center;display:grid;gap:.65rem;padding:1rem 0;color:var(--tinta)}
+.chat-entrada img{margin-inline:auto;object-fit:contain}.chat-entrada strong{color:var(--ardosia);font-size:1.55rem;font-weight:600}.chat-entrada .rubrica-do-convite{letter-spacing:.12em}
+.chat-painel .chat-login-form{display:grid;text-align:left;margin:0;gap:.55rem}.chat-login-form label{display:grid;gap:.2rem}.chat-login-form input{min-height:44px;width:100%;min-width:0;border:1px solid var(--nevoa);border-radius:4px;padding:.4rem .65rem}
+.chat-alternativa{display:inline-flex;min-height:44px;justify-content:center;align-items:center}
+@media(max-width:600px){.chat-overlay{padding:8px}.chat-painel{height:min(94dvh,calc(100dvh - 16px));padding:14px}.chat-abrir{right:max(12px,env(safe-area-inset-right));bottom:calc(12px + env(safe-area-inset-bottom))}}
 
 /* Chat Sidebar Animations */
 @keyframes slideInRight {
