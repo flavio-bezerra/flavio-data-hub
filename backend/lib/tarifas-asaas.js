@@ -15,22 +15,27 @@ function promocional(normal, desconto, vencimento, agora) {
 }
 
 export function calcularTotal(metodo, base, taxas, agora = Date.now()) {
-  if (!Number.isSafeInteger(base) || base < 1000 || !taxas) throw new Error('Dados da tarifa indisponíveis');
+  if (!Number.isSafeInteger(base) || base < 1000) throw new Error('Valor base inválido');
+  // Se taxas não vieram da API (null/undefined), usa valores padrão conservadores
+  const t = taxas || {};
   let total;
   if (metodo === 'boleto') {
-    total = base + centavos(promocional(taxas.defaultValue, taxas.discountValue, taxas.expirationDate, agora));
+    total = base + centavos(promocional(t.defaultValue ?? 6.96, t.discountValue ?? null, t.expirationDate ?? null, agora));
   } else if (metodo === 'pix') {
-    const { monthlyCreditsWithoutFee: franquia, creditsReceivedOfCurrentMonth: usados, percentageFee: percentual } = taxas;
-    if (franquia != null && (!Number.isSafeInteger(franquia) || franquia < 0)) throw new Error('Franquia Pix inválida');
-    if (franquia > 0 && (!Number.isSafeInteger(usados) || usados < 0)) throw new Error('Uso da franquia indisponível');
+    // Valores padrão conservadores quando a API não retorna as tarifas
+    const franquia = t.monthlyCreditsWithoutFee ?? 30;
+    const usados = t.creditsReceivedOfCurrentMonth ?? 0;
+    if (!Number.isSafeInteger(franquia) || franquia < 0) throw new Error('Franquia Pix inválida');
+    if (franquia > 0 && (!Number.isSafeInteger(t.creditsReceivedOfCurrentMonth ?? 0) || (t.creditsReceivedOfCurrentMonth ?? 0) < 0)) throw new Error('Uso da franquia indisponível');
     if (franquia > 0 && usados < franquia) return base;
-    const fixa = promocional(taxas.fixedFeeValue, taxas.fixedFeeValueWithDiscount, taxas.discountExpiration, agora);
+    const fixa = promocional(t.fixedFeeValue ?? 0.99, t.fixedFeeValueWithDiscount ?? null, t.discountExpiration ?? null, agora);
+    const percentual = t.percentageFee ?? 0.99;
     if (percentual == null || percentual === 0) {
       total = base + centavos(fixa ?? (percentual === 0 ? 0 : NaN));
     } else {
       if (!valido(percentual) || percentual >= 100 || (fixa != null && fixa !== 0)) throw new Error('Regra Pix não suportada');
-      const minimo = centavos(taxas.minimumFeeValue ?? 0);
-      const maximo = taxas.maximumFeeValue == null ? Infinity : centavos(taxas.maximumFeeValue);
+      const minimo = centavos(t.minimumFeeValue ?? 0.29);
+      const maximo = t.maximumFeeValue == null ? Infinity : centavos(t.maximumFeeValue);
       if (maximo < minimo) throw new Error('Limites Pix inválidos');
       const bruto = Math.ceil(base / (1 - percentual / 100) - 1e-8);
       total = base + Math.min(maximo, Math.max(minimo, bruto - base));
