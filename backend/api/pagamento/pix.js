@@ -119,9 +119,9 @@ export default async function handler(req, res) {
   const base = Math.round((item.livre ? Number(valor) : item.valor) * 100);
   if (!Number.isSafeInteger(base) || base < 1000) return res.status(400).json({ ok: false, message: 'Informe um valor válido a partir de R$ 10,00.' });
   const headers = { access_token: token, 'Content-Type': 'application/json', 'User-Agent': 'Casamento-Victoria-Flavio/1.0' };
-  let opcao;
+  let cotacao;
   try {
-    opcao = await cotarCobranca('pix', base, baseUrl, headers);
+    cotacao = await cotarCobranca('pix', base, baseUrl, headers);
   } catch (erro) {
     const msg = erro instanceof Error ? erro.message : 'erro desconhecido';
     // Validation errors should return 400 (future-proofing)
@@ -130,7 +130,8 @@ export default async function handler(req, res) {
     }
     return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa Pix.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: msg } });
   }
-  if (acao === 'cotacao') return res.status(200).json({ ok: true, opcoes: [opcao] });
+  const opcao = cotacao.opcoes[0];
+  if (acao === 'cotacao') return res.status(200).json({ ok: true, opcoes: cotacao.opcoes });
   if (totalAceitoCentavos !== opcao.totalCentavos) return res.status(409).json({ ok: false, message: 'Confira o total atualizado antes de gerar o Pix.' });
   const valorFinal = opcao.totalCentavos / 100;
 
