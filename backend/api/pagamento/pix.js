@@ -157,24 +157,14 @@ export default async function handler(req, res) {
       { headers, signal: AbortSignal.timeout(10000) }
     );
 
-    const searchText = await searchResp.text().catch(() => '');
-    let searchData = {};
-    try { searchData = JSON.parse(searchText); } catch {}
-
     if (searchResp.ok) {
+      const searchData = await searchResp.json().catch(() => ({}));
       if (Array.isArray(searchData.data) && searchData.data.length > 0) {
         customerId = searchData.data[0].id;
       }
     } else {
-      return res.status(400).json({ ok: false, message: 'Erro ao buscar cliente no gateway.', debug: { 
-        stage: 'search', 
-        status: searchResp.status, 
-        body: searchText,
-        url: `${baseUrl}/customers?cpfCnpj=${encodeURIComponent(cpfLimpo)}`,
-        hasToken: !!token,
-        tokenPrefix: token ? token.substring(0, 10) + '...' : 'none',
-        isProd
-      } });
+      const errText = await searchResp.text().catch(() => '');
+      return res.status(400).json({ ok: false, message: 'Erro ao buscar cliente no gateway. Verifique a configuração da conta Asaas.', diagnostico: { status: searchResp.status, body: errText } });
     }
 
     if (!customerId) {
@@ -195,14 +185,7 @@ export default async function handler(req, res) {
         let errCust = {};
         try { errCust = JSON.parse(errText); } catch {}
         const erroMsg = errCust.errors?.[0]?.description || errCust.message || errText || 'Erro ao registrar cliente no gateway.';
-        return res.status(400).json({ ok: false, message: erroMsg, debug: { 
-          status: createCustResp.status, 
-          body: errText,
-          url: `${baseUrl}/customers`,
-          hasToken: !!token,
-          tokenPrefix: token ? token.substring(0, 10) + '...' : 'none',
-          isProd
-        } });
+        return res.status(400).json({ ok: false, message: erroMsg, diagnostico: { status: createCustResp.status, body: errText } });
       }
 
       const custData = await createCustResp.json();
@@ -244,27 +227,16 @@ export default async function handler(req, res) {
     let qrCodeBase64 = null;
     let expirationDate = null;
 
-    const qrResp = await fetch(`${baseUrl}/payments/${paymentId}/pixQrCode`, {
+    const pixResp = await fetch(`${baseUrl}/payments/${paymentId}/pixQrCode`, {
       headers,
       signal: AbortSignal.timeout(10000)
     });
 
-    if (qrResp.ok) {
-      const qrData = await qrResp.json();
-      pixPayload = qrData.payload;
-      qrCodeBase64 = qrData.encodedImage;
-      expirationDate = qrData.expirationDate;
-    } else {
-      // Em sandbox, se a chave Pix estiver AWAITING_ACTIVATION, fornece fallback seguro
-      const qrErr = await qrResp.json().catch(() => ({}));
-      if (!isProd) {
-        pixPayload = `00020126580014br.gov.bcb.pix0136sandbox-casamento-${paymentId}520400005303986540${valorFinal.toFixed(2)}5802BR5925Victoria e Flavio Casamento6009Mairipora62070503***6304DEMO`;
-      } else {
-        return res.status(502).json({
-          ok: false,
-          message: qrErr.errors?.[0]?.description || 'Chave Pix não disponível para cobrança no momento.'
-        });
-      }
+    if (pixResp.ok) {
+      const pixData = await pixResp.json();
+      pixPayload = pixData.payload;
+      qrCodeBase64 = pixData.encodedImage;
+      expirationDate = pixData.expirationDate;
     }
 
     return res.status(200).json({
@@ -272,10 +244,9 @@ export default async function handler(req, res) {
       cobrancaId: paymentId,
       valor: valorFinal,
       presente: item.titulo,
-      pixCopiaECola: pixPayload,
+      pixPayload,
       qrCodeBase64,
-      invoiceUrl: payData.invoiceUrl,
-      expiraEm: expirationDate,
+      expirationDate,
       ambiente: isProd ? 'producao' : 'sandbox'
     });
   } catch (error) {
