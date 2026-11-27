@@ -179,8 +179,8 @@ export default async function handler(req, res) {
 
       if (!createCustResp.ok) {
         const errCust = await createCustResp.json().catch(() => ({}));
-        const erroMsg = errCust.errors?.[0]?.description || 'Erro ao registrar cliente no gateway.';
-        return res.status(400).json({ ok: false, message: erroMsg });
+        const erroMsg = errCust.errors?.[0]?.description || errCust.message || JSON.stringify(errCust) || 'Erro ao registrar cliente no gateway.';
+        return res.status(400).json({ ok: false, message: erroMsg, debug: errCust });
       }
 
       const custData = await createCustResp.json();
