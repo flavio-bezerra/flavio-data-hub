@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: 🟢 Setup Node.js
       uses: actions/setup-node@v4
@@ -27,6 +29,14 @@ jobs:
     - name: Check lint
       run: npm run lint
 
+    - name: Setup PHP for syntax validation
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+
+    - name: Check PHP syntax
+      run: find server public/api -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+
     - name: 🏗️ Build Project
       run: npm run build
       env:
@@ -41,6 +51,85 @@ jobs:
         ls -la dist/assets/ || true
         echo "=== .htaccess exists? ==="
         test -f dist/.htaccess
+        echo "=== private PHP access guard exists? ==="
+        test -f server/.htaccess
+
+    - name: Guard PHP deploy until enabled
+      env:
+        SERVER_DEPLOY_ENABLED: ${{ vars.HOSTGATOR_SERVER_DEPLOY_ENABLED }}
+        EVENT_BEFORE: ${{ github.event.before }}
+      run: |
+        base="$EVENT_BEFORE"
+        if [ -z "$base" ] || [[ "$base" =~ ^0+$ ]]; then
+          base="$(git rev-parse HEAD^ 2>/dev/null || true)"
+        fi
+        if [ -n "$base" ]; then
+          changed="$(git diff --name-only "$base" "$GITHUB_SHA")"
+        else
+          changed="$(git ls-files server public/api)"
+        fi
+        if printf '%s\n' "$changed" | grep -Eq '^(server/|database/criar-schema-do-evento\.sql$|public/api/(assistente|auth|confirmacoes|contexto|convites|diagnostico|memoria|operacoes)\.php$)'; then
+          if [ "$SERVER_DEPLOY_ENABLED" != "true" ]; then
+            echo "Server/API PHP changed. Set HOSTGATOR_SERVER_DEPLOY_ENABLED=true before deployment."
+            exit 1
+          fi
+        fi
+
+    - name: Prepare HTTP access guard
+      if: ${{ vars.HOSTGATOR_SERVER_DEPLOY_ENABLED == 'true' }}
+      run: |
+        mkdir -p "$RUNNER_TEMP/server-guard"
+        cp server/.htaccess "$RUNNER_TEMP/server-guard/.htaccess"
+
+    # Upload the deny rule before any PHP file enters public_html/server/.
+    - name: 🔒 Publish server HTTP access guard first
+      if: ${{ vars.HOSTGATOR_SERVER_DEPLOY_ENABLED == 'true' }}
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # O usuário FTP já cai em public_html; publica apenas a pasta server/.
+        server-dir: ./server/
+        local-dir: ${{ runner.temp }}/server-guard/
+        timeout: 120000
+
+    - name: Prepare PHP server bundle with schema initializer
+      if: ${{ vars.HOSTGATOR_SERVER_DEPLOY_ENABLED == 'true' }}
+      run: |
+        mkdir -p "$RUNNER_TEMP/php-server"
+        cp -R server/. "$RUNNER_TEMP/php-server/"
+        cp database/criar-schema-do-evento.sql "$RUNNER_TEMP/php-server/schema-do-evento.sql"
+
+    - name: 🔒 Sync PHP server to HostGator
+      if: ${{ vars.HOSTGATOR_SERVER_DEPLOY_ENABLED == 'true' }}
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ./server/
+        local-dir: ${{ runner.temp }}/php-server/
+        timeout: 120000
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/.env*
+          **/vendor/**
+          **/storage/**
+          **/config.private.php
+          **/bridge.php
+          **/database.php
+          **/database.*.php
+
+    - name: Verify PHP directory is not directly accessible
+      if: ${{ vars.HOSTGATOR_SERVER_DEPLOY_ENABLED == 'true' }}
+      run: |
+        status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' https://casamento-flavio-victoria.com.br/server/ponte/gateway.php)"
+        if [ "$status" != "403" ]; then
+          echo "Expected HTTP 403 for direct PHP access, got $status. Stopping before the public API is switched."
+          exit 1
+        fi
 
     - name: 📂 Sync files to HostGator
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5

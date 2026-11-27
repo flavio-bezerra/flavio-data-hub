@@ -5,13 +5,17 @@ $acao=$argv[1]??'';
 if(!in_array($acao,['--confirmar','--gerar-link-de-configuracao'],true)) { fwrite(STDERR,"Use --confirmar após configurar email privado de uma conta já verificada.
 ");exit(1); }
 $private='/home2/hg8dcc78/casamento-private';
-$config=require $private.'/application.php';
-$environment=$config['access_environment']??'pilot';
-$databaseFile=match($environment){'pilot'=>'database.pilot.php','event'=>'database.event.php',default=>throw new RuntimeException('Ambiente inválido.')};
-if($acao==='--gerar-link-de-configuracao'&&$environment!=='event')throw new RuntimeException('Use o login autorizado do piloto.');
-$database=require $private.'/'.$databaseFile;
+$config=require '/home2/hg8dcc78/public_html/server/application.php';
+$environment=$config['access_environment']??'event';
+if($environment!=='event')throw new RuntimeException('Bootstrap administrativo disponível somente no ambiente do evento.');
+$database=require $private.'/database.php';
 $db=new PDO(sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s',$database['host'],(int)$database['port'],$database['database'],$database['charset']),$database['username'],$database['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
-$email=strtolower(trim($config['bootstrap_admin_email']));
+$email=strtolower(trim((string)($config['bootstrap_admin_email']??'')));
+if($email===''&&PHP_SAPI==='cli'){
+    fwrite(STDERR,"E-mail verificado do administrador (entrada nao armazenada no repositorio): ");
+    $entrada=fgets(STDIN);
+    if($entrada!==false)$email=strtolower(trim($entrada));
+}
 if(!filter_var($email,FILTER_VALIDATE_EMAIL))throw new RuntimeException('Configuração privada inválida.');
 $db->beginTransaction();
 try {

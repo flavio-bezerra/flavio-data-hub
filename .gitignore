@@ -23,12 +23,13 @@ playwright-report
 entrega/
 *.local
 
-# Configuração privada do backend e bibliotecas Composer
+# Configurações e credenciais privadas nunca entram no Git.
+/casamento-private/
 /server/config.private.php
-# Configurações operacionais privadas; os modelos .example.php continuam versionáveis.
+/server/bridge.php
+/server/database.php
 **/database.event.php
 **/database.pilot.php
-/casamento-private/
 /server/vendor/
 /server/storage/
 

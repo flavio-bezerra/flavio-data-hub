@@ -14,6 +14,7 @@ header('X-Content-Type-Options: nosniff');
  */
 
 $private = '/home2/hg8dcc78/casamento-private';
+$server = '/home2/hg8dcc78/public_html/server';
 
 $out = [
     'php' => PHP_VERSION,
@@ -23,7 +24,7 @@ $out = [
 ];
 
 /* ---- application.php ---- */
-$app = $private . '/application.php';
+$app = $server . '/application.php';
 $out['application_existe'] = is_file($app);
 $out['application_legivel'] = is_readable($app);
 $out['application_tipo'] = null;
@@ -65,9 +66,9 @@ if ($out['bridge_existe']) {
 }
 
 /* ---- demais arquivos privados ---- */
-$out['gateway_existe'] = is_file($private . '/server/ponte/gateway.php');
-$out['operacoes_php_existe'] = is_file($private . '/server/ponte/operacoes.php');
-$out['autenticacao_php_existe'] = is_file($private . '/server/autenticacao.php');
+$out['gateway_existe'] = is_file($server . '/ponte/gateway.php');
+$out['operacoes_php_existe'] = is_file($server . '/ponte/operacoes.php');
+$out['autenticacao_php_existe'] = is_file($server . '/autenticacao.php');
 $out['database_pilot_existe'] = is_file($private . '/database.pilot.php');
 $out['database_existe'] = is_file($private . '/database.php');
 

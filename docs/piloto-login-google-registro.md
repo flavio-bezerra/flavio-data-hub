@@ -198,6 +198,6 @@ A tabela `administrators` já existia no banco piloto (criada pela migração 00
 ## 11. Próxima rodada — convites e presença
 
 - As rotas `/administracao/convidados` e `/meu-convite` usam as APIs existentes; nenhuma função Vercel nem migração nova é necessária. A rota de demonstração permanece separada.
-- Após uma publicação autorizada do frontend, atualizar **juntos** apenas `server/administracao.php`, `server/convites.php` e `server/ponte/operacoes.php` em `casamento-private/server/` (respeitando a subpasta `ponte/`). Use o commit de código homologado como fonte; os ZIPs anteriores não contêm essas operações. Preserve a configuração em uso.
+- Após uma publicação autorizada do frontend, manter `server/administracao.php`, `server/convites.php` e `server/ponte/operacoes.php` na mesma revisão. Com o deploy ativado, o workflow sincroniza os arquivos para `/home2/hg8dcc78/public_html/server/`. Preserve as configurações privadas em `casamento-private/`.
 - No banco piloto: criar uma família fictícia via painel, copiar o link, vincular explicitamente, salvar presença, recarregar e conferir os totais. Conferir bloqueio sem sessão e de conta não administradora, reemissão de link após extravio e recusa do link anterior. A transferência exige uma segunda conta verificada no banco piloto; teste de duas contas é uma etapa separada da configuração Google de conta única. Após transferir, confira que o responsável anterior não pode ler ou salvar.
 - Manter login por senha, chat e dados alimentares fora desta rodada; nenhuma alteração no banco de produção.

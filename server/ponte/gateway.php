@@ -4,7 +4,7 @@ function executarGatewayVercel(string $domain): never {
  header('Content-Type: application/json; charset=utf-8');header('Cache-Control: no-store');header('X-Content-Type-Options: nosniff');
  try{
   if(!in_array($domain,['auth','assistente','memoria','contexto','convites','confirmacoes'],true))throw new RuntimeException('route');
-  $private='/home2/hg8dcc78/casamento-private';$settings=require $private.'/application.php';$bridge=require $private.'/bridge.php';
+  $private='/home2/hg8dcc78/casamento-private';$settings=require '/home2/hg8dcc78/public_html/server/application.php';$bridge=require $private.'/bridge.php';
   if(($settings['gateway_enabled']??false)!==true||!is_string($bridge['token']??null)||strlen($bridge['token'])<32)throw new RuntimeException('configuration');
   $method=$_SERVER['REQUEST_METHOD']??'';if(!in_array($method,['GET','POST'],true)||($method==='GET'&&$domain!=='auth')){http_response_code(405);echo json_encode(['ok'=>false,'message'=>'Método não permitido.']);exit;}
   $origin=$_SERVER['HTTP_ORIGIN']??'';

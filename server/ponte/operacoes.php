@@ -5,23 +5,24 @@ require_once dirname(__DIR__).'/administracao.php';require_once dirname(__DIR__)
 require_once dirname(__DIR__).'/assistente/contexto-da-festa.php';
 require_once dirname(__DIR__).'/assistente/administracao-memoria.php';require_once dirname(__DIR__).'/assistente/administracao-contexto.php';
 require_once __DIR__.'/sessoes.php';require_once __DIR__.'/contas.php';
+require_once __DIR__.'/garantir-schema.php';
 require_once dirname(__DIR__).'/importacao-convites.php';
 require_once dirname(__DIR__).'/prazo-de-presenca.php';
 require_once dirname(__DIR__).'/logistica-de-convites.php';
 require_once dirname(__DIR__).'/comunicados.php';
-function executarOperacoesDaPonte(string $private, string $environment='pilot'): never {
+function executarOperacoesDaPonte(string $private, string $environment='event'): never {
  try{
   if(strtolower(explode(';',$_SERVER['CONTENT_TYPE']??'')[0])!=='application/json')throw new FalhaDeAcesso(415,'Envie JSON.');
   $raw=file_get_contents('php://input',false,null,0,65537);if(strlen($raw)>65536)throw new FalhaDeAcesso(413,'Solicitação muito grande.');
   $body=json_decode($raw,true,32,JSON_THROW_ON_ERROR);if(!is_array($body)||array_is_list($body)||array_diff(array_keys($body),['operation','session_token','payload','client_bucket']))throw new FalhaDeAcesso(422,'Corpo inválido.');
-  $allowed=['session.read','session.create','session.rotate','session.revoke','rate.limit','account.google','account.google_invite','chat.context','memory.dispatch','logistics.dispatch','invitation.dispatch','rsvp.save'];
+  // Suporta o login por e-mail do backend e o login Google por convite do evento.
+  $allowed=['session.read','session.create','session.rotate','session.revoke','rate.limit','account.google','account.google_invite','account.register','account.lookup','account.token','account.consume_token','chat.context','memory.dispatch','logistics.dispatch','invitation.dispatch','rsvp.save'];
   $operation=$body['operation']??null;$p=$body['payload']??null;$token=$body['session_token']??null;
   if(!in_array($operation,$allowed,true)||!is_array($p)||(!empty($p)&&array_is_list($p))||!is_string($token))throw new FalhaDeAcesso(422,'Operação inválida.');
-  // Isolado do banco usado pela integração existente; nunca fazer fallback.
-  $databaseFile=match($environment){'pilot'=>'database.pilot.php','event'=>'database.event.php',default=>throw new RuntimeException('Ambiente inválido.')};
-   if(($operation==='account.google_invite'&&$environment!=='event')||($operation==='account.google'&&$environment!=='pilot'))throw new FalhaDeAcesso(503,'O acesso não está disponível no momento.');
-   $config=require $private.'/'.$databaseFile;$dsn=sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s',$config['host'],(int)$config['port'],$config['database'],$config['charset']);
-  $db=new PDO($dsn,$config['username'],$config['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);$db->exec("SET time_zone='+00:00'");
+  // Este gateway é exclusivo do evento. As credenciais vivem fora do Git em database.php.
+  if($environment!=='event'||$operation==='account.google')throw new FalhaDeAcesso(503,'O acesso não está disponível no momento.');
+  $config=require $private.'/database.php';$dsn=sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s',$config['host'],(int)$config['port'],$config['database'],$config['charset']);
+  $db=new PDO($dsn,$config['username'],$config['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);$db->exec("SET time_zone='+00:00'");garantirSchemaDoEvento($db);
   $result=despacharOperacao($db,$operation,$token,$p,$body['client_bucket']??'');
   echo json_encode($result,JSON_THROW_ON_ERROR|JSON_UNESCAPED_UNICODE);
  }catch(FalhaDeAcesso $e){http_response_code($e->status);echo json_encode(['ok'=>false,'message'=>$e->getMessage()]);}

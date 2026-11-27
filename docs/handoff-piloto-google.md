@@ -2,7 +2,7 @@
 
 ## Branches e responsabilidades
 
-- `main`: fonte de verdade do frontend (`src/`), funções Vercel (`backend/`), gateways públicos (`public/api/`), PHP privado (`server/`) e SQL (`database/`). O push na `main` dispara os deploys automáticos; não muda variáveis de ambiente, não envia `server/` para a HostGator e não executa migrações.
+- `main`: fonte de verdade do frontend (`src/`), funções Vercel (`backend/`), gateways públicos (`public/api/`), PHP (`server/`) e SQL (`database/`). O push autorizado na `main` dispara os deploys automáticos; o PHP é sincronizado em `public_html/server/` quando `HOSTGATOR_SERVER_DEPLOY_ENABLED=true`. As credenciais permanecem em `casamento-private/`; o workflow não executa migrações.
 - [`instalacao/piloto-login-google`](https://github.com/flavio-bezerra/flavio-data-hub/tree/instalacao/piloto-login-google/instalacao/piloto-login-google): espelho dos arquivos privados, exemplos vazios, dois ZIPs e README de instalação. Use como material de transferência, não faça merge dessa branch na `main` e não implante essa branch na Vercel. Na dúvida, regenere o pacote a partir do commit de código que será homologado.
 
 No outro computador, clone `https://github.com/flavio-bezerra/flavio-data-hub.git`, leia `AGENTS.md`, este documento e `docs/ativacao-vercel.md`. Comece com `git status`, `git fetch origin` e `git log -1 origin/main`. Não sobrescreva alterações do usuário. Anote o SHA homologado e confirme no painel Vercel que o projeto `flavio-data-hub-backend` usa `backend/` como raiz. Mantenha o teto de 12 funções; memória e contexto compartilham uma função. Não modifique pagamentos, webhook, `execute-sql`, DNS ou o menu para este piloto.
@@ -11,7 +11,7 @@ No outro computador, clone `https://github.com/flavio-bezerra/flavio-data-hub.gi
 
 O ZIP privado deve ter `server/` na raiz. Use esta lista fechada de caminhos do commit homologado:
 
-| Origem | Destino dentro de `casamento-private/` |
+| Origem no repositório | Destino dentro de `casamento-private/` |
 | --- | --- |
 | `server/ponte/{gateway,operacoes,sessoes,contas,config.example}.php` | `server/ponte/` |
 | `server/{autenticacao,administracao,convites}.php` | `server/` |
@@ -21,7 +21,7 @@ Exclua `.env*`, configurações reais, logs, `storage/`, `vendor/` e o bootstrap
 
 Crie ou revise no cPanel, fora do Git, estes arquivos:
 
-- `application.php`: modele com `server/ponte/config.example.php`. Comece com `gateway_enabled=false`, `access_enabled=false` e `bootstrap_admin_email` vazio. Preserve valores existentes não relacionados.
+- `application.php` neste procedimento é a configuração do **piloto isolado**: modele com `instalacao/piloto-login-google/casamento-private/server/ponte/config.example.php`. Produção usa as flags versionadas em `server/application.php`; nunca coloque e-mail pessoal no Git.
 - `database.pilot.php`: use `database.pilot.example.php` da branch de instalação. Preencha `host`, `port`, `database`, `charset`, `username`, `password` localmente. Envie somente ao cPanel e use um usuário vinculado apenas ao banco piloto. O código não faz fallback para `database.php`.
 - `bridge.php` e `database.php` existentes: preserve ambos. Não copie valores de token/senha para chat, GitHub, artefatos, arquivos públicos ou logs.
 
@@ -41,7 +41,7 @@ Crie ou revise no cPanel, fora do Git, estes arquivos:
 
 ## Cadastro, importação e comprovante (nova rodada)
 
-Após autorização, faça backup do banco piloto, confirme as migrações 001–003 e aplique `database/004-cadastro-e-comprovantes.sql` **somente no piloto**. O MySQL não reverte o DDL como uma transação única: pare ao primeiro erro e confira o que foi aplicado. Não altere o banco de produção. Após a migração, copie da mesma revisão para `casamento-private/server/`: `administracao.php`, `convites.php`, `importacao-convites.php` e `ponte/operacoes.php`. O ZIP anterior da branch de instalação não contém o novo módulo. Preserve `bridge.php`, `database.php`, `database.pilot.php` e `application.php`. Publique o frontend da mesma revisão apenas com autorização. A quantidade de funções Vercel não muda.
+Após autorização, faça backup do banco piloto, confirme as migrações 001–003 e aplique `database/004-cadastro-e-comprovantes.sql` **somente no piloto**. O MySQL não reverte o DDL como uma transação única: pare ao primeiro erro e confira o que foi aplicado. Não altere o banco de produção. Os fontes ficam em `server/` no repositório e são sincronizados para `/home2/hg8dcc78/public_html/server/` quando a publicação automática estiver ativada. Preserve `bridge.php`, `database.php`, `database.pilot.php` e `application.php` em `casamento-private/`. Publique o frontend da mesma revisão apenas com autorização. A quantidade de funções Vercel não muda.
 
 No phpMyAdmin do piloto, alimente `invitation_import_stage` (não `guests` diretamente): uma linha por pessoa, `id_convite`, `grupo_familia`, `nome` e `id_pessoa` opcional. IDs usam apenas letras ASCII, números, ponto, hífen ou sublinhado, até 80 caracteres. Repita o `id_convite` e o nome do grupo para os membros da mesma família; mantenha zeros à esquerda nos IDs. Forneça IDs individuais distintos para homônimos. Uma prévia lê até 250 pessoas por lote; mantenha famílias inteiras em cada lote. `row_id` é automático. Exemplo fictício:
 

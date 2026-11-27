@@ -1,0 +1,9 @@
+# Os PHP desta pasta são módulos internos carregados pelas rotas em public/api/.
+# Bloqueia pedidos HTTP diretos a PHP, documentação e demais arquivos internos.
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Deny from all
+</IfModule>
