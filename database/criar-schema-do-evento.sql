@@ -236,4 +236,4 @@ VALUES (1, '2027-10-10 16:30:00', NULL, 30);
 INSERT IGNORE INTO assistant_publication (id)
 VALUES (1);
 
-SELECT 'Schema inicial criado/verificado; rode verificar-migracoes-producao.sql antes do deploy.' AS status;
+SELECT 'Schema inicial criado/verificado. Rode verificar-migracoes-producao.sql antes do deploy.' AS status;

@@ -109,7 +109,10 @@ function garantirSchemaDoEvento(PDO $db): void
         $arquivo = dirname(__DIR__).'/schema-do-evento.sql';
         $sql = file_get_contents($arquivo);
         if (!is_string($sql) || $sql === '') throw new RuntimeException('Arquivo de schema indisponivel.');
-        $sql = preg_replace('/^\s*--.*$/m', '', $sql) ?? $sql;
+        $linhas = preg_split('/\R/', $sql);
+        if (!is_array($linhas)) throw new RuntimeException('Nao foi possivel ler o arquivo de schema.');
+        $linhas = array_filter($linhas, static fn(string $linha): bool => !preg_match('/^\s*--/', $linha));
+        $sql = implode("\n", $linhas);
         foreach (explode(';', $sql) as $statement) {
             $statement = trim($statement);
             if ($statement === '' || preg_match('/^SELECT\b/i', $statement)) continue;
