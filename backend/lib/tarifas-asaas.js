@@ -92,7 +92,7 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
       const maxParcelas = metodo === 'cartao' ? 21 : 1;
       for (let p = 1; p <= maxParcelas; p++) {
         const r = calcularTotalCompleto(metodo, base, null, Date.now(), p, true);
-        opcoes.push(r.opcoes[0]); // extrai a opção do objeto
+        opcoes.push(r);
       }
       return { ok: true, opcoes, valorBaseCentavos: base };
     }
@@ -104,7 +104,7 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
       const maxParcelas = metodo === 'cartao' ? 21 : 1;
       for (let p = 1; p <= maxParcelas; p++) {
         const r = calcularTotalCompleto(metodo, base, null, Date.now(), p, true);
-        opcoes.push(r.opcoes[0]);
+        opcoes.push(r);
       }
       return { ok: true, opcoes, valorBaseCentavos: base };
     }
@@ -125,7 +125,7 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
     const maxParcelas = metodo === 'cartao' ? 21 : 1;
     for (let p = 1; p <= maxParcelas; p++) {
       const r = calcularTotalCompleto(metodo, base, null, Date.now(), p, true);
-      opcoes.push(r.opcoes[0]);
+      opcoes.push(r);
     }
     return { ok: true, opcoes, valorBaseCentavos: base };
   }
