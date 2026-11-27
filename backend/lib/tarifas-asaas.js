@@ -17,13 +17,13 @@ function promocional(normal, desconto, vencimento, agora) {
 
 export function calcularTotal(metodo, base, taxas, agora = Date.now(), parcelas = 1, paraExibicao = false) {
   if (!Number.isSafeInteger(base) || base < 1000) throw new Error('Valor base inválido');
-  // Se taxas não vieram da API (null/undefined), usa valores padrão conservadores
+  // Se taxas não vieram da API (null/undefined), usa valores padrão (Asaas production)
   const t = taxas || {};
   let total;
   if (metodo === 'boleto') {
-    total = base + centavos(promocional(t.defaultValue ?? 6.96, t.discountValue ?? null, t.expirationDate ?? null, agora));
+    total = base + centavos(promocional(t.defaultValue ?? 1.69, t.discountValue ?? null, t.expirationDate ?? null, agora));
   } else if (metodo === 'pix') {
-    // Valores padrão conservadores quando a API não retorna as tarifas
+    // Valores padrão quando a API não retorna as tarifas (Asaas production)
     const franquia = t.monthlyCreditsWithoutFee ?? 30;
     const usados = t.creditsReceivedOfCurrentMonth ?? 0;
     if (!Number.isSafeInteger(franquia) || franquia < 0) throw new Error('Franquia Pix inválida');
@@ -49,19 +49,26 @@ export function calcularTotal(metodo, base, taxas, agora = Date.now(), parcelas 
       }
     }
   } else if (metodo === 'cartao') {
-    // Taxas de cartão de crédito: operationValue + percentual por parcela
-    // Mínimo: 3x de R$ 5,00 = R$ 15,00 | Máximo: 10x
+    // Taxas de cartão de crédito (Asaas production):
+    // Crédito à vista: 2,89% + R$ 0,00 fixa (recebimento 30 dias)
+    // Crédito 2 a 6x: 3,12% (recebimento 30 dias por parcela)
+    // Crédito 7 a 12x: 3,44% (recebimento 30 dias por parcela)
+    // Crédito 13 a 21x: 5,58% (recebimento 30 dias por parcela)
+    // Antecipação avulsa: 1,99% ao mês (recebimento 2 dias úteis)
+    // Mínimo: 3x de R$ 5,00 = R$ 15,00 | Máximo: 21x (Asaas suporta até 21x)
     if (parcelas > 1 && base < 1500) throw new Error('Valor mínimo para parcelamento é R$ 15,00 (3x de R$ 5,00).');
-    if (parcelas > 10) throw new Error('Parcelamento máximo de 10x.');
+    if (parcelas > 21) throw new Error('Parcelamento máximo de 21x.');
     
-    const operacao = t.operationValue ?? 0.49;
+    const operacao = t.operationValue ?? 0.00; // R$ 0,00 fixa por parcela
     let percentual;
     if (parcelas <= 1) {
-      percentual = t.oneInstallmentPercentage ?? 2.99;
+      percentual = t.oneInstallmentPercentage ?? 2.89;
     } else if (parcelas <= 6) {
-      percentual = t.upToSixInstallmentsPercentage ?? 2.99;
+      percentual = t.upToSixInstallmentsPercentage ?? 3.12;
+    } else if (parcelas <= 12) {
+      percentual = t.upToTwelveInstallmentsPercentage ?? 3.44;
     } else {
-      percentual = t.upToTwelveInstallmentsPercentage ?? 2.99;
+      percentual = t.upToTwentyOneInstallmentsPercentage ?? 5.58;
     }
     // Verifica se há promoção vigente
     const percentualPromo = promocional(
@@ -89,14 +96,14 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
   // Validação de regras de negócio antes de chamar a API
   if (metodo === 'cartao') {
     if (parcelas > 1 && base < 1500) throw new Error('Valor mínimo para parcelamento é R$ 15,00 (3x de R$ 5,00).');
-    if (parcelas > 10) throw new Error('Parcelamento máximo de 10x.');
+    if (parcelas > 21) throw new Error('Parcelamento máximo de 21x.');
   }
 
   try {
     const resposta = await fetch(`${baseUrl}/myAccount/fees/`, { headers, signal: AbortSignal.timeout(8000) });
     if (resposta.status === 404) {
       const opcoes = [];
-      const maxParcelas = metodo === 'cartao' ? 10 : 1;
+      const maxParcelas = metodo === 'cartao' ? 21 : 1;
       for (let p = 1; p <= maxParcelas; p++) {
         const r = calcularTotalCompleto(metodo, base, null, Date.now(), p, true);
         opcoes.push(r);
@@ -108,7 +115,7 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
     const taxas = dados?.payment?.[metodo === 'pix' ? 'pix' : metodo === 'cartao' ? 'creditCard' : 'bankSlip'];
     if (!taxas) {
       const opcoes = [];
-      const maxParcelas = metodo === 'cartao' ? 10 : 1;
+      const maxParcelas = metodo === 'cartao' ? 21 : 1;
       for (let p = 1; p <= maxParcelas; p++) {
         const r = calcularTotalCompleto(metodo, base, null, Date.now(), p, true);
         opcoes.push(r);
@@ -116,7 +123,7 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
       return { ok: true, opcoes, valorBaseCentavos: base };
     }
     const opcoes = [];
-    const maxParcelas = metodo === 'cartao' ? 10 : 1;
+    const maxParcelas = metodo === 'cartao' ? 21 : 1;
     for (let p = 1; p <= maxParcelas; p++) {
       const total = calcularTotal(metodo, base, taxas, Date.now(), p, true);
       const acrescimo = total - base;
@@ -134,7 +141,7 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
     }
     // Fallback silencioso para erros de API
     const opcoes = [];
-    const maxParcelas = metodo === 'cartao' ? 10 : 1;
+    const maxParcelas = metodo === 'cartao' ? 21 : 1;
     for (let p = 1; p <= maxParcelas; p++) {
       const r = calcularTotalCompleto(metodo, base, null, Date.now(), p, true);
       opcoes.push(r);
