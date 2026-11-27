@@ -121,8 +121,8 @@ export default async function handler(req, res) {
   let opcao;
   try {
     opcao = await cotarCobranca('boleto', base, baseUrl, headers);
-  } catch {
-    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa do boleto.' });
+  } catch (erro) {
+    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa do boleto.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: erro instanceof Error ? erro.message : 'erro desconhecido' } });
   }
   if (acao === 'cotacao') return res.status(200).json({ ok: true, opcoes: [opcao] });
   if (totalAceitoCentavos !== opcao.totalCentavos) return res.status(409).json({ ok: false, message: 'Confira o total atualizado antes de emitir o boleto.' });

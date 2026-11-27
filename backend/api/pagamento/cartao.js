@@ -163,11 +163,11 @@ export default async function handler(req, res) {
   let opcoes;
   try {
     const taxasResp = await fetch(`${baseUrl}/myAccount/fees/`, { headers, signal: AbortSignal.timeout(8000) });
-    if (!taxasResp.ok) throw new Error('Taxas indisponíveis');
-    const taxas = await taxasResp.json();
+    if (!taxasResp.ok) throw new Error(`Taxas indisponíveis (HTTP ${taxasResp.status})`);
+    const taxas = await taxasResp.json().catch(() => null);
     opcoes = calcularOpcoes(item, valorNum, taxas?.payment?.creditCard);
-  } catch {
-    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa do cartão. Tente novamente ou escolha outra forma de pagamento.' });
+  } catch (erro) {
+    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa do cartão. Tente novamente ou escolha outra forma de pagamento.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: erro instanceof Error ? erro.message : 'erro desconhecido' } });
   }
   if (cotacao) return res.status(200).json({ ok: true, opcoes });
   const opcao = opcoes.find((p) => p.parcelas === numParcelas);
