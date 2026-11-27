@@ -29,6 +29,9 @@ jobs:
 
     - name: 🏗️ Build Project
       run: npm run build
+      env:
+        # Habilita os botões de pagamento no frontend (a rota /api/pagamento/* é servida pela ponte PHP em public/api/pagamento.php)
+        VITE_PAGAMENTOS_VISIVEIS: 'true'
 
     - name: 🔍 Verify build output
       run: |

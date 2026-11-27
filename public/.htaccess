@@ -1,6 +1,10 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Rotas de pagamento: encaminha para a ponte PHP (HostGator -> Vercel)
+  RewriteRule ^api/pagamento/(pix|boleto|cartao|status)$ /api/pagamento.php?rota=$1 [QSA,L]
+
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
