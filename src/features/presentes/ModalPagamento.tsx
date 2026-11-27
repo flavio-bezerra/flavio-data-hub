@@ -205,6 +205,11 @@ export default function ModalPagamento({ presente, onClose }: ModalPagamentoProp
           throw new Error(data.message || "Erro ao gerar cobrança Pix.");
         }
 
+        if (typeof data.pixCopiaECola !== "string" || !data.pixCopiaECola.trim()) {
+          throw new Error("O gateway não retornou um código Pix válido. A cobrança pode ter sido criada; confirme antes de tentar novamente.");
+        }
+
+        data.pixCopiaECola = data.pixCopiaECola.trim();
         setDadosPix(data);
         setEtapa("pix_resultado");
       } else if (metodo === "boleto") {

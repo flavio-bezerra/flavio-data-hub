@@ -231,11 +231,25 @@ export default async function handler(req, res) {
       signal: AbortSignal.timeout(10000)
     });
 
-    if (pixResp.ok) {
-      const pixData = await pixResp.json();
-      pixPayload = pixData.payload;
-      qrCodeBase64 = pixData.encodedImage;
-      expirationDate = pixData.expirationDate;
+    if (!pixResp.ok) {
+      return res.status(502).json({
+        ok: false,
+        message: 'A cobrança foi criada, mas não foi possível obter o QR Code Pix. Não tente pagar com outro código; entre em contato para confirmar a cobrança.',
+        cobrancaId: paymentId
+      });
+    }
+
+    const pixData = await pixResp.json().catch(() => null);
+    pixPayload = typeof pixData?.payload === 'string' ? pixData.payload.trim() : '';
+    qrCodeBase64 = typeof pixData?.encodedImage === 'string' ? pixData.encodedImage : null;
+    expirationDate = pixData?.expirationDate ?? null;
+
+    if (!pixPayload) {
+      return res.status(502).json({
+        ok: false,
+        message: 'A cobrança foi criada, mas o Asaas não retornou um código Pix válido. Não tente novamente antes de confirmar a cobrança.',
+        cobrancaId: paymentId
+      });
     }
 
     return res.status(200).json({
@@ -243,7 +257,7 @@ export default async function handler(req, res) {
       cobrancaId: paymentId,
       valor: valorFinal,
       presente: item.titulo,
-      pixPayload,
+      pixCopiaECola: pixPayload,
       qrCodeBase64,
       expirationDate,
       ambiente: isProd ? 'producao' : 'sandbox'
