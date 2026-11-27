@@ -70,17 +70,6 @@ if (!is_string($sql) || trim($sql) === '') {
     ]);
 }
 
-$normalized = strtolower(
-    (string) preg_replace('/\s+/', ' ', trim($sql))
-);
-
-if ($normalized !== 'select 1 as teste') {
-    respond(400, [
-        'ok' => false,
-        'message' => 'Somente a consulta de diagnóstico está habilitada'
-    ]);
-}
-
 try {
     $dbConfig = require $privateDir . '/database.php';
 
@@ -123,16 +112,38 @@ try {
         ]
     );
 
-    $statement = $pdo->query('SELECT 1 AS teste');
-    $rows = $statement->fetchAll();
+    $statement = $pdo->query($sql);
+
+    if ($statement === false) {
+        respond(500, [
+            'ok' => false,
+            'message' => 'Falha ao executar a consulta SQL'
+        ]);
+    }
+
+    $firstWord = strtolower(ltrim($sql));
+    $firstWord = substr($firstWord, 0, strpos($firstWord, ' ') ?: strlen($firstWord));
+
+    if ($firstWord === 'select' || $firstWord === 'show' || $firstWord === 'describe' || $firstWord === 'desc') {
+        $rows = $statement->fetchAll();
+
+        respond(200, [
+            'ok' => true,
+            'rows' => $rows,
+            'count' => count($rows)
+        ]);
+    }
+
+    $affected = $statement->rowCount();
 
     respond(200, [
         'ok' => true,
-        'rows' => $rows
+        'message' => 'Consulta executada com sucesso',
+        'affected_rows' => (int) $affected
     ]);
 } catch (Throwable $exception) {
     respond(500, [
         'ok' => false,
-        'message' => 'Falha ao executar a consulta'
+        'message' => 'Falha ao executar a consulta SQL'
     ]);
 }
