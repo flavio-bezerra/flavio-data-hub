@@ -93,7 +93,7 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
       for (let p = 1; p <= maxParcelas; p++) {
         opcoes.push(calcularTotalCompleto(metodo, base, null, Date.now(), p, true));
       }
-      return { parcelas: 1, opcoes, valorBaseCentavos: base };
+      return { ok: true, opcoes, valorBaseCentavos: base };
     }
     if (!resposta.ok) throw new Error(`Tarifas indisponíveis (HTTP ${resposta.status})`);
     const dados = await resposta.json().catch(() => null);
@@ -104,7 +104,7 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
       for (let p = 1; p <= maxParcelas; p++) {
         opcoes.push(calcularTotalCompleto(metodo, base, null, Date.now(), p, true));
       }
-      return { parcelas: 1, opcoes, valorBaseCentavos: base };
+      return { ok: true, opcoes, valorBaseCentavos: base };
     }
     const opcoes = [];
     const maxParcelas = metodo === 'cartao' ? 21 : 1;
@@ -117,14 +117,14 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
       }
       opcoes.push(opcao);
     }
-    return { parcelas: 1, opcoes, valorBaseCentavos: base };
+    return { ok: true, opcoes, valorBaseCentavos: base };
   } catch (erro) {
     const opcoes = [];
     const maxParcelas = metodo === 'cartao' ? 21 : 1;
     for (let p = 1; p <= maxParcelas; p++) {
       opcoes.push(calcularTotalCompleto(metodo, base, null, Date.now(), p, true));
     }
-    return { parcelas: 1, opcoes, valorBaseCentavos: base };
+    return { ok: true, opcoes, valorBaseCentavos: base };
   }
 }
 
