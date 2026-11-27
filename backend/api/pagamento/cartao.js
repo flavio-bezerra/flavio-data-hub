@@ -146,13 +146,14 @@ export default async function handler(req, res) {
   if (parcelasReq < 1 || parcelasReq > 21) return res.status(400).json({ ok: false, message: 'Parcelas inválidas (1 a 21).' });
 
   const headers = { access_token: token, 'Content-Type': 'application/json', 'User-Agent': 'Casamento-Victoria-Flavio/1.0' };
-  let opcao;
+  let cotacao;
   try {
-    opcao = await cotarCobranca('cartao', base, baseUrl, headers, parcelasReq);
+    cotacao = await cotarCobranca('cartao', base, baseUrl, headers, parcelasReq);
   } catch (erro) {
     return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa do cartão.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: erro instanceof Error ? erro.message : 'erro desconhecido' } });
   }
-  if (acao === 'cotacao') return res.status(200).json({ ok: true, opcoes: [opcao] });
+  if (acao === 'cotacao') return res.status(200).json({ ok: true, opcoes: cotacao.opcoes, valorBaseCentavos: cotacao.valorBaseCentavos });
+  const opcao = cotacao.opcoes.find((o) => o.parcelas === parcelasReq) ?? cotacao.opcoes[0];
   if (totalAceitoCentavos !== opcao.totalCentavos) return res.status(409).json({ ok: false, message: 'Confira o total atualizado antes de gerar a cobrança.' });
   const valorFinal = opcao.totalCentavos / 100;
 
