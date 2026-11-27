@@ -1,4 +1,5 @@
 // Valores da conta: https://docs.asaas.com/reference/retrieve-account-fees
+// Validação de parcelamento no cartão: mínimo R$ 15,00 (3x de R$ 5,00), máximo 10x
 const valido = (valor) => typeof valor === 'number' && Number.isFinite(valor) && valor >= 0;
 const centavos = (valor) => {
   if (!valido(valor) || !Number.isSafeInteger(Math.round(valor * 100))) throw new Error('Tarifa inválida');
