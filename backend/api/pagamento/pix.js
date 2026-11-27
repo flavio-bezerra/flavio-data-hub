@@ -157,11 +157,24 @@ export default async function handler(req, res) {
       { headers, signal: AbortSignal.timeout(10000) }
     );
 
+    const searchText = await searchResp.text().catch(() => '');
+    let searchData = {};
+    try { searchData = JSON.parse(searchText); } catch {}
+
     if (searchResp.ok) {
-      const searchData = await searchResp.json();
       if (Array.isArray(searchData.data) && searchData.data.length > 0) {
         customerId = searchData.data[0].id;
       }
+    } else {
+      return res.status(400).json({ ok: false, message: 'Erro ao buscar cliente no gateway.', debug: { 
+        stage: 'search', 
+        status: searchResp.status, 
+        body: searchText,
+        url: `${baseUrl}/customers?cpfCnpj=${encodeURIComponent(cpfLimpo)}`,
+        hasToken: !!token,
+        tokenPrefix: token ? token.substring(0, 10) + '...' : 'none',
+        isProd
+      } });
     }
 
     if (!customerId) {
