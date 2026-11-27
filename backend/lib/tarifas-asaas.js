@@ -14,7 +14,7 @@ function promocional(normal, desconto, vencimento, agora) {
   return fim > agora ? desconto : normal;
 }
 
-export function calcularTotal(metodo, base, taxas, agora = Date.now()) {
+export function calcularTotal(metodo, base, taxas, agora = Date.now(), parcelas = 1) {
   if (!Number.isSafeInteger(base) || base < 1000) throw new Error('Valor base inválido');
   // Se taxas não vieram da API (null/undefined), usa valores padrão conservadores
   const t = taxas || {};
@@ -40,6 +40,36 @@ export function calcularTotal(metodo, base, taxas, agora = Date.now()) {
       const bruto = Math.ceil(base / (1 - percentual / 100) - 1e-8);
       total = base + Math.min(maximo, Math.max(minimo, bruto - base));
     }
+  } else if (metodo === 'cartao') {
+    // Taxas de cartão de crédito: operationValue + percentual por parcela
+    const operacao = t.operationValue ?? 0.49;
+    let percentual;
+    if (parcelas <= 1) {
+      percentual = t.oneInstallmentPercentage ?? 2.99;
+    } else if (parcelas <= 6) {
+      percentual = t.upToSixInstallmentsPercentage ?? 2.99;
+    } else if (parcelas <= 12) {
+      percentual = t.upToTwelveInstallmentsPercentage ?? 2.99;
+    } else if (parcelas <= 21) {
+      percentual = t.upToTwentyOneInstallmentsPercentage ?? 4.29;
+    } else {
+      throw new Error('Parcelamento inválido (máximo 21x)');
+    }
+    // Verifica se há promoção vigente
+    const percentualPromo = promocional(
+      percentual,
+      parcelas <= 1 ? t.discountOneInstallmentPercentage ?? null :
+        parcelas <= 6 ? t.discountUpToSixInstallmentsPercentage ?? null :
+          parcelas <= 12 ? t.discountUpToTwelveInstallmentsPercentage ?? null :
+            t.discountUpToTwentyOneInstallmentsPercentage ?? null,
+      t.discountExpiration ?? null,
+      agora
+    );
+    const percentualFinal = percentualPromo ?? percentual;
+    if (!valido(percentualFinal) || percentualFinal >= 100) throw new Error('Percentual de cartão inválido');
+    const taxaOperacao = centavos(operacao);
+    const acrescimoPercentual = Math.ceil(base * percentualFinal / 100 - 1e-8);
+    total = base + taxaOperacao + acrescimoPercentual;
   } else {
     throw new Error('Método inválido');
   }
@@ -47,24 +77,24 @@ export function calcularTotal(metodo, base, taxas, agora = Date.now()) {
   return total;
 }
 
-export async function cotarCobranca(metodo, base, baseUrl, headers) {
+export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1) {
   try {
     const resposta = await fetch(`${baseUrl}/myAccount/fees/`, { headers, signal: AbortSignal.timeout(8000) });
     if (resposta.status === 404) {
       // Endpoint não existe na conta Asaas (ex: sandbox ou conta sem tarifas configuradas)
-      return calcularTotal(metodo, base, null, Date.now());
+      return calcularTotal(metodo, base, null, Date.now(), parcelas);
     }
     if (!resposta.ok) throw new Error(`Tarifas indisponíveis (HTTP ${resposta.status})`);
     const dados = await resposta.json().catch(() => null);
-    const taxas = dados?.payment?.[metodo === 'pix' ? 'pix' : 'bankSlip'];
+    const taxas = dados?.payment?.[metodo === 'pix' ? 'pix' : metodo === 'cartao' ? 'creditCard' : 'bankSlip'];
     if (!taxas) {
       // Taxas não configuradas na conta Asaas
-      return calcularTotal(metodo, base, null, Date.now());
+      return calcularTotal(metodo, base, null, Date.now(), parcelas);
     }
-    const total = calcularTotal(metodo, base, taxas);
-    return { parcelas: 1, valorBaseCentavos: base, acrescimoCentavos: total - base, totalCentavos: total };
+    const total = calcularTotal(metodo, base, taxas, Date.now(), parcelas);
+    return { parcelas, valorBaseCentavos: base, acrescimoCentavos: total - base, totalCentavos: total };
   } catch (erro) {
     // Fallback silencioso: usa tarifas padrão
-    return calcularTotal(metodo, base, null, Date.now());
+    return calcularTotal(metodo, base, null, Date.now(), parcelas);
   }
 }

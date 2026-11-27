@@ -1,5 +1,6 @@
 /**
- * Processamento de Cartão de Crédito via Asaas
+ * Criação de cobrança Cartão de Crédito via Asaas
+ * Suporta Sandbox (desenvolvimento) e Produção (deploy)
  */
 
 const CATALOGO_PADRAO = [
@@ -88,32 +89,35 @@ function obterAmbiente() {
   return { token, isProd, baseUrl };
 }
 
-function limparDigitos(str) {
-  if (typeof str !== 'string') return '';
-  return str.replace(/\D/g, '');
+function limparCpf(cpf) {
+  if (typeof cpf !== 'string') return '';
+  return cpf.replace(/\D/g, '');
 }
 
-function calcularOpcoes(item, valor, taxas, agora = Date.now()) {
-  const fixo = taxas?.operationValue;
-  const vencimento = taxas?.discountExpiration;
-  const data = typeof vencimento === 'string' ? vencimento.replace(' ', 'T') : '';
-  const expira = Date.parse(/T.*(?:Z|[+-]\d\d:?\d\d)$/i.test(data) ? data : `${data.length === 10 ? `${data}T00:00:00` : data}-03:00`);
-  if (typeof fixo !== 'number' || !Number.isFinite(fixo) || fixo < 0 || (vencimento && !Number.isFinite(expira))) throw new Error('Taxas inválidas');
-  const centavos = Math.round((item.livre ? valor : item.valor) * 100);
-  const fixaCentavos = Math.round(fixo * 100);
-  const minimo = Object.entries({ 1: 10, 2: 60, 3: 90, 6: 150 });
-  return minimo.filter(([, base]) => centavos >= base * 100).map(([chave]) => {
-    const parcelas = Number(chave);
-    const normal = parcelas === 1 ? taxas.oneInstallmentPercentage : taxas.upToSixInstallmentsPercentage;
-    const desconto = parcelas === 1 ? taxas.discountOneInstallmentPercentage : taxas.discountUpToSixInstallmentsPercentage;
-    const percentual = expira > agora && desconto != null ? desconto : normal;
-    if (typeof percentual !== 'number' || !Number.isFinite(percentual) || percentual < 0 || percentual >= 100) throw new Error('Percentual inválido');
-    // R$ líquidos = total - tarifa fixa - percentual aplicado ao total.
-    const totalCentavos = Math.ceil((centavos + fixaCentavos) / (1 - percentual / 100) - 1e-8);
-    if (!Number.isSafeInteger(totalCentavos) || totalCentavos < centavos) throw new Error('Total inválido');
-    return { parcelas, valorBaseCentavos: centavos, acrescimoCentavos: totalCentavos - centavos, totalCentavos };
-  });
+function limparCartao(numero) {
+  if (typeof numero !== 'string') return '';
+  return numero.replace(/\D/g, '');
 }
+
+function validarCartao(numero) {
+  const limpo = limparCartao(numero);
+  if (limpo.length < 13 || limpo.length > 19) return false;
+  // Luhn algorithm
+  let soma = 0;
+  let alternar = false;
+  for (let i = limpo.length - 1; i >= 0; i--) {
+    let digito = parseInt(limpo[i], 10);
+    if (alternar) {
+      digito *= 2;
+      if (digito > 9) digito -= 9;
+    }
+    soma += digito;
+    alternar = !alternar;
+  }
+  return soma % 10 === 0;
+}
+
+import { cotarCobranca, calcularTotal } from '../../lib/tarifas-asaas.js';
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
@@ -132,48 +136,24 @@ export default async function handler(req, res) {
     });
   }
 
-  const {
-    presenteId,
-    nome,
-    email,
-    cpf,
-    telefone,
-    cep,
-    numeroEndereco,
-    valor,
-    parcelas = 1,
-    cartao,
-    acao,
-    totalAceitoCentavos
-  } = req.body || {};
-
-  const cotacao = acao === 'cotacao';
+  const { presenteId, nome, email, cpf, mensagem, valor, acao, totalAceitoCentavos, parcelas, cartao } = req.body || {};
   const item = CATALOGO_PADRAO.find((p) => p.id === presenteId);
-  if (!item) return res.status(400).json({ ok: false, message: 'Presente inválido. Escolha um item da lista.' });
-  const valorNum = Number(valor);
-  if (item.livre && (!Number.isFinite(valorNum) || valorNum < 10 || !Number.isSafeInteger(Math.round(valorNum * 100)))) {
-    return res.status(400).json({ ok: false, message: 'Informe um valor válido a partir de R$ 10,00.' });
-  }
-  const numParcelas = Number(parcelas);
-  if (!cotacao && (![1, 2, 3, 6].includes(numParcelas) || !Number.isSafeInteger(totalAceitoCentavos))) {
-    return res.status(400).json({ ok: false, message: 'Confira o total e o parcelamento antes de pagar.' });
-  }
+  if (!item) return res.status(400).json({ ok: false, message: 'Presente inválido.' });
+  const base = Math.round((item.livre ? Number(valor) : item.valor) * 100);
+  if (!Number.isSafeInteger(base) || base < 1000) return res.status(400).json({ ok: false, message: 'Informe um valor válido a partir de R$ 10,00.' });
+
+  const parcelasReq = Number.isInteger(parcelas) ? parcelas : 1;
+  if (parcelasReq < 1 || parcelasReq > 21) return res.status(400).json({ ok: false, message: 'Parcelas inválidas (1 a 21).' });
 
   const headers = { access_token: token, 'Content-Type': 'application/json', 'User-Agent': 'Casamento-Victoria-Flavio/1.0' };
-  let opcoes;
+  let opcao;
   try {
-    const taxasResp = await fetch(`${baseUrl}/myAccount/fees/`, { headers, signal: AbortSignal.timeout(8000) });
-    if (!taxasResp.ok) throw new Error(`Taxas indisponíveis (HTTP ${taxasResp.status})`);
-    const taxas = await taxasResp.json().catch(() => null);
-    opcoes = calcularOpcoes(item, valorNum, taxas?.payment?.creditCard);
+    opcao = await cotarCobranca('cartao', base, baseUrl, headers, parcelasReq);
   } catch (erro) {
-    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa do cartão. Tente novamente ou escolha outra forma de pagamento.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: erro instanceof Error ? erro.message : 'erro desconhecido' } });
+    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa do cartão.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: erro instanceof Error ? erro.message : 'erro desconhecido' } });
   }
-  if (cotacao) return res.status(200).json({ ok: true, opcoes });
-  const opcao = opcoes.find((p) => p.parcelas === numParcelas);
-  if (!opcao || opcao.totalCentavos !== totalAceitoCentavos) {
-    return res.status(409).json({ ok: false, message: 'O total ou o parcelamento mudou. Revise o novo valor antes de pagar.' });
-  }
+  if (acao === 'cotacao') return res.status(200).json({ ok: true, opcoes: [opcao] });
+  if (totalAceitoCentavos !== opcao.totalCentavos) return res.status(409).json({ ok: false, message: 'Confira o total atualizado antes de gerar a cobrança.' });
   const valorFinal = opcao.totalCentavos / 100;
 
   if (!nome || typeof nome !== 'string' || nome.trim().length < 2) {
@@ -184,38 +164,45 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, message: 'Por favor, informe um e-mail válido.' });
   }
 
-  const cpfLimpo = limparDigitos(cpf);
+  const cpfLimpo = limparCpf(cpf);
   if (cpfLimpo.length !== 11) {
     return res.status(400).json({ ok: false, message: 'Por favor, informe um CPF válido (11 dígitos).' });
   }
 
   if (!cartao || typeof cartao !== 'object') {
-    return res.status(400).json({ ok: false, message: 'Dados do cartão de crédito não fornecidos.' });
+    return res.status(400).json({ ok: false, message: 'Dados do cartão são obrigatórios.' });
   }
 
-  const numeroCartao = limparDigitos(cartao.numero);
-  if (numeroCartao.length < 13 || numeroCartao.length > 19) {
-    return res.status(400).json({ ok: false, message: 'Número de cartão de crédito inválido.' });
+  const numeroCartao = limparCartao(cartao.numero);
+  if (!validarCartao(numeroCartao)) {
+    return res.status(400).json({ ok: false, message: 'Número do cartão inválido.' });
   }
 
-  if (!cartao.nomeTitular || typeof cartao.nomeTitular !== 'string' || cartao.nomeTitular.trim().length < 3) {
-    return res.status(400).json({ ok: false, message: 'Informe o nome do titular como impresso no cartão.' });
+  const validade = cartao.validade;
+  if (!validade || !/^\d{2}\/\d{2}$/.test(validade)) {
+    return res.status(400).json({ ok: false, message: 'Validade inválida (MM/AA).' });
+  }
+  const [mes, ano] = validade.split('/').map(Number);
+  const agora = new Date();
+  const anoAtual = agora.getFullYear() % 100;
+  const mesAtual = agora.getMonth() + 1;
+  if (mes < 1 || mes > 12 || ano < anoAtual || (ano === anoAtual && mes < mesAtual)) {
+    return res.status(400).json({ ok: false, message: 'Cartão expirado.' });
   }
 
-  const mesExp = limparDigitos(cartao.mesExpiracao);
-  let anoExp = limparDigitos(cartao.anoExpiracao);
-  if (anoExp.length === 2) anoExp = `20${anoExp}`;
-
-  if (!mesExp || Number(mesExp) < 1 || Number(mesExp) > 12 || anoExp.length !== 4) {
-    return res.status(400).json({ ok: false, message: 'Data de validade do cartão inválida.' });
+  const cvv = cartao.cvv;
+  if (!cvv || !/^\d{3,4}$/.test(cvv)) {
+    return res.status(400).json({ ok: false, message: 'CVV inválido.' });
   }
 
-  const ccv = limparDigitos(cartao.ccv);
-  if (ccv.length < 3 || ccv.length > 4) {
-    return res.status(400).json({ ok: false, message: 'Código de segurança (CVV) inválido.' });
+  const titular = cartao.titular;
+  if (!titular || typeof titular !== 'string' || titular.trim().length < 2) {
+    return res.status(400).json({ ok: false, message: 'Nome do titular obrigatório.' });
   }
 
   try {
+    const headers = { access_token: token, 'Content-Type': 'application/json', 'User-Agent': 'Casamento-Victoria-Flavio/1.0' };
+
     // 1. Localizar ou criar cliente no Asaas
     let customerId = null;
     const searchResp = await fetch(
@@ -253,71 +240,78 @@ export default async function handler(req, res) {
       customerId = custData.id;
     }
 
-    // 2. Data de vencimento hoje
-    const dueDate = new Date().toISOString().split('T')[0];
+    // Tokenizar cartão
+    const cardPayload = {
+      customer: customerId,
+      holderName: titular.trim(),
+      number: numeroCartao,
+      expiryMonth: mes.toString().padStart(2, '0'),
+      expiryYear: ('20' + ano).toString(),
+      ccv: cvv
+    };
 
+    let creditCardToken = null;
+    const cardResp = await fetch(`${baseUrl}/creditCards`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(cardPayload),
+      signal: AbortSignal.timeout(10000)
+    });
+
+    if (!cardResp.ok) {
+      const errCard = await cardResp.json().catch(() => ({}));
+      const erroMsg = errCard.errors?.[0]?.description || 'Erro ao tokenizar cartão.';
+      return res.status(400).json({ ok: false, message: erroMsg });
+    }
+
+    const cardData = await cardResp.json();
+    creditCardToken = cardData.creditCardToken;
+
+    // Data de vencimento (2 dias à frente)
+    const vencimento = new Date();
+    vencimento.setDate(vencimento.getDate() + 2);
+    const dueDate = vencimento.toISOString().split('T')[0];
 
     const paymentPayload = {
       customer: customerId,
       billingType: 'CREDIT_CARD',
+      value: opcao.totalCentavos / 100,
       dueDate,
       description: `Presente: ${item.titulo} — Victória & Flávio`,
       externalReference: `presente:${item.id}:${Date.now()}`.slice(0, 100),
-      creditCard: {
-        holderName: cartao.nomeTitular.trim().toUpperCase(),
-        number: numeroCartao,
-        expiryMonth: mesExp.padStart(2, '0'),
-        expiryYear: anoExp,
-        ccv
-      },
-      creditCardHolderInfo: {
-        name: nome.trim(),
-        email: email.trim().toLowerCase(),
-        cpfCnpj: cpfLimpo,
-        postalCode: limparDigitos(cep) || '01310100',
-        addressNumber: (numeroEndereco || 'SN').toString().trim(),
-        phone: limparDigitos(telefone) || '11999999999'
-      }
+      creditCardToken,
+      installmentCount: parcelasReq
     };
-
-    if (numParcelas > 1) {
-      paymentPayload.installmentCount = numParcelas;
-      paymentPayload.totalValue = valorFinal;
-    } else {
-      paymentPayload.value = valorFinal;
-    }
 
     const payResp = await fetch(`${baseUrl}/payments`, {
       method: 'POST',
       headers,
       body: JSON.stringify(paymentPayload),
-      signal: AbortSignal.timeout(15000)
+      signal: AbortSignal.timeout(12000)
     });
 
-    const payData = await payResp.json().catch(() => ({}));
-
     if (!payResp.ok) {
-      const erroMsg = payData.errors?.[0]?.description || 'Transação não autorizada pela operadora do cartão.';
+      const errPay = await payResp.json().catch(() => ({}));
+      const erroMsg = errPay.errors?.[0]?.description || 'Erro ao gerar cobrança no cartão.';
       return res.status(400).json({ ok: false, message: erroMsg });
     }
 
-    const pago = ['CONFIRMED', 'RECEIVED'].includes(payData.status);
+    const payData = await payResp.json();
+    const paymentId = payData.id;
 
     return res.status(200).json({
       ok: true,
-      cobrancaId: payData.id,
-      status: payData.status,
-      pago,
-      valor: valorFinal,
-      parcelas: numParcelas,
+      cobrancaId: paymentId,
+      valor: opcao.totalCentavos / 100,
       presente: item.titulo,
-      dataConfirmacao: payData.confirmedDate || null,
+      parcelas: parcelasReq,
+      invoiceUrl: payData.invoiceUrl,
       ambiente: isProd ? 'producao' : 'sandbox'
     });
   } catch (error) {
     return res.status(500).json({
       ok: false,
-      message: 'Falha na comunicação com a operadora de cartão.'
+      message: 'Falha na comunicação com o gateway de pagamento.'
     });
   }
 }
