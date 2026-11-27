@@ -82,19 +82,24 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
     const resposta = await fetch(`${baseUrl}/myAccount/fees/`, { headers, signal: AbortSignal.timeout(8000) });
     if (resposta.status === 404) {
       // Endpoint não existe na conta Asaas (ex: sandbox ou conta sem tarifas configuradas)
-      return calcularTotal(metodo, base, null, Date.now(), parcelas);
+      return calcularTotalCompleto(metodo, base, null, Date.now(), parcelas);
     }
     if (!resposta.ok) throw new Error(`Tarifas indisponíveis (HTTP ${resposta.status})`);
     const dados = await resposta.json().catch(() => null);
     const taxas = dados?.payment?.[metodo === 'pix' ? 'pix' : metodo === 'cartao' ? 'creditCard' : 'bankSlip'];
     if (!taxas) {
       // Taxas não configuradas na conta Asaas
-      return calcularTotal(metodo, base, null, Date.now(), parcelas);
+      return calcularTotalCompleto(metodo, base, null, Date.now(), parcelas);
     }
     const total = calcularTotal(metodo, base, taxas, Date.now(), parcelas);
     return { parcelas, valorBaseCentavos: base, acrescimoCentavos: total - base, totalCentavos: total };
   } catch (erro) {
     // Fallback silencioso: usa tarifas padrão
-    return calcularTotal(metodo, base, null, Date.now(), parcelas);
+    return calcularTotalCompleto(metodo, base, null, Date.now(), parcelas);
   }
+}
+
+function calcularTotalCompleto(metodo, base, taxas, agora, parcelas) {
+  const total = calcularTotal(metodo, base, taxas, agora, parcelas);
+  return { parcelas, valorBaseCentavos: base, acrescimoCentavos: total - base, totalCentavos: total };
 }
