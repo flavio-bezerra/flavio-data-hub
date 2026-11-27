@@ -20,7 +20,8 @@ function executarOperacoesDaPonte(string $private, string $environment='event'):
   $operation=$body['operation']??null;$p=$body['payload']??null;$token=$body['session_token']??null;
   if(!in_array($operation,$allowed,true)||!is_array($p)||(!empty($p)&&array_is_list($p))||!is_string($token))throw new FalhaDeAcesso(422,'Operação inválida.');
   // Este gateway é exclusivo do evento. As credenciais vivem fora do Git em database.php.
-  if($environment!=='event'||$operation==='account.google')throw new FalhaDeAcesso(503,'O acesso não está disponível no momento.');
+  // account.google só no pilot; account.google_invite só no event.
+  if(($operation==='account.google_invite'&&$environment==='pilot')||($operation==='account.google'&&$environment!=='pilot'))throw new FalhaDeAcesso(503,'O acesso não está disponível no momento.');
   $config=require $private.'/database.php';$dsn=sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s',$config['host'],(int)$config['port'],$config['database'],$config['charset']);
   $db=new PDO($dsn,$config['username'],$config['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);$db->exec("SET time_zone='+00:00'");garantirSchemaDoEvento($db);
   $result=despacharOperacao($db,$operation,$token,$p,$body['client_bucket']??'');
