@@ -85,6 +85,12 @@ export function calcularTotal(metodo, base, taxas, agora = Date.now(), parcelas 
 }
 
 export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1) {
+  // Validação de regras de negócio antes de chamar a API
+  if (metodo === 'cartao') {
+    if (parcelas > 1 && base < 1500) throw new Error('Valor mínimo para parcelamento é R$ 15,00 (3x de R$ 5,00).');
+    if (parcelas > 10) throw new Error('Parcelamento máximo de 10x.');
+  }
+
   try {
     const resposta = await fetch(`${baseUrl}/myAccount/fees/`, { headers, signal: AbortSignal.timeout(8000) });
     if (resposta.status === 404) {
@@ -121,6 +127,11 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
     }
     return { ok: true, opcoes, valorBaseCentavos: base };
   } catch (erro) {
+    // Re-throw validation errors
+    if (erro.message.includes('parcelamento') || erro.message.includes('mínimo') || erro.message.includes('máximo')) {
+      throw erro;
+    }
+    // Fallback silencioso para erros de API
     const opcoes = [];
     const maxParcelas = metodo === 'cartao' ? 10 : 1;
     for (let p = 1; p <= maxParcelas; p++) {
