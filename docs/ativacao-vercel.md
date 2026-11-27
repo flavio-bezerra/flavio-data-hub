@@ -11,7 +11,7 @@ Não execute o bootstrap administrativo nesta etapa: ele ainda usa a configuraç
 ## Arquitetura vigente
 Frontend HostGator -> gateway PHP no mesmo domínio -> APIs Node Vercel -> ponte PHP de operações fixas -> MySQL. Nenhum SQL é enviado pela Vercel; a ponte aceita enumeração fechada e consultas preparadas. A identidade do usuário é resolvida pela sessão persistida, não por account_id enviado pelo navegador. Operações internas de login recebem identidade já verificada pela Vercel, autenticada pelo segredo da ponte.
 
-O endpoint execute-sql foi preservado, não ampliado. Pagamentos existentes intocados. server/entrada-api.php desativado. PHP de banco reutiliza os módulos de convites/admin/contexto; Google, SMTP, hash scrypt/verificação bcrypt e OpenRouter agora no Node.
+O endpoint execute-sql foi preservado e aceita SQL arbitrário via token da ponte; o uso operacional é o inicializador de schema fixo (`garantir-schema.php`) e diagnóstico controlado. Pagamentos existentes intocados. server/entrada-api.php desativado. PHP de banco reutiliza os módulos de convites/admin/contexto; Google, SMTP, hash scrypt/verificação bcrypt e OpenRouter agora no Node.
 
 ## Vercel
 Projeto existente flavio-data-hub-backend, Root Directory backend, instalar com npm ci do backend e redeploy separado. Variáveis: HOSTGATOR_BRIDGE_TOKEN (existente, >=32 caracteres, mesmo da HostGator), ACCESS_ENABLED=false inicialmente, APP_ORIGIN HTTPS exata, GOOGLE_CLIENT_ID, SMTP_HOST/PORT/SECURE/USER/PASSWORD/EMAIL_FROM. Google OAuth Web autoriza origem do site, não vercel.app, pois GIS aparece no navegador do site.

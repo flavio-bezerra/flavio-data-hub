@@ -3,8 +3,8 @@
 Data: 13/11/2026  
 Ambiente de Execução: Windows / PowerShell  
 Endpoints:
-- **HostGator (Direto)**: `https://casamento-flavio-victoria.com.br/api/execute-sql.php`
-- **Vercel (Proxy)**: `https://flavio-data-hub-backend.vercel.app/api/execute-sql`
+- **HostGator (Direto)**: `https://casamento-flavio-victoria.com.br/api/execute-sql.php` — aceita SQL arbitrário no campo `sql` com `X-Bridge-Token`. Usado pelo inicializador de schema fixo e diagnóstico.
+- **Vercel (Proxy)**: `https://flavio-data-hub-backend.vercel.app/api/execute-sql` — encaminha para a HostGator.
 
 ---
 
@@ -14,10 +14,11 @@ A matriz completa de testes da ponte foi executada com sucesso em **13/11/2026**
 1. **Autenticação rigorosa**: Tanto a HostGator (`hash_equals`) quanto a Vercel (`timingSafeEqual`) barram imediatamente requisições sem token ou com tokens incorretos/fictícios com **HTTP 401**, sem tocar no banco de dados e sem expor detalhes internos.
 2. **Métodos HTTP**: Ambas as pontas rejeitam métodos não permitidos (ex: `GET`) com **HTTP 405** e cabeçalho `Allow: POST`.
 3. **Validação de Payload**: Payloads malformados, JSON inválido, campos ausentes ou tipos incorretos são rejeitados com **HTTP 400**.
-4. **Proteção contra SQL Arbitrário**:
-   - O PHP na HostGator aceita estritamente a consulta fixa normalizada `select 1 as teste`. Qualquer outra instrução (como `SELECT 2 AS teste` ou tentativa de ponto e vírgula `;`) é rejeitada com **HTTP 400** (`"Somente a consulta de diagnóstico está habilitada"`).
-   - O proxy na Vercel converte respostas de erro upstream não-2xx em **HTTP 502**, preservando integralmente a mensagem de erro da HostGator.
-   - Ponto e vírgula é bloqueado na Vercel antes mesmo de contatar a HostGator com **HTTP 400** (`"Apenas SELECT simples é permitido"`).
+4. **Comportamento do endpoint execute-sql** (estado atual: aceita SQL arbitrário):
+   - O PHP na HostGator **aceita SQL arbitrário** no campo `sql` e o executa via `PDO::query`. A restrição anterior de permitir apenas `select 1 as teste` foi removida.
+   - O proxy na Vercel encaminha a requisição para a HostGator; converte respostas de erro upstream não-2xx em **HTTP 502**, preservando a mensagem de erro da HostGator.
+   - O filtro anterior na Vercel que bloqueava ponto e vírgula (`;`) e limitava a `SELECT` simples foi removido.
+   - **Nota**: Os testes abaixo (seção 2) documentam o comportamento histórico de 13/11/2026, quando o endpoint aceitava apenas `SELECT 1 AS teste`. O endpoint atual aceita SQL arbitrário via token da ponte.
 5. **Privacidade e Gestão de Segredos**: As variáveis foram consolidadas no arquivo `.env.local` (ignorado pelo Git via `.gitignore` e `*.local`). Um arquivo `.env.example` foi disponibilizado como modelo para novas variáveis. Nenhum segredo foi incluído em commits ou logs.
 
 ---

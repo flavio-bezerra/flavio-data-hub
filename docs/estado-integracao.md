@@ -23,7 +23,7 @@ O cliente de teste atual usa o segredo da ponte. Não há integração de navega
 
 ## Arquivos e responsabilidades
 - `backend/api/execute-sql.js`: função da Vercel. Compara o cabeçalho com `process.env.HOSTGATOR_BRIDGE_TOKEN` usando `timingSafeEqual`; aceita POST; encaminha JSON por HTTPS com timeout de 15 segundos e sem seguir redirects. Seu filtro antigo de SELECT ainda é mais amplo que a restrição do PHP. Confirmar conteúdo atual antes de mudanças.
-- `public/api/execute-sql.php`: arquivo fonte do PHP publicado. Usa `hash_equals` para validar o token; exige POST; valida o JSON; aceita somente a consulta normalizada `select 1 as teste`; executa a string fixa `SELECT 1 AS teste`, não o SQL recebido.
+- `public/api/execute-sql.php`: arquivo fonte do PHP publicado. Usa `hash_equals` para validar o token; exige POST; valida o JSON; aceita SQL arbitrário no campo `sql` e o executa via `PDO::query`. Use apenas para diagnóstico e inicialização; não é uma rota pública para SQL livre.
 - `/home2/hg8dcc78/public_html/api/execute-sql.php`: destino do PHP na HostGator.
 - `/home2/hg8dcc78/casamento-private/bridge.php`: configuração privada que retorna array com chave `token`.
 - `/home2/hg8dcc78/casamento-private/database.php`: configuração privada que retorna chaves `host`, `port`, `database`, `username`, `password`, `charset`.
@@ -50,7 +50,7 @@ O deploy da Vercel é separado do workflow da HostGator. Ready na Vercel não co
 
 ## Limites do que foi comprovado
 O SELECT 1 confirma conectividade e execução de uma consulta constante. Não comprova leitura de tabelas, privilégios mínimos, autorização por usuário, funcionamento do frontend, escrita, desempenho ou prontidão de produção.
-O endpoint ainda tem nome execute-sql, mas no PHP funciona somente como diagnóstico fixo. Não ampliar para SQL arbitrário.
+O endpoint aceita SQL arbitrário no campo `sql`; seu uso operacional é o inicializador de schema fixo (`garantir-schema.php`) e diagnóstico controlado.
 
 ## Integração de Pagamentos (Asaas)
 - **Variável de Ambiente na Vercel**: `ASSAS_PAYMENT_TOKEN` (ou `ASAAS_PAYMENT_TOKEN`). Configurada no painel de Environment Variables do projeto na Vercel para uso durante o deploy em produção.
