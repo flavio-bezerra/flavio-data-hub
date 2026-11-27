@@ -150,7 +150,12 @@ export default async function handler(req, res) {
   try {
     cotacao = await cotarCobranca('cartao', base, baseUrl, headers, parcelasReq);
   } catch (erro) {
-    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa do cartão.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: erro instanceof Error ? erro.message : 'erro desconhecido' } });
+    const msg = erro instanceof Error ? erro.message : 'erro desconhecido';
+    // Validation errors (parcelamento mínimo/máximo) should return 400
+    if (msg.includes('parcelamento') || msg.includes('mínimo') || msg.includes('máximo')) {
+      return res.status(400).json({ ok: false, message: msg });
+    }
+    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa do cartão.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: msg } });
   }
   if (acao === 'cotacao') return res.status(200).json({ ok: true, opcoes: cotacao.opcoes, valorBaseCentavos: cotacao.valorBaseCentavos });
   const opcao = cotacao.opcoes.find((o) => o.parcelas === parcelasReq) ?? cotacao.opcoes[0];
