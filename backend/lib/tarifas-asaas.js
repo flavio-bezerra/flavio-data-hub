@@ -48,11 +48,23 @@ export function calcularTotal(metodo, base, taxas, agora = Date.now()) {
 }
 
 export async function cotarCobranca(metodo, base, baseUrl, headers) {
-  const resposta = await fetch(`${baseUrl}/myAccount/fees/`, { headers, signal: AbortSignal.timeout(8000) });
-  if (!resposta.ok) throw new Error(`Tarifas indisponíveis (HTTP ${resposta.status})`);
-  const dados = await resposta.json().catch(() => null);
-  const taxas = dados?.payment?.[metodo === 'pix' ? 'pix' : 'bankSlip'];
-  if (!taxas) throw new Error('Taxa ausente na resposta do Asaas');
-  const total = calcularTotal(metodo, base, taxas);
-  return { parcelas: 1, valorBaseCentavos: base, acrescimoCentavos: total - base, totalCentavos: total };
+  try {
+    const resposta = await fetch(`${baseUrl}/myAccount/fees/`, { headers, signal: AbortSignal.timeout(8000) });
+    if (resposta.status === 404) {
+      // Endpoint não existe na conta Asaas (ex: sandbox ou conta sem tarifas configuradas)
+      return calcularTotal(metodo, base, null, Date.now());
+    }
+    if (!resposta.ok) throw new Error(`Tarifas indisponíveis (HTTP ${resposta.status})`);
+    const dados = await resposta.json().catch(() => null);
+    const taxas = dados?.payment?.[metodo === 'pix' ? 'pix' : 'bankSlip'];
+    if (!taxas) {
+      // Taxas não configuradas na conta Asaas
+      return calcularTotal(metodo, base, null, Date.now());
+    }
+    const total = calcularTotal(metodo, base, taxas);
+    return { parcelas: 1, valorBaseCentavos: base, acrescimoCentavos: total - base, totalCentavos: total };
+  } catch (erro) {
+    // Fallback silencioso: usa tarifas padrão
+    return calcularTotal(metodo, base, null, Date.now());
+  }
 }
