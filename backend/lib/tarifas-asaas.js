@@ -143,6 +143,6 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
 }
 
 function calcularTotalCompleto(metodo, base, taxas, agora, parcelas) {
-  const total = calcularTotal(metodo, base, taxas, agora, parcelas);
+  const total = calcularTotal(metodo, base, taxas, agora, parcelas, true);
   return { parcelas, valorBaseCentavos: base, acrescimoCentavos: total - base, totalCentavos: total };
 }
