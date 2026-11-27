@@ -88,23 +88,43 @@ export async function cotarCobranca(metodo, base, baseUrl, headers, parcelas = 1
   try {
     const resposta = await fetch(`${baseUrl}/myAccount/fees/`, { headers, signal: AbortSignal.timeout(8000) });
     if (resposta.status === 404) {
-      return calcularTotalCompleto(metodo, base, null, Date.now(), parcelas, true);
+      const opcoes = [];
+      const maxParcelas = metodo === 'cartao' ? 21 : 1;
+      for (let p = 1; p <= maxParcelas; p++) {
+        opcoes.push(calcularTotalCompleto(metodo, base, null, Date.now(), p, true));
+      }
+      return { parcelas: 1, opcoes, valorBaseCentavos: base };
     }
     if (!resposta.ok) throw new Error(`Tarifas indisponíveis (HTTP ${resposta.status})`);
     const dados = await resposta.json().catch(() => null);
     const taxas = dados?.payment?.[metodo === 'pix' ? 'pix' : metodo === 'cartao' ? 'creditCard' : 'bankSlip'];
     if (!taxas) {
-      return calcularTotalCompleto(metodo, base, null, Date.now(), parcelas, true);
+      const opcoes = [];
+      const maxParcelas = metodo === 'cartao' ? 21 : 1;
+      for (let p = 1; p <= maxParcelas; p++) {
+        opcoes.push(calcularTotalCompleto(metodo, base, null, Date.now(), p, true));
+      }
+      return { parcelas: 1, opcoes, valorBaseCentavos: base };
     }
-    const total = calcularTotal(metodo, base, taxas, Date.now(), parcelas, true);
-    const acrescimo = total - base;
-    const resultado = { parcelas, valorBaseCentavos: base, acrescimoCentavos: acrescimo, totalCentavos: total };
-    if (metodo === 'cartao' && parcelas > 1) {
-      resultado.valorParcelaCentavos = Math.ceil(total / parcelas);
+    const opcoes = [];
+    const maxParcelas = metodo === 'cartao' ? 21 : 1;
+    for (let p = 1; p <= maxParcelas; p++) {
+      const total = calcularTotal(metodo, base, taxas, Date.now(), p, true);
+      const acrescimo = total - base;
+      const opcao = { parcelas: p, valorBaseCentavos: base, acrescimoCentavos: total - base, totalCentavos: total };
+      if (metodo === 'cartao' && p > 1) {
+        opcao.valorParcelaCentavos = Math.ceil(total / p);
+      }
+      opcoes.push(opcao);
     }
-    return resultado;
+    return { parcelas: 1, opcoes, valorBaseCentavos: base };
   } catch (erro) {
-    return calcularTotalCompleto(metodo, base, null, Date.now(), parcelas, true);
+    const opcoes = [];
+    const maxParcelas = metodo === 'cartao' ? 21 : 1;
+    for (let p = 1; p <= maxParcelas; p++) {
+      opcoes.push(calcularTotalCompleto(metodo, base, null, Date.now(), p, true));
+    }
+    return { parcelas: 1, opcoes, valorBaseCentavos: base };
   }
 }
 
