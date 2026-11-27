@@ -114,10 +114,10 @@ try {
     $totalCentavos = $valorCentavos + $taxaCentavos;
     $valorLiquidoCentavos = $valorCentavos; // o convidado paga o total, o casal recebe o valor líquido
 
-    // Para cartão, calcula parcelas se informado
+    // Para cartão, calcula parcelas se informado (vem do JSON body)
     $parcelasInfo = null;
-    if ($tipo === 'cartao' && isset($_POST['parcelas']) && (int)$_POST['parcelas'] > 1) {
-        $parcelas = max(1, min(21, (int)$_POST['parcelas']));
+    if ($tipo === 'cartao' && isset($body['parcelas']) && (int)$body['parcelas'] > 1) {
+        $parcelas = max(1, min(21, (int)$body['parcelas']));
         $valorParcelaCentavos = (int) round($totalCentavos / $parcelas);
         $parcelasInfo = [
             'quantidade' => $parcelas,
