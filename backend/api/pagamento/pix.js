@@ -182,7 +182,14 @@ export default async function handler(req, res) {
         let errCust = {};
         try { errCust = JSON.parse(errText); } catch {}
         const erroMsg = errCust.errors?.[0]?.description || errCust.message || errText || 'Erro ao registrar cliente no gateway.';
-        return res.status(400).json({ ok: false, message: erroMsg, debug: { status: createCustResp.status, body: errText } });
+        return res.status(400).json({ ok: false, message: erroMsg, debug: { 
+          status: createCustResp.status, 
+          body: errText,
+          url: `${baseUrl}/customers`,
+          hasToken: !!token,
+          tokenPrefix: token ? token.substring(0, 10) + '...' : 'none',
+          isProd
+        } });
       }
 
       const custData = await createCustResp.json();
