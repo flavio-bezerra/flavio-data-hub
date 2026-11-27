@@ -123,7 +123,12 @@ export default async function handler(req, res) {
   try {
     opcao = await cotarCobranca('pix', base, baseUrl, headers);
   } catch (erro) {
-    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa Pix.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: erro instanceof Error ? erro.message : 'erro desconhecido' } });
+    const msg = erro instanceof Error ? erro.message : 'erro desconhecido';
+    // Validation errors should return 400 (future-proofing)
+    if (msg.includes('parcelamento') || msg.includes('mínimo') || msg.includes('máximo')) {
+      return res.status(400).json({ ok: false, message: msg });
+    }
+    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa Pix.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: msg } });
   }
   if (acao === 'cotacao') return res.status(200).json({ ok: true, opcoes: [opcao] });
   if (totalAceitoCentavos !== opcao.totalCentavos) return res.status(409).json({ ok: false, message: 'Confira o total atualizado antes de gerar o Pix.' });
