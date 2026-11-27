@@ -85,7 +85,7 @@ const CATALOGO_PADRAO = [
 function obterAmbiente() {
   const token = process.env.ASAAS_PAYMENT_TOKEN || process.env.ASSAS_PAYMENT_TOKEN;
   const isProd = process.env.NODE_ENV === 'production' && process.env.ASAAS_ENVIRONMENT !== 'sandbox';
-  const baseUrl = isProd ? 'https://api.asaas.com/api/v3' : 'https://sandbox.asaas.com/api/v3';
+  const baseUrl = isProd ? 'https://api.asaas.com/v3' : 'https://api-sandbox.asaas.com/v3';
   return { token, isProd, baseUrl };
 }
 
@@ -128,7 +128,7 @@ export default async function handler(req, res) {
     if (msg.includes('parcelamento') || msg.includes('mínimo') || msg.includes('máximo')) {
       return res.status(400).json({ ok: false, message: msg });
     }
-    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa Pix.', diagnostico: { ambiente: isProd ? 'producao' : 'sandbox', motivo: msg } });
+    return res.status(503).json({ ok: false, message: 'Não foi possível calcular a tarifa Pix.' });
   }
   const opcao = cotacao.opcoes[0];
   if (acao === 'cotacao') return res.status(200).json({ ok: true, opcoes: cotacao.opcoes });
@@ -163,8 +163,7 @@ export default async function handler(req, res) {
         customerId = searchData.data[0].id;
       }
     } else {
-      const errText = await searchResp.text().catch(() => '');
-      return res.status(400).json({ ok: false, message: 'Erro ao buscar cliente no gateway. Verifique a configuração da conta Asaas.', diagnostico: { status: searchResp.status, body: errText } });
+      return res.status(502).json({ ok: false, message: 'Não foi possível consultar o cliente no gateway de pagamento.' });
     }
 
     if (!customerId) {
@@ -185,7 +184,7 @@ export default async function handler(req, res) {
         let errCust = {};
         try { errCust = JSON.parse(errText); } catch {}
         const erroMsg = errCust.errors?.[0]?.description || errCust.message || errText || 'Erro ao registrar cliente no gateway.';
-        return res.status(400).json({ ok: false, message: erroMsg, diagnostico: { status: createCustResp.status, body: errText } });
+        return res.status(400).json({ ok: false, message: erroMsg });
       }
 
       const custData = await createCustResp.json();
