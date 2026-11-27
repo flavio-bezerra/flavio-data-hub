@@ -157,10 +157,13 @@ export default async function handler(req, res) {
     );
 
     if (searchResp.ok) {
-      const searchData = await searchResp.json();
+      const searchData = await searchResp.json().catch(() => ({}));
       if (Array.isArray(searchData.data) && searchData.data.length > 0) {
         customerId = searchData.data[0].id;
       }
+    } else {
+      const errText = await searchResp.text().catch(() => '');
+      return res.status(400).json({ ok: false, message: 'Erro ao buscar cliente no gateway. Verifique a configuração da conta Asaas.', diagnostico: { status: searchResp.status, body: errText } });
     }
 
     if (!customerId) {
@@ -177,9 +180,11 @@ export default async function handler(req, res) {
       });
 
       if (!createCustResp.ok) {
-        const errCust = await createCustResp.json().catch(() => ({}));
-        const erroMsg = errCust.errors?.[0]?.description || 'Erro ao registrar cliente no gateway.';
-        return res.status(400).json({ ok: false, message: erroMsg });
+        const errText = await createCustResp.text().catch(() => '');
+        let errCust = {};
+        try { errCust = JSON.parse(errText); } catch {}
+        const erroMsg = errCust.errors?.[0]?.description || errCust.message || errText || 'Erro ao registrar cliente no gateway.';
+        return res.status(400).json({ ok: false, message: erroMsg, diagnostico: { status: createCustResp.status, body: errText } });
       }
 
       const custData = await createCustResp.json();
